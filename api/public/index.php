@@ -1,10 +1,5 @@
 <?php
 
-use Ratchet\Server\IoServer;
-use Ratchet\Http\HttpServer;
-use Ratchet\WebSocket\WsServer;
-use App\Websocket\Notificacao;
-
 /*
 |--------------------------------------------------------------------------
 | Create The Application
@@ -31,14 +26,3 @@ $app = require __DIR__.'/../bootstrap/app.php';
 */
 
 $app->run();
-
-$server = IoServer::factory(
-    new HttpServer(
-        new WsServer(
-            new Notificacao()
-        )
-    ),
-    8000
-);
-
-$server->run();
