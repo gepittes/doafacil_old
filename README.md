@@ -33,6 +33,7 @@
             * nginx
             * php-fpm
             * postgres
+            * websocket
         - [ ] api
             - [ ] notificacoes
                 - [ ] consultar ( getOne && getAll )
