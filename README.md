@@ -68,3 +68,8 @@ php api/app/Websocket/bin/socket.php
 cd web
 npm run serve
 ```
+
+**Docker**
+```sh
+docker-compose up --build --force-recreate
+```

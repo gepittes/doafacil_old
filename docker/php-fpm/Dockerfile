@@ -13,6 +13,7 @@ RUN apt-get install -y libxml2-dev
 RUN apt-get install -y freetds-dev
 RUN apt-get install -y git
 RUN apt-get install -y curl 
+RUN apt-get install -y supervisor
 
 RUN echo "[ ***** ***** ***** ] - Installing PHP Dependencies ***** ***** ***** "
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/

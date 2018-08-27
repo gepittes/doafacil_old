@@ -14,9 +14,13 @@ services:
     build: docker/php-fpm
     container_name: salic-api-php-fpm
     working_dir: /application
+    command: "supervisord -n"
     volumes:
       - ./api:/application
       - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+      - ./docker/php-fpm/supervisor/supervisor.conf:/etc/supervisor/conf.d/supervisor.conf
+    ports:
+      - "8001:8001"
   
   db:
     image: postgres:10
