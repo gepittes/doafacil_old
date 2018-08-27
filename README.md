@@ -2,7 +2,7 @@
 
 
 ### To-Do
-- [ ] Frontend
+- Frontend
     - [ ] notification-service
         - [ ] painel administrativo
             - [ ] notificacoes
