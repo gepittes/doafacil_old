@@ -16,3 +16,4 @@ $router->get('/api', ['as' => 'api', function () use ($router) {
 }]);
 
 $router->get('/user[/{id}]', 'UsuarioController@get');
+$router->post('/user', 'UsuarioController@post');
