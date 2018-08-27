@@ -45,6 +45,11 @@
                 - [ ] cadastrar
                 - [ ] alterar
                 - [ ] remover
+            - [ ] usuario
+                - [ ] consultar ( getOne && getAll )
+                - [ ] cadastrar
+                - [ ] alterar
+                - [ ] remover
     - salic-minc
         - [ ] notificação
             - [ ] enviar
