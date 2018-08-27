@@ -5,7 +5,7 @@ use Ratchet\Http\HttpServer;
 use Ratchet\WebSocket\WsServer;
 use App\Websocket\Notificacao;
 
-require_once __DIR__.'/../../../vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 $server = IoServer::factory(
     new HttpServer(
