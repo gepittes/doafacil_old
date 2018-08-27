@@ -26,10 +26,13 @@
             - [ ] exibir notificações
             - [ ] bloco de notificações não lidas
             - [ ] marcar notificação como lidas
-            * visualização de notas as notificações (link)
+            * visualização de todas as notificações (link)
 - Backend
     - notification-service
-        - [ ] infra (containers nginx + php-fpm)
+        - [x] infra
+            * nginx
+            * php-fpm
+            * postgres
         - [ ] api
             - [ ] notificacoes
                 - [ ] consultar ( getOne && getAll )
@@ -45,9 +48,10 @@
         - [ ] notificação
             - [ ] enviar
 - Database
-    - [ ] modelagem
-    - [ ] criação
-    * entry-point
+    - [x] modelagem
+    - [x] criação
+    - [x] entry-point
+    - [ ] script com dados iniciais
 
 **API**
 ```sh
