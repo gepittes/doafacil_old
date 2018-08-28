@@ -2,7 +2,7 @@ FROM php:7.2.5-fpm
 
 WORKDIR "/application"
 
-RUN apt-get update
+RUN apt-get update --fix-missing
 
 RUN echo "[ ***** ***** ***** ] - Installing each item in new command to use cache and avoid download again ***** ***** ***** "
 RUN apt-get install -y apt-utils
@@ -12,7 +12,7 @@ RUN apt-get install -y libcurl4-gnutls-dev
 RUN apt-get install -y libxml2-dev
 RUN apt-get install -y freetds-dev
 RUN apt-get install -y git
-RUN apt-get install -y curl 
+RUN apt-get install -y curl
 RUN apt-get install -y supervisor
 RUN apt-get install -y libpq-dev
 
