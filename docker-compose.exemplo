@@ -2,7 +2,7 @@ version: '2'
 services:
   webserver:
     image: nginx:alpine
-    container_name: salic-api-webserver
+    container_name: notification-webserver
     working_dir: /application
     volumes:
         - ./api:/application
@@ -12,7 +12,16 @@ services:
 
   php-fpm:
     build: docker/php-fpm
-    container_name: salic-api-php-fpm
+    image: notification-php-fpm:1.0.0
+    container_name: notification-api
+    working_dir: /application
+    volumes:
+      - ./api:/application
+      - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+
+  php-websocket:
+    image: notification-php-fpm:1.0.0
+    container_name: notification-websocket
     working_dir: /application
     command: "supervisord -n"
     volumes:
@@ -21,9 +30,10 @@ services:
       - ./docker/php-fpm/supervisor/supervisor.conf:/etc/supervisor/conf.d/supervisor.conf
     ports:
       - "8001:8001"
-  
+
   db:
     image: postgres:10
+    container_name: notification-db
     environment:
       - POSTGRES_PASSWORD=senhaNotificacao
       - POSTGRES_USER=notificacao
