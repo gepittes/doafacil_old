@@ -9,11 +9,13 @@ $router->get('/', function () use ($router) {
 $router->get('/api', ['as' => 'api', function () use ($router) {
     return response()->json(
         [
-            'name' => 'Abigail', 
+            'name' => 'Abigail',
             'state' => 'CA'
         ]
     );
 }]);
 
-$router->get('/user[/{id}]', 'UsuarioController@get');
-$router->post('/user', 'UsuarioController@post');
+$router->get('/usuario[/{id}]', 'UsuarioController@get');
+$router->post('/usuario', 'UsuarioController@post');
+$router->patch('/usuario/{id}', 'UsuarioController@patch');
+$router->delete('/usuario/{id}', 'UsuarioController@delete');
