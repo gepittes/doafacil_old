@@ -11,7 +11,7 @@ CREATE SCHEMA "notificacao";
 -- Table "notificacao"."usuario"
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS "notificacao"."usuario" (
-  "usuario_id" INT NOT NULL,
+  "usuario_id" SERIAL NOT NULL,
   "descricao" TEXT NULL,
   PRIMARY KEY ("usuario_id"))
 ;
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS "notificacao"."usuario" (
 -- Table "notificacao"."sistema"
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS "notificacao"."sistema" (
-  "sistema_id" INT NOT NULL,
+  "sistema_id" SERIAL NOT NULL,
   "descricao" TEXT NULL,
   PRIMARY KEY ("sistema_id"))
 ;
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS "notificacao"."sistema" (
 -- Table "notificacao"."tipo_notificacao"
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS "notificacao"."tipo_notificacao" (
-  "tipo_notificacao_id" INT NOT NULL,
+  "tipo_notificacao_id" SERIAL NOT NULL,
   "descricao" VARCHAR(255) NULL,
   "mensagem" TEXT NULL,
   "sistema_id" INT NOT NULL,
@@ -58,7 +58,7 @@ CREATE INDEX "fk_tipo_notificacao_usuario1_idx" ON "notificacao"."tipo_notificac
 -- Table "notificacao"."notificacao"
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS "notificacao"."notificacao" (
-  "notificacao_id" INT NOT NULL,
+  "notificacao_id" SERIAL NOT NULL,
   "destinatario_id" INT NOT NULL,
   "tipo_notificacao_id" INT NOT NULL,
   "is_notificacao_lida" BOOLEAN NULL,
@@ -85,7 +85,7 @@ CREATE INDEX "fk_notificacao_tipo_notificacao1_idx" ON "notificacao"."notificaca
 -- Table "notificacao"."plataforma"
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS "notificacao"."plataforma" (
-  "plataforma_id" INT NOT NULL,
+  "plataforma_id" SERIAL NOT NULL,
   "descricao" TEXT NULL,
   PRIMARY KEY ("plataforma_id"))
 ;
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS "notificacao"."plataforma" (
 -- Table "notificacao"."tipo_notificacao_has_plataforma"
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS "notificacao"."tipo_notificacao_has_plataforma" (
-  "tipo_notificacao_tipo_notificacao_id" INT NOT NULL,
+  "tipo_notificacao_tipo_notificacao_id" SERIAL NOT NULL,
   "plataforma_plataforma_id" INT NOT NULL,
   PRIMARY KEY ("tipo_notificacao_tipo_notificacao_id", "plataforma_plataforma_id"),
   CONSTRAINT "fk_tipo_notificacao_has_plataforma_tipo_notificacao1"
