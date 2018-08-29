@@ -12,7 +12,7 @@ class UsuarioController extends Controller
     public function get(Request $request, $id = null)
     {
 
-        if(!empty(trim($id))) {
+        if (!empty(trim($id))) {
             $data = Usuario::find($id);
         } else {
             $data = Usuario::all();
@@ -23,16 +23,14 @@ class UsuarioController extends Controller
 
     public function post(ServerRequestInterface $request)
     {
+        try {
+            $dados = $request->getParsedBody();
+            $conta = new \App\Services\Conta();
 
-        $parsedBody = $request->getParsedBody();
-        $usuario = new Usuario();
-
-        // $usuario->usuario_id = 1;
-        $usuario->descricao = $parsedBody['descricao'];
-
-        $usuario->save();
-
-        return response()->json($usuario);
+            return response()->json($conta->criar($dados));
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), 400);
+        }
     }
 
     public function patch(ServerRequestInterface $request, $id = null)
@@ -56,14 +54,11 @@ class UsuarioController extends Controller
 
     public function delete(ServerRequestInterface $request, $id = null)
     {
-        try
-        {
+        try {
             $usuario = Usuario::findOrFail($id);
             $usuario->delete();
             return response()->json();
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             return response()->json(["message" => $e->getMessage()], 404);
         }
     }
