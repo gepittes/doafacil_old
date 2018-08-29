@@ -11,7 +11,7 @@
                 - [ ] consultar
             - [ ] tipo_notificao
                 - [ ] consultar
-                - [ ] listar 
+                - [ ] listar
                 - [ ] cadastrar
                 - [ ] remover
             * plataforma
@@ -35,7 +35,17 @@
             * postgres
             * websocket
         - [ ] api
-            - [ ] notificacoes
+            - [x] usuario
+                - [x] consultar ( getOne && getAll )
+                - [x] cadastrar
+                - [x] alterar
+                - [x] remover
+            - [ ] plataforma
+                - [ ] consultar ( getOne && getAll )
+                - [ ] cadastrar
+                - [ ] alterar
+                - [ ] remover
+            - [ ] sistema
                 - [ ] consultar ( getOne && getAll )
                 - [ ] cadastrar
                 - [ ] alterar
@@ -45,7 +55,12 @@
                 - [ ] cadastrar
                 - [ ] alterar
                 - [ ] remover
-            - [ ] usuario
+            - [ ] tipo_notificacao_has_plataforma
+                - [ ] consultar ( getOne && getAll )
+                - [ ] cadastrar
+                - [ ] alterar
+                - [ ] remover
+            - [ ] notificacoes
                 - [ ] consultar ( getOne && getAll )
                 - [ ] cadastrar
                 - [ ] alterar
