@@ -4,21 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario;
 use Psr\Http\Message\ServerRequestInterface;
-use Illuminate\Http\Request;
 use Validator;
 
 class UsuarioController extends Controller
 {
-    public function get(Request $request, $id = null)
+    public function get(ServerRequestInterface $request, $id = null)
     {
 
-        if (!empty(trim($id))) {
-            $data = Usuario::find($id);
-        } else {
-            $data = Usuario::all();
-        }
+        $conta = new \App\Services\Conta();
 
-        return response()->json($data);
+        return response()->json($conta->obter($id));
     }
 
     public function post(ServerRequestInterface $request)
@@ -35,31 +30,24 @@ class UsuarioController extends Controller
 
     public function patch(ServerRequestInterface $request, $id = null)
     {
-        $validator = Validator::make($request->getParsedBody(), [
-            "descricao" => 'required|string|min:3|max:50'
-        ]);
+        try {
+            $dados = $request->getParsedBody();
+            $conta = new \App\Services\Conta();
 
-        if ($validator->fails()) {
-            return response()->json(["message" => $validator->errors()->all()], 400);
+            return response()->json($conta->alterar($id, $dados));
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), 400);
         }
-
-        $parsedBody = $request->getParsedBody();
-        $usuario = Usuario::find($id);
-        $usuario->update([
-            "descricao" => $parsedBody['descricao']
-        ]);
-
-        return response()->json($usuario);
     }
 
     public function delete(ServerRequestInterface $request, $id = null)
     {
         try {
-            $usuario = Usuario::findOrFail($id);
-            $usuario->delete();
-            return response()->json();
-        } catch (Exception $e) {
-            return response()->json(["message" => $e->getMessage()], 404);
+            $conta = new \App\Services\Conta();
+
+            return response()->json($conta->desabilitar($id));
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), 400);
         }
     }
 }
