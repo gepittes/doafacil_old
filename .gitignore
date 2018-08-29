@@ -1,3 +1,4 @@
 docker-compose.yml
 docker-data
 .vsls
+.idea
