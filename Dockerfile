@@ -20,9 +20,23 @@ RUN echo "[ ***** ***** ***** ] - Installing PHP Dependencies ***** ***** ***** 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
 RUN docker-php-ext-install gd
 RUN docker-php-ext-install soap
-
 RUN docker-php-ext-install calendar
 
 RUN docker-php-ext-configure pgsql --with-pgsql=/usr/local/pgsql \
   && docker-php-ext-configure pdo_pgsql --with-pgsql \
-  && docker-php-ext-install pgsql pdo_pgsql \
+  && docker-php-ext-install pgsql pdo_pgsql
+
+WORKDIR "/tmp"
+
+RUN ls -la /tmp
+RUN curl --silent --show-error https://getcomposer.org/installer | php
+RUN ls -la /tmp/composer.phar
+RUN mv /tmp/composer.phar /usr/local/bin/
+RUN ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+
+COPY ./docker/php-fpm/docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+COPY ./api /application
+
+WORKDIR "/application"
