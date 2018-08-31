@@ -8,13 +8,15 @@ if [ "$UPDATE_COMPOSER_DEPENDENCIES" == "true" ]; then
     composer update --prefer-source --no-interaction
 fi
 
-if  ! [ -e "/application/.env" ] ; then
+if  ! [ -e "/application/.env" ] && [ -e "/application/.env.example" ] ; then
     echo "[ ****************** ] Copying sample application configuration to real one"
     cp /application/.env.example /application/.env
 fi
 
 echo "[ ****************** ] Ending Endpoint of Application"
 
-set -- php-fpm
+if [ "$USE_PHP_FPM" == "true" ]; then
+    set -- php-fpm
+fi
 
 exec "$@"

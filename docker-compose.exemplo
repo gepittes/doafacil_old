@@ -20,8 +20,9 @@ services:
     volumes:
       - ./api:/application
       - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
-    #environment:
+    environment:
     #  - UPDATE_COMPOSER_DEPENDENCIES=true
+      - USE_PHP_FPM=true
 
   php-websocket:
     image: notification-php-fpm:1.0.0
@@ -29,7 +30,7 @@ services:
     working_dir: /application
     command: "supervisord -n"
     volumes:
-      - ./api:/application
+      - ./websocket:/application
       - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
       - ./docker/php-fpm/supervisor/supervisor.conf:/etc/supervisor/conf.d/supervisor.conf
     ports:
