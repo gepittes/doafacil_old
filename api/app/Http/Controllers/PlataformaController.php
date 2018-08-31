@@ -10,17 +10,17 @@ class PlataformaController extends Controller
 {
     public function get(ServerRequestInterface $request, $id = null)
     {
-        $conta = new \App\Services\Conta();
-        return response()->json($conta->obter($id));
+        $plataforma = new \App\Services\Plataforma();
+        return response()->json($plataforma->obter($id));
     }
 
     public function post(ServerRequestInterface $request)
     {
         try {
             $dados = $request->getParsedBody();
-            $conta = new \App\Services\Conta();
+            $plataforma = new \App\Services\Plataforma();
 
-            return response()->json($conta->criar($dados));
+            return response()->json($plataforma->criar($dados));
         } catch (\Exception $exception) {
             return response()->json($exception->getMessage(), 400);
         }
@@ -30,9 +30,9 @@ class PlataformaController extends Controller
     {
         try {
             $dados = $request->getParsedBody();
-            $conta = new \App\Services\Conta();
+            $plataforma = new \App\Services\Plataforma();
 
-            return response()->json($conta->alterar($id, $dados));
+            return response()->json($plataforma->alterar($id, $dados));
         } catch (\Exception $exception) {
             return response()->json($exception->getMessage(), 400);
         }
@@ -41,9 +41,9 @@ class PlataformaController extends Controller
     public function delete(ServerRequestInterface $request, $id = null)
     {
         try {
-            $conta = new \App\Services\Conta();
+            $plataforma = new \App\Services\Plataforma();
 
-            return response()->json($conta->desabilitar($id));
+            return response()->json($plataforma->desabilitar($id));
         } catch (\Exception $exception) {
             return response()->json($exception->getMessage(), 400);
         }
