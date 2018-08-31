@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Conta;
+use App\Models\Plataforma as ModeloPlataforma;
 use Validator;
 
 class Plataforma implements IService
@@ -11,15 +11,15 @@ class Plataforma implements IService
     public function obter($id = null)
     {
         if (!empty(trim($id))) {
-            $data = Conta::findOrFail($id);
+            $data = ModeloPlataforma::findOrFail($id);
         } else {
-            $data = Conta::all();
+            $data = ModeloPlataforma::all();
         }
 
         return $data;
     }
 
-    public function criar(array $dados = []) : Conta
+    public function criar(array $dados = []): ModeloPlataforma
     {
         $validator = Validator::make($dados, [
             "descricao" => 'required|string|min:3|max:50'
@@ -29,10 +29,14 @@ class Plataforma implements IService
             throw new \Exception($validator->errors()->first());
         }
 
-        return Conta::create($dados);
+        $dados = array_merge($dados, [
+            'is_ativo' => true
+        ]);
+
+        return ModeloPlataforma::create($dados);
     }
 
-    public function alterar($id, $dados = [])
+    public function alterar($id, array $dados = [])
     {
         $validator = Validator::make($dados, [
             "descricao" => 'required|string|min:3|max:50'
@@ -41,12 +45,12 @@ class Plataforma implements IService
             throw new \Exception($validator->errors()->first());
         }
 
-        return Conta::where('usuario_id', $id)->update($dados);
+        return ModeloPlataforma::where('usuario_id', $id)->update($dados);
     }
 
     public function desabilitar($id)
     {
-        $usuario = Conta::findOrFail($id);
+        $usuario = ModeloPlataforma::findOrFail($id);
         return $usuario->delete();
     }
 
