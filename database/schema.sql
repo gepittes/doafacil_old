@@ -113,3 +113,8 @@ CREATE TABLE IF NOT EXISTS "notificacao"."tipo_notificacao_has_plataforma" (
 CREATE INDEX "fk_tipo_notificacao_has_plataforma_plataforma1_idx" ON "notificacao"."tipo_notificacao_has_plataforma" ("plataforma_plataforma_id");
 
 CREATE INDEX "fk_tipo_notificacao_has_plataforma_tipo_notificacao1_idx" ON "notificacao"."tipo_notificacao_has_plataforma" ("tipo_notificacao_tipo_notificacao_id");
+
+ALTER TABLE notificacao.plataforma ADD is_ativo boolean DEFAULT false NOT NULL;
+
+ALTER TABLE notificacao.usuario ADD is_ativo boolean DEFAULT false  NOT NULL;
+
