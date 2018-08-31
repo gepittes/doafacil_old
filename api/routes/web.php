@@ -15,7 +15,12 @@ $router->get('/api', ['as' => 'api', function () use ($router) {
     );
 }]);
 
-$router->get('/usuario[/{id}]', 'UsuarioController@get');
-$router->post('/usuario', 'UsuarioController@post');
-$router->patch('/usuario/{id}', 'UsuarioController@patch');
-$router->delete('/usuario/{id}', 'UsuarioController@delete');
+$router->get('/conta[/{id}]', 'ContaController@get');
+$router->post('/conta', 'ContaController@post');
+$router->patch('/conta/{id}', 'ContaController@patch');
+$router->delete('/conta/{id}', 'ContaController@delete');
+
+$router->get('/plataforma[/{id}]', 'PlataformaController@get');
+$router->post('/plataforma', 'PlataformaController@post');
+$router->patch('/plataforma/{id}', 'PlataformaController@patch');
+$router->delete('/plataforma/{id}', 'PlataformaController@delete');
