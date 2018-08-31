@@ -6,13 +6,11 @@ use App\Models\Usuario;
 use Psr\Http\Message\ServerRequestInterface;
 use Validator;
 
-class UsuarioController extends Controller
+class ContaController extends Controller
 {
     public function get(ServerRequestInterface $request, $id = null)
     {
-
         $conta = new \App\Services\Conta();
-
         return response()->json($conta->obter($id));
     }
 
