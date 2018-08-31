@@ -43,6 +43,15 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+$previousHandler = null;
+if (app()->bound(ExceptionHandler::class) === true) {
+    $previousHandler = app()->make(ExceptionHandler::class);
+}
+
+$app->singleton(ExceptionHandler::class, function () use ($previousHandler) {
+    return new JsonResponseExceptionHandler($previousHandler);
+});
+
 $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
     App\Console\Kernel::class
@@ -63,8 +72,16 @@ $app->singleton(
 //    App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
+ $app->middleware([
+     App\Http\Middleware\JsonResponseStyle::class
+ ]);
+
 // $app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
+// ]);
+
+// $app->routeMiddleware([
+//     App\Http\Middleware\JsonResponseStyle::class
 // ]);
 
 /*

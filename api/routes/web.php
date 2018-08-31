@@ -16,9 +16,9 @@ $router->get('/api', ['as' => 'api', function () use ($router) {
 }]);
 
 define('API_VERSION', '1.0');
-define('API_PATTERN', 'v1');
+$apiPattern = 'v1';
 
-$app->group(['prefix' => API_PATTERN], function () use ($router) {
+$router->group(['prefix' => $apiPattern], function () use ($router) {
     $router->get('/conta[/{id}]', 'ContaController@get');
     $router->post('/conta', 'ContaController@post');
     $router->patch('/conta/{id}', 'ContaController@patch');
