@@ -34,9 +34,12 @@ RUN ls -la /tmp/composer.phar
 RUN mv /tmp/composer.phar /usr/local/bin/
 RUN ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 
-COPY ./docker/php-fpm/docker-entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["docker-entrypoint.sh"]
+WORKDIR "/application"
 
 COPY ./api /application
 
-WORKDIR "/application"
+COPY ./docker/php-fpm/docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+RUN chmod 777 /usr/local/bin/docker-entrypoint.sh \
+    && ln -s /usr/local/bin/docker-entrypoint.sh /

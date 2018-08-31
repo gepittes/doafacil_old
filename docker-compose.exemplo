@@ -19,6 +19,8 @@ services:
     volumes:
       - ./api:/application
       - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+    #environment:
+    #  - UPDATE_COMPOSER_DEPENDENCIES=true
 
   php-websocket:
     image: notification-php-fpm:1.0.0
