@@ -14,4 +14,9 @@ class Plataforma extends Model
     ];
     protected $primaryKey = "plataforma_id";
     protected $table = 'notificacao.plataforma';
+
+    public function tiposNotificacao()
+    {
+        return $this->belongsToMany(App\Models\TipoNotificacao::class);
+    }
 }
