@@ -40,11 +40,11 @@
                 - [x] cadastrar
                 - [x] alterar
                 - [x] remover
-            - [ ] plataforma
-                - [ ] consultar ( getOne && getAll )
-                - [ ] cadastrar
-                - [ ] alterar
-                - [ ] remover
+            - [x] plataforma
+                - [x] consultar ( getOne && getAll )
+                - [x] cadastrar
+                - [x] alterar
+                - [x] remover
             - [ ] sistema
                 - [ ] consultar ( getOne && getAll )
                 - [ ] cadastrar
