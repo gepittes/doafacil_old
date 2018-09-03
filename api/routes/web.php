@@ -29,5 +29,10 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
     $router->patch('/plataforma/{id}', 'PlataformaController@patch');
     $router->delete('/plataforma/{id}', 'PlataformaController@delete');
 
+    $router->get('/sistema[/{id}]', 'SistemaController@get');
+    $router->post('/sistema', 'SistemaController@post');
+    $router->patch('/sistema/{id}', 'SistemaController@patch');
+    $router->delete('/sistema/{id}', 'SistemaController@delete');
+
 });
 

@@ -45,13 +45,13 @@ class Plataforma implements IService
             throw new \Exception($validator->errors()->first());
         }
 
-        return ModeloPlataforma::where('usuario_id', $id)->update($dados);
+        return ModeloPlataforma::where('plataforma_id', $id)->update($dados);
     }
 
     public function desabilitar($id)
     {
-        $usuario = ModeloPlataforma::findOrFail($id);
-        return $usuario->delete();
+        $plataforma = ModeloPlataforma::findOrFail($id);
+        return $plataforma->delete();
     }
 
     public function habilitar()

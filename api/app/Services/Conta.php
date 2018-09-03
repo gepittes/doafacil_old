@@ -52,6 +52,9 @@ class Conta implements IService
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->first());
         }
+        if(isset($dados['usuario_id'])) {
+            unset($dados['usuario_id']);
+        }
 
         return ModeloUsuario::where('usuario_id', $id)->update($dados);
     }
