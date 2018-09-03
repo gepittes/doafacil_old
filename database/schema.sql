@@ -118,3 +118,5 @@ ALTER TABLE notificacao.plataforma ADD is_ativo boolean DEFAULT false NOT NULL;
 
 ALTER TABLE notificacao.usuario ADD is_ativo boolean DEFAULT false  NOT NULL;
 
+ALTER TABLE notificacao.sistema ADD is_ativo boolean DEFAULT false  NOT NULL;
+
