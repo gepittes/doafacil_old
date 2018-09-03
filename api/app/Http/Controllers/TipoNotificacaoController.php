@@ -7,7 +7,7 @@ use App\Models\Usuario;
 use Psr\Http\Message\ServerRequestInterface;
 use Validator;
 
-class SistemaController extends Controller
+class TipoNotificacaoController extends Controller
 {
     public function get(ServerRequestInterface $request, $id = null)
     {
