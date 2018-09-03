@@ -30,10 +30,10 @@
 - Backend
     - notification-service
         - [x] infra
-            * nginx
-            * php-fpm
-            * postgres
-            * websocket
+            - [x] nginx
+            - [x] php-fpm
+            - [x] postgres
+            - [x] websocket
         - [ ] api
             - [x] usuario
                 - [x] consultar ( getOne && getAll )
@@ -45,16 +45,16 @@
                 - [x] cadastrar
                 - [x] alterar
                 - [x] remover
-            - [ ] sistema
-                - [ ] consultar ( getOne && getAll )
-                - [ ] cadastrar
-                - [ ] alterar
-                - [ ] remover
-            - [ ] tipo_notificao
-                - [ ] consultar ( getOne && getAll )
-                - [ ] cadastrar
-                - [ ] alterar
-                - [ ] remover
+            - [x] sistema
+                - [x] consultar ( getOne && getAll )
+                - [x] cadastrar
+                - [x] alterar
+                - [x] remover
+            - [x] tipo_notificao
+                - [x] consultar ( getOne && getAll )
+                - [x] cadastrar
+                - [x] alterar
+                - [x] remover
             - [ ] tipo_notificacao_has_plataforma
                 - [ ] consultar ( getOne && getAll )
                 - [ ] cadastrar
@@ -65,6 +65,9 @@
                 - [ ] cadastrar
                 - [ ] alterar
                 - [ ] remover
+            * Authenticação
+            * JWT
+            * ACL
     - salic-minc
         - [ ] notificação
             - [ ] enviar
@@ -73,6 +76,9 @@
     - [x] criação
     - [x] entry-point
     - [ ] script com dados iniciais
+    
+
+**OBS: Itens com `*` são sugestões para implementações futuras**    
 
 **API**
 ```sh
