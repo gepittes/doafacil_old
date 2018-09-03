@@ -1,5 +1,28 @@
-# notification-service
+# NotificationService (notification-service)
 
+### Sobre
+
+Serviço com responsabilidade de centralizar e disparar notificações de diversos tipos para sistemas e plataformas que utilizam.
+
+##### Tecnologias utilizadas
+
+- Docker
+- PHP 7 (php-fpm)
+    - Lumen Framework
+    - Eloquent ORM
+    - PSR4, PSR7, ...
+- Nginx
+- Javascript
+    - Node
+    - VueJS + VueX + Vuetify
+- Postgres
+
+### Como inicializar a Stack?
+
+**API + WebSocket + WebServer + WebAPP**
+```sh
+docker-compose up --build --force-recreate
+```
 
 ### To-Do
 - Frontend
@@ -75,28 +98,6 @@
     - [x] modelagem
     - [x] criação
     - [x] entry-point
-    - [ ] script com dados iniciais
-    
+    - [ ] script com dados iniciais 
 
 **OBS: Itens com `*` são sugestões para implementações futuras**    
-
-**API**
-```sh
-php -S localhost:8080 -t public
-```
-
-**WebSocket**
-```sh
-php api/app/Websocket/bin/socket.php
-```
-
-**Web**
-```sh
-cd web
-npm run serve
-```
-
-**Docker**
-```sh
-docker-compose up --build --force-recreate
-```
