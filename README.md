@@ -32,24 +32,36 @@ docker-compose up --build --force-recreate
                 - [ ] enviar
                 - [ ] listar
                 - [ ] consultar
-            - [ ] tipo_notificao
+            - [ ] tipo_notificacao
                 - [ ] consultar
                 - [ ] listar
                 - [ ] cadastrar
                 - [ ] remover
-            * plataforma
-            * sistema
-            * usuario
+            - [ ] plataforma
+                - [ ] consultar
+                - [ ] listar
+                - [ ] cadastrar
+                - [ ] remover
+            - [ ] sistema
+                - [ ] consultar
+                - [ ] listar
+                - [ ] cadastrar
+                - [ ] remover
+            - [ ] usuario
+                - [ ] consultar
+                - [ ] listar
+                - [ ] cadastrar
+                - [ ] remover
         - [ ] autenticacao
             - [ ] login (senha mestra temporariamente)
-            * consultando tabela de usuários
+            * **consultando tabela de usuários**
     - [ ] salic-minc
         - [ ] Componente Sininho
             - [ ] observar WebSocket
             - [ ] exibir notificações
             - [ ] bloco de notificações não lidas
             - [ ] marcar notificação como lidas
-            * visualização de todas as notificações (link)
+            * **visualização de todas as notificações (link)**
 - Backend
     - notification-service
         - [x] infra
@@ -88,9 +100,9 @@ docker-compose up --build --force-recreate
                 - [ ] cadastrar
                 - [ ] alterar
                 - [ ] remover
-            * Authenticação
-            * JWT
-            * ACL
+            * **Authenticação**
+            * **JWT**
+            * **ACL**
     - salic-minc
         - [ ] notificação
             - [ ] enviar
@@ -100,4 +112,4 @@ docker-compose up --build --force-recreate
     - [x] entry-point
     - [ ] script com dados iniciais 
 
-**OBS: Itens com `*` são sugestões para implementações futuras**    
+**OBS**: Itens com em **negrito** são sugestões para implementações futuras. 
