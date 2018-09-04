@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Notificacao as ModeloNotificacao;
+use Carbon\Carbon;
 use Validator;
 
 class Notificacao implements IService
@@ -32,7 +33,8 @@ class Notificacao implements IService
         }
 
         $dados = array_merge($dados, [
-            'is_ativo' => true
+            'is_ativo' => true,
+            'data_envio' => Carbon::now()
         ]);
 
         return ModeloNotificacao::create($dados);
@@ -49,7 +51,6 @@ class Notificacao implements IService
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->first());
         }
-        $dados['data_envio'] = ModeloNotificacao::now();
 
         if(isset($dados['notificacao_id'])) {
             unset($dados['notificacao_id']);
@@ -64,8 +65,4 @@ class Notificacao implements IService
         return $notificacao->delete();
     }
 
-    public function habilitar()
-    {
-
-    }
 }
