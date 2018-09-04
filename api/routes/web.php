@@ -39,5 +39,10 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
     $router->patch('/tipo-notificacao/{id}', 'TipoNotificacaoController@patch');
     $router->delete('/tipo-notificacao/{id}', 'TipoNotificacaoController@delete');
 
+    $router->get('/notificacao[/{id}]', 'NotificacaoController@get');
+    $router->post('/notificacao', 'NotificacaoController@post');
+    $router->patch('/notificacao/{id}', 'NotificacaoController@patch');
+    $router->delete('/notificacao/{id}', 'NotificacaoController@delete');
+
 });
 
