@@ -25,17 +25,17 @@ class JsonResponseStyle
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         if (empty(trim($response->exception))) {
-            $responseData['data'] = json_decode($response->getContent(), true);
+            $dados = json_decode($response->getContent(), true);
+            if(is_array($dados)) {
+                $dados = $this->converterUTF8($dados);
+            }
+            $responseData['data'] = $dados;
             $statusCode = '200';
         } else {
-            $responseData['error'] = $response->exception;
+            $responseData['error'] = $response->exception->getMessage();
             $statusCode = '400';
         }
 
-        $responseData['data'] = $this->converterUTF8($responseData['data']);
-        if(count($responseData['error']) > 0) {
-            $responseData['error'] = $this->converterUTF8($responseData['error']);
-        }
         $content = json_encode($responseData);
 
         return $response->setContent($content)->setStatusCode($statusCode);
