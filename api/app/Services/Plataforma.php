@@ -65,4 +65,12 @@ class Plataforma implements IService
             ]
         ]);
     }
+
+    public function vincularTipoNotificacao($plataforma_id, array $tiposNotificacoes)
+    {
+        foreach($tiposNotificacoes as $tipoNotificacao) {
+            $plataforma = ModeloPlataforma::findOrFail($plataforma_id);
+            $plataforma->tiposNotificacao()->attach($tipoNotificacao['tipo_notificacao_id']);
+        }
+    }
 }

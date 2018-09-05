@@ -26,6 +26,8 @@ class TipoNotificacao implements IService
             "mensagem" => 'required|string|min:3|max:9999',
             "sistema_id" => 'required|int',
             "autor_id" => 'required|int',
+            "plataformas" => 'required|array|size:1',
+            "plataformas.*.plataforma_id" => 'required|int',
         ]);
 
         if ($validator->fails()) {
@@ -36,7 +38,10 @@ class TipoNotificacao implements IService
             'is_ativo' => true
         ]);
 
-        return ModeloTipoNotificacao::create($dados);
+        $tipoNofiticacao = ModeloTipoNotificacao::create($dados);
+        $this->vincularPlataforma($tipoNofiticacao->tipo_notificacao_id, $dados['plataformas']);
+        return $tipoNofiticacao;
+
     }
 
     public function alterar($id, array $dados = [])
@@ -76,4 +81,13 @@ class TipoNotificacao implements IService
             ]
         ]);
     }
+
+    public function vincularPlataforma($tipo_notificacao_id, array $plataformas)
+    {
+        foreach($plataformas as $plataforma) {
+            $tipoNotificacao = ModeloTipoNotificacao::findOrFail($tipo_notificacao_id);
+            $tipoNotificacao->plataformas()->attach($plataforma['plataforma_id']);
+        }
+    }
+
 }
