@@ -11,46 +11,46 @@ class TipoNotificacaoController extends Controller
 {
     public function get(ServerRequestInterface $request, $id = null)
     {
-        $sistema = new \App\Services\Sistema();
+        $tipoNotificacao = new \App\Services\TipoNotificacao();
         /**
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json($sistema->obter($id));
+        return $response->json($tipoNotificacao->obter($id));
     }
 
     public function post(ServerRequestInterface $request)
     {
         $dados = $request->getParsedBody();
-        $sistema = new \App\Services\Sistema();
+        $tipoNotificacao = new \App\Services\TipoNotificacao();
 
         /**
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json($sistema->criar($dados));
+        return $response->json($tipoNotificacao->criar($dados));
     }
 
     public function patch(ServerRequestInterface $request, $id = null)
     {
         $dados = $request->getParsedBody();
-        $sistema = new \App\Services\Sistema();
+        $tipoNotificacao = new \App\Services\TipoNotificacao();
 
         /**
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json($sistema->alterar($id, $dados));
+        return $response->json($tipoNotificacao->alterar($id, $dados));
     }
 
     public function delete(ServerRequestInterface $request, $id = null)
     {
-        $sistema = new \App\Services\Sistema();
+        $tipoNotificacao = new \App\Services\TipoNotificacao();
 
         /**
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json($sistema->desabilitar($id));
+        return $response->json($tipoNotificacao->desabilitar($id));
     }
 }
