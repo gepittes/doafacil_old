@@ -95,24 +95,24 @@ CREATE TABLE IF NOT EXISTS "notificacao"."plataforma" (
 -- Table "notificacao"."tipo_notificacao_has_plataforma"
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS "notificacao"."tipo_notificacao_has_plataforma" (
-  "tipo_notificacao_tipo_notificacao_id" SERIAL NOT NULL,
-  "plataforma_plataforma_id" INT NOT NULL,
-  PRIMARY KEY ("tipo_notificacao_tipo_notificacao_id", "plataforma_plataforma_id"),
+  "tipo_notificacao_id" SERIAL NOT NULL,
+  "plataforma_id" INT NOT NULL,
+  PRIMARY KEY ("tipo_notificacao_id", "plataforma_id"),
   CONSTRAINT "fk_tipo_notificacao_has_plataforma_tipo_notificacao1"
-  FOREIGN KEY ("tipo_notificacao_tipo_notificacao_id")
+  FOREIGN KEY ("tipo_notificacao_id")
   REFERENCES "notificacao"."tipo_notificacao" ("tipo_notificacao_id")
   ON DELETE NO ACTION
   ON UPDATE NO ACTION,
   CONSTRAINT "fk_tipo_notificacao_has_plataforma_plataforma1"
-  FOREIGN KEY ("plataforma_plataforma_id")
+  FOREIGN KEY ("plataforma_id")
   REFERENCES "notificacao"."plataforma" ("plataforma_id")
   ON DELETE NO ACTION
   ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX "fk_tipo_notificacao_has_plataforma_plataforma1_idx" ON "notificacao"."tipo_notificacao_has_plataforma" ("plataforma_plataforma_id");
+CREATE INDEX "fk_tipo_notificacao_has_plataforma_plataforma1_idx" ON "notificacao"."tipo_notificacao_has_plataforma" ("plataforma_id");
 
-CREATE INDEX "fk_tipo_notificacao_has_plataforma_tipo_notificacao1_idx" ON "notificacao"."tipo_notificacao_has_plataforma" ("tipo_notificacao_tipo_notificacao_id");
+CREATE INDEX "fk_tipo_notificacao_has_plataforma_tipo_notificacao1_idx" ON "notificacao"."tipo_notificacao_has_plataforma" ("tipo_notificacao_id");
 
 ALTER TABLE notificacao.plataforma ADD is_ativo boolean DEFAULT false NOT NULL;
 
