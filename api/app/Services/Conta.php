@@ -33,7 +33,7 @@ class Conta implements IService
          * @var $usuarioExistente \Illuminate\Database\Eloquent\Collection
          */
         $usuarioExistente = ModeloUsuario::where('descricao', $dados['descricao'])->get();
-        if(count($usuarioExistente->toArray()) > 0 ) {
+        if (count($usuarioExistente->toArray()) > 0) {
             throw new \Exception("Usu&aacute;rio existente");
         }
 
@@ -52,7 +52,7 @@ class Conta implements IService
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->first());
         }
-        if(isset($dados['usuario_id'])) {
+        if (isset($dados['usuario_id'])) {
             unset($dados['usuario_id']);
         }
 
@@ -67,18 +67,14 @@ class Conta implements IService
     public function desabilitar($id)
     {
         return $this->alterar($id, [
-            [
-                'is_ativo' => false
-            ]
+            'is_ativo' => false
         ]);
     }
 
     public function habilitar($id)
     {
         return $this->alterar($id, [
-            [
-                'is_ativo' => true
-            ]
+            'is_ativo' => true
         ]);
     }
 }

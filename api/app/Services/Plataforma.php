@@ -51,24 +51,20 @@ class Plataforma implements IService
     public function desabilitar($id)
     {
         return $this->alterar($id, [
-            [
-                'is_ativo' => false
-            ]
+            'is_ativo' => false
         ]);
     }
 
     public function habilitar($id)
     {
         return $this->alterar($id, [
-            [
-                'is_ativo' => true
-            ]
+            'is_ativo' => true
         ]);
     }
 
     public function vincularTipoNotificacao($plataforma_id, array $tiposNotificacoes)
     {
-        foreach($tiposNotificacoes as $tipoNotificacao) {
+        foreach ($tiposNotificacoes as $tipoNotificacao) {
             $plataforma = ModeloPlataforma::findOrFail($plataforma_id);
             $plataforma->tiposNotificacao()->attach($tipoNotificacao['tipo_notificacao_id']);
         }

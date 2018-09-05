@@ -44,7 +44,7 @@ class Sistema implements IService
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->first());
         }
-        if(isset($dados['sistema_id'])) {
+        if (isset($dados['sistema_id'])) {
             unset($dados['sistema_id']);
         }
 
@@ -54,18 +54,14 @@ class Sistema implements IService
     public function desabilitar($id)
     {
         return $this->alterar($id, [
-            [
-                'is_ativo' => false
-            ]
+            'is_ativo' => false
         ]);
     }
 
     public function habilitar($id)
     {
         return $this->alterar($id, [
-            [
-                'is_ativo' => true
-            ]
+            'is_ativo' => true
         ]);
     }
 }
