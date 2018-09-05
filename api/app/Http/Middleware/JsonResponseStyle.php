@@ -13,8 +13,8 @@ class JsonResponseStyle
 
         $responseData = [
             'apiVersion' => API_VERSION,
-            'data' => null,
-            'error' => null
+            'data' => [],
+            'error' => []
         ];
 
         if (!defined('API_VERSION')) {
@@ -24,19 +24,34 @@ class JsonResponseStyle
         /**
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
-        $responseData['error'] = $response->exception;
-        $statusCode = '400';
         if (empty(trim($response->exception))) {
-            $responseData['data'] = $response->getContent();
+            $responseData['data'] = json_decode($response->getContent(), true);
             $statusCode = '200';
+        } else {
+            $responseData['error'] = $response->exception;
+            $statusCode = '400';
         }
 
-        array_walk($responseData, function ($value, $key) use (&$responseData) {
-            $responseData[$key] = utf8_encode($value);
-        });
+        $responseData['data'] = $this->converterUTF8($responseData['data']);
+        if(count($responseData['error']) > 0) {
+            $responseData['error'] = $this->converterUTF8($responseData['error']);
+        }
         $content = json_encode($responseData);
 
         return $response->setContent($content)->setStatusCode($statusCode);
+    }
+
+    private function converterUTF8(array $dados)
+    {
+        array_walk($dados, function ($value, $key) use (&$dados) {
+            if(is_array($value)) {
+                $value = $this->converterUTF8($value);
+            } else {
+                $dados[$key] = utf8_encode($value);
+            }
+        });
+
+        return $dados;
     }
 
 }

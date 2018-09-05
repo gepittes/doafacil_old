@@ -69,7 +69,7 @@ docker-compose up --build --force-recreate
             - [x] php-fpm
             - [x] postgres
             - [x] websocket
-        - [ ] api
+        - [x] api
             - [x] usuario
                 - [x] consultar ( getOne && getAll )
                 - [x] cadastrar
@@ -90,16 +90,16 @@ docker-compose up --build --force-recreate
                 - [x] cadastrar
                 - [x] alterar
                 - [x] remover
-            - [ ] tipo_notificacao_has_plataforma
-                - [ ] consultar ( getOne && getAll )
-                - [ ] cadastrar
-                - [ ] alterar
-                - [ ] remover
-            - [ ] notificacoes
-                - [ ] consultar ( getOne && getAll )
-                - [ ] cadastrar
-                - [ ] alterar
-                - [ ] remover
+            - [x] tipo_notificacao_has_plataforma
+                - [x] consultar ( getOne && getAll )
+                - [x] cadastrar
+                - [x] alterar
+                - [x] remover
+            - [x] notificacoes
+                - [x] consultar ( getOne && getAll )
+                - [x] cadastrar
+                - [x] alterar
+                - [x] remover
             * **Authenticação**
             * **JWT**
             * **ACL**
