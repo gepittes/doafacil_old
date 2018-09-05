@@ -17,6 +17,11 @@ class Plataforma extends Model
 
     public function tiposNotificacao()
     {
-        return $this->belongsToMany(App\Models\TipoNotificacao::class);
+        return $this->belongsToMany(
+            App\Models\TipoNotificacao::class,
+            'notificacao.tipo_notificacao_has_plataforma',
+            'plataforma_id',
+            'tipo_notificacao_id'
+        );
     }
 }
