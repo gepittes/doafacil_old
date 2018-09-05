@@ -23,7 +23,6 @@ class Notificacao implements IService
     public function criar(array $dados = []): ModeloNotificacao
     {
         $validator = Validator::make($dados, [
-            "is_notificacao_lida" => 'required|bool',
             "destinatario_id" => 'required|int',
             "tipo_notificacao_id" => 'required|int',
         ]);
@@ -34,6 +33,7 @@ class Notificacao implements IService
 
         $dados = array_merge($dados, [
             'is_ativo' => true,
+            'is_notificacao_lida' => false,
             'data_envio' => Carbon::now()
         ]);
 
@@ -43,9 +43,9 @@ class Notificacao implements IService
     public function alterar($id, array $dados = [])
     {
         $validator = Validator::make($dados, [
-            "is_notificacao_lida" => 'required|bool',
-            "destinatario_id" => 'required|int',
-            "tipo_notificacao_id" => 'required|int',
+            "is_notificacao_lida" => 'bool',
+            "destinatario_id" => 'int',
+            "tipo_notificacao_id" => 'int',
         ]);
 
         if ($validator->fails()) {
@@ -59,10 +59,5 @@ class Notificacao implements IService
         return ModeloNotificacao::where('notificacao_id', $id)->update($dados);
     }
 
-    public function desabilitar($id)
-    {
-        $notificacao = ModeloNotificacao::findOrFail($id);
-        return $notificacao->delete();
-    }
 
 }

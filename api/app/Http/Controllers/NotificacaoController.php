@@ -11,46 +11,35 @@ class NotificacaoController extends Controller
 {
     public function get(ServerRequestInterface $request, $id = null)
     {
-        $sistema = new \App\Services\Sistema();
+        $notificacao = new \App\Services\Notificacao();
         /**
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json($sistema->obter($id));
+        return $response->json($notificacao->obter($id));
     }
 
     public function post(ServerRequestInterface $request)
     {
         $dados = $request->getParsedBody();
-        $sistema = new \App\Services\Sistema();
+        $notificacao = new \App\Services\Notificacao();
 
         /**
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json($sistema->criar($dados));
+        return $response->json($notificacao->criar($dados));
     }
 
     public function patch(ServerRequestInterface $request, $id = null)
     {
         $dados = $request->getParsedBody();
-        $sistema = new \App\Services\Sistema();
+        $notificacao = new \App\Services\Notificacao();
 
         /**
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json($sistema->alterar($id, $dados));
-    }
-
-    public function delete(ServerRequestInterface $request, $id = null)
-    {
-        $sistema = new \App\Services\Sistema();
-
-        /**
-         * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
-         */
-        $response = response();
-        return $response->json($sistema->desabilitar($id));
+        return $response->json($notificacao->alterar($id, $dados));
     }
 }

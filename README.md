@@ -110,6 +110,6 @@ docker-compose up --build --force-recreate
     - [x] modelagem
     - [x] criação
     - [x] entry-point
-    - [ ] script com dados iniciais 
+    - [x] script com dados iniciais 
 
 **OBS**: Itens com em **negrito** são sugestões para implementações futuras. 
