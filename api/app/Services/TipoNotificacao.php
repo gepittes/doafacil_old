@@ -11,9 +11,9 @@ class TipoNotificacao implements IService
     public function obter($id = null)
     {
         if (!empty(trim($id))) {
-            $data = ModeloTipoNotificacao::findOrFail($id);
+            $data = ModeloTipoNotificacao::with('plataformas:descricao')->findOrFail($id);
         } else {
-            $data = ModeloTipoNotificacao::all();
+            $data = ModeloTipoNotificacao::with('plataformas')->get();
         }
 
         return $data;
@@ -26,7 +26,7 @@ class TipoNotificacao implements IService
             "mensagem" => 'required|string|min:3|max:9999',
             "sistema_id" => 'required|int',
             "autor_id" => 'required|int',
-            "plataformas" => 'required|array|size:1',
+            "plataformas" => 'required|array|min:1',
             "plataformas.*.plataforma_id" => 'required|int',
         ]);
 
@@ -47,17 +47,17 @@ class TipoNotificacao implements IService
     public function alterar($id, array $dados = [])
     {
         $validator = Validator::make($dados, [
-            "descricao" => 'required|string|min:3|max:50',
-            "mensagem" => 'required|string|min:3|max:9999',
-            "sistema_id" => 'required|int',
-            "autor_id" => 'required|int',
+            "descricao" => 'string|min:3|max:50',
+            "mensagem" => 'string|min:3|max:9999',
+            "sistema_id" => 'int',
+            "autor_id" => 'int',
         ]);
 
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->first());
         }
 
-        if(isset($dados['tipo_notificacao_id'])) {
+        if (isset($dados['tipo_notificacao_id'])) {
             unset($dados['tipo_notificacao_id']);
         }
 
@@ -67,24 +67,20 @@ class TipoNotificacao implements IService
     public function desabilitar($id)
     {
         return $this->alterar($id, [
-            [
-                'is_ativo' => false
-            ]
+            'is_ativo' => false
         ]);
     }
 
     public function habilitar($id)
     {
         return $this->alterar($id, [
-            [
-                'is_ativo' => true
-            ]
+            'is_ativo' => true
         ]);
     }
 
     public function vincularPlataforma($tipo_notificacao_id, array $plataformas)
     {
-        foreach($plataformas as $plataforma) {
+        foreach ($plataformas as $plataforma) {
             $tipoNotificacao = ModeloTipoNotificacao::findOrFail($tipo_notificacao_id);
             $tipoNotificacao->plataformas()->attach($plataforma['plataforma_id']);
         }
