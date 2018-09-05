@@ -61,12 +61,19 @@ class TipoNotificacao implements IService
 
     public function desabilitar($id)
     {
-        $tipoNotificacao = ModeloTipoNotificacao::findOrFail($id);
-        return $tipoNotificacao->delete();
+        return $this->alterar($id, [
+            [
+                'is_ativo' => false
+            ]
+        ]);
     }
 
-    public function habilitar()
+    public function habilitar($id)
     {
-
+        return $this->alterar($id, [
+            [
+                'is_ativo' => true
+            ]
+        ]);
     }
 }

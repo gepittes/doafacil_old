@@ -66,14 +66,19 @@ class Conta implements IService
 
     public function desabilitar($id)
     {
-        $this->alterar($id, [
-
+        return $this->alterar($id, [
+            [
+                'is_ativo' => false
+            ]
         ]);
-//        return
     }
 
-    public function habilitar()
+    public function habilitar($id)
     {
-
+        return $this->alterar($id, [
+            [
+                'is_ativo' => true
+            ]
+        ]);
     }
 }

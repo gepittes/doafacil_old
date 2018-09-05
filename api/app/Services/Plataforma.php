@@ -50,12 +50,19 @@ class Plataforma implements IService
 
     public function desabilitar($id)
     {
-        $plataforma = ModeloPlataforma::findOrFail($id);
-        return $plataforma->delete();
+        return $this->alterar($id, [
+            [
+                'is_ativo' => false
+            ]
+        ]);
     }
 
-    public function habilitar()
+    public function habilitar($id)
     {
-
+        return $this->alterar($id, [
+            [
+                'is_ativo' => true
+            ]
+        ]);
     }
 }

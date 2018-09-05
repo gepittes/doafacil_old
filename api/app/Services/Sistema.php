@@ -53,12 +53,19 @@ class Sistema implements IService
 
     public function desabilitar($id)
     {
-        $sistema = ModeloSistema::findOrFail($id);
-        return $sistema->delete();
+        return $this->alterar($id, [
+            [
+                'is_ativo' => false
+            ]
+        ]);
     }
 
-    public function habilitar()
+    public function habilitar($id)
     {
-
+        return $this->alterar($id, [
+            [
+                'is_ativo' => true
+            ]
+        ]);
     }
 }
