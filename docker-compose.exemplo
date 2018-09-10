@@ -2,12 +2,12 @@ version: '2'
 services:
 
   webapp-service:
-    image: node:9
+    image: node:8.11.4-slim
     container_name: notification-webapp
     user: "node"
     working_dir: /home/node/app
     volumes:
-      - ./web:/home/node/app
+      - ./webapp:/home/node/app
     command:
       sh -c 'npm i && npm run serve'
     ports:
