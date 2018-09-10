@@ -71,7 +71,6 @@
 </template>
 
 <script>
-
     export default {
         name: 'App',
         data() {
@@ -99,7 +98,7 @@
                 miniVariant: false,
                 right: true,
                 rightDrawer: false,
-                title: 'Vuetify.js'
+                title: 'Notification WebApp'
             }
         }
     }
