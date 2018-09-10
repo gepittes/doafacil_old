@@ -18,15 +18,16 @@
                                 solo
                                 v-model="mensagem"
                                 label="mensagem"
+                                ref="mensagem"
                                 required></v-textarea>
                     <v-flex xs12>
-                        <div style="display: inline">
+                        <div style="display: inline" ref="mensagem-completa">
                             <span v-if="sistema != ''" style="color:dodgerblue">[{{sistema}}]</span>
                             <span v-if="usuario != ''" style="color:dodgerblue">{{usuario}}:</span>
                             <span v-if="mensagem != ''" style="color:yellowgreen">{{mensagem}}</span>
                         </div>
                     </v-flex>
-                    <v-btn ref="botaoEnviar" v-if="isEnviando == false" @click="sendMessage">
+                    <v-btn v-if="isEnviando == false" @click="sendMessage">
                         Enviar
                     </v-btn>
                     <v-progress-circular v-if="isEnviando == true"
@@ -61,8 +62,16 @@
             sendMessage(e) {
                 // console.log(this.$refs['botaoEnviar'].hide);
 
-                this.isEnviando = true;
+                let base = this;
+                base.isEnviando = true;
+
+                setTimeout(function() {
+                    base.isEnviando = false;
+                }, 1000)
+                this.websocket.connection.send(this.sistema + '|' + this.usuario + ':' + this.mensagem);
                 e.preventDefault();
+
+                this.$refs['mensagem'].reset();
             }
         },
         created() {
