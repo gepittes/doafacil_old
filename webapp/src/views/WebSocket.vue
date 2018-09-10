@@ -1,21 +1,43 @@
 <template>
-    <v-container fluid>
-        <v-slide-y-transition mode="out-in">
-            <v-layout column align-center>
-                <img src="@/assets/logo.png" alt="Vuetify.js" class="mb-5">
-                <blockquote>
-                    <div class="hello">
-                        <h1>WebSocket</h1>
-                        <form>
-                            <input v-model="message" placeholder="Me edite">
-                        </form>
-                    </div>
-                    <footer>
+    <v-container fluid grid-list-md text-xs-center>
+        <v-layout row wrap>
+            <v-flex xs1></v-flex>
+            <v-flex xs10>
+                <h1>WebSocket</h1>
+                <v-form @submit="sendMessage">
+                    <v-text-field
+                            v-model="sistema"
+                            label="Sistema"
+                            required></v-text-field>
+                    <v-text-field
+                            v-model="usuario"
+                            :counter="15"
+                            label="Usuario"
+                            required></v-text-field>
+                        <v-textarea
+                                solo
+                                v-model="mensagem"
+                                label="mensagem"
+                                required></v-textarea>
+                    <v-flex xs12>
+                        <div style="display: inline">
+                            <span v-if="sistema != ''" style="color:dodgerblue">[{{sistema}}]</span>
+                            <span v-if="usuario != ''" style="color:dodgerblue">{{usuario}}:</span>
+                            <span v-if="mensagem != ''" style="color:yellowgreen">{{mensagem}}</span>
+                        </div>
+                    </v-flex>
+                    <v-btn ref="botaoEnviar" v-if="isEnviando == false" @click="sendMessage">
+                        Enviar
+                    </v-btn>
+                    <v-progress-circular v-if="isEnviando == true"
+                            indeterminate
+                            color="green"></v-progress-circular>
 
-                    </footer>
-                </blockquote>
-            </v-layout>
-        </v-slide-y-transition>
+                </v-form>
+            </v-flex>
+            <v-flex xs1></v-flex>
+        </v-layout>
+
     </v-container>
 
 
@@ -26,11 +48,21 @@
         name: "WebSocket",
         data() {
             return {
-                message: "",
+                isEnviando: false,
+                usuario: "",
+                sistema: "",
+                mensagem: "",
                 websocket: {
                     connection: new WebSocket('ws://localhost:8001')
                 }
+            }
+        },
+        methods: {
+            sendMessage(e) {
+                // console.log(this.$refs['botaoEnviar'].hide);
 
+                this.isEnviando = true;
+                e.preventDefault();
             }
         },
         created() {
