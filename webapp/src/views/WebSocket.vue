@@ -6,6 +6,9 @@
                 <blockquote>
                     <div class="hello">
                         <h1>WebSocket</h1>
+                        <form>
+                            <input v-model="message" placeholder="Me edite">
+                        </form>
                     </div>
                     <footer>
 
@@ -21,14 +24,23 @@
 <script>
     export default {
         name: "WebSocket",
-        updated() {
-            var conn = new WebSocket('ws://localhost:8001');
+        data() {
+            return {
+                message: "",
+                websocket: {
+                    connection: new WebSocket('ws://localhost:8001')
+                }
 
-            conn.onopen = function (e) {
+            }
+        },
+        created() {
+            this.websocket.connection = new WebSocket('ws://localhost:8001');
+
+            this.websocket.connection.onopen = function (e) {
                 console.log("Conexão estabelecida " + e);
             }
 
-            conn.onmessage = function (e) {
+            this.websocket.connection.onmessage = function (e) {
                 console.log(e.data);
             }
         }
