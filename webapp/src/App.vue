@@ -91,9 +91,14 @@
                     },
                     {
                         icon: 'bubble_chart',
+                        title: 'Plataforma',
+                        to: "/plataforma"
+                    },
+                    {
+                        icon: 'bubble_chart',
                         title: 'Sobre',
                         to: "/about"
-                    },
+                    }
                 ],
                 miniVariant: false,
                 right: true,

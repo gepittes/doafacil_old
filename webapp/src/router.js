@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import WebSocket from './views/WebSocket.vue';
+import Plataforma from './views/Plataforma.vue';
 
 Vue.use(Router);
 
@@ -18,6 +19,11 @@ export default new Router({
       path: '/websocket',
       name: 'websocket',
       component: WebSocket,
+    },
+    {
+      path: '/plataforma',
+      name: 'plataforma',
+      component: Plataforma,
     },
     {
       path: '/about',

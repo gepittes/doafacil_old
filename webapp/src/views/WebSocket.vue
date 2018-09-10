@@ -1,8 +1,7 @@
 <template>
     <v-container fluid grid-list-md text-xs-center>
         <v-layout row wrap>
-            <v-flex xs1></v-flex>
-            <v-flex xs10>
+            <v-flex xs12 sm12 md6>
                 <h1>WebSocket</h1>
                 <v-form @submit="sendMessage">
                     <v-text-field
@@ -36,7 +35,6 @@
 
                 </v-form>
             </v-flex>
-            <v-flex xs1></v-flex>
         </v-layout>
 
     </v-container>
