@@ -18,21 +18,35 @@
                                 row
                                 spacer>
 
-                            <v-flex sm7 md4 hidden-xs-only>
+                            <v-flex md1>
                                 <strong v-html="plataforma.plataforma_id"></strong>
                             </v-flex>
 
-                            <v-flex no-wrap xs5 sm3>
+                            <v-flex m7 no-wrap>
                                 <strong v-html="plataforma.descricao"></strong>
                             </v-flex>
 
-                            <v-flex :class="{
+                            <v-flex m2 :class="{
                                 'red--text': !plataforma.is_ativo,
                                 'blue--text': plataforma.is_ativo,
                             }"
                                     ellipsis
                                     hidden-sm-and-down>
                                 {{ plataforma.is_ativo ? "Ativo" : "Inativo" }}
+                            </v-flex>
+                            <v-flex md2>
+                                <v-tooltip top>
+                                    <v-btn fab dark small color="indigo" slot="activator">
+                                        <v-icon dark>create</v-icon>
+                                    </v-btn>
+                                    <span>Editar</span>
+                                </v-tooltip>
+                                <v-tooltip top>
+                                    <v-btn fab dark small color="cyan" slot="activator">
+                                        <v-icon dark>delete</v-icon>
+                                    </v-btn>
+                                    <span>Remover</span>
+                                </v-tooltip>
                             </v-flex>
                         </v-layout>
 
