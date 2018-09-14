@@ -46,6 +46,12 @@ class Plataforma implements IService
         return ModeloPlataforma::where('plataforma_id', $id)->update($dados);
     }
 
+    public function remover($plataforma_id)
+    {
+        $plataforma = ModeloPlataforma::findOrFail($plataforma_id);
+        return $plataforma->delete();
+    }
+
     public function desabilitar($id)
     {
         return $this->alterar($id, [

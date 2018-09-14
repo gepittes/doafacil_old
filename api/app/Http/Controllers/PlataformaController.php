@@ -51,6 +51,7 @@ class PlataformaController extends Controller
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json($plataforma->desabilitar($id));
+        return $response->json($plataforma->remover($id));
+//        return $response->json($plataforma->desabilitar($id));
     }
 }

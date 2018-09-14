@@ -37,7 +37,12 @@
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
                                         <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
-                                        <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
+                                        <v-btn v-if="!loading" color="blue darken-1" flat @click.native="save">Save
+                                        </v-btn>
+                                        <v-progress-circular
+                                                v-if="loading"
+                                                indeterminate
+                                                color="primary"></v-progress-circular>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
@@ -52,14 +57,12 @@
                                 <td class="text-xs-center">{{ props.item.descricao }}</td>
                                 <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
                                 <td class="justify-center layout px-0">
-                                    <v-icon
-                                            small
+                                    <v-icon small
                                             class="mr-2"
                                             @click="editItem(props.item)">
                                         edit
                                     </v-icon>
-                                    <v-icon
-                                            small
+                                    <v-icon small
                                             @click="deleteItem(props.item)">
                                         delete
                                     </v-icon>
@@ -82,6 +85,7 @@
 
     export default {
         data: () => ({
+            loading: false,
             dialog: false,
             headers: [
                 {
@@ -159,8 +163,15 @@
             },
 
             deleteItem(item) {
-                const index = this.plataformas.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.plataformas.splice(index, 1)
+                const self = this;
+                const index = self.plataformas.indexOf(item)
+                if (confirm('Are you sure you want to delete this item?')) {
+
+                    axios.delete('http://localhost/v1/plataforma/' + item.plataforma_id)
+                        .then(function () {
+                            self.plataformas.splice(index, 1);
+                        });
+                }
             },
 
             close() {
@@ -172,23 +183,31 @@
             },
 
             save() {
-                if (this.editedIndex > -1) {
-                    Object.assign(this.plataformas[this.editedIndex], this.editedItem)
-                } else {
+                const self = this;
+                self.loading = true;
 
-                    const self = this;
+                if (self.editedIndex > -1) {
+                    axios.patch('http://localhost/v1/plataforma/' + self.editedItem.plataforma_id, self.editedItem)
+                        .then(() => {
+                            Object.assign(self.plataformas[self.editedIndex], self.editedItem)
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                        .finally(() => self.loading = false)
+                } else {
                     axios.post('http://localhost/v1/plataforma', self.editedItem)
                         .then(response => {
                             self.editedItem.plataforma_id = response.data.data.plataforma_id;
-                            self.plataformas.push(self.editedItem)
+                            self.plataformas.push(self.editedItem);
                         })
                         .catch(error => {
                             console.log(error)
                         })
-                        .finally(() => this.loading = false)
+                        .finally(() => self.loading = false)
 
                 }
-                this.close()
+                self.close()
             }
         }
     }
