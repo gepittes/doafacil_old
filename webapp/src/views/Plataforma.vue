@@ -3,56 +3,74 @@
         <v-layout column justify-center>
             <v-card flat>
                 <v-subheader>Plataformas</v-subheader>
-
                 <v-data-table
                         :headers="headers"
                         :items="plataformas"
                         class="elevation-1">
-                    <template slot="headerCell" slot-scope="props">
-                        <v-tooltip bottom>
-                        <span slot="activator">
-                          {{ props.header.text }}
-                        </span>
-                            <span>
-                          {{ props.header.text }}
-                        </span>
-                        </v-tooltip>
-                    </template>
                     <template slot="items" slot-scope="props">
-                        <td>{{ props.item.plataforma_id }}</td>
-                        <td>{{ props.item.descricao }}</td>
-                        <td>{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
-                        <td>
-                            <v-tooltip top>
-                                <v-btn fab dark small color="indigo" slot="activator">
-                                    <v-icon dark>create</v-icon>
-                                </v-btn>
-                                <span>Editar</span>
-                            </v-tooltip>
-                            <v-tooltip top>
-                                <v-btn fab dark small color="cyan" slot="activator">
-                                    <v-icon dark>delete</v-icon>
-                                </v-btn>
-                                <span>Remover</span>
-                            </v-tooltip>
+                        <td class="text-xs-center">{{ props.item.plataforma_id }}</td>
+                        <td class="text-xs-center">{{ props.item.descricao }}</td>
+                        <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
+                        <td class="justify-center layout px-0">
+                            <v-icon small
+                                    class="mr-2"
+                                    @click="editItem(props.item)">
+                                edit
+                            </v-icon>
+                            <v-icon small
+                                    @click="deleteItem(props.item)">
+                                delete
+                            </v-icon>
                         </td>
+                    </template>
+                    <template slot="no-data">
+                        <v-btn color="primary" @click="initialize">Reset</v-btn>
                     </template>
                 </v-data-table>
             </v-card>
-
-            <v-dialog v-model="dialog" persistent max-width="290">
-                <v-btn slot="activator" color="primary" dark>Open Dialog</v-btn>
-                <v-card>
-                    <v-card-title class="headline justify-center">Atenção</v-card-title>
-                    <v-card-text>Deseja mesmo remover a plataforma?</v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="green darken-1" flat @click.native="dialog = false">Não</v-btn>
-                        <v-btn color="red darken-1" flat @click.native="dialog = false">Sim</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
         </v-layout>
+        <v-dialog v-model="dialog" max-width="500px">
+            <v-card>
+                <v-card-title>
+                    <span class="headline">{{ formTitle }} Plataforma</span>
+                </v-card-title>
+                <v-subheader>Preencha os dados da plataforma.</v-subheader>
+
+                <v-card-text>
+                    <v-container grid-list-md>
+                        <v-layout wrap>
+                            <v-flex xs12 sm6 md12>
+                                <v-text-field v-model="editedItem.descricao"
+                                              label="Descrição"></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm6 md12>
+                                <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
+                                          v-model="editedItem.is_ativo"></v-switch>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" flat @click.native="close">Cancelar</v-btn>
+                    <v-btn v-if="!loading" color="blue darken-1" flat @click.native="save">Gravar
+                    </v-btn>
+                    <v-progress-circular
+                            v-if="loading"
+                            indeterminate
+                            color="primary"></v-progress-circular>
+                </v-card-actions>
+            </v-card>
+            <v-btn color="blue"
+                   slot="activator"
+                   fab
+                   dark
+                   absolute
+                   right>
+                <v-icon>add</v-icon>
+            </v-btn>
+        </v-dialog>
     </v-container>
 
 </template>
@@ -61,54 +79,131 @@
     import axios from 'axios'
 
     export default {
-        data() {
-            return {
-                dialog: false,
-                bottomNav: 'recent',
-                plataformas: [],
-                headers: [
-                    {
-                        text: 'Identificador',
-                        align: 'left',
-                        sortable: true,
-                        value: 'name'
-                    },
-                    {
-                        text: 'Descrição',
-                        value: 'descricao',
-                        align: 'left'
-                    },
-                    {
-                        text: 'Situação',
-                        value: 'situacao',
-                        align: 'left'
-                    },
-                    {
-                        text: 'Ação',
-                        value: 'acao',
-                        align: 'left',
-                        sortable: false,
-                    },
-                ]
+        data: () => ({
+            loading: false,
+            dialog: false,
+            headers: [
+                {
+                    text: 'Identificador',
+                    align: 'center',
+                    sortable: true,
+                    value: 'name'
+                },
+                {
+                    text: 'Descrição',
+                    value: 'descricao',
+                    align: 'center'
+                },
+                {
+                    text: 'Situação',
+                    value: 'situacao',
+                    align: 'center'
+                },
+                {
+                    text: 'Ação',
+                    value: 'acao',
+                    align: 'center',
+                    sortable: false,
+                },
+            ],
+            plataformas: [],
+            editedIndex: -1,
+            editedItem: {
+                plataforma_id: 0,
+                descricao: '',
+                is_ativo: true,
+            },
+            defaultItem: {
+                name: '',
+                calories: 0,
+                fat: 0,
+                carbs: 0,
+                protein: 0
+            }
+        }),
+
+        computed: {
+            formTitle() {
+                return this.editedIndex === -1 ? 'Criar' : 'Editar'
             }
         },
-        created() {
-            this.buscarPlataformas()
+
+        watch: {
+            dialog(val) {
+                val || this.close()
+            }
         },
+
+        created() {
+            this.initialize()
+        },
+
         methods: {
-            buscarPlataformas() {
+            initialize() {
                 axios.get('http://localhost/v1/plataforma')
                     .then(response => {
                         const data = response.data;
                         this.plataformas = data.data;
                     })
-                    // .then(response => (this.info = response.data.bpi))
                     .catch(error => {
                         console.log(error)
-                        this.errored = true
                     })
                     .finally(() => this.loading = false)
             },
+
+            editItem(item) {
+                this.editedIndex = this.plataformas.indexOf(item)
+                this.editedItem = Object.assign({}, item)
+                this.dialog = true
+            },
+
+            deleteItem(item) {
+                const self = this;
+                const index = self.plataformas.indexOf(item)
+                if (confirm('Are you sure you want to delete this item?')) {
+
+                    axios.delete('http://localhost/v1/plataforma/' + item.plataforma_id)
+                        .then(function () {
+                            self.plataformas.splice(index, 1);
+                        });
+                }
+            },
+
+            close() {
+                this.dialog = false
+                setTimeout(() => {
+                    this.editedItem = Object.assign({}, this.defaultItem)
+                    this.editedIndex = -1
+                }, 300)
+            },
+
+            save() {
+                const self = this;
+                self.loading = true;
+
+                if (self.editedIndex > -1) {
+                    axios.patch('http://localhost/v1/plataforma/' + self.editedItem.plataforma_id, self.editedItem)
+                        .then(() => {
+                            Object.assign(self.plataformas[self.editedIndex], self.editedItem)
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                        .finally(() => self.loading = false)
+                } else {
+                    axios.post('http://localhost/v1/plataforma', self.editedItem)
+                        .then(response => {
+                            self.editedItem.plataforma_id = response.data.data.plataforma_id;
+                            self.plataformas.push(self.editedItem);
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+                        .finally(() => self.loading = false)
+
+                }
+                self.close()
+            }
         }
     }
 
