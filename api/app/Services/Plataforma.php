@@ -29,9 +29,7 @@ class Plataforma implements IService
             throw new \Exception($validator->errors()->first());
         }
 
-        $dados = array_merge($dados, [
-            'is_ativo' => true
-        ]);
+        unset($dados['plataforma_id']);
 
         return ModeloPlataforma::create($dados);
     }

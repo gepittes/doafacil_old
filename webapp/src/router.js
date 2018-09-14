@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import WebSocket from './views/WebSocket.vue';
 import Plataforma from './views/Plataforma.vue';
+import PlataformaDatatable from './views/PlataformaDatatable.vue';
 
 Vue.use(Router);
 
@@ -24,6 +25,11 @@ export default new Router({
       path: '/plataforma',
       name: 'plataforma',
       component: Plataforma,
+    },
+    {
+      path: '/plataformaDatatable',
+      name: 'plataformaDatatable',
+      component: PlataformaDatatable,
     },
     {
       path: '/about',
