@@ -61,8 +61,8 @@ $ docker exec -it notification-api php artisan db:seed
 $ docker exec -it notification-api php artisan wn:controller AuthController --api
 ```
 
-### @todo
-- [ ] Migrar todas as definições de classe, chamadas e vínculos de `TipoPlataforma` para `Mensagem`
+### @todos - Recentes
+- [x] Adicionar Middleware para JWT
 - [ ] Criar, vincular e registrar, Migration, Seeds e Factory para:
     - [x] Usuario
         - [x] Migration
@@ -94,7 +94,8 @@ $ docker exec -it notification-api php artisan wn:controller AuthController --ap
         - [ ] Factory
         - [ ] UsuarioTableSeed
         - [ ] DatabaseSeeder
-- [ ] Adicionar Middleware para JWT
+- [ ] Migrar todas as definições de classe, chamadas e vínculos de `TipoPlataforma` para `Mensagem`
 - [ ] Adicionar testes
     - [ ] ...
+    
 **OBS - Migrations : As migrations são executadas em ordem de timestamps do nome dos arquivos do diretório `database/migrations/*.php` .**
