@@ -13,8 +13,12 @@ class CreateUsuarioTable extends Migration
      */
     public function up()
     {
-        Schema::create('usuario', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('notificacao.usuario', function (Blueprint $table) {
+            $table->increments('usuario_id');
+            $table->string('nome');
+            $table->boolean('is_ativo');
+            $table->string('email')->unique();
+            $table->string('password');
             $table->timestamps();
         });
     }
