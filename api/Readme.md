@@ -5,6 +5,11 @@ $ docker exec -it notification-api php artisan migrate
 $ docker exec -it notification-api php artisan db:seed
 ```
 
+Criando Controllers
+```shell
+$ docker exec -it notification-api php artisan wn:controller AuthController --api
+```
+
 ### @todo
 - [ ] Migrar todas as definições de classe, chamadas e vínculos de `TipoPlataforma` para `Mensagem`
 - [ ] Criar, vincular e registrar, Migration, Seeds e Factory para:
