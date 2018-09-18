@@ -17,5 +17,6 @@ $factory->define(App\Models\Usuario::class, function (Faker\Generator $faker) {
         'is_ativo' => $faker->boolean,
         'email' => $faker->email,
         'password' => password_hash('12345', PASSWORD_BCRYPT),
+        'created_at' => $faker->dateTime,
     ];
 });
