@@ -2,7 +2,7 @@
 
 Módulo responsável por fornecer a API da aplicação.
 
-### JSON Web Tokens(JWT)
+### 1. JSON Web Tokens(JWT)
 
 Os JSON Web Tokens são um método RFC 7519 padrão da indústria aberto para representar declarações com segurança entre duas partes
 
@@ -11,9 +11,9 @@ A dependência mencionada está localizada no arquivo `composer.json`.
 
 A implementação dela é feita principalmente na classe `\App\Http\Controllers\AutenticacaoController`.
 
-### Autentica&ccedil;&atilde;o 
+### 2. Autentica&ccedil;&atilde;o 
 
-#### JWT
+#### 2.1. JWT
 
 Para que seja possível autenticar na API é necess&aacute;rio enviar uma requisição do tipo **POST** para o endere&ccedil;o abaixo:
 `http://localhost/v1/autenticacao/login`
@@ -31,7 +31,7 @@ Obtenção de dados informando token:
 ![Autenticacao + JWT](public/JWT_GET.png?raw=true "Autenticacao + JWT")
 
 
-#### Middleware
+#### 2.2. Middleware
 
 Middleware é um recurso que permite filtrar requisições e respostas HTTP da aplicação.
 
@@ -49,7 +49,7 @@ $app->routeMiddleware([
 ]);
 ```
 
-#### JSON Style Guide
+#### 2.3. JSON Style Guide
 
 Foi padronizado como formato de estilo padrão do retorno da api o [Google JSON Style Guide](https://google.github.io/styleguide/jsoncstyleguide.xml
 ).
@@ -62,19 +62,19 @@ Para tratar comportamentos inesperados e para que não seja retornado pela api f
 `App\Exceptions\JsonResponseExceptionHandler` que tem como responsebilidade receber os erros enviados do Controlador 
 para o Middleware `App\Http\Middleware\JsonResponseStyle`.
 
-### Comandos
+### 3. Comandos
 
 ```shell
 $ docker exec -it notification-api php artisan migrate
 $ docker exec -it notification-api php artisan db:seed
 ```
 
-### Helpers
+### 4. Helpers
 ```shell
 $ docker exec -it notification-api php artisan wn:controller AuthController --api
 ```
 
-### @todos - Recentes
+### 5. @todos - Recentes
 - [x] Adicionar Middleware para JWT
 - [ ] Criar, vincular e registrar, Migration, Seeds e Factory para:
     - [x] Usuario
