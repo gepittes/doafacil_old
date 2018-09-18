@@ -70,30 +70,30 @@ $ docker exec -it notification-api php artisan wn:controller AuthController --ap
         - [x] UsuarioTableSeed
         - [x] DatabaseSeeder
     - [ ] Plataforma
-        - [] Migration
-        - [] Factory
-        - [] UsuarioTableSeed
-        - [] DatabaseSeeder
+        - [ ] Migration
+        - [ ] Factory
+        - [ ] UsuarioTableSeed
+        - [ ] DatabaseSeeder
     - [ ] Sistema
-        - [] Migration
-        - [] Factory
-        - [] UsuarioTableSeed
-        - [] DatabaseSeeder
+        - [ ] Migration
+        - [ ] Factory
+        - [ ] UsuarioTableSeed
+        - [ ] DatabaseSeeder
     - [ ] Tipo de Notificacao
-        - [] Migration
-        - [] Factory
-        - [] UsuarioTableSeed
-        - [] DatabaseSeeder
+        - [ ] Migration
+        - [ ] Factory
+        - [ ] UsuarioTableSeed
+        - [ ] DatabaseSeeder
     - [ ] Tipo de Notificacao x Plataforma
-        - [] Migration
-        - [] Factory
-        - [] UsuarioTableSeed
-        - [] DatabaseSeeder
+        - [ ] Migration
+        - [ ] Factory
+        - [ ] UsuarioTableSeed
+        - [ ] DatabaseSeeder
     - [ ] Notificacao x Plataforma
-        - [] Migration
-        - [] Factory
-        - [] UsuarioTableSeed
-        - [] DatabaseSeeder
+        - [ ] Migration
+        - [ ] Factory
+        - [ ] UsuarioTableSeed
+        - [ ] DatabaseSeeder
 - [ ] Adicionar Middleware para JWT
 - [ ] Adicionar testes
     - [ ] ...
