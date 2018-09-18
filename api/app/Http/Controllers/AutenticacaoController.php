@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\JsonResponseExceptionHandler;
 use App\Models\Usuario;
+use Firebase\JWT\JWT;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 class AutenticacaoController extends BaseController
@@ -23,7 +25,7 @@ class AutenticacaoController extends BaseController
         $this->request = $request;
     }
 
-    protected function criarNovoJWT(Usuario $usuario)
+    protected function criarJWT(Usuario $usuario)
     {
         $this->assuntoToken = $usuario->usuario_id;
         $this->horarioEmissaoToken = time();
@@ -65,7 +67,7 @@ class AutenticacaoController extends BaseController
         }
 
         return response()->json([
-            'token' => $this->jwt($usuario)
+            'token' => $this->criarJWT($usuario)
         ], 200);
     }
 

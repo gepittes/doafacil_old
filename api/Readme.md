@@ -1,11 +1,33 @@
 # notification-api
 
+Módulo responsável por fornecer a API da aplicação.
+
+### JSON Web Tokens(JWT)
+
+Os JSON Web Tokens são um método RFC 7519 padrão da indústria aberto para representar declarações com segurança entre duas partes
+
+Neste projeto para auxiliar no fornecimento do JWT foi utilizada a biblioteca `firebase/php-jwt`. 
+A dependência mencionada está localizada no arquivo `composer.json`.
+
+A implementação dela é feita principalmente na classe `\App\Http\Controllers\AutenticacaoController`.
+
+### Autentica&ccedil;&atilde;o + JWT
+
+Para que seja possível autenticar na API é necess&aacute;rio enviar uma requisição do tipo **POST** para o endere&ccedil;o abaixo:
+`http://localhost/v1/autenticacao/login`
+
+Caso a autenticação seja realizada com sucesso será obtido como resultado uma Token, conforme imagem abaixo:
+
+ ![Alt text](public/JWT_Post.png?raw=true "Autenticacao + JWT")
+
+### Comandos
+
 ```shell
 $ docker exec -it notification-api php artisan migrate
 $ docker exec -it notification-api php artisan db:seed
 ```
 
-Criando Controllers
+### Helpers
 ```shell
 $ docker exec -it notification-api php artisan wn:controller AuthController --api
 ```
