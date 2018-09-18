@@ -4,6 +4,22 @@
 
 Serviço com responsabilidade de centralizar e disparar notificações de diversos tipos para sistemas e plataformas que utilizam.
 
+### Módulos
+
+O projeto foi divido em 4 módulos:
+
+- [API](./api)
+- Database - Porta 5432
+- WebApp - 
+- WebSocket
+
+Para reunir todos os módulos acima, foi criada uma stack Docker da aplicação, contendo os serviços abaixo:
+- webapp-service - Porta 8080
+- api-service - Porta 9000
+- webserver-service - Porta 80
+- websocket-service - Porta 8001
+- database-service - Porta 5432
+
 ##### Tecnologias utilizadas
 
 - Docker
@@ -100,8 +116,13 @@ docker-compose up --build --force-recreate
                 - [x] cadastrar
                 - [x] alterar
                 - [x] remover
-            * **Authenticação**
-            * **JWT**
+            - [x] Authenticação**
+                - [x] Criar camada de autenticação na aplicação
+                - [x] Definir rotas e grupos para aplicar tratamentos de acordo com login válido
+            - [x] JSON Web Token (JWT)
+                - [x] Criar Controller para Autenticação
+                - [x] Criar de JSON Web Token (JWT) encapsulando dados do usuário e de expiração da token
+                - [x] Criar Middleware para interceptar requisições HTTP e validar dados informados
             * **ACL**
     - salic-minc
         - [ ] notificação
