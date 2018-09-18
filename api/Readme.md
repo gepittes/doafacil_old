@@ -11,7 +11,9 @@ A dependência mencionada está localizada no arquivo `composer.json`.
 
 A implementação dela é feita principalmente na classe `\App\Http\Controllers\AutenticacaoController`.
 
-### Autentica&ccedil;&atilde;o + JWT
+### Autentica&ccedil;&atilde;o 
+
+#### JWT
 
 Para que seja possível autenticar na API é necess&aacute;rio enviar uma requisição do tipo **POST** para o endere&ccedil;o abaixo:
 `http://localhost/v1/autenticacao/login`
@@ -19,6 +21,22 @@ Para que seja possível autenticar na API é necess&aacute;rio enviar uma requis
 Caso a autenticação seja realizada com sucesso será obtido como resultado uma Token, conforme imagem abaixo:
 
  ![Alt text](public/JWT_Post.png?raw=true "Autenticacao + JWT")
+
+#### Middleware
+
+Para mapear as requisições de entrada para rotas específicas, foi criado o Middleware `\App\Http\Middleware\JWTMiddleware.php`.
+A classe tem como responsabilidade validar os itens abaixo :
+ - Token existente;
+ - Token válida;
+ - Tempo de expiração da Token;
+
+A definição do Middleware para authenticação foi definido no arquivo `bootstrap/app.php` na seguinte linha:
+
+```php
+$app->routeMiddleware([
+    'jwt.auth' => \App\Http\Middleware\JWTMiddleware::class
+]);
+```
 
 ### Comandos
 
