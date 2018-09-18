@@ -49,6 +49,19 @@ $app->routeMiddleware([
 ]);
 ```
 
+#### JSON Style Guide
+
+Foi padronizado como formato de estilo padrão do retorno da api o [Google JSON Style Guide](https://google.github.io/styleguide/jsoncstyleguide.xml
+).
+
+Para que o padrão pudesse sem implementado, foi criado um Middleware `App\Http\Middleware\JsonResponseStyle` que tem 
+como responsabilidade interceptar as respostas dos controladores e agrupar suas respotas em padrões definidos pelo Style 
+Guide.
+
+Para tratar comportamentos inesperados e para que não seja retornado pela api foi criada a Exception 
+`App\Exceptions\JsonResponseExceptionHandler` que tem como responsebilidade receber os erros enviados do Controlador 
+para o Middleware `App\Http\Middleware\JsonResponseStyle`.
+
 ### Comandos
 
 ```shell
