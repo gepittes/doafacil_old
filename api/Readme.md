@@ -20,9 +20,20 @@ Para que seja possível autenticar na API é necess&aacute;rio enviar uma requis
 
 Caso a autenticação seja realizada com sucesso será obtido como resultado uma Token, conforme imagem abaixo:
 
- ![Alt text](public/JWT_Post.png?raw=true "Autenticacao + JWT")
+![Autenticacao + JWT](public/JWT_Autenticacao_Post.png?raw=true "Autenticacao + JWT")
+ 
+Caso a token não seja informada:
+
+![Autenticacao + JWT](public/JWT_GET_nao_recebida.png?raw=true "Autenticacao + JWT")
+
+Obtenção de dados informando token:
+
+![Autenticacao + JWT](public/JWT_GET.png?raw=true "Autenticacao + JWT")
+
 
 #### Middleware
+
+Middleware é um recurso que permite filtrar requisições e respostas HTTP da aplicação.
 
 Para mapear as requisições de entrada para rotas específicas, foi criado o Middleware `\App\Http\Middleware\JWTMiddleware.php`.
 A classe tem como responsabilidade validar os itens abaixo :
