@@ -41,43 +41,6 @@ docker-compose up --build --force-recreate
 ```
 
 ### To-Do
-- Frontend
-    - [ ] notification-service
-        - [ ] painel administrativo
-            - [ ] notificacoes
-                - [ ] enviar
-                - [ ] listar
-                - [ ] consultar
-            - [ ] tipo_notificacao
-                - [ ] consultar
-                - [ ] listar
-                - [ ] cadastrar
-                - [ ] remover
-            - [ ] plataforma
-                - [ ] consultar
-                - [ ] listar
-                - [ ] cadastrar
-                - [ ] remover
-            - [ ] sistema
-                - [ ] consultar
-                - [ ] listar
-                - [ ] cadastrar
-                - [ ] remover
-            - [ ] usuario
-                - [ ] consultar
-                - [ ] listar
-                - [ ] cadastrar
-                - [ ] remover
-        - [ ] autenticacao
-            - [ ] login (senha mestra temporariamente)
-            * **consultando tabela de usuários**
-    - [ ] salic-minc
-        - [ ] Componente Sininho
-            - [ ] observar WebSocket
-            - [ ] exibir notificações
-            - [ ] bloco de notificações não lidas
-            - [ ] marcar notificação como lidas
-            * **visualização de todas as notificações (link)**
 - Backend
     - notification-service
         - [x] infra
@@ -132,5 +95,42 @@ docker-compose up --build --force-recreate
     - [x] criação
     - [x] entry-point
     - [x] script com dados iniciais 
+- Frontend
+    - [ ] notification-service
+        - [ ] painel administrativo
+            - [x] plataforma
+                - [x] consultar
+                - [x] listar
+                - [x] cadastrar
+                - [x] remover
+            - [ ] notificacoes
+                - [ ] enviar
+                - [ ] listar
+                - [ ] consultar
+            - [ ] tipo_notificacao
+                - [ ] consultar
+                - [ ] listar
+                - [ ] cadastrar
+                - [ ] remover
+            - [ ] sistema
+                - [ ] consultar
+                - [ ] listar
+                - [ ] cadastrar
+                - [ ] remover
+            - [ ] usuario
+                - [ ] consultar
+                - [ ] listar
+                - [ ] cadastrar
+                - [ ] remover
+        - [ ] autenticacao
+            - [ ] login (senha mestra temporariamente)
+            * **consultando tabela de usuários**
+    - [ ] salic-minc
+        - [ ] Componente Sininho
+            - [ ] observar WebSocket
+            - [ ] exibir notificações
+            - [ ] bloco de notificações não lidas
+            - [ ] marcar notificação como lidas
+            * **visualização de todas as notificações (link)**
 
 **OBS**: Itens com em **negrito** são sugestões para implementações futuras. 
