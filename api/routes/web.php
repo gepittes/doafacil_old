@@ -17,10 +17,10 @@ $router->get('/api', ['as' => 'api', function () use ($router) {
 
 define('API_VERSION', '1.0');
 $apiPattern = 'v1';
-$router->post('/autenticacao/login', [
-    'uses' => 'AutenticacaoController@autenticar'
-]);
 $router->group(['prefix' => $apiPattern], function () use ($router) {
+    $router->post('/autenticacao/login', [
+        'uses' => 'AutenticacaoController@autenticar'
+    ]);
     $router->get('/conta[/{id}]', 'ContaController@get');
     $router->post('/conta', 'ContaController@post');
     $router->patch('/conta/{id}', 'ContaController@patch');
@@ -46,13 +46,3 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
     $router->patch('/notificacao/{id}', 'NotificacaoController@patch');
 
 });
-
-
-/**
- * Routes for resource auth-controller
- */
-$app->get('auth-controller', 'AuthControllersController@all');
-$app->get('auth-controller/{id}', 'AuthControllersController@get');
-$app->post('auth-controller', 'AuthControllersController@add');
-$app->put('auth-controller/{id}', 'AuthControllersController@put');
-$app->delete('auth-controller/{id}', 'AuthControllersController@remove');
