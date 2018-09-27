@@ -82,11 +82,11 @@ $ docker exec -it notification-api php artisan wn:controller AuthController --ap
         - [x] Factory
         - [x] UsuarioTableSeed
         - [x] DatabaseSeeder
-    - [ ] Plataforma
-        - [ ] Migration
-        - [ ] Factory
-        - [ ] UsuarioTableSeed
-        - [ ] DatabaseSeeder
+    - [x] Plataforma
+        - [x] Migration
+        - [x] Factory
+        - [x] UsuarioTableSeed
+        - [x] DatabaseSeeder
     - [ ] Sistema
         - [ ] Migration
         - [ ] Factory
