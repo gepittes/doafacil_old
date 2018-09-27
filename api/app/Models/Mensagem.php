@@ -4,27 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TipoNotificacao extends Model
+class Mensagem extends Model
 {
     public $timestamps = false;
     public $incrementing = true;
     protected $fillable = [
+        'titulo',
         'descricao',
-        'mensagem',
         'sistema_id',
         'autor_id',
         'is_ativo'
     ];
-    protected $primaryKey = "tipo_notificacao_id";
-    protected $table = 'notificacao.tipo_notificacao';
+    protected $primaryKey = "mensagem_id";
+    protected $table = 'notificacao.mensagem';
 
     public function plataformas()
     {
         return $this->belongsToMany(
             \App\Models\Plataforma::class,
-            'notificacao.tipo_notificacao_has_plataforma',
-            'tipo_notificacao_id',
+            'notificacao.mensagem_has_plataforma',
+            'mensagem_id',
             'plataforma_id'
-        )->as('tipo_notificacao_has_plataforma');
+        )->as('mensagem_has_plataforma');
     }
 }

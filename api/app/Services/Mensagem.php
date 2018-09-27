@@ -2,24 +2,24 @@
 
 namespace App\Services;
 
-use App\Models\TipoNotificacao as ModeloTipoNotificacao;
+use App\Models\Mensagem as ModeloMensagem;
 use Validator;
 
-class TipoNotificacao implements IService
+class Mensagem implements IService
 {
 
     public function obter($id = null)
     {
         if (!empty(trim($id))) {
-            $data = ModeloTipoNotificacao::with('plataformas:descricao')->findOrFail($id);
+            $data = ModeloMensagem::with('plataformas:descricao')->findOrFail($id);
         } else {
-            $data = ModeloTipoNotificacao::with('plataformas')->get();
+            $data = ModeloMensagem::with('plataformas')->get();
         }
 
         return $data;
     }
 
-    public function criar(array $dados = []): ModeloTipoNotificacao
+    public function criar(array $dados = []): ModeloMensagem
     {
         $validator = Validator::make($dados, [
             "descricao" => 'required|string|min:3|max:50',
@@ -38,9 +38,9 @@ class TipoNotificacao implements IService
             'is_ativo' => true
         ]);
 
-        $tipoNofiticacao = ModeloTipoNotificacao::create($dados);
-        $this->vincularPlataforma($tipoNofiticacao->tipo_notificacao_id, $dados['plataformas']);
-        return $tipoNofiticacao;
+        $mensagem = ModeloMensagem::create($dados);
+        $this->vincularPlataforma($mensagem->mensagem_id, $dados['plataformas']);
+        return $mensagem;
 
     }
 
@@ -57,11 +57,11 @@ class TipoNotificacao implements IService
             throw new \Exception($validator->errors()->first());
         }
 
-        if (isset($dados['tipo_notificacao_id'])) {
-            unset($dados['tipo_notificacao_id']);
+        if (isset($dados['mensagem_id'])) {
+            unset($dados['mensagem_id']);
         }
 
-        return ModeloTipoNotificacao::where('tipo_notificacao_id', $id)->update($dados);
+        return ModeloMensagem::where('mensagem_id', $id)->update($dados);
     }
 
     public function desabilitar($id)
@@ -78,11 +78,11 @@ class TipoNotificacao implements IService
         ]);
     }
 
-    public function vincularPlataforma($tipo_notificacao_id, array $plataformas)
+    public function vincularPlataforma($mensagem_id, array $plataformas)
     {
         foreach ($plataformas as $plataforma) {
-            $tipoNotificacao = ModeloTipoNotificacao::findOrFail($tipo_notificacao_id);
-            $tipoNotificacao->plataformas()->attach($plataforma['plataforma_id']);
+            $mensagem = ModeloMensagem::findOrFail($mensagem_id);
+            $mensagem->plataformas()->attach($plataforma['plataforma_id']);
         }
     }
 

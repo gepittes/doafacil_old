@@ -20,7 +20,7 @@ class Notificacao extends Model
     public function tiposNotificacao()
     {
         return $this->hasMany(
-            'App\Models\TipoNotificacao'
+            'App\Models\Mensagem'
         );
     }
 }
