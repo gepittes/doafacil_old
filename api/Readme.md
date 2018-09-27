@@ -92,22 +92,22 @@ $ docker exec -it notification-api php artisan wn:controller AuthController --ap
         - [x] Factory
         - [x] UsuarioTableSeed
         - [x] DatabaseSeeder
-    - [ ] Mensagem
-        - [ ] Migration
-        - [ ] Factory
-        - [ ] UsuarioTableSeed
-        - [ ] DatabaseSeeder
+    - [x] Mensagem
+        - [x] Migration
+        - [x] Factory
+        - [x] UsuarioTableSeed
+        - [x] DatabaseSeeder
     - [ ] Mensagem x Plataforma
         - [ ] Migration
         - [ ] Factory
         - [ ] UsuarioTableSeed
         - [ ] DatabaseSeeder
-    - [ ] Notificacao x Plataforma
+    - [ ] Notificacao
         - [ ] Migration
         - [ ] Factory
         - [ ] UsuarioTableSeed
         - [ ] DatabaseSeeder
-- [ ] Migrar todas as definições de classe, chamadas e vínculos de `TipoPlataforma` para `Mensagem`
+- [x] Migrar todas as definições de classe, chamadas e vínculos de `TipoPlataforma` para `Mensagem`
 - [ ] Adicionar testes
     - [ ] ...
     

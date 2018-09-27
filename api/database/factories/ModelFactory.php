@@ -36,3 +36,14 @@ $factory->define(App\Models\Sistema::class, function(Faker\Generator $faker) {
         'created_at' => $faker->dateTime
     ];
 });
+
+$factory->define(App\Models\Mensagem::class, function(Faker\Generator $faker) {
+    return [
+        'titulo' => $faker->name,
+        'descricao' => $faker->text,
+        'sistema_id' => factory(\App\Models\Sistema::class)->create()->sistema_id,
+        'autor_id' => factory(\App\Models\Usuario::class)->create()->usuario_id,
+        'is_ativo' => $faker->boolean,
+        'created_at' => $faker->dateTime
+    ];
+});
