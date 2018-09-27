@@ -24,7 +24,7 @@ class Notificacao implements IService
     {
         $validator = Validator::make($dados, [
             "destinatario_id" => 'required|int',
-            "tipo_notificacao_id" => 'required|int',
+            "mensagem_id" => 'required|int',
         ]);
 
         if ($validator->fails()) {
@@ -45,7 +45,7 @@ class Notificacao implements IService
         $validator = Validator::make($dados, [
             "is_notificacao_lida" => 'bool',
             "destinatario_id" => 'int',
-            "tipo_notificacao_id" => 'int',
+            "mensagem_id" => 'int',
         ]);
 
         if ($validator->fails()) {
