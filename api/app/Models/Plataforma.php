@@ -15,13 +15,13 @@ class Plataforma extends Model
     protected $primaryKey = "plataforma_id";
     protected $table = 'notificacao.plataforma';
 
-    public function tiposNotificacao()
+    public function mensagens()
     {
         return $this->belongsToMany(
             \App\Models\Mensagem::class,
-            'notificacao.tipo_notificacao_has_plataforma',
+            'notificacao.mensagem_has_plataforma',
             'plataforma_id',
-            'tipo_notificacao_id'
-        )->as('tipo_notificacao_has_plataforma');
+            'mensagem_id'
+        )->as('mensagem_has_plataforma');
     }
 }

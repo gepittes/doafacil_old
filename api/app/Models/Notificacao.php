@@ -10,14 +10,14 @@ class Notificacao extends Model
     public $incrementing = true;
     protected $fillable = [
         'destinatario_id',
-        'tipo_notificacao_id',
+        'mensagem_id',
         'data_envio',
         'is_notificacao_lida'
     ];
     protected $primaryKey = "notificacao_id";
     protected $table = 'notificacao.notificacao';
 
-    public function tiposNotificacao()
+    public function mensagens()
     {
         return $this->hasMany(
             'App\Models\Mensagem'

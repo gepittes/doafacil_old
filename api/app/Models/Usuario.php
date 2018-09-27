@@ -11,7 +11,7 @@ class Usuario extends Model
     protected $fillable = [
         'descricao',
         'is_ativo'
-        ];
+    ];
     protected $primaryKey = "usuario_id";
     protected $table = 'notificacao.usuario';
 }
