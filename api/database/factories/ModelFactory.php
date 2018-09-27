@@ -20,3 +20,11 @@ $factory->define(App\Models\Usuario::class, function (Faker\Generator $faker) {
         'created_at' => $faker->dateTime,
     ];
 });
+
+$factory->define(App\Models\Plataforma::class, function(Faker\Generator $faker) {
+    return [
+        'descricao' => $faker->name,
+        'is_ativo' => $faker->boolean,
+        'created_at' => $faker->dateTime
+    ];
+});

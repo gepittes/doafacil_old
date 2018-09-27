@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
         // Registra o seeder de usuário
         $this->call(UsuarioTableSeeder::class);
+        $this->call(PlataformaTableSeeder::class);
         Model::reguard();
     }
 }
