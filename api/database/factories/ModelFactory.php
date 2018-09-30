@@ -47,3 +47,7 @@ $factory->define(App\Models\Mensagem::class, function(Faker\Generator $faker) {
         'created_at' => $faker->dateTime
     ];
 });
+
+$factory->define(App\Models\Notificacao::class, function(Faker\Generator $faker) {
+    return [];
+});

@@ -17,6 +17,9 @@ class DatabaseSeeder extends Seeder
         $this->call(UsuarioTableSeeder::class);
         $this->call(PlataformaTableSeeder::class);
         $this->call(SistemaTableSeeder::class);
+        $this->call(MensagemTableSeeder::class);
+        $this->call(MensagemPlataformaSeeder::class);
+        $this->call(NotificacaoSeeder::class);
         Model::reguard();
     }
 }
