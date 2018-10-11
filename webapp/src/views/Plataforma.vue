@@ -24,7 +24,7 @@
                         </td>
                     </template>
                     <template slot="no-data">
-                        <v-btn color="primary" @click="initialize">Reset</v-btn>
+                        <v-btn color="primary" @click="this.obterPlataformas">Reset</v-btn>
                     </template>
                 </v-data-table>
             </v-card>
@@ -78,6 +78,8 @@
 
     import axios from 'axios'
 
+    import { mapActions, mapGetters } from 'vuex';
+
     export default {
         data: () => ({
             loading: false,
@@ -106,7 +108,7 @@
                     sortable: false,
                 },
             ],
-            plataformas: [],
+            // plataformas: [],
             editedIndex: -1,
             editedItem: {
                 plataforma_id: 0,
@@ -125,7 +127,10 @@
         computed: {
             formTitle() {
                 return this.editedIndex === -1 ? 'Criar' : 'Editar'
-            }
+            },
+            ...mapGetters({
+                plataformas: 'plataforma/plataforma'
+            }),
         },
 
         watch: {
@@ -135,21 +140,14 @@
         },
 
         created() {
-            this.initialize()
+            this.obterPlataformas();
         },
 
         methods: {
-            initialize() {
-                axios.get('http://localhost/v1/plataforma')
-                    .then(response => {
-                        const data = response.data;
-                        this.plataformas = data.data;
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-                    .finally(() => this.loading = false)
-            },
+
+            ...mapActions({
+                obterPlataformas: 'plataforma/obterPlataformas'
+            }),
 
             editItem(item) {
                 this.editedIndex = this.plataformas.indexOf(item)

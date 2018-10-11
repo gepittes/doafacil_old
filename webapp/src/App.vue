@@ -2,16 +2,17 @@
     <v-app>
         <v-navigation-drawer persistent
                              :mini-variant="miniVariant"
-                             :clipped="clipped"
+                             clipped="clipped"
                              v-model="drawer"
                              enable-resize-watcher
                              fixed
+                             dark
                              app>
             <v-list>
                 <v-list-tile value="true"
                              v-for="(item, i) in items"
                              :key="i"
-                             v-bind:to="item.to">
+                             :to="item.to">
                     <v-list-tile-action>
                         <v-icon v-html="item.icon"></v-icon>
                     </v-list-tile-action>
