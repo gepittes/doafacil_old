@@ -4,6 +4,7 @@ import Home from './views/Home.vue';
 import WebSocket from './views/WebSocket.vue';
 import Plataforma from './views/Plataforma.vue';
 import PlataformaDatatable from './views/PlataformaDatatable.vue';
+import NaoEncontrado from './views/NaoEncontrado.vue';
 
 Vue.use(Router);
 
@@ -11,6 +12,11 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    {
+      path: '*',
+      name: 'naoEncontrado',
+      component: NaoEncontrado,
+    },
     {
       path: '/',
       name: 'home',
