@@ -24,7 +24,7 @@
                         </td>
                     </template>
                     <template slot="no-data">
-                        <v-btn color="primary" @click="initialize">Reset</v-btn>
+                        <v-btn color="primary" @click="this.obterPlataformas">Reset</v-btn>
                     </template>
                 </v-data-table>
             </v-card>
@@ -78,6 +78,8 @@
 
     import axios from 'axios'
 
+    import { mapActions, mapGetters } from 'vuex';
+
     export default {
         data: () => ({
             loading: false,
@@ -106,7 +108,7 @@
                     sortable: false,
                 },
             ],
-            plataformas: [],
+            // plataformas: [],
             editedIndex: -1,
             editedItem: {
                 plataforma_id: 0,
@@ -125,7 +127,10 @@
         computed: {
             formTitle() {
                 return this.editedIndex === -1 ? 'Criar' : 'Editar'
-            }
+            },
+            ...mapGetters({
+                plataformas: 'plataforma/plataforma'
+            }),
         },
 
         watch: {
@@ -135,21 +140,15 @@
         },
 
         created() {
-            this.initialize()
+            this.obterPlataformas();
         },
 
         methods: {
-            initialize() {
-                axios.get('http://localhost/v1/plataforma')
-                    .then(response => {
-                        const data = response.data;
-                        this.plataformas = data.data;
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-                    .finally(() => this.loading = false)
-            },
+
+            ...mapActions({
+                obterPlataformas: 'plataforma/obterPlataformas',
+                removerPlataforma: 'plataforma/removerPlataforma'
+            }),
 
             editItem(item) {
                 this.editedIndex = this.plataformas.indexOf(item)
@@ -162,10 +161,7 @@
                 const index = self.plataformas.indexOf(item)
                 if (confirm('Are you sure you want to delete this item?')) {
 
-                    axios.delete('http://localhost/v1/plataforma/' + item.plataforma_id)
-                        .then(function () {
-                            self.plataformas.splice(index, 1);
-                        });
+                    this.removerPlataforma(item.plataforma_id);
                 }
             },
 
@@ -182,6 +178,7 @@
                 self.loading = true;
 
                 if (self.editedIndex > -1) {
+
                     axios.patch('http://localhost/v1/plataforma/' + self.editedItem.plataforma_id, self.editedItem)
                         .then(() => {
                             Object.assign(self.plataformas[self.editedIndex], self.editedItem)

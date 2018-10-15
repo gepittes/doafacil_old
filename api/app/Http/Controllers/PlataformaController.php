@@ -6,6 +6,7 @@ use App\Exceptions\JsonResponseExceptionHandler;
 use App\Models\Usuario;
 use Psr\Http\Message\ServerRequestInterface;
 use Validator;
+use Laravel\Lumen\Routing\Controller;
 
 class PlataformaController extends Controller
 {
