@@ -7,5 +7,9 @@ export const state = {
 export const mutations = {
     [types.SET_PLATAFORMA](state, plataforma) {
         state.plataforma = plataforma
-    }
+    },
+    [types.DELETE_PLATAFORMA](state, plataforma_id) {
+        var index = state.plataforma.findIndex( plataforma => plataforma.plataforma_id === plataforma_id);
+        state.plataforma.splice(index, 1);
+    },
 }

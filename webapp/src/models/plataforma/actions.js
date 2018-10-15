@@ -12,3 +12,11 @@ export const obterPlataformas = ({commit}) => {
         .catch(error => { console.log(error) })
         // .finally(() => this.loading = false)
 }
+
+export const removerPlataforma = ({commit}, plataforma_id) => {
+
+    axios.delete('http://localhost/v1/plataforma/' + plataforma_id)
+        .then(function () {
+            commit(types.DELETE_PLATAFORMA, plataforma_id);
+        });
+}

@@ -146,7 +146,8 @@
         methods: {
 
             ...mapActions({
-                obterPlataformas: 'plataforma/obterPlataformas'
+                obterPlataformas: 'plataforma/obterPlataformas',
+                removerPlataforma: 'plataforma/removerPlataforma'
             }),
 
             editItem(item) {
@@ -160,10 +161,7 @@
                 const index = self.plataformas.indexOf(item)
                 if (confirm('Are you sure you want to delete this item?')) {
 
-                    axios.delete('http://localhost/v1/plataforma/' + item.plataforma_id)
-                        .then(function () {
-                            self.plataformas.splice(index, 1);
-                        });
+                    this.removerPlataforma(item.plataforma_id);
                 }
             },
 
@@ -180,6 +178,7 @@
                 self.loading = true;
 
                 if (self.editedIndex > -1) {
+
                     axios.patch('http://localhost/v1/plataforma/' + self.editedItem.plataforma_id, self.editedItem)
                         .then(() => {
                             Object.assign(self.plataformas[self.editedIndex], self.editedItem)
