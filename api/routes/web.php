@@ -22,7 +22,7 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
         'uses' => 'AutenticacaoController@autenticar'
     ]);
 
-    $router->group(['middleware' => 'jwt.auth'], function () use ($router) {
+//    $router->group(['middleware' => 'jwt.auth'], function () use ($router) {
         $router->get('/conta[/{id}]', 'ContaController@get');
         $router->post('/conta', 'ContaController@post');
         $router->patch('/conta/{id}', 'ContaController@patch');
@@ -46,5 +46,5 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
         $router->get('/notificacao[/{id}]', 'NotificacaoController@get');
         $router->post('/notificacao', 'NotificacaoController@post');
         $router->patch('/notificacao/{id}', 'NotificacaoController@patch');
-    });
+//    });
 });

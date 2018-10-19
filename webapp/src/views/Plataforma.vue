@@ -5,7 +5,7 @@
                 <v-subheader>Plataformas</v-subheader>
                 <v-data-table
                         :headers="headers"
-                        :items="plataformas"
+                        :items="plataformasIniciais"
                         class="elevation-1">
                     <template slot="items" slot-scope="props">
                         <td class="text-xs-center">{{ props.item.plataforma_id }}</td>
@@ -78,7 +78,7 @@
 
     import axios from 'axios'
 
-    import { mapActions, mapGetters } from 'vuex';
+    import {mapActions, mapGetters} from 'vuex';
 
     export default {
         data: () => ({
@@ -108,6 +108,7 @@
                     sortable: false,
                 },
             ],
+            plataformasIniciais: [],
             // plataformas: [],
             editedIndex: -1,
             editedItem: {
@@ -136,7 +137,17 @@
         watch: {
             dialog(val) {
                 val || this.close()
-            }
+            },
+            plataformas(value) {
+// console.log(this.plataformas)
+                if ('error' in value) {
+                    alert(value.error);
+                     this.plataformasIniciais = [];
+                } else {
+                     this.plataformasIniciais = value;
+                }
+            },
+
         },
 
         created() {
@@ -147,7 +158,8 @@
 
             ...mapActions({
                 obterPlataformas: 'plataforma/obterPlataformas',
-                removerPlataforma: 'plataforma/removerPlataforma'
+                removerPlataforma: 'plataforma/removerPlataforma',
+                cadastrarPlataforma: 'plataforma/cadastrarPlataforma'
             }),
 
             editItem(item) {
@@ -157,10 +169,7 @@
             },
 
             deleteItem(item) {
-                const self = this;
-                const index = self.plataformas.indexOf(item)
                 if (confirm('Are you sure you want to delete this item?')) {
-
                     this.removerPlataforma(item.plataforma_id);
                 }
             },
@@ -188,16 +197,16 @@
                         })
                         .finally(() => self.loading = false)
                 } else {
-                    axios.post('http://localhost/v1/plataforma', self.editedItem)
-                        .then(response => {
-                            self.editedItem.plataforma_id = response.data.data.plataforma_id;
-                            self.plataformas.push(self.editedItem);
-                        })
-                        .catch(error => {
-                            console.log(error)
-                        })
-                        .finally(() => self.loading = false)
-
+                    // axios.post('http://localhost/v1/plataforma', self.editedItem)
+                    //     .then(response => {
+                    //         self.editedItem.plataforma_id = response.data.data.plataforma_id;
+                    //         self.plataformas.push(self.editedItem);
+                    //     })
+                    //     .catch(error => {
+                    //         console.log(error)
+                    //     })
+                    //     .finally(() => self.loading = false)
+                    this.cadastrarPlataforma(self.editedItem)
                 }
                 self.close()
             }
