@@ -139,7 +139,6 @@
                 val || this.close()
             },
             plataformas(value) {
-// console.log(this.plataformas)
                 if ('error' in value) {
                     alert(value.error);
                      this.plataformasIniciais = [];
@@ -159,7 +158,8 @@
             ...mapActions({
                 obterPlataformas: 'plataforma/obterPlataformas',
                 removerPlataforma: 'plataforma/removerPlataforma',
-                cadastrarPlataforma: 'plataforma/cadastrarPlataforma'
+                cadastrarPlataforma: 'plataforma/cadastrarPlataforma',
+                atualizarPlataforma: 'plataforma/atualizarPlataforma',
             }),
 
             editItem(item) {
@@ -187,25 +187,8 @@
                 self.loading = true;
 
                 if (self.editedIndex > -1) {
-
-                    axios.patch('http://localhost/v1/plataforma/' + self.editedItem.plataforma_id, self.editedItem)
-                        .then(() => {
-                            Object.assign(self.plataformas[self.editedIndex], self.editedItem)
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        })
-                        .finally(() => self.loading = false)
+                    this.atualizarPlataforma(self.editedItem)
                 } else {
-                    // axios.post('http://localhost/v1/plataforma', self.editedItem)
-                    //     .then(response => {
-                    //         self.editedItem.plataforma_id = response.data.data.plataforma_id;
-                    //         self.plataformas.push(self.editedItem);
-                    //     })
-                    //     .catch(error => {
-                    //         console.log(error)
-                    //     })
-                    //     .finally(() => self.loading = false)
                     this.cadastrarPlataforma(self.editedItem)
                 }
                 self.close()
