@@ -34,7 +34,7 @@
                 <v-card-title>
                     <span class="headline">{{ formTitle }} Plataforma</span>
                 </v-card-title>
-                <v-subheader>Preencha os dados da plataforma.</v-subheader>
+                <!--<v-subheader>Preencha os dados da plataforma.</v-subheader>-->
 
                 <v-card-text>
                     <v-container grid-list-md>
@@ -109,7 +109,6 @@
                 },
             ],
             plataformasIniciais: [],
-            // plataformas: [],
             editedIndex: -1,
             editedItem: {
                 plataforma_id: 0,
@@ -169,7 +168,7 @@
             },
 
             deleteItem(item) {
-                if (confirm('Are you sure you want to delete this item?')) {
+                if (confirm('Deseja remover esse item?')) {
                     this.removerPlataforma(item.plataforma_id);
                 }
             },
