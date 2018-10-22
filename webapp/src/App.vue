@@ -37,6 +37,9 @@
 </template>
 
 <script>
+
+    import { mapState, mapActions } from 'vuex'
+
     export default {
         name: 'App',
         data() {
@@ -70,6 +73,22 @@
                 right: true,
                 rightDrawer: false,
                 title: 'Notification WebApp'
+            }
+        },
+        computed: {
+            ...mapState({
+                alert: state => state.alert
+            })
+        },
+        methods: {
+            ...mapActions({
+                clearAlert: 'alert/clear'
+            })
+        },
+        watch: {
+            $route (to, from){
+                // clear alert on location change
+                this.clearAlert();
             }
         }
     }
