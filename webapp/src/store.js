@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import plataforma from '@/models/plataforma';
-import conta from '@/models/conta';
+import plataforma from '@/modules/plataforma';
+import conta from '@/modules/conta';
 
 Vue.use(Vuex);
 

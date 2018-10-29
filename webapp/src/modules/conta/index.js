@@ -1,11 +1,13 @@
 import * as actions from './actions';
 import * as getters from './getters';
-import { mutations, state } from "./mutations";
+import * as fakeBackend from './fake-backend';
+import {mutations, state} from "./mutations";
 
 export default {
     namespaced: true,
     actions,
     state,
     getters,
-    mutations
+    mutations,
+    fakeBackend
 }

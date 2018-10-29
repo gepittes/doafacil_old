@@ -1,5 +1,12 @@
 <template>
     <v-app>
+        <div id="nav">
+            <router-link to="/">Home</router-link>
+            |
+            <router-link to="/about">About</router-link>
+            <span v-if="isLoggedIn"> | <a @click="logout">Logout</a></span>
+        </div>
+        <router-view/>
         <v-navigation-drawer persistent
                              :mini-variant="miniVariant"
                              clipped="clipped"
@@ -38,7 +45,7 @@
 
 <script>
 
-    import { mapState, mapActions } from 'vuex'
+    import {mapState, mapActions} from 'vuex'
 
     export default {
         name: 'App',
@@ -73,11 +80,12 @@
                 right: true,
                 rightDrawer: false,
                 title: 'Notification WebApp'
-            }
+            };
         },
         computed: {
             ...mapState({
-                alert: state => state.alert
+                alert: state => state.alert,
+                isLoggedIn: state => state.isLoggedIn
             })
         },
         methods: {
@@ -86,7 +94,7 @@
             })
         },
         watch: {
-            $route (to, from){
+            $route(to, from) {
                 // clear alert on location change
                 this.clearAlert();
             }

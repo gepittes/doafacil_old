@@ -6,9 +6,9 @@ use App\Exceptions\JsonResponseExceptionHandler;
 use App\Models\Usuario;
 use Firebase\JWT\JWT;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Lumen\Routing\Controller as BaseController;
+use Laravel\Lumen\Routing\Controller;
 
-class AutenticacaoController extends BaseController
+class AutenticacaoController extends Controller
 {
     /**
      * @var \Illuminate\Http\Request
