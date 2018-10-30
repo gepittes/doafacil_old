@@ -5,13 +5,18 @@ import WebSocket from './views/WebSocket.vue';
 import Plataforma from './views/Plataforma.vue';
 import NaoEncontrado from './views/NaoEncontrado.vue';
 import Login from './views/Login.vue';
+import Cadastrar from './views/Cadastrar.vue';
 
 Vue.use(Router);
 
-const routes = [
+const routesObject = [
     {
       path: '/login',
       component: Login,
+    },
+    {
+      path: '/cadastrar',
+      component: Cadastrar,
     },
     {
         path: '*',
@@ -36,25 +41,27 @@ const routes = [
     },
 ];
 
-export default new Router({
+const router = new Router({
     mode: 'history',
     base: process.env.BASE_URL,
-    routes: routes,
+    routes: routesObject,
 });
-//
-// router.beforeEach((to, from, next) => {
-//
-//     const publicPages = [
-//         '/login',
-//         '/cadastrar'
-//     ];
-//
-//     const authRequired = !publicPages.includes(to.path);
-//     const loggedIn = localStorage.getItem('user');
-//
-//     if (authRequired && !loggedIn) {
-//         return next('/login');
-//     }
-//
-//     next();
-// })
+
+router.beforeEach((to, from, next) => {
+
+    const publicPages = [
+        '/login',
+        '/cadastrar'
+    ];
+
+    const authRequired = !publicPages.includes(to.path);
+    const loggedIn = localStorage.getItem('user');
+
+    if (authRequired && !loggedIn) {
+        return next('/login');
+    }
+
+    next();
+})
+
+export default router;

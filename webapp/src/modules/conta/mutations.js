@@ -2,7 +2,8 @@ import * as types from './types';
 
 export const state = {
     conta: {},
-    isLoggedIn: !!localStorage.getItem('token')
+    isLoggedIn: !!localStorage.getItem('token'),
+    pending: true
 }
 
 export const mutations = {
