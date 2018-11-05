@@ -1,12 +1,13 @@
 import {userService} from '../user/service';
 import {router} from '../_helpers';
+import * as types from './types'
 
 export const success = ({commit}, message) => {
-    commit('success', message);
+    commit(types.SUCCESS, message);
 }
 export const error = ({commit}, message) => {
-    commit('error', message);
+    commit(types.ERROR, message);
 }
 export const clear = ({commit}, message) => {
-    commit('success', message);
+    commit(types.SUCCESS, message);
 }

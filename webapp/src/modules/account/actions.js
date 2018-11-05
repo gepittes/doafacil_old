@@ -8,11 +8,11 @@ export const login = ({dispatch, commit}, {username, password}) => {
     userService.login(username, password)
         .then(
             user => {
-                commit('LOGINSUCCESS', user);
+                commit(types.LOGINSUCCESS, user);
                 router.push('/');
             },
             error => {
-                commit('LOGINFAILURE', error);
+                commit(types.LOGINFAILURE, error);
                 dispatch('alert/error', error, {root: true});
             }
         );
