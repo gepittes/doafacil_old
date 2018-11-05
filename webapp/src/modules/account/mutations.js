@@ -1,6 +1,6 @@
 import * as types from './types';
 
-export const mutations = {
+export default {
     [types.LOGINREQUEST](state, user) {
         state.status = { loggingIn: true };
         state.user = user;

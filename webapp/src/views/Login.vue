@@ -23,6 +23,8 @@
 
 <script>
     import { mapState, mapActions } from 'vuex'
+    import * as types from '../modules/account/types'
+
     export default {
         data () {
             return {
@@ -32,7 +34,10 @@
             }
         },
         computed: {
-            ...mapState('conta', ['status','loggingIn'])
+            ...mapState('account', [
+                'status',
+                'loggingIn'
+            ])
         },
         created () {
             // reset login status
@@ -44,7 +49,10 @@
             }
         },
         methods: {
-            ...mapActions('conta', ['login', 'logout']),
+            ...mapActions('account', [
+                'login',
+                'logout'
+            ]),
             handleSubmit (e) {
                 this.submitted = true;
                 const { username, password } = this;

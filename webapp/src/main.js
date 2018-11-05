@@ -9,6 +9,7 @@ import './registerServiceWorker';
 import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 
+// process.env.NODE_CONFIG_DIR = './myCustomDir'
 
 Vue.config.productionTip = false;
 

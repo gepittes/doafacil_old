@@ -1,6 +1,6 @@
 import * as types from './types';
 
-export const mutations = {
+export default {
     [types.GETALLREQUEST](state) {
         state.all = { loading: true };
     },
