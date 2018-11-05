@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import plataforma from '@/modules/plataforma';
-import conta from '@/modules/conta';
+import account from '@/modules/account';
 
 Vue.use(Vuex);
 
@@ -10,7 +10,7 @@ export default new Vuex.Store({
 
     modules: {
         plataforma,
-        conta
+        account
     }
 
 });

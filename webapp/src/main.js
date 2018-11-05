@@ -9,8 +9,6 @@ import './registerServiceWorker';
 import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 
-// import { configureFakeBackend } from './_helpers';
-// configureFakeBackend();
 
 Vue.config.productionTip = false;
 
