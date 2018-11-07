@@ -19,11 +19,11 @@ class MensagemPlataformaTable extends Migration
         });
 
         Schema::table('notificacao.mensagem_has_plataforma', function (Blueprint $table) {
-            $table->foreign('mensagem_id')->references('mensagem_id')->on('mensagem');
+            $table->foreign('mensagem_id')->references('mensagem_id')->on('notificacao.mensagem');
         });
 
         Schema::table('notificacao.mensagem_has_plataforma', function (Blueprint $table) {
-            $table->foreign('plataforma_id')->references('plataforma_id')->on('plataforma');
+            $table->foreign('plataforma_id')->references('plataforma_id')->on('notificacao.plataforma');
         });
     }
 

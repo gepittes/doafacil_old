@@ -26,10 +26,10 @@ class MensagemTable extends Migration
         Schema::table('notificacao.mensagem', function (Blueprint $table) {
             $table->foreign('sistema_id')
                 ->references('sistema_id')
-                ->on('sistema');
+                ->on('notificacao.sistema');
             $table->foreign('autor_id')
                 ->references('usuario_id')
-                ->on('usuario');
+                ->on('notificacao.usuario');
         });
     }
 
