@@ -45,7 +45,7 @@
         },
         watch: {
             status: () => {
-                console.log(this)
+                // console.log(this)
             }
         },
         methods: {
