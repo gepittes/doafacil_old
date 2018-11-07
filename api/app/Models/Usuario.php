@@ -9,7 +9,9 @@ class Usuario extends Model
     public $timestamps = false;
     public $incrementing = true;
     protected $fillable = [
-        'descricao',
+        'nome',
+        'email',
+        'password',
         'is_ativo'
     ];
     protected $primaryKey = "usuario_id";
