@@ -1,4 +1,6 @@
-import { authHeader } from '../_helpers';
+import {authHeader} from '../_helpers';
+import axios from 'axios';
+import * as types from "../plataforma/types";
 
 export const userService = {
     login,
@@ -13,8 +15,8 @@ export const userService = {
 function login(username, password) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username, password})
     };
 
     return fetch(`http://localhost/v1/autenticacao/login`, requestOptions)
@@ -38,10 +40,18 @@ function logout() {
 function register(user) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(user)
     };
 
+    // axios.get('http://localhost/v1/conta')
+    //     .then(response => {
+    //         const data = response.data;
+    //         commit(types.SET_PLATAFORMA, data.data)
+    //     })
+    //     .catch(error => {
+    //         console.log(error)
+    //     })
     return fetch(`http://localhost/v1/conta`, requestOptions).then(handleResponse);
 }
 
@@ -67,7 +77,7 @@ function getById(id) {
 function update(user) {
     const requestOptions = {
         method: 'PUT',
-        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        headers: {...authHeader(), 'Content-Type': 'application/json'},
         body: JSON.stringify(user)
     };
 
@@ -85,12 +95,12 @@ function _delete(id) {
 }
 
 function handleResponse(response) {
-console.log(response)
-console.log(response.text())
+    console.log(response)
+    console.log(response.text())
     return response.text().then(text => {
-console.log(text)
+        console.log(text)
         const data = text && JSON.parse(text);
-console.log(data)
+        console.log(data)
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api

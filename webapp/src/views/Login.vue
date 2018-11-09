@@ -1,36 +1,48 @@
 <template>
-    <div>
-        <h2>Login</h2>
-        <form @submit.prevent="handleSubmit">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" v-model="username" name="username" class="form-control" :class="{ 'is-invalid': submitted && !username }" />
-                <div v-show="submitted && !username" class="invalid-feedback">Username is required</div>
-            </div>
-            <div class="form-group">
-                <label htmlFor="password">Password</label>
-                <input type="password" v-model="password" name="password" class="form-control" :class="{ 'is-invalid': submitted && !password }" />
-                <div v-show="submitted && !password" class="invalid-feedback">Password is required</div>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-primary" :disabled="status.loggingIn">Login</button>
-                <img v-show="status.loggingIn" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                <router-link to="/register" class="btn btn-link">Register</router-link>
-            </div>
-        </form>
-    </div>
+    <v-container fluid>
+        <v-layout column justify-center>
+            <v-card flat>
+                <v-subheader>Login</v-subheader>
+
+                <v-form ref="form" v-model="valid" lazy-validation  @submit.prevent="handleSubmit">
+                    <v-text-field
+                            v-model="email"
+                            :rules="emailRules"
+                            label="E-mail"
+                            required
+                    ></v-text-field>
+                    <v-text-field
+                            v-model="password"
+                            :rules="passwordRules"
+                            label="Senha"
+                            required
+                    ></v-text-field>
+
+                    <v-btn :disabled="!valid"
+                            @click="submit"> Entrar </v-btn>
+                    <v-btn @click="clear">Limpar</v-btn>
+                </v-form>
+            </v-card>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>
-    import { mapState, mapActions } from 'vuex'
-    import * as types from '../modules/account/types'
+    import {mapState, mapActions} from 'vuex'
 
     export default {
-        data () {
+        data() {
             return {
-                username: '',
+                email: '',
+                emailRules: [
+                    v => !!v || 'E-mail obrigatório',
+                    v => /.+@.+/.test(v) || 'E-mail precisa ser válido'
+                ],
                 password: '',
-                submitted: false
+                passwordRules: [
+                    v => !!v || 'Senha obrigatória'
+                ],
+                valid: true
             }
         },
         computed: {
@@ -39,27 +51,38 @@
                 'loggingIn'
             ])
         },
-        created () {
+        created() {
             // reset login status
             this.logout();
         },
         watch: {
             status: () => {
-                // console.log(this)
+                console.log(this)
             }
         },
         methods: {
+            submit () {
+                if (this.$refs.form.validate()) {
+                    // Native form submission is not yet supported
+                    // axios.post('/api/submit', {
+                    //     name: this.name,
+                    //     email: this.email,
+                    //     select: this.select,
+                    //     checkbox: this.checkbox
+                    // })
+                    const {email, password} = this;
+                    if (email && password) {
+                        this.login({email, password})
+                    }
+                }
+            },
+            clear () {
+                this.$refs.form.reset()
+            },
             ...mapActions('account', [
                 'login',
                 'logout'
-            ]),
-            handleSubmit (e) {
-                this.submitted = true;
-                const { username, password } = this;
-                if (username && password) {
-                    this.login({ username, password })
-                }
-            }
+            ])
         }
     };
 </script>
