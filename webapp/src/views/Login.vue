@@ -4,7 +4,7 @@
             <v-card flat>
                 <v-subheader>Login</v-subheader>
 
-                <v-form ref="form" v-model="valid" lazy-validation  @submit.prevent="handleSubmit">
+                <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="handleSubmit">
                     <v-text-field
                             v-model="email"
                             :rules="emailRules"
@@ -19,7 +19,8 @@
                     ></v-text-field>
 
                     <v-btn :disabled="!valid"
-                            @click="submit"> Entrar </v-btn>
+                           @click="submit"> Entrar
+                    </v-btn>
                     <v-btn @click="clear">Limpar</v-btn>
                 </v-form>
             </v-card>
@@ -61,7 +62,7 @@
             }
         },
         methods: {
-            submit () {
+            submit() {
                 if (this.$refs.form.validate()) {
                     // Native form submission is not yet supported
                     // axios.post('/api/submit', {
@@ -76,7 +77,7 @@
                     }
                 }
             },
-            clear () {
+            clear() {
                 this.$refs.form.reset()
             },
             ...mapActions('account', [

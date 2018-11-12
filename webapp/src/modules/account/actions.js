@@ -1,21 +1,28 @@
 import {userService} from '../user/service';
-import {router} from '../_helpers';
+import router from "../../router";
 import * as types from './types'
 
-export const login = ({dispatch, commit}, {username, password}) => {
-    commit(types.LOGINREQUEST, {username});
+export const login = ({dispatch, commit}, {email, password}) => {
+    commit(types.LOGINREQUEST, {email});
 
-    userService.login(username, password)
-        .then(
-            user => {
-                commit(types.LOGINSUCCESS, user);
-                router.push('/');
-            },
-            error => {
-                commit(types.LOGINFAILURE, error);
-                dispatch('alert/error', error, {root: true});
-            }
-        );
+    userService.login(email, password)
+        .then(response => {
+            const data = response.data;
+    commit(types.SET_PLATAFORMA, data.data)
+        })
+        // .catch(error => {
+        //     console.log(error)
+        // })
+        // .then(
+        //     user => {
+        //         commit(types.LOGINSUCCESS, user);
+        //         router.push('/');
+        //     },
+        //     error => {
+        //         commit(types.LOGINFAILURE, error);
+        //         dispatch('alert/error', error, {root: true});
+        //     }
+        // );
 }
 export const logout = ({commit}) => {
     userService.logout();
