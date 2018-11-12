@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Exceptions\JsonResponseExceptionHandler;
 use App\Models\Usuario;
 use Firebase\JWT\JWT;
-use Illuminate\Support\Facades\Hash;
 use Laravel\Lumen\Routing\Controller;
 
 class AutenticacaoController extends Controller
@@ -45,9 +44,9 @@ class AutenticacaoController extends Controller
         return JWT::encode($payload, env('JWT_SECRET'));
     }
 
-    private function validarHash($hashEnviado, $hashOriginal)
+    private function validarHash($senha, $senhaBanco)
     {
-        return Hash::check($hashEnviado, $hashOriginal);
+        return password_verify($senha, $senhaBanco);
     }
 
     public function autenticar(Usuario $usuario)
@@ -62,7 +61,10 @@ class AutenticacaoController extends Controller
             throw new JsonResponseExceptionHandler('Email inexistente.');
         }
 
-        if (!$this->validarHash($this->request->input('password'), $usuario->password)) {
+        $senha = $this->request->input('password');
+        $senhaBanco = $usuario->password;
+
+        if (!$this->validarHash($senha, $senhaBanco)) {
             throw new JsonResponseExceptionHandler('Email ou senha incorretos.');
         }
 
