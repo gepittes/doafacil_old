@@ -6,6 +6,7 @@ use App\Exceptions\JsonResponseExceptionHandler;
 use App\Models\Usuario;
 use Firebase\JWT\JWT;
 use Laravel\Lumen\Routing\Controller;
+use Ratchet\Wamp\Exception;
 
 class AutenticacaoController extends Controller
 {
@@ -58,14 +59,15 @@ class AutenticacaoController extends Controller
 
         $usuario = Usuario::where('email', $this->request->input('email'))->first();
         if (!$usuario) {
-            throw new JsonResponseExceptionHandler('Email inexistente.');
+            throw new \Exception('Email inexistente.');
         }
 
         $senha = $this->request->input('password');
         $senhaBanco = $usuario->password;
 
+//return response()->json([123123]);
         if (!$this->validarHash($senha, $senhaBanco)) {
-            throw new JsonResponseExceptionHandler('Email ou senha incorretos.');
+            throw new \Exception('Email ou senha incorretos.');
         }
 
         return response()->json([
