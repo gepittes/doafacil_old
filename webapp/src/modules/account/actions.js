@@ -8,21 +8,30 @@ export const login = ({dispatch, commit}, {email, password}) => {
     userService.login(email, password)
         .then(response => {
             const data = response.data;
-    commit(types.SET_PLATAFORMA, data.data)
+            if(data) {
+                commit(types.LOGINSUCCESS, data);
+                router.push('/')
+            }
         })
-        // .catch(error => {
-        //     console.log(error)
-        // })
-        // .then(
-        //     user => {
-        //         commit(types.LOGINSUCCESS, user);
-        //         router.push('/');
-        //     },
-        //     error => {
-        //         commit(types.LOGINFAILURE, error);
-        //         dispatch('alert/error', error, {root: true});
-        //     }
-        // );
+        .catch((error) => {
+            console.log(error.request.status)
+            commit(types.LOGINFAILURE, error.request);
+            dispatch('alert/error', error.request, {root: true});
+        }
+)
+    // .catch(error => {
+    //     console.log(error)
+    // })
+    // .then(
+    //     user => {
+    // commit(types.LOGINSUCCESS, user);
+    // router.push('/');
+    //     },
+    //     error => {
+    //         commit(types.LOGINFAILURE, error);
+    //         dispatch('alert/error', error, {root: true});
+    //     }
+    // );
 }
 export const logout = ({commit}) => {
     userService.logout();

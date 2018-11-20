@@ -4,7 +4,7 @@
             <v-card flat>
                 <v-subheader>Login</v-subheader>
 
-                <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="handleSubmit">
+                <v-form ref="form" v-model="valid" lazy-validation>
                     <v-text-field
                             v-model="email"
                             :rules="emailRules"
@@ -58,7 +58,7 @@
         },
         watch: {
             status: () => {
-                console.log(this)
+                // console.log(this)
             }
         },
         methods: {

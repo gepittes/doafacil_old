@@ -21,13 +21,10 @@ function login(email, password) {
         if (response.data.token) {
             localStorage.setItem('user', JSON.stringify(response.data.token));
         }
-    }).catch(error => {
-        console.log(error)
     })
 }
 
 function logout() {
-    // remove user from local storage to log user out
     localStorage.removeItem('user');
 }
 
