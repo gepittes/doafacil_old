@@ -18,8 +18,8 @@ function login(email, password) {
         email: email,
         password: password
     }).then(response => {
-        if (response.data.token) {
-            localStorage.setItem('user', JSON.stringify(response.data.token));
+        if (response.data.data.token) {
+            localStorage.setItem('user', JSON.stringify(response.data.data.token));
         }
     })
 }

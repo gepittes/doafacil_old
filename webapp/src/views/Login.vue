@@ -12,6 +12,7 @@
                             required
                     ></v-text-field>
                     <v-text-field
+                            type="password"
                             v-model="password"
                             :rules="passwordRules"
                             label="Senha"

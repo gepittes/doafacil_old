@@ -26,6 +26,7 @@ const routesObject = [
     {
         path: '/',
         component: Home,
+        name: 'home'
     },
     {
         path: '/websocket',
@@ -56,7 +57,8 @@ router.beforeEach((to, from, next) => {
 
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
-
+console.log(loggedIn);
+console.log(authRequired);
     if (authRequired && !loggedIn) {
         return next('/login');
     }
