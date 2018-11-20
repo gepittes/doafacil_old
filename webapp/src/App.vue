@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-navigation-drawer persistent
+        <v-navigation-drawer v-if="isLoggedIn" persistent
                              :mini-variant="miniVariant"
                              clipped="clipped"
                              v-model="drawer"
@@ -23,7 +23,7 @@
             </v-list>
         </v-navigation-drawer>
         <v-toolbar app :clipped-left="clipped">
-            <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+            <v-toolbar-side-icon v-if="isLoggedIn" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-toolbar-title v-text="title"></v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
@@ -41,6 +41,8 @@
         <!--<v-footer :fixed="fixed" app>-->
         <!--<span>&copy; 2018</span>-->
         <!--</v-footer>-->
+
+
     </v-app>
 </template>
 
