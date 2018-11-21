@@ -1,14 +1,15 @@
 import {userService} from '../user/service';
 import * as types from './types'
+import router from '../../router'
 
 export const login = ({dispatch, commit}, {email, password}) => {
     commit(types.LOGINREQUEST, {email});
 
     return userService.login(email, password)
         .then(response => {
-console.log(response);
             if(response.data && response.data.data) {
                 const data = response.data.data;
+            console.log(response.data.data);
                 if(data) {
                     if (data.token) {
                         localStorage.setItem('user', JSON.stringify(data.token));
@@ -17,7 +18,9 @@ console.log(response);
                     dispatch('alert/success', 'Login realizado com sucesso!', {
                         root: true
                     });
-                    this.$router.push('home')
+                    console.log('rota disparada??????');
+                    router.push({ name: 'home' })
+                    console.log('rota disparada!');
                 }
             }
         })
@@ -28,8 +31,7 @@ console.log(response);
                     root: true
                 });
             }
-        }
-)
+        })
 }
 export const logout = ({commit}) => {
     userService.logout();
@@ -42,7 +44,7 @@ export const register = ({dispatch, commit}, user) => {
         .then(
             user => {
                 commit(types.REGISTERSUCCESS, user);
-                this.$router.push('/login')
+                router.push('/login')
                 setTimeout(() => {
                     dispatch('alert/success', 'Registration successful', {root: true});
                 })

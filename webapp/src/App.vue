@@ -85,7 +85,8 @@
                 miniVariant: false,
                 right: true,
                 rightDrawer: false,
-                title: 'Notification WebApp'
+                title: 'Notification WebApp',
+                isLoggedIn: localStorage.getItem('user')
             };
         },
         computed: {
@@ -93,7 +94,6 @@
                 alert: state => state.alert,
                 // isLoggedIn: state => state.isLoggedIn
             }),
-            isLoggedIn: localStorage.getItem('user')
         },
         methods: {
             ...mapActions({
