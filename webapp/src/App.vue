@@ -91,8 +91,9 @@
         computed: {
             ...mapState({
                 alert: state => state.alert,
-                isLoggedIn: state => state.isLoggedIn
-            })
+                // isLoggedIn: state => state.isLoggedIn
+            }),
+            isLoggedIn: localStorage.getItem('user')
         },
         methods: {
             ...mapActions({

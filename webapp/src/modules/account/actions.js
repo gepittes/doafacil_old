@@ -4,11 +4,15 @@ import * as types from './types'
 export const login = ({dispatch, commit}, {email, password}) => {
     commit(types.LOGINREQUEST, {email});
 
-    userService.login(email, password)
+    return userService.login(email, password)
         .then(response => {
-            if(response.data) {
-                const data = response.data;
+console.log(response);
+            if(response.data && response.data.data) {
+                const data = response.data.data;
                 if(data) {
+                    if (data.token) {
+                        localStorage.setItem('user', JSON.stringify(data.token));
+                    }
                     commit(types.LOGINSUCCESS, data);
                     dispatch('alert/success', 'Login realizado com sucesso!', {
                         root: true
