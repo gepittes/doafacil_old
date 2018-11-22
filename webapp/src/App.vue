@@ -18,7 +18,7 @@
                     </v-list-tile-avatar>
 
                     <v-list-tile-content>
-                        <v-list-tile-title>aaaa</v-list-tile-title>
+                        <v-list-tile-title>{{this.getJWTInformation()}}</v-list-tile-title>
                     </v-list-tile-content>
 
                     <v-list-tile-action>
@@ -107,6 +107,7 @@
                 rightDrawer: false,
                 title: 'Notification WebApp',
                 // isLoggedIn: localStorage.getItem('user')
+                userInformation: {}
             };
         },
         computed: {
@@ -121,7 +122,8 @@
         },
         methods: {
             ...mapActions({
-                clearAlert: 'alert/clear'
+                clearAlert: 'alert/clear',
+                getJWTInformation: 'account/getJWTInformation'
             })
         },
         watch: {
@@ -129,6 +131,10 @@
                 // clear alert on location change
                 this.clearAlert();
             }
+        },
+        mounted() {
+            this.getJWTInformation().then(result => {console.log(result)});
         }
+
     }
 </script>

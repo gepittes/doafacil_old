@@ -1,6 +1,7 @@
 import {userService} from '../user/service';
 import * as types from './types'
 import router from '../../router'
+import jwt_decode from 'jwt-decode';
 
 export const login = ({dispatch, commit}, {email, password}) => {
     commit(types.LOGINREQUEST, {email});
@@ -53,4 +54,8 @@ export const register = ({dispatch, commit}, user) => {
                 dispatch('alert/error', error, {root: true});
             }
         );
+}
+
+export const getJWTInformation = ({}) => {
+    return jwt_decode(localStorage.getItem('user'))
 }
