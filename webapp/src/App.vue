@@ -18,7 +18,7 @@
                     </v-list-tile-avatar>
 
                     <v-list-tile-content>
-                        <v-list-tile-title>{{this.getJWTInformation()}}</v-list-tile-title>
+                        <v-list-tile-title>{{this.userInformation.name}}</v-list-tile-title>
                     </v-list-tile-content>
 
                     <v-list-tile-action>
@@ -133,7 +133,9 @@
             }
         },
         mounted() {
-            this.getJWTInformation().then(result => {console.log(result)});
+            this.getJWTInformation().then(result => {
+                this.userInformation = result.user
+            });
         }
 
     }
