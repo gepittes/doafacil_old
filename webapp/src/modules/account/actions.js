@@ -18,9 +18,8 @@ export const login = ({dispatch, commit}, {email, password}) => {
                     dispatch('alert/success', 'Login realizado com sucesso!', {
                         root: true
                     });
-                    console.log('rota disparada??????');
+
                     router.push({ name: 'home' })
-                    console.log('rota disparada!');
                 }
             }
         })
