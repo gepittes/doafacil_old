@@ -24,13 +24,13 @@ class NotificacaoTable extends Migration
         Schema::table('notificacao.notificacao', function (Blueprint $table) {
             $table->foreign('notificacao_id')
                 ->references('notificacao_id')
-                ->on('notificacao');
+                ->on('notificacao.notificacao');
             $table->foreign('destinatario_id')
-                ->references('destinatario_id')
-                ->on('destinatario');
+                ->references('usuario_id')
+                ->on('notificacao.usuario');
             $table->foreign('mensagem_id')
                 ->references('mensagem_id')
-                ->on('mensagem');
+                ->on('notificacao.mensagem');
         });
     }
 

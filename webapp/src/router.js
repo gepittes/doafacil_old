@@ -15,7 +15,7 @@ const routesObject = [
       component: Login,
     },
     {
-      path: '/cadastrar',
+      path: '/register',
       component: Cadastrar,
     },
     {
@@ -26,6 +26,7 @@ const routesObject = [
     {
         path: '/',
         component: Home,
+        name: 'home'
     },
     {
         path: '/websocket',
@@ -51,7 +52,7 @@ router.beforeEach((to, from, next) => {
 
     const publicPages = [
         '/login',
-        '/cadastrar'
+        '/register'
     ];
 
     const authRequired = !publicPages.includes(to.path);

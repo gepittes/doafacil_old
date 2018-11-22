@@ -22,7 +22,9 @@ class Conta implements IService
     public function criar(array $dados = []): ModeloUsuario
     {
         $validator = Validator::make($dados, [
-            "descricao" => 'required|string|min:3|max:50'
+            "nome" => 'required|string|min:3|max:50',
+            "email" => 'required|string|min:3|max:50',
+            "password" => 'required|string|min:3|max:50',
         ]);
 
         if ($validator->fails()) {
@@ -32,7 +34,7 @@ class Conta implements IService
         /**
          * @var $usuarioExistente \Illuminate\Database\Eloquent\Collection
          */
-        $usuarioExistente = ModeloUsuario::where('descricao', $dados['descricao'])->get();
+        $usuarioExistente = ModeloUsuario::where('email', $dados['email'])->get();
         if (count($usuarioExistente->toArray()) > 0) {
             throw new \Exception("Usu&aacute;rio existente");
         }

@@ -9,10 +9,10 @@ import './registerServiceWorker';
 import VeeValidate from 'vee-validate';
 Vue.use(VeeValidate);
 
-// import { configureFakeBackend } from './_helpers';
-// configureFakeBackend();
+// process.env.NODE_CONFIG_DIR = './config'
 
-Vue.config.productionTip = false;
+import { configureFakeBackend } from './modules/_helpers';
+configureFakeBackend();
 
 new Vue({
   router,
