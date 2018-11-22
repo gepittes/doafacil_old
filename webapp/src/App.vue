@@ -100,7 +100,12 @@
                         icon: 'bubble_chart',
                         title: 'Sobre',
                         to: "/about"
-                    }
+                    },
+                    {
+                        icon: 'bubble_chart',
+                        title: 'Sair',
+                        to: "/login"
+                    },
                 ],
                 miniVariant: false,
                 right: true,
