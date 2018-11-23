@@ -81,13 +81,13 @@
                 fixed: false,
                 items: [
                     {
-                        icon: 'bubble_chart',
-                        title: 'Hello!',
+                        icon: 'home',
+                        title: 'Início!',
                         to: "/"
                     },
                     {
-                        icon: 'bubble_chart',
-                        title: 'WebSocket',
+                        icon: 'chat',
+                        title: 'Chat - WebSocket',
                         to: "/websocket"
                     },
                     {
@@ -96,12 +96,12 @@
                         to: "/plataforma"
                     },
                     {
-                        icon: 'bubble_chart',
+                        icon: 'info',
                         title: 'Sobre',
                         to: "/about"
                     },
                     {
-                        icon: 'bubble_chart',
+                        icon: 'exit_to_app',
                         title: 'Sair',
                         to: "/login"
                     },
