@@ -15,7 +15,7 @@ const routesObject = [
       component: Login,
     },
     {
-      path: '/register',
+      path: '/cadastrar',
       component: Cadastrar,
     },
     {
@@ -52,7 +52,7 @@ router.beforeEach((to, from, next) => {
 
     const publicPages = [
         '/login',
-        '/register'
+        '/cadastrar'
     ];
 
     const authRequired = !publicPages.includes(to.path);

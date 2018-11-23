@@ -5,28 +5,30 @@
                              clipped="clipped"
                              v-model="drawer"
                              enable-resize-watcher
-
+                             dark color="primary"
                              temporary
                              app>
-            <v-list class="pa-1">
-                <v-list-tile avatar tag="div">
-                    <v-list-tile-avatar>
-                        <i class="material-icons">
-                            account_circle
-                        </i>
-                    </v-list-tile-avatar>
+            <v-card dark color="primary">
+                <v-list class="pa-1">
+                    <v-list-tile avatar tag="div">
+                        <v-list-tile-avatar>
+                            <i class="material-icons">
+                                account_circle
+                            </i>
+                        </v-list-tile-avatar>
 
-                    <v-list-tile-content>
-                        <v-list-tile-title>{{this.userInformation.name}}</v-list-tile-title>
-                    </v-list-tile-content>
+                        <v-list-tile-content>
+                            <v-list-tile-title>{{this.userInformation.name}}</v-list-tile-title>
+                        </v-list-tile-content>
 
-                    <v-list-tile-action>
-                        <v-btn icon @click.stop="drawer = !drawer">
-                            <v-icon>chevron_left</v-icon>
-                        </v-btn>
-                    </v-list-tile-action>
-                </v-list-tile>
-            </v-list>
+                        <v-list-tile-action>
+                            <v-btn icon @click.stop="drawer = !drawer">
+                                <v-icon>chevron_left</v-icon>
+                            </v-btn>
+                        </v-list-tile-action>
+                    </v-list-tile>
+                </v-list>
+            </v-card>
             <v-list class="pt-0">
                 <v-divider></v-divider>
 
@@ -87,7 +89,7 @@
                     },
                     {
                         icon: 'chat',
-                        title: 'Chat - WebSocket',
+                        title: 'Chat',
                         to: "/websocket"
                     },
                     {

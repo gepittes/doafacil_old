@@ -1,39 +1,47 @@
 <template>
-    <v-container fluid grid-list-md text-xs-center>
-        <v-layout row wrap>
-            <v-flex xs12 sm12 md6>
-                <h1>WebSocket</h1>
-                <v-form @submit="sendMessage">
-                    <v-text-field
-                            v-model="sistema"
-                            label="Sistema"
-                            required></v-text-field>
-                    <v-text-field
-                            v-model="usuario"
-                            :counter="15"
-                            label="Usuario"
-                            required></v-text-field>
-                        <v-textarea
-                                solo
-                                v-model="mensagem"
-                                label="mensagem"
-                                ref="mensagem"
-                                required></v-textarea>
-                    <v-flex xs12>
-                        <div style="display: inline" ref="mensagem-completa">
-                            <span v-if="sistema != ''" style="color:dodgerblue">[{{sistema}}]</span>
-                            <span v-if="usuario != ''" style="color:dodgerblue">{{usuario}}:</span>
-                            <span v-if="mensagem != ''" style="color:yellowgreen">{{mensagem}}</span>
-                        </div>
-                    </v-flex>
-                    <v-btn v-if="isEnviando == false" @click="sendMessage">
-                        Enviar
-                    </v-btn>
-                    <v-progress-circular v-if="isEnviando == true"
-                            indeterminate
-                            color="green"></v-progress-circular>
+    <v-container fluid fill-height>
+        <v-layout align-center justify-center>
+            <v-flex xs12 sm8 md4>
+                <v-layout column justify-center>
+                    <v-card dark class="elevation-12">
+                        <v-toolbar dark color="success">
+                            <v-toolbar-title>Chat (WebSocket)</v-toolbar-title>
+                        </v-toolbar>
+                        <v-card-text>
+                            <v-form @submit="sendMessage">
+                                <v-text-field
+                                        v-model="sistema"
+                                        label="Sistema"
+                                        required></v-text-field>
+                                <v-text-field
+                                        v-model="usuario"
+                                        :counter="15"
+                                        label="Usuario"
+                                        required></v-text-field>
+                                <v-textarea
+                                        solo
+                                        v-model="mensagem"
+                                        label="mensagem"
+                                        ref="mensagem"
+                                        required></v-textarea>
+                                <v-flex xs12>
+                                    <div style="display: inline" ref="mensagem-completa">
+                                        <span v-if="sistema != ''" style="color:dodgerblue">[{{sistema}}]</span>
+                                        <span v-if="usuario != ''" style="color:dodgerblue">{{usuario}}:</span>
+                                        <span v-if="mensagem != ''" style="color:yellowgreen">{{mensagem}}</span>
+                                    </div>
+                                </v-flex>
+                                <v-btn light color="primary" v-if="isEnviando == false" @click="sendMessage">
+                                    Enviar
+                                </v-btn>
+                                <v-progress-circular v-if="isEnviando == true"
+                                                     indeterminate
+                                                     color="green"></v-progress-circular>
 
-                </v-form>
+                            </v-form>
+                        </v-card-text>
+                    </v-card>
+                </v-layout>
             </v-flex>
         </v-layout>
 
@@ -63,7 +71,7 @@
                 let base = this;
                 base.isEnviando = true;
 
-                setTimeout(function() {
+                setTimeout(function () {
                     base.isEnviando = false;
                 }, 1000)
                 this.websocket.connection.send(this.sistema + '|' + this.usuario + ':' + this.mensagem);
