@@ -1,11 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Login from './views/Login.vue';
+import Cadastrar from './views/Cadastrar.vue';
 import Home from './views/Home.vue';
 import WebSocket from './views/WebSocket.vue';
 import Plataforma from './views/Plataforma.vue';
 import NaoEncontrado from './views/NaoEncontrado.vue';
-import Login from './views/Login.vue';
-import Cadastrar from './views/Cadastrar.vue';
+import Sistema from './views/Sistema.vue';
 
 Vue.use(Router);
 
@@ -35,6 +36,10 @@ const routesObject = [
     {
         path: '/plataforma',
         component: Plataforma,
+    },
+    {
+        path: '/sistema',
+        component: Sistema,
     },
     {
         path: '/about',

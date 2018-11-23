@@ -84,7 +84,7 @@
                 items: [
                     {
                         icon: 'home',
-                        title: 'Início!',
+                        title: 'Início',
                         to: "/"
                     },
                     {
@@ -94,8 +94,13 @@
                     },
                     {
                         icon: 'devices',
-                        title: 'Plataforma',
+                        title: 'Plataformas',
                         to: "/plataforma"
+                    },
+                    {
+                        icon: 'settings_system_daydream',
+                        title: 'Sistemas',
+                        to: "/sistema"
                     },
                     {
                         icon: 'info',
