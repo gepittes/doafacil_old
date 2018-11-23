@@ -1,6 +1,6 @@
 <template>
     <v-container fluid>
-        <v-card color="">
+        <v-card color="" >
             <v-toolbar dark color="success">
                 <v-toolbar-title>Olá!</v-toolbar-title>
             </v-toolbar>
