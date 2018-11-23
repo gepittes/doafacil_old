@@ -11,7 +11,6 @@
             <v-list class="pa-1">
                 <v-list-tile avatar tag="div">
                     <v-list-tile-avatar>
-                        <!--<img src="https://randomuser.me/api/portraits/men/85.jpg">-->
                         <i class="material-icons">
                             account_circle
                         </i>

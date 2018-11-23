@@ -7,8 +7,6 @@
                     <v-toolbar dark color="primary">
                         <v-toolbar-title>Login</v-toolbar-title>
                     </v-toolbar>
-                    <!--<v-subheader>Login</v-subheader>-->
-
                     <v-card-text>
                         <v-form ref="form" v-model="valid" lazy-validation>
                             <v-text-field

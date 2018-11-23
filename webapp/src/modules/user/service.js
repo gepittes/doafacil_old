@@ -18,9 +18,6 @@ function login(email, password) {
         email: email,
         password: password
     })
-    //     .then(response => {
-    //
-    // })
 }
 
 function logout() {
