@@ -1,9 +1,5 @@
 import * as types from './types';
 
-export const state = {
-    sistema: {}
-}
-
 export const mutations = {
     [types.SET_SISTEMA](state, sistema) {
         state.sistema = sistema
