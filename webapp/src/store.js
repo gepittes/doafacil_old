@@ -6,6 +6,7 @@ import user from '@/modules/user';
 import alert from '@/modules/alert';
 import plataforma from '@/modules/plataforma';
 import sistema from '@/modules/sistema';
+import mensagem from '@/modules/mensagem';
 
 Vue.use(Vuex);
 
@@ -16,7 +17,8 @@ export default new Vuex.Store({
         user,
         alert,
         plataforma,
-        sistema
+        sistema,
+        mensagem
     },
     strict: true
 });
