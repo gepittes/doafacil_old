@@ -7,6 +7,7 @@ import WebSocket from './views/WebSocket.vue';
 import Plataforma from './views/Plataforma.vue';
 import NaoEncontrado from './views/NaoEncontrado.vue';
 import Sistema from './views/Sistema.vue';
+import Mensagem from './views/Mensagem.vue';
 
 Vue.use(Router);
 
@@ -42,8 +43,12 @@ const routesObject = [
         component: Sistema,
     },
     {
-        path: '/about',
-        component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+        path: '/mensagem',
+        component: Mensagem,
+    },
+    {
+        path: '/sobre',
+        component: () => import(/* webpackChunkName: "about" */ './views/Sobre.vue'),
     },
 ];
 

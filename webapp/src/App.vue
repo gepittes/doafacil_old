@@ -103,6 +103,11 @@
                         to: "/sistema"
                     },
                     {
+                        icon: 'chat',
+                        title: 'Mensagens',
+                        to: "/mensagem"
+                    },
+                    {
                         icon: 'info',
                         title: 'Sobre',
                         to: "/about"
