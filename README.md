@@ -103,16 +103,16 @@ docker-compose up --build --force-recreate
                 - [x] listar
                 - [x] cadastrar
                 - [x] remover
+            - [x] sistema
+                - [x] consultar
+                - [x] listar
+                - [x] cadastrar
+                - [x] remover
             - [ ] notificacoes
                 - [ ] enviar
                 - [ ] listar
                 - [ ] consultar
             - [ ] tipo_notificacao
-                - [ ] consultar
-                - [ ] listar
-                - [ ] cadastrar
-                - [ ] remover
-            - [ ] sistema
                 - [ ] consultar
                 - [ ] listar
                 - [ ] cadastrar
