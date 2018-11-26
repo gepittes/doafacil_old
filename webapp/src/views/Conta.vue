@@ -2,29 +2,22 @@
     <v-container fluid>
         <v-layout column justify-center>
             <v-card flat dark>
-                <v-toolbar dark color="success">
-                    <v-toolbar-title>Mensagems</v-toolbar-title>
+                <v-toolbar dark color="primary">
+                    <v-toolbar-title>Contas</v-toolbar-title>
                     <v-dialog v-model="dialog" max-width="500px">
                         <v-card>
                             <v-card-title>
-                                <span class="headline">{{ formTitle }} Mensagem</span>
+                                <span class="headline">{{ formTitle }} Conta</span>
                             </v-card-title>
 
                             <v-card-text>
                                 <v-container grid-list-md>
                                     <v-layout wrap>
                                         <v-flex xs12 sm6 md12>
-                                            <v-text-field v-model="editedItem.titulo"
-                                                          label="Título"></v-text-field>
-                                            <v-text-field v-model="editedItem.descricao"
-                                                          label="Descrição"></v-text-field>
-                                            <v-select v-model="editedItem.sistema_id"
-                                                      :items="sistemasIniciais"
-                                                      :rules="[v => !!v || 'Campo obrigatório']"
-                                                      label="Sistema"
-                                                      item-text="descricao"
-                                                      item-value="sistema_id"
-                                                      required></v-select>
+                                            <v-text-field v-model="editedItem.nome"
+                                                          label="Nome"></v-text-field>
+                                            <v-text-field v-model="editedItem.email"
+                                                          label="E-mail"></v-text-field>
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
@@ -39,9 +32,10 @@
                                 <v-btn color="blue darken-1" flat @click.native="close">Cancelar</v-btn>
                                 <v-btn v-if="!loading" color="blue darken-1" flat @click.native="save">Gravar
                                 </v-btn>
-                                <v-progress-circular v-if="loading"
-                                                     indeterminate
-                                                     color="primary"></v-progress-circular>
+                                <v-progress-circular
+                                        v-if="loading"
+                                        indeterminate
+                                        color="primary"></v-progress-circular>
                             </v-card-actions>
                         </v-card>
                         <v-btn color="blue"
@@ -53,13 +47,13 @@
                 </v-toolbar>
                 <v-card-text>
                     <v-data-table light
-                                  :headers="headers"
-                                  :items="mensagemsIniciais"
-                                  class="elevation-1">
+                            :headers="headers"
+                            :items="contasIniciais"
+                            class="elevation-1">
                         <template slot="items" slot-scope="props">
-                            <td class="text-xs-center">{{ props.item.mensagem_id }}</td>
-                            <td class="text-xs-center">{{ props.item.titulo }}</td>
-                            <td class="text-xs-center">{{ props.item.descricao }}</td>
+                            <td class="text-xs-center">{{ props.item.usuario_id }}</td>
+                            <td class="text-xs-center">{{ props.item.nome }}</td>
+                            <td class="text-xs-center">{{ props.item.email }}</td>
                             <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
                             <td class="justify-center layout px-0">
                                 <v-icon small
@@ -74,13 +68,15 @@
                             </td>
                         </template>
                         <template slot="no-data">
-                            <v-btn color="primary" @click="this.obterMensagems">Reset</v-btn>
+                            <v-btn color="primary" @click="this.obterContas">Reset</v-btn>
                         </template>
                     </v-data-table>
                 </v-card-text>
             </v-card>
         </v-layout>
+
     </v-container>
+
 </template>
 <script>
 
@@ -98,13 +94,13 @@
                     value: 'name'
                 },
                 {
-                    text: 'Título',
-                    value: 'titulo',
+                    text: 'Nome',
+                    value: 'nome',
                     align: 'center'
                 },
                 {
-                    text: 'Descrição',
-                    value: 'descricao',
+                    text: 'E-mail',
+                    value: 'email',
                     align: 'center'
                 },
                 {
@@ -119,11 +115,10 @@
                     sortable: false,
                 },
             ],
-            mensagemsIniciais: [],
-            sistemasIniciais: [],
+            contasIniciais: [],
             editedIndex: -1,
             editedItem: {
-                mensagem_id: 0,
+                usuario_id: 0,
                 descricao: '',
                 is_ativo: true,
             },
@@ -141,8 +136,7 @@
                 return this.editedIndex === -1 ? 'Criar' : 'Editar'
             },
             ...mapGetters({
-                mensagems: 'mensagem/mensagem',
-                sistemas: 'sistema/sistema'
+                contas: 'conta/conta'
             }),
         },
 
@@ -150,52 +144,39 @@
             dialog(val) {
                 val || this.close()
             },
-            mensagems(value) {
+            contas(value) {
                 if ('error' in value) {
                     alert(value.error);
-                    this.mensagemsIniciais = [];
+                    this.contasIniciais = [];
                 } else {
-                    this.mensagemsIniciais = value;
+                    this.contasIniciais = value;
                 }
             },
-            sistemas(value) {
-                if ('error' in value) {
-                    this.sistemasIniciais = [];
-                } else {
-                    this.sistemasIniciais = value;
-                }
-            }
 
         },
 
         created() {
-            this.obterMensagems();
-        },
-        mounted() {
-            if(this.sistemas.length == null) {
-                this.obterSistemas();
-            }
+            this.obterContas();
         },
 
         methods: {
 
             ...mapActions({
-                obterSistemas: 'sistema/obterSistemas',
-                obterMensagems: 'mensagem/obterMensagems',
-                removerMensagem: 'mensagem/removerMensagem',
-                cadastrarMensagem: 'mensagem/cadastrarMensagem',
-                atualizarMensagem: 'mensagem/atualizarMensagem',
+                obterContas: 'conta/obterContas',
+                removerConta: 'conta/removerConta',
+                cadastrarConta: 'conta/cadastrarConta',
+                atualizarConta: 'conta/atualizarConta',
             }),
 
             editItem(item) {
-                this.editedIndex = this.mensagems.indexOf(item)
+                this.editedIndex = this.contas.indexOf(item)
                 this.editedItem = Object.assign({}, item)
                 this.dialog = true
             },
 
             deleteItem(item) {
                 if (confirm('Deseja remover esse item?')) {
-                    this.removerMensagem(item.mensagem_id);
+                    this.removerConta(item.usuario_id);
                 }
             },
 
@@ -212,9 +193,9 @@
                 self.loading = true;
 
                 if (self.editedIndex > -1) {
-                    this.atualizarMensagem(self.editedItem)
+                    this.atualizarConta(self.editedItem)
                 } else {
-                    this.cadastrarMensagem(self.editedItem)
+                    this.cadastrarConta(self.editedItem)
                 }
                 self.close()
             }

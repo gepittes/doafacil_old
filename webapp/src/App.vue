@@ -108,6 +108,11 @@
                         to: "/mensagem"
                     },
                     {
+                        icon: 'account_circle',
+                        title: 'Contas',
+                        to: "/conta"
+                    },
+                    {
                         icon: 'info',
                         title: 'Sobre',
                         to: "/about"
