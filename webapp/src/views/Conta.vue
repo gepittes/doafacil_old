@@ -2,20 +2,22 @@
     <v-container fluid>
         <v-layout column justify-center>
             <v-card flat dark>
-                <v-toolbar dark color="success">
-                    <v-toolbar-title>Usuarios</v-toolbar-title>
+                <v-toolbar dark color="primary">
+                    <v-toolbar-title>Contas</v-toolbar-title>
                     <v-dialog v-model="dialog" max-width="500px">
                         <v-card>
                             <v-card-title>
-                                <span class="headline">{{ formTitle }} Usuario</span>
+                                <span class="headline">{{ formTitle }} Conta</span>
                             </v-card-title>
 
                             <v-card-text>
                                 <v-container grid-list-md>
                                     <v-layout wrap>
                                         <v-flex xs12 sm6 md12>
-                                            <v-text-field v-model="editedItem.descricao"
-                                                          label="Descrição"></v-text-field>
+                                            <v-text-field v-model="editedItem.nome"
+                                                          label="Nome"></v-text-field>
+                                            <v-text-field v-model="editedItem.email"
+                                                          label="E-mail"></v-text-field>
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
@@ -46,11 +48,12 @@
                 <v-card-text>
                     <v-data-table light
                             :headers="headers"
-                            :items="usuariosIniciais"
+                            :items="contasIniciais"
                             class="elevation-1">
                         <template slot="items" slot-scope="props">
                             <td class="text-xs-center">{{ props.item.usuario_id }}</td>
-                            <td class="text-xs-center">{{ props.item.descricao }}</td>
+                            <td class="text-xs-center">{{ props.item.nome }}</td>
+                            <td class="text-xs-center">{{ props.item.email }}</td>
                             <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
                             <td class="justify-center layout px-0">
                                 <v-icon small
@@ -65,7 +68,7 @@
                             </td>
                         </template>
                         <template slot="no-data">
-                            <v-btn color="primary" @click="this.obterUsuarios">Reset</v-btn>
+                            <v-btn color="primary" @click="this.obterContas">Reset</v-btn>
                         </template>
                     </v-data-table>
                 </v-card-text>
@@ -91,8 +94,13 @@
                     value: 'name'
                 },
                 {
-                    text: 'Descrição',
-                    value: 'descricao',
+                    text: 'Nome',
+                    value: 'nome',
+                    align: 'center'
+                },
+                {
+                    text: 'E-mail',
+                    value: 'email',
                     align: 'center'
                 },
                 {
@@ -107,7 +115,7 @@
                     sortable: false,
                 },
             ],
-            usuariosIniciais: [],
+            contasIniciais: [],
             editedIndex: -1,
             editedItem: {
                 usuario_id: 0,
@@ -128,7 +136,7 @@
                 return this.editedIndex === -1 ? 'Criar' : 'Editar'
             },
             ...mapGetters({
-                usuarios: 'usuario/usuario'
+                contas: 'conta/conta'
             }),
         },
 
@@ -136,39 +144,39 @@
             dialog(val) {
                 val || this.close()
             },
-            usuarios(value) {
+            contas(value) {
                 if ('error' in value) {
                     alert(value.error);
-                    this.usuariosIniciais = [];
+                    this.contasIniciais = [];
                 } else {
-                    this.usuariosIniciais = value;
+                    this.contasIniciais = value;
                 }
             },
 
         },
 
         created() {
-            this.obterUsuarios();
+            this.obterContas();
         },
 
         methods: {
 
             ...mapActions({
-                obterUsuarios: 'usuario/obterUsuarios',
-                removerUsuario: 'usuario/removerUsuario',
-                cadastrarUsuario: 'usuario/cadastrarUsuario',
-                atualizarUsuario: 'usuario/atualizarUsuario',
+                obterContas: 'conta/obterContas',
+                removerConta: 'conta/removerConta',
+                cadastrarConta: 'conta/cadastrarConta',
+                atualizarConta: 'conta/atualizarConta',
             }),
 
             editItem(item) {
-                this.editedIndex = this.usuarios.indexOf(item)
+                this.editedIndex = this.contas.indexOf(item)
                 this.editedItem = Object.assign({}, item)
                 this.dialog = true
             },
 
             deleteItem(item) {
                 if (confirm('Deseja remover esse item?')) {
-                    this.removerUsuario(item.usuario_id);
+                    this.removerConta(item.usuario_id);
                 }
             },
 
@@ -185,9 +193,9 @@
                 self.loading = true;
 
                 if (self.editedIndex > -1) {
-                    this.atualizarUsuario(self.editedItem)
+                    this.atualizarConta(self.editedItem)
                 } else {
-                    this.cadastrarUsuario(self.editedItem)
+                    this.cadastrarConta(self.editedItem)
                 }
                 self.close()
             }
