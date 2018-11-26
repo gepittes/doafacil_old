@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import account from '@/modules/account';
 import user from '@/modules/user';
 import alert from '@/modules/alert';
+import conta from '@/modules/conta';
 import plataforma from '@/modules/plataforma';
 import sistema from '@/modules/sistema';
 import mensagem from '@/modules/mensagem';
@@ -18,6 +19,7 @@ export default new Vuex.Store({
         alert,
         plataforma,
         sistema,
+        conta,
         mensagem
     },
     strict: true
