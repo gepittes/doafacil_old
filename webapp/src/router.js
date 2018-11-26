@@ -1,11 +1,13 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Login from './views/Login.vue';
+import Cadastrar from './views/Cadastrar.vue';
 import Home from './views/Home.vue';
 import WebSocket from './views/WebSocket.vue';
 import Plataforma from './views/Plataforma.vue';
 import NaoEncontrado from './views/NaoEncontrado.vue';
-import Login from './views/Login.vue';
-import Cadastrar from './views/Cadastrar.vue';
+import Sistema from './views/Sistema.vue';
+import Mensagem from './views/Mensagem.vue';
 
 Vue.use(Router);
 
@@ -15,7 +17,7 @@ const routesObject = [
       component: Login,
     },
     {
-      path: '/register',
+      path: '/cadastrar',
       component: Cadastrar,
     },
     {
@@ -37,8 +39,16 @@ const routesObject = [
         component: Plataforma,
     },
     {
-        path: '/about',
-        component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+        path: '/sistema',
+        component: Sistema,
+    },
+    {
+        path: '/mensagem',
+        component: Mensagem,
+    },
+    {
+        path: '/sobre',
+        component: () => import(/* webpackChunkName: "about" */ './views/Sobre.vue'),
     },
 ];
 
@@ -52,7 +62,7 @@ router.beforeEach((to, from, next) => {
 
     const publicPages = [
         '/login',
-        '/register'
+        '/cadastrar'
     ];
 
     const authRequired = !publicPages.includes(to.path);

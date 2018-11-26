@@ -3,18 +3,19 @@
         <v-layout column justify-center>
             <v-card flat dark>
                 <v-toolbar dark color="success">
-                    <v-toolbar-title>Plataformas</v-toolbar-title>
+                    <v-toolbar-title>Mensagems</v-toolbar-title>
                     <v-dialog v-model="dialog" max-width="500px">
                         <v-card>
                             <v-card-title>
-                                <span class="headline">{{ formTitle }} Plataforma</span>
+                                <span class="headline">{{ formTitle }} Mensagem</span>
                             </v-card-title>
-                            <!--<v-subheader>Preencha os dados da plataforma.</v-subheader>-->
 
                             <v-card-text>
                                 <v-container grid-list-md>
                                     <v-layout wrap>
                                         <v-flex xs12 sm6 md12>
+                                            <v-text-field v-model="editedItem.titulo"
+                                                          label="Título"></v-text-field>
                                             <v-text-field v-model="editedItem.descricao"
                                                           label="Descrição"></v-text-field>
                                         </v-flex>
@@ -47,10 +48,11 @@
                 <v-card-text>
                     <v-data-table light
                             :headers="headers"
-                            :items="plataformasIniciais"
+                            :items="mensagemsIniciais"
                             class="elevation-1">
                         <template slot="items" slot-scope="props">
-                            <td class="text-xs-center">{{ props.item.plataforma_id }}</td>
+                            <td class="text-xs-center">{{ props.item.mensagem_id }}</td>
+                            <td class="text-xs-center">{{ props.item.titulo }}</td>
                             <td class="text-xs-center">{{ props.item.descricao }}</td>
                             <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
                             <td class="justify-center layout px-0">
@@ -66,7 +68,7 @@
                             </td>
                         </template>
                         <template slot="no-data">
-                            <v-btn color="primary" @click="this.obterPlataformas">Reset</v-btn>
+                            <v-btn color="primary" @click="this.obterMensagems">Reset</v-btn>
                         </template>
                     </v-data-table>
                 </v-card-text>
@@ -92,6 +94,11 @@
                     value: 'name'
                 },
                 {
+                    text: 'Título',
+                    value: 'titulo',
+                    align: 'center'
+                },
+                {
                     text: 'Descrição',
                     value: 'descricao',
                     align: 'center'
@@ -108,10 +115,10 @@
                     sortable: false,
                 },
             ],
-            plataformasIniciais: [],
+            mensagemsIniciais: [],
             editedIndex: -1,
             editedItem: {
-                plataforma_id: 0,
+                mensagem_id: 0,
                 descricao: '',
                 is_ativo: true,
             },
@@ -129,7 +136,7 @@
                 return this.editedIndex === -1 ? 'Criar' : 'Editar'
             },
             ...mapGetters({
-                plataformas: 'plataforma/plataforma'
+                mensagems: 'mensagem/mensagem'
             }),
         },
 
@@ -137,39 +144,39 @@
             dialog(val) {
                 val || this.close()
             },
-            plataformas(value) {
+            mensagems(value) {
                 if ('error' in value) {
                     alert(value.error);
-                    this.plataformasIniciais = [];
+                    this.mensagemsIniciais = [];
                 } else {
-                    this.plataformasIniciais = value;
+                    this.mensagemsIniciais = value;
                 }
             },
 
         },
 
         created() {
-            this.obterPlataformas();
+            this.obterMensagems();
         },
 
         methods: {
 
             ...mapActions({
-                obterPlataformas: 'plataforma/obterPlataformas',
-                removerPlataforma: 'plataforma/removerPlataforma',
-                cadastrarPlataforma: 'plataforma/cadastrarPlataforma',
-                atualizarPlataforma: 'plataforma/atualizarPlataforma',
+                obterMensagems: 'mensagem/obterMensagems',
+                removerMensagem: 'mensagem/removerMensagem',
+                cadastrarMensagem: 'mensagem/cadastrarMensagem',
+                atualizarMensagem: 'mensagem/atualizarMensagem',
             }),
 
             editItem(item) {
-                this.editedIndex = this.plataformas.indexOf(item)
+                this.editedIndex = this.mensagems.indexOf(item)
                 this.editedItem = Object.assign({}, item)
                 this.dialog = true
             },
 
             deleteItem(item) {
                 if (confirm('Deseja remover esse item?')) {
-                    this.removerPlataforma(item.plataforma_id);
+                    this.removerMensagem(item.mensagem_id);
                 }
             },
 
@@ -186,9 +193,9 @@
                 self.loading = true;
 
                 if (self.editedIndex > -1) {
-                    this.atualizarPlataforma(self.editedItem)
+                    this.atualizarMensagem(self.editedItem)
                 } else {
-                    this.cadastrarPlataforma(self.editedItem)
+                    this.cadastrarMensagem(self.editedItem)
                 }
                 self.close()
             }

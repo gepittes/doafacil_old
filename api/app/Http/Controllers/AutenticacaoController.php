@@ -34,6 +34,10 @@ class AutenticacaoController extends Controller
         $payload = [
             'iss' => $this->emissorToken,
             'sub' => $this->assuntoToken,
+            'user' => [
+                'name' => $usuario->nome,
+                'email' => $usuario->email,
+            ],
             'iat' => $this->horarioEmissaoToken,
             'exp' => $this->tempoExpiracaoToken
         ];
@@ -60,6 +64,11 @@ class AutenticacaoController extends Controller
         $usuario = Usuario::where('email', $this->request->input('email'))->first();
         if (!$usuario) {
             throw new \Exception('Email inexistente.');
+        }
+
+        $usuario = Usuario::where('is_ativo', true)->first();
+        if (!$usuario) {
+            throw new \Exception('Usuario inativo.');
         }
 
         $senha = $this->request->input('password');

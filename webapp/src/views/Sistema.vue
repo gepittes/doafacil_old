@@ -3,13 +3,12 @@
         <v-layout column justify-center>
             <v-card flat dark>
                 <v-toolbar dark color="success">
-                    <v-toolbar-title>Plataformas</v-toolbar-title>
+                    <v-toolbar-title>Sistemas</v-toolbar-title>
                     <v-dialog v-model="dialog" max-width="500px">
                         <v-card>
                             <v-card-title>
-                                <span class="headline">{{ formTitle }} Plataforma</span>
+                                <span class="headline">{{ formTitle }} Sistema</span>
                             </v-card-title>
-                            <!--<v-subheader>Preencha os dados da plataforma.</v-subheader>-->
 
                             <v-card-text>
                                 <v-container grid-list-md>
@@ -47,10 +46,10 @@
                 <v-card-text>
                     <v-data-table light
                             :headers="headers"
-                            :items="plataformasIniciais"
+                            :items="sistemasIniciais"
                             class="elevation-1">
                         <template slot="items" slot-scope="props">
-                            <td class="text-xs-center">{{ props.item.plataforma_id }}</td>
+                            <td class="text-xs-center">{{ props.item.sistema_id }}</td>
                             <td class="text-xs-center">{{ props.item.descricao }}</td>
                             <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
                             <td class="justify-center layout px-0">
@@ -66,7 +65,7 @@
                             </td>
                         </template>
                         <template slot="no-data">
-                            <v-btn color="primary" @click="this.obterPlataformas">Reset</v-btn>
+                            <v-btn color="primary" @click="this.obterSistemas">Reset</v-btn>
                         </template>
                     </v-data-table>
                 </v-card-text>
@@ -108,10 +107,10 @@
                     sortable: false,
                 },
             ],
-            plataformasIniciais: [],
+            sistemasIniciais: [],
             editedIndex: -1,
             editedItem: {
-                plataforma_id: 0,
+                sistema_id: 0,
                 descricao: '',
                 is_ativo: true,
             },
@@ -129,7 +128,7 @@
                 return this.editedIndex === -1 ? 'Criar' : 'Editar'
             },
             ...mapGetters({
-                plataformas: 'plataforma/plataforma'
+                sistemas: 'sistema/sistema'
             }),
         },
 
@@ -137,39 +136,39 @@
             dialog(val) {
                 val || this.close()
             },
-            plataformas(value) {
+            sistemas(value) {
                 if ('error' in value) {
                     alert(value.error);
-                    this.plataformasIniciais = [];
+                    this.sistemasIniciais = [];
                 } else {
-                    this.plataformasIniciais = value;
+                    this.sistemasIniciais = value;
                 }
             },
 
         },
 
         created() {
-            this.obterPlataformas();
+            this.obterSistemas();
         },
 
         methods: {
 
             ...mapActions({
-                obterPlataformas: 'plataforma/obterPlataformas',
-                removerPlataforma: 'plataforma/removerPlataforma',
-                cadastrarPlataforma: 'plataforma/cadastrarPlataforma',
-                atualizarPlataforma: 'plataforma/atualizarPlataforma',
+                obterSistemas: 'sistema/obterSistemas',
+                removerSistema: 'sistema/removerSistema',
+                cadastrarSistema: 'sistema/cadastrarSistema',
+                atualizarSistema: 'sistema/atualizarSistema',
             }),
 
             editItem(item) {
-                this.editedIndex = this.plataformas.indexOf(item)
+                this.editedIndex = this.sistemas.indexOf(item)
                 this.editedItem = Object.assign({}, item)
                 this.dialog = true
             },
 
             deleteItem(item) {
                 if (confirm('Deseja remover esse item?')) {
-                    this.removerPlataforma(item.plataforma_id);
+                    this.removerSistema(item.sistema_id);
                 }
             },
 
@@ -186,9 +185,9 @@
                 self.loading = true;
 
                 if (self.editedIndex > -1) {
-                    this.atualizarPlataforma(self.editedItem)
+                    this.atualizarSistema(self.editedItem)
                 } else {
-                    this.cadastrarPlataforma(self.editedItem)
+                    this.cadastrarSistema(self.editedItem)
                 }
                 self.close()
             }
