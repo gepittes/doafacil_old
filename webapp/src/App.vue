@@ -108,6 +108,11 @@
                         to: "/mensagem"
                     },
                     {
+                        icon: 'account_circle',
+                        title: 'Usuários',
+                        to: "/usuario"
+                    },
+                    {
                         icon: 'info',
                         title: 'Sobre',
                         to: "/about"
