@@ -18,15 +18,13 @@
                                                           label="Título"></v-text-field>
                                             <v-text-field v-model="editedItem.descricao"
                                                           label="Descrição"></v-text-field>
-                                            <v-select
-                                                    v-model="editedItem.sistema_id"
-                                                    :items="sistemas"
-                                                    :rules="[v => !!v || 'Campo obrigatório']"
-                                                    label="Sistema"
-                                                    item-text="descricao"
-                                                    item-value="sistema_id"
-                                                    required
-                                            ></v-select>
+                                            <v-select v-model="editedItem.sistema_id"
+                                                      :items="sistemasIniciais"
+                                                      :rules="[v => !!v || 'Campo obrigatório']"
+                                                      label="Sistema"
+                                                      item-text="descricao"
+                                                      item-value="sistema_id"
+                                                      required></v-select>
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
@@ -41,10 +39,9 @@
                                 <v-btn color="blue darken-1" flat @click.native="close">Cancelar</v-btn>
                                 <v-btn v-if="!loading" color="blue darken-1" flat @click.native="save">Gravar
                                 </v-btn>
-                                <v-progress-circular
-                                        v-if="loading"
-                                        indeterminate
-                                        color="primary"></v-progress-circular>
+                                <v-progress-circular v-if="loading"
+                                                     indeterminate
+                                                     color="primary"></v-progress-circular>
                             </v-card-actions>
                         </v-card>
                         <v-btn color="blue"
@@ -56,9 +53,9 @@
                 </v-toolbar>
                 <v-card-text>
                     <v-data-table light
-                            :headers="headers"
-                            :items="mensagemsIniciais"
-                            class="elevation-1">
+                                  :headers="headers"
+                                  :items="mensagemsIniciais"
+                                  class="elevation-1">
                         <template slot="items" slot-scope="props">
                             <td class="text-xs-center">{{ props.item.mensagem_id }}</td>
                             <td class="text-xs-center">{{ props.item.titulo }}</td>
@@ -83,9 +80,7 @@
                 </v-card-text>
             </v-card>
         </v-layout>
-
     </v-container>
-
 </template>
 <script>
 
@@ -125,6 +120,7 @@
                 },
             ],
             mensagemsIniciais: [],
+            sistemasIniciais: [],
             editedIndex: -1,
             editedItem: {
                 mensagem_id: 0,
@@ -163,7 +159,11 @@
                 }
             },
             sistemas(value) {
-                console.log(value)
+                if ('error' in value) {
+                    this.sistemasIniciais = [];
+                } else {
+                    this.sistemasIniciais = value;
+                }
             }
 
         },
@@ -171,10 +171,16 @@
         created() {
             this.obterMensagems();
         },
+        mounted() {
+            if(this.sistemas.length == null) {
+                this.obterSistemas();
+            }
+        },
 
         methods: {
 
             ...mapActions({
+                obterSistemas: 'sistema/obterSistemas',
                 obterMensagems: 'mensagem/obterMensagems',
                 removerMensagem: 'mensagem/removerMensagem',
                 cadastrarMensagem: 'mensagem/cadastrarMensagem',
