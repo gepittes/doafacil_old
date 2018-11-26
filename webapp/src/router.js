@@ -7,7 +7,7 @@ import WebSocket from './views/WebSocket.vue';
 import Plataforma from './views/Plataforma.vue';
 import NaoEncontrado from './views/NaoEncontrado.vue';
 import Sistema from './views/Sistema.vue';
-import Usuario from './views/Usuario.vue';
+import Conta from './views/Conta.vue';
 import Mensagem from './views/Mensagem.vue';
 
 Vue.use(Router);
@@ -44,8 +44,8 @@ const routesObject = [
         component: Sistema,
     },
     {
-        path: '/usuario',
-        component: Usuario,
+        path: '/conta',
+        component: Conta,
     },
     {
         path: '/mensagem',

@@ -109,8 +109,8 @@
                     },
                     {
                         icon: 'account_circle',
-                        title: 'Usuários',
-                        to: "/usuario"
+                        title: 'Contas',
+                        to: "/conta"
                     },
                     {
                         icon: 'info',
