@@ -14,6 +14,8 @@
                                 <v-container grid-list-md>
                                     <v-layout wrap>
                                         <v-flex xs12 sm6 md12>
+                                            <v-text-field v-model="editedItem.titulo"
+                                                          label="Título"></v-text-field>
                                             <v-text-field v-model="editedItem.descricao"
                                                           label="Descrição"></v-text-field>
                                         </v-flex>
@@ -50,6 +52,7 @@
                             class="elevation-1">
                         <template slot="items" slot-scope="props">
                             <td class="text-xs-center">{{ props.item.mensagem_id }}</td>
+                            <td class="text-xs-center">{{ props.item.titulo }}</td>
                             <td class="text-xs-center">{{ props.item.descricao }}</td>
                             <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
                             <td class="justify-center layout px-0">
@@ -89,6 +92,11 @@
                     align: 'center',
                     sortable: true,
                     value: 'name'
+                },
+                {
+                    text: 'Título',
+                    value: 'titulo',
+                    align: 'center'
                 },
                 {
                     text: 'Descrição',
