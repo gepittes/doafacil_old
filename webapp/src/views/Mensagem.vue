@@ -18,6 +18,15 @@
                                                           label="Título"></v-text-field>
                                             <v-text-field v-model="editedItem.descricao"
                                                           label="Descrição"></v-text-field>
+                                            <v-select
+                                                    v-model="editedItem.sistema_id"
+                                                    :items="sistemas"
+                                                    :rules="[v => !!v || 'Campo obrigatório']"
+                                                    label="Sistema"
+                                                    item-text="descricao"
+                                                    item-value="sistema_id"
+                                                    required
+                                            ></v-select>
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
@@ -136,7 +145,8 @@
                 return this.editedIndex === -1 ? 'Criar' : 'Editar'
             },
             ...mapGetters({
-                mensagems: 'mensagem/mensagem'
+                mensagems: 'mensagem/mensagem',
+                sistemas: 'sistema/sistema'
             }),
         },
 
@@ -152,6 +162,9 @@
                     this.mensagemsIniciais = value;
                 }
             },
+            sistemas(value) {
+                console.log(value)
+            }
 
         },
 
