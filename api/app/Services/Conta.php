@@ -49,7 +49,8 @@ class Conta implements IService
     public function alterar($id, array $dados = [])
     {
         $validator = Validator::make($dados, [
-            "descricao" => 'required|string|min:3|max:50'
+            "nome" => 'required|string|min:3|max:50',
+            "email" => 'required|string|min:3|max:50'
         ]);
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->first());
