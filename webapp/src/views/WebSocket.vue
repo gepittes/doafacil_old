@@ -4,7 +4,7 @@
             <v-flex xs12 sm8 md4>
                 <v-layout column justify-center>
                     <v-card dark class="elevation-12">
-                        <v-toolbar dark color="success">
+                        <v-toolbar dark color="primary">
                             <v-toolbar-title>Chat (WebSocket)</v-toolbar-title>
                         </v-toolbar>
                         <v-card-text>

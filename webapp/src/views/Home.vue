@@ -1,7 +1,7 @@
 <template>
     <v-container fluid>
         <v-card color="" >
-            <v-toolbar dark color="success">
+            <v-toolbar dark color="primary">
                 <v-toolbar-title>Olá!</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
