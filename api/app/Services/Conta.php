@@ -10,10 +10,17 @@ class Conta implements IService
 
     public function obter($id = null)
     {
+        $modelUsuario = ModeloUsuario::select(
+            'usuario_id',
+            'nome',
+            'email',
+            'is_ativo'
+        );
         if (!empty(trim($id))) {
-            $data = ModeloUsuario::findOrFail($id);
+            $data = $modelUsuario->where('usuario_id', $id)->get();
         } else {
-            $data = ModeloUsuario::all();
+            $data = $modelUsuario->get();
+//            $data = ModeloUsuario::all();
         }
 
         return $data;

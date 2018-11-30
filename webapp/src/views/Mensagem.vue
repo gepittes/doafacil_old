@@ -3,7 +3,7 @@
         <v-layout column justify-center>
             <v-card flat dark>
                 <v-toolbar dark color="primary">
-                    <v-toolbar-title>Mensagems</v-toolbar-title>
+                    <v-toolbar-title>Mensagens</v-toolbar-title>
                     <v-dialog v-model="dialog" max-width="500px">
                         <v-card>
                             <v-card-title>
@@ -15,16 +15,24 @@
                                     <v-layout wrap>
                                         <v-flex xs12 sm6 md12>
                                             <v-text-field v-model="editedItem.titulo"
-                                                          label="Título"></v-text-field>
+                                                          label="Título"
+                                                          box
+                                                          required></v-text-field>
                                             <v-text-field v-model="editedItem.descricao"
-                                                          label="Descrição"></v-text-field>
+                                                          box
+                                                          label="Descrição"
+                                            required></v-text-field>
                                             <v-select v-model="editedItem.sistema_id"
                                                       :items="sistemasIniciais"
                                                       :rules="[v => !!v || 'Campo obrigatório']"
                                                       label="Sistema"
+                                                      box
                                                       item-text="descricao"
                                                       item-value="sistema_id"
                                                       required></v-select>
+                                            <v-text-field disabled :value="this.obterNomeAutor(editedItem.autor_id)"
+                                                          label="Autor"
+                                                          box></v-text-field>
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
@@ -121,6 +129,7 @@
             ],
             mensagemsIniciais: [],
             sistemasIniciais: [],
+            contasIniciais: [],
             editedIndex: -1,
             editedItem: {
                 mensagem_id: 0,
@@ -142,7 +151,8 @@
             },
             ...mapGetters({
                 mensagems: 'mensagem/mensagem',
-                sistemas: 'sistema/sistema'
+                sistemas: 'sistema/sistema',
+                contas: 'conta/conta'
             }),
         },
 
@@ -164,16 +174,24 @@
                 } else {
                     this.sistemasIniciais = value;
                 }
+            },
+            contas(value) {
+                if('error' in value) {
+                    this.contasIniciais = [];
+                } else {
+                    this.contasIniciais = value;
+                }
             }
-
         },
-
         created() {
             this.obterMensagems();
         },
         mounted() {
             if(this.sistemas.length == null) {
                 this.obterSistemas();
+            }
+            if(this.contas.length == null) {
+                this.obterContas();
             }
         },
 
@@ -182,6 +200,7 @@
             ...mapActions({
                 obterSistemas: 'sistema/obterSistemas',
                 obterMensagems: 'mensagem/obterMensagems',
+                obterContas: 'conta/obterContas',
                 removerMensagem: 'mensagem/removerMensagem',
                 cadastrarMensagem: 'mensagem/cadastrarMensagem',
                 atualizarMensagem: 'mensagem/atualizarMensagem',
@@ -217,6 +236,19 @@
                     this.cadastrarMensagem(self.editedItem)
                 }
                 self.close()
+            },
+
+            obterNomeAutor(usuario_id) {
+                // console.log(usuario_id);
+                if(this.contas.length == null) {
+                    this.obterContas();
+                }
+
+                for (var i in this.contas) {
+                    if(this.contas[i].usuario_id == usuario_id) {
+                        return this.contas[i].nome;
+                    }
+                }
             }
         }
     }
