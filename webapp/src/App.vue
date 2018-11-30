@@ -115,7 +115,7 @@
                     {
                         icon: 'info',
                         title: 'Sobre',
-                        to: "/about"
+                        to: "/sobre"
                     },
                     {
                         icon: 'exit_to_app',

@@ -10,10 +10,17 @@ class Conta implements IService
 
     public function obter($id = null)
     {
+        $modelUsuario = ModeloUsuario::select(
+            'usuario_id',
+            'nome',
+            'email',
+            'is_ativo'
+        );
         if (!empty(trim($id))) {
-            $data = ModeloUsuario::findOrFail($id);
+            $data = $modelUsuario->where('usuario_id', $id)->get();
         } else {
-            $data = ModeloUsuario::all();
+            $data = $modelUsuario->get();
+//            $data = ModeloUsuario::all();
         }
 
         return $data;
@@ -49,7 +56,8 @@ class Conta implements IService
     public function alterar($id, array $dados = [])
     {
         $validator = Validator::make($dados, [
-            "descricao" => 'required|string|min:3|max:50'
+            "nome" => 'required|string|min:3|max:50',
+            "email" => 'required|string|min:3|max:50'
         ]);
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->first());
