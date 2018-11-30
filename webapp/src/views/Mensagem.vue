@@ -58,11 +58,21 @@
                             <v-icon>add</v-icon>
                         </v-btn>
                     </v-dialog>
+                    <v-spacer></v-spacer>
+                    <v-spacer></v-spacer>
+                    <v-text-field
+                            v-model="modeloBuscar"
+                            append-icon="search"
+                            label="Buscar"
+                            single-line
+                            hide-details
+                    ></v-text-field>
                 </v-toolbar>
                 <v-card-text>
                     <v-data-table light
                                   :headers="headers"
                                   :items="mensagemsIniciais"
+                                  :search="modeloBuscar"
                                   class="elevation-1">
                         <template slot="items" slot-scope="props">
                             <td class="text-xs-center">{{ props.item.mensagem_id }}</td>
@@ -98,6 +108,7 @@
         data: () => ({
             loading: false,
             dialog: false,
+            modeloBuscar: '',
             headers: [
                 {
                     text: 'Identificador',
