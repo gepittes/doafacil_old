@@ -73,6 +73,8 @@
                                   :headers="headers"
                                   :items="mensagemsIniciais"
                                   :search="modeloBuscar"
+                                  :rows-per-page-items="[ 10, 25, 40 ]"
+                                  :rows-per-page-text="'Registros por página'"
                                   class="elevation-1">
                         <template slot="items" slot-scope="props">
                             <td class="text-xs-center">{{ props.item.mensagem_id }}</td>
