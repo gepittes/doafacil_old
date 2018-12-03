@@ -24,14 +24,17 @@
                                                           required></v-text-field>
 
                                             <li v-for="plataforma in this.plataformas">
-                                                <v-checkbox v-model="plataformasSelecionadas"
+                                                <v-checkbox v-if="plataformasSelecionadas.length > 0" v-model="plataformasSelecionadas"
                                                             :label="plataforma.descricao"
                                                             color="success"
                                                             :value="plataforma.plataforma_id"
                                                 ></v-checkbox>
+                                                <v-checkbox v-if="plataformasSelecionadas.length < 1" v-model="editedItem.plataformas"
+                                                            :label="plataforma.descricao"
+                                                            color="success"
+                                                            :value="plataforma"
+                                                ></v-checkbox>
                                             </li>
-
-                                            {{plataformasSelecionadas}}
 
                                             <v-select v-model="editedItem.sistema_id"
                                                       disabled
@@ -158,6 +161,7 @@
                 mensagem_id: 0,
                 descricao: '',
                 is_ativo: true,
+                plataformas: []
             }
         }),
 
@@ -201,15 +205,15 @@
             }
         },
         created() {
-            if (this.mensagens.length == null) {
-                this.obterMensagems();
-            }
 
             // if(this.plataformas.length == null) {
             //     this.obterPlataformas();
             // }
         },
         mounted() {
+            if (this.mensagens.length == null) {
+                this.obterMensagems();
+            }
             if (this.sistemas.length == null) {
                 this.obterSistemas();
             }
