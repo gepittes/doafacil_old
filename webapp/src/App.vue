@@ -55,6 +55,7 @@
             <v-alert :value="true" type="error" v-if="alert.message != null && alert.type == 'alert-danger'">
                 {{alert.message}}
             </v-alert>
+            {{this.user}}
             <!--<div id="nav">-->
             <!--<router-link to="/">Home</router-link>-->
             <!--|-->
@@ -139,7 +140,7 @@
             }),
             ...mapGetters({
                 status: 'account/status',
-                accountInformation: 'account/accountInformation'
+                user: 'account/user'
             }),
         },
         methods: {
@@ -152,13 +153,16 @@
             $route(to, from) {
                 // clear alert on location change
                 this.clearAlert();
+            },
+            user() {
+                let token = localStorage.getItem('user');
+                this.getJWTInformation(token).then(result => {
+                    this.accountInformation = result.user
+                });
             }
         },
         mounted() {
-            this.getJWTInformation().then(result => {
-                this.accountInformation = result.user
-                alert(1);
-            });
+            console.log(2)
         }
 
     }
