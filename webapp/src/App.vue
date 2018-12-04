@@ -55,7 +55,6 @@
             <v-alert :value="true" type="error" v-if="alert.message != null && alert.type == 'alert-danger'">
                 {{alert.message}}
             </v-alert>
-            {{this.user}}
             <!--<div id="nav">-->
             <!--<router-link to="/">Home</router-link>-->
             <!--|-->
