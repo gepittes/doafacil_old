@@ -18,7 +18,7 @@
                         </v-list-tile-avatar>
 
                         <v-list-tile-content>
-                            <v-list-tile-title>{{this.accountInformation.name}}</v-list-tile-title>
+                            <v-list-tile-title>{{this.accountInfo.name}}</v-list-tile-title>
                         </v-list-tile-content>
 
                         <v-list-tile-action>
@@ -128,7 +128,7 @@
                 rightDrawer: false,
                 title: 'Notification WebApp',
                 // isLoggedIn: localStorage.getItem('user')
-                accountInformation: {}
+                accountInfo: {}
             };
         },
         computed: {
@@ -156,7 +156,7 @@
             user() {
                 let token = localStorage.getItem('user');
                 this.getJWTInformation(token).then(result => {
-                    this.accountInformation = result.user
+                    this.accountInfo = result.user
                 });
             }
         },

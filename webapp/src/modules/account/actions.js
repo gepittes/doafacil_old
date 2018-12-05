@@ -20,7 +20,12 @@ export const login = ({dispatch, commit}, {email, password}) => {
                         root: true
                     });
 
-                    router.push({ name: 'home' })
+                    let token = JSON.stringify(data.token);
+                    this.getJWTInformation(token).then(result => {
+                        commit(types.SETACCOUNTINFO, result.user);
+                        router.push({ name: 'home' })
+                    });
+
                 }
             }
         })

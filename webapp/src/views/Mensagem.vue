@@ -29,6 +29,7 @@
                                                             color="success"
                                                             :value="plataforma.plataforma_id"
                                                 ></v-checkbox>
+
                                                 <v-checkbox v-if="plataformasSelecionadas.length < 1" v-model="editedItem.plataformas"
                                                             :label="plataforma.descricao"
                                                             color="success"
@@ -37,6 +38,16 @@
                                             </li>
 
                                             <v-select v-model="editedItem.sistema_id"
+                                                      v-if="plataformasSelecionadas.length < 1"
+                                                      :items="sistemasRenderizados"
+                                                      :rules="[v => !!v || 'Campo obrigatório']"
+                                                      label="Sistema"
+                                                      box
+                                                      item-text="descricao"
+                                                      item-value="sistema_id"
+                                                      required></v-select>
+                                            <v-select v-model="editedItem.sistema_id"
+                                                      v-if="plataformasSelecionadas.length > 0"
                                                       disabled
                                                       :items="sistemasRenderizados"
                                                       :rules="[v => !!v || 'Campo obrigatório']"
@@ -45,9 +56,14 @@
                                                       item-text="descricao"
                                                       item-value="sistema_id"
                                                       required></v-select>
-                                            <v-text-field disabled :value="this.obterNomeAutor(editedItem.autor_id)"
+
+                                            <v-text-field disabled
+                                                          :value="this.obterNomeAutor(editedItem.autor_id)"
+                                                          v-if="plataformasSelecionadas.length > 0"
                                                           label="Autor"
                                                           box></v-text-field>
+
+                                            <input type="hidden" v-model="editedItem.autor_id" value=""/>
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
