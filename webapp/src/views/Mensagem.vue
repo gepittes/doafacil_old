@@ -227,7 +227,7 @@
             // }
         },
         mounted() {
-
+            this.mensagensRenderizadas = this.mensagens;
 
             if (this.mensagens.length == null) {
                 this.obterMensagems();
