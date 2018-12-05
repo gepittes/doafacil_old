@@ -21,10 +21,10 @@ export const login = ({dispatch, commit}, {email, password}) => {
                     });
 
                     let token = JSON.stringify(data.token);
-                    this.getJWTInformation(token).then(result => {
-                        commit(types.SETACCOUNTINFO, result.user);
-                        router.push({ name: 'home' })
-                    });
+                    let tokenDecodificada = jwt_decode(token);
+                    commit(types.SETACCOUNTINFO, tokenDecodificada.user);
+
+                    router.push({ name: 'home' })
 
                 }
             }

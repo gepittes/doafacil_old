@@ -1,2 +1,11 @@
+import jwt_decode from "jwt-decode";
+
 const user = JSON.parse(localStorage.getItem('user'));
-export const state = user ? {status: {loggedIn: true}, user, accountInfo: {}} : {status: {}, user: null, accountInfo: {}};
+const accountInfo = user != '' ? jwt_decode(user) : '';
+
+export const state = {
+    status: {loggedIn: true},
+    user: user ? user : '',
+    accountInfo: accountInfo ? accountInfo.user : ''
+}
+

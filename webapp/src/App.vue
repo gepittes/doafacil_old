@@ -128,7 +128,7 @@
                 rightDrawer: false,
                 title: 'Notification WebApp',
                 // isLoggedIn: localStorage.getItem('user')
-                accountInfo: {}
+                // accountInfo: {}
             };
         },
         computed: {
@@ -139,25 +139,20 @@
             }),
             ...mapGetters({
                 status: 'account/status',
-                user: 'account/user'
+                user: 'account/user',
+                accountInfo: 'account/accountInfo',
             }),
         },
         methods: {
             ...mapActions({
                 clearAlert: 'alert/clear',
-                getJWTInformation: 'account/getJWTInformation'
+                // getJWTInformation: 'account/getJWTInformation'
             })
         },
         watch: {
             $route(to, from) {
                 // clear alert on location change
                 this.clearAlert();
-            },
-            user() {
-                let token = localStorage.getItem('user');
-                this.getJWTInformation(token).then(result => {
-                    this.accountInfo = result.user
-                });
             }
         },
         mounted() {
