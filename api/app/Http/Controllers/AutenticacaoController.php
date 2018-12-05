@@ -35,6 +35,7 @@ class AutenticacaoController extends Controller
             'iss' => $this->emissorToken,
             'sub' => $this->assuntoToken,
             'user' => [
+                'user_id' => $usuario->usuario_id,
                 'name' => $usuario->nome,
                 'email' => $usuario->email,
             ],

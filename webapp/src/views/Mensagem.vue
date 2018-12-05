@@ -24,16 +24,30 @@
                                                           required></v-text-field>
 
                                             <li v-for="plataforma in this.plataformas">
-                                                <v-checkbox v-model="plataformasSelecionadas"
+                                                <v-checkbox v-if="plataformasSelecionadas.length > 0" v-model="plataformasSelecionadas"
                                                             :label="plataforma.descricao"
                                                             color="success"
                                                             :value="plataforma.plataforma_id"
                                                 ></v-checkbox>
+
+                                                <v-checkbox v-if="plataformasSelecionadas.length < 1" v-model="editedItem.plataformas"
+                                                            :label="plataforma.descricao"
+                                                            color="success"
+                                                            :value="plataforma"
+                                                ></v-checkbox>
                                             </li>
 
-                                            {{plataformasSelecionadas}}
-
                                             <v-select v-model="editedItem.sistema_id"
+                                                      v-if="plataformasSelecionadas.length < 1"
+                                                      :items="sistemasRenderizados"
+                                                      :rules="[v => !!v || 'Campo obrigatório']"
+                                                      label="Sistema"
+                                                      box
+                                                      item-text="descricao"
+                                                      item-value="sistema_id"
+                                                      required></v-select>
+                                            <v-select v-model="editedItem.sistema_id"
+                                                      v-if="plataformasSelecionadas.length > 0"
                                                       disabled
                                                       :items="sistemasRenderizados"
                                                       :rules="[v => !!v || 'Campo obrigatório']"
@@ -42,9 +56,14 @@
                                                       item-text="descricao"
                                                       item-value="sistema_id"
                                                       required></v-select>
-                                            <v-text-field disabled :value="this.obterNomeAutor(editedItem.autor_id)"
+
+                                            <v-text-field disabled
+                                                          :value="this.obterNomeAutor(editedItem.autor_id)"
+                                                          v-if="plataformasSelecionadas.length > 0"
                                                           label="Autor"
                                                           box></v-text-field>
+{{this.accountInfo}}
+                                            <!--<input type="hidden" v-model="editedItem.autor_id" :value="this.accountInfo.name"/>-->
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
@@ -158,6 +177,7 @@
                 mensagem_id: 0,
                 descricao: '',
                 is_ativo: true,
+                plataformas: []
             }
         }),
 
@@ -169,7 +189,8 @@
                 mensagens: 'mensagem/mensagem',
                 sistemas: 'sistema/sistema',
                 contas: 'conta/conta',
-                plataformas: 'plataforma/plataforma'
+                plataformas: 'plataforma/plataforma',
+                accountInfo: 'account/accountInfo'
             }),
         },
 
@@ -201,15 +222,17 @@
             }
         },
         created() {
-            if (this.mensagens.length == null) {
-                this.obterMensagems();
-            }
 
             // if(this.plataformas.length == null) {
             //     this.obterPlataformas();
             // }
         },
         mounted() {
+            this.mensagensRenderizadas = this.mensagens;
+
+            if (this.mensagens.length == null) {
+                this.obterMensagems();
+            }
             if (this.sistemas.length == null) {
                 this.obterSistemas();
             }

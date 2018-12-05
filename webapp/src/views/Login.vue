@@ -67,7 +67,7 @@
                 'loggingIn'
             ])
         },
-        created() {
+        mounted() {
             // reset login status
             this.logout();
         },

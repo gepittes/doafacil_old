@@ -18,7 +18,7 @@
                         </v-list-tile-avatar>
 
                         <v-list-tile-content>
-                            <v-list-tile-title>{{this.userInformation.name}}</v-list-tile-title>
+                            <v-list-tile-title>{{this.accountInfo.name}}</v-list-tile-title>
                         </v-list-tile-content>
 
                         <v-list-tile-action>
@@ -127,8 +127,6 @@
                 right: true,
                 rightDrawer: false,
                 title: 'Notification WebApp',
-                // isLoggedIn: localStorage.getItem('user')
-                userInformation: {}
             };
         },
         computed: {
@@ -138,13 +136,14 @@
                 // status: state => state.status
             }),
             ...mapGetters({
-                status: 'account/status'
+                status: 'account/status',
+                user: 'account/user',
+                accountInfo: 'account/accountInfo',
             }),
         },
         methods: {
             ...mapActions({
                 clearAlert: 'alert/clear',
-                getJWTInformation: 'account/getJWTInformation'
             })
         },
         watch: {
@@ -154,9 +153,7 @@
             }
         },
         mounted() {
-            this.getJWTInformation().then(result => {
-                this.userInformation = result.user
-            });
+            console.log(2)
         }
 
     }

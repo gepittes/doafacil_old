@@ -20,7 +20,12 @@ export const login = ({dispatch, commit}, {email, password}) => {
                         root: true
                     });
 
+                    let token = JSON.stringify(data.token);
+                    let tokenDecodificada = jwt_decode(token);
+                    commit(types.SETACCOUNTINFO, tokenDecodificada.user);
+
                     router.push({ name: 'home' })
+
                 }
             }
         })
@@ -54,8 +59,4 @@ export const register = ({dispatch, commit}, user) => {
                 dispatch('alert/error', error, {root: true});
             }
         );
-}
-
-export const getJWTInformation = ({}) => {
-    return jwt_decode(localStorage.getItem('user'))
 }

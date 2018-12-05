@@ -9,6 +9,9 @@ export default {
         state.status = { loggedIn: true };
         state.user = user;
     },
+    [types.SETACCOUNTINFO](state, accountInfo) {
+        state.accountInfo = accountInfo;
+    },
     [types.LOGINFAILURE](state) {
         state.status = {};
         state.user = null;
