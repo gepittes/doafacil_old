@@ -60,7 +60,3 @@ export const register = ({dispatch, commit}, user) => {
             }
         );
 }
-
-export const getJWTInformation = ({}, token) => {
-    return jwt_decode(token)
-}
