@@ -127,8 +127,6 @@
                 right: true,
                 rightDrawer: false,
                 title: 'Notification WebApp',
-                // isLoggedIn: localStorage.getItem('user')
-                // accountInfo: {}
             };
         },
         computed: {
@@ -146,7 +144,6 @@
         methods: {
             ...mapActions({
                 clearAlert: 'alert/clear',
-                // getJWTInformation: 'account/getJWTInformation'
             })
         },
         watch: {

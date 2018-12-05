@@ -62,8 +62,8 @@
                                                           v-if="plataformasSelecionadas.length > 0"
                                                           label="Autor"
                                                           box></v-text-field>
-
-                                            <input type="hidden" v-model="editedItem.autor_id" value=""/>
+{{this.accountInfo}}
+                                            <!--<input type="hidden" v-model="editedItem.autor_id" :value="this.accountInfo.name"/>-->
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
@@ -189,7 +189,8 @@
                 mensagens: 'mensagem/mensagem',
                 sistemas: 'sistema/sistema',
                 contas: 'conta/conta',
-                plataformas: 'plataforma/plataforma'
+                plataformas: 'plataforma/plataforma',
+                accountInfo: 'account/accountInfo'
             }),
         },
 
