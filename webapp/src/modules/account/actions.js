@@ -10,7 +10,6 @@ export const login = ({dispatch, commit}, {email, password}) => {
         .then(response => {
             if(response.data && response.data.data) {
                 const data = response.data.data;
-            console.log(response.data.data);
                 if(data) {
                     if (data.token) {
                         localStorage.setItem('user', JSON.stringify(data.token));

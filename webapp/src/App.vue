@@ -153,7 +153,6 @@
             }
         },
         mounted() {
-            console.log(2)
         }
 
     }

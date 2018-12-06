@@ -228,10 +228,12 @@
             // }
         },
         mounted() {
-            this.mensagensRenderizadas = this.mensagens;
 
             if (this.mensagens.length == null) {
                 this.obterMensagems();
+            }
+            if(this.mensagens.length > 0) {
+                this.mensagensRenderizadas = this.mensagens;
             }
             if (this.sistemas.length == null) {
                 this.obterSistemas();
