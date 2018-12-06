@@ -8,7 +8,7 @@
                             <v-toolbar-title>Login</v-toolbar-title>
                         </v-toolbar>
                         <v-card-text>
-                            <v-form ref="form" v-model="valid" lazy-validation>
+                            <v-form ref="form" v-model="valid" @submit.prevent="submit()">
                                 <v-text-field
                                         prepend-icon="person"
                                         v-model="email"
@@ -24,17 +24,16 @@
                                         label="Senha"
                                         required
                                 ></v-text-field>
+
+                                <v-card-actions>
+                                    <!--<v-btn @click="clear">Limpar</v-btn>-->
+                                    <router-link to="/cadastrar" class="btn btn-link">Cadastrar</router-link>
+                                    <v-spacer></v-spacer>
+
+                                    <v-btn color="primary" type="submit" :disabled="!valid"> Entrar</v-btn>
+
+                                </v-card-actions>
                             </v-form>
-
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <!--<v-btn @click="clear">Limpar</v-btn>-->
-                                <router-link to="/cadastrar" class="btn btn-link">Cadastrar</router-link>
-                                <v-spacer></v-spacer>
-
-                                <v-btn color="primary" :disabled="!valid" @click="submit"> Entrar</v-btn>
-
-                            </v-card-actions>
                         </v-card-text>
                     </v-card>
                 </v-layout>
@@ -78,7 +77,9 @@
         },
         methods: {
             submit() {
+                alert(1)
                 if (this.$refs.form.validate()) {
+                    alert(2)
                     // Native form submission is not yet supported
                     // axios.post('/api/submit', {
                     //     name: this.name,
