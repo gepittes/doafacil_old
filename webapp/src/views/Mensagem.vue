@@ -173,8 +173,9 @@
             sistemasRenderizados: [],
             editedIndex: -1,
             editedItem: {
-                mensagem_id: 0,
+                mensagem_id: null,
                 autor_id: null,
+                sistema_id: null,
                 descricao: '',
                 is_ativo: true,
                 plataformas: []
@@ -227,7 +228,6 @@
                 if(this.editedItem.autor_id == null) {
                     this.editedItem.autor_id = this.accountInfo.user_id;
                 }
-// console.log(value)
 
             }
         },
@@ -247,6 +247,9 @@
             }
             if (this.sistemas.length == null) {
                 this.obterSistemas();
+            }
+            if(this.sistemas.length > 0) {
+                this.sistemasRenderizados = this.sistemas;
             }
             if (this.contas.length == null) {
                 this.obterContas();
