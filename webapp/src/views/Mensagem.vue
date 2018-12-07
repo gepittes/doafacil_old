@@ -24,31 +24,15 @@
                                                           required></v-text-field>
 
                                             <li v-for="plataforma in this.plataformas">
-                                                <v-checkbox v-if="plataformasSelecionadas.length > 0" v-model="plataformasSelecionadas"
+                                                <v-checkbox disabled="plataformasSelecionadas.length < 1"
+                                                            v-model="plataformasSelecionadas"
                                                             :label="plataforma.descricao"
                                                             color="success"
-                                                            :value="plataforma.plataforma_id"
-                                                ></v-checkbox>
-
-                                                <v-checkbox v-if="plataformasSelecionadas.length < 1" v-model="editedItem.plataformas"
-                                                            :label="plataforma.descricao"
-                                                            color="success"
-                                                            :value="plataforma"
-                                                ></v-checkbox>
+                                                            :value="plataforma.plataforma_id"></v-checkbox>
                                             </li>
 
                                             <v-select v-model="editedItem.sistema_id"
-                                                      v-if="plataformasSelecionadas.length < 1"
-                                                      :items="sistemasRenderizados"
-                                                      :rules="[v => !!v || 'Campo obrigatório']"
-                                                      label="Sistema"
-                                                      box
-                                                      item-text="descricao"
-                                                      item-value="sistema_id"
-                                                      required></v-select>
-                                            <v-select v-model="editedItem.sistema_id"
-                                                      v-if="plataformasSelecionadas.length > 0"
-                                                      disabled
+                                                      :disabled="editedItem.sistema_id != null"
                                                       :items="sistemasRenderizados"
                                                       :rules="[v => !!v || 'Campo obrigatório']"
                                                       label="Sistema"
