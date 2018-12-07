@@ -23,7 +23,7 @@ export const cadastrarMensagem = ({commit}, mensagem) => {
     return axios.post('http://localhost/v1/mensagem', mensagem)
         .then((response) => {
             const data = response.data;
-            commit(types.DEFINIR_MENSAGEM, data.data)
+            commit(types.ACRESCENTAR_MENSAGEM, data.data)
         });
 };
 
