@@ -1,7 +1,7 @@
 import * as types from './types';
 
 export const mutations = {
-    [types.SET_MENSAGEM](state, mensagem) {
+    [types.DEFINIR_MENSAGEM](state, mensagem) {
         state.mensagem = mensagem
     },
     [types.DELETE_MENSAGEM](state, mensagem_id) {

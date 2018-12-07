@@ -5,7 +5,7 @@ export const obterMensagems = ({commit}) => {
     axios.get('http://localhost/v1/mensagem')
         .then(response => {
             const data = response.data;
-            commit(types.SET_MENSAGEM, data.data)
+            commit(types.DEFINIR_MENSAGEM, data.data)
         })
         .catch(error => {
             console.log(error)
@@ -23,7 +23,7 @@ export const cadastrarMensagem = ({commit}, mensagem) => {
     return axios.post('http://localhost/v1/mensagem', mensagem)
         .then((response) => {
             const data = response.data;
-            commit(types.SET_MENSAGEM, data.data)
+            commit(types.DEFINIR_MENSAGEM, data.data)
         });
 };
 
