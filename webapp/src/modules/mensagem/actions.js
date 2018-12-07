@@ -5,7 +5,7 @@ export const obterMensagems = ({commit}) => {
     axios.get('http://localhost/v1/mensagem')
         .then(response => {
             const data = response.data;
-            commit(types.DEFINIR_MENSAGEM, data.data)
+            commit(types.DEFINIR_MENSAGENS, data.data)
         })
         .catch(error => {
             console.log(error)
@@ -15,7 +15,7 @@ export const obterMensagems = ({commit}) => {
 export const removerMensagem = ({commit}, mensagem_id) => {
     axios.delete('http://localhost/v1/mensagem/' + mensagem_id)
         .then(function () {
-            commit(types.DELETE_MENSAGEM, mensagem_id);
+            commit(types.REMOVER_MENSAGEM, mensagem_id);
         });
 }
 

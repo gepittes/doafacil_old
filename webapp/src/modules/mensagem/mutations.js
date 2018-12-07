@@ -1,13 +1,13 @@
 import * as types from './types';
 
 export const mutations = {
-    [types.DEFINIR_MENSAGEM](state, mensagem) {
+    [types.DEFINIR_MENSAGENS](state, mensagem) {
         state.mensagem = mensagem
     },
     [types.ACRESCENTAR_MENSAGEM](state, mensagem) {
         state.mensagem.push(mensagem);
     },
-    [types.DELETE_MENSAGEM](state, mensagem_id) {
+    [types.REMOVER_MENSAGEM](state, mensagem_id) {
         var index = state.mensagem.findIndex(mensagem => mensagem.mensagem_id === mensagem_id);
         state.mensagem.splice(index, 1);
     },
