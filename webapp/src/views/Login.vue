@@ -27,10 +27,10 @@
 
                                 <v-card-actions>
                                     <!--<v-btn @click="clear">Limpar</v-btn>-->
-                                    <router-link to="/cadastrar" class="btn btn-link">Cadastrar</router-link>
-                                    <v-spacer></v-spacer>
+                                    <!--<v-spacer></v-spacer>-->
 
                                     <v-btn color="primary" type="submit" :disabled="!valid"> Entrar</v-btn>
+                                    <router-link to="/cadastrar" class="btn btn-link" style="margin-left: 20px">Cadastre-se</router-link>
 
                                 </v-card-actions>
                             </v-form>
@@ -77,9 +77,7 @@
         },
         methods: {
             submit() {
-                alert(1)
                 if (this.$refs.form.validate()) {
-                    alert(2)
                     // Native form submission is not yet supported
                     // axios.post('/api/submit', {
                     //     name: this.name,
