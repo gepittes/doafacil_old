@@ -62,8 +62,7 @@
                                                           v-if="plataformasSelecionadas.length > 0"
                                                           label="Autor"
                                                           box></v-text-field>
-{{this.accountInfo}}
-                                            <!--<input type="hidden" v-model="editedItem.autor_id" :value="this.accountInfo.name"/>-->
+
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
@@ -175,6 +174,7 @@
             editedIndex: -1,
             editedItem: {
                 mensagem_id: 0,
+                autor_id: null,
                 descricao: '',
                 is_ativo: true,
                 plataformas: []
@@ -196,6 +196,11 @@
 
         watch: {
             dialog(val) {
+
+                if(this.editedItem.autor_id == null) {
+                    this.editedItem.autor_id = this.accountInfo.user_id;
+                }
+
                 val || this.close()
             },
             mensagens(value) {
@@ -218,6 +223,11 @@
                 for(var index in value.plataformas) {
                     this.plataformasSelecionadas.push(value.plataformas[index].plataforma_id);
                 }
+
+                if(this.editedItem.autor_id == null) {
+                    this.editedItem.autor_id = this.accountInfo.user_id;
+                }
+// console.log(value)
 
             }
         },
@@ -245,7 +255,7 @@
                 this.obterPlataformas();
             }
         },
-
+        // editedItem
         methods: {
 
             ...mapActions({
