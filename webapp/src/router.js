@@ -9,6 +9,7 @@ import NaoEncontrado from './views/NaoEncontrado.vue';
 import Sistema from './views/Sistema.vue';
 import Conta from './views/Conta.vue';
 import Mensagem from './views/Mensagem.vue';
+import Administracao from './views/Administracao.vue';
 
 Vue.use(Router);
 
@@ -54,6 +55,10 @@ const routesObject = [
     {
         path: '/sobre',
         component: () => import(/* webpackChunkName: "about" */ './views/Sobre.vue'),
+    },
+    {
+        path: '/administracao',
+        component: Administracao,
     },
 ];
 

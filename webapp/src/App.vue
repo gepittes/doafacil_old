@@ -5,7 +5,7 @@
                              clipped="clipped"
                              v-model="drawer"
                              enable-resize-watcher
-                             dark color="primary"
+                             color="primary"
                              temporary
                              app>
             <v-card dark color="primary">
@@ -39,7 +39,7 @@
                     <v-list-tile-action>
                         <v-icon v-html="item.icon"></v-icon>
                     </v-list-tile-action>
-                    <v-list-tile-content dark color="white">
+                    <v-list-tile-content color="white">
                         <v-list-tile-title v-text="item.title"></v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
@@ -92,25 +92,30 @@
                         title: 'Chat',
                         to: "/websocket"
                     },
+                    // {
+                    //     icon: 'devices',
+                    //     title: 'Plataformas',
+                    //     to: "/plataforma"
+                    // },
+                    // {
+                    //     icon: 'settings_system_daydream',
+                    //     title: 'Sistemas',
+                    //     to: "/sistema"
+                    // },
+                    // {
+                    //     icon: 'chat',
+                    //     title: 'Mensagens',
+                    //     to: "/mensagem"
+                    // },
+                    // {
+                    //     icon: 'account_circle',
+                    //     title: 'Contas',
+                    //     to: "/conta"
+                    // },
                     {
-                        icon: 'devices',
-                        title: 'Plataformas',
-                        to: "/plataforma"
-                    },
-                    {
-                        icon: 'settings_system_daydream',
-                        title: 'Sistemas',
-                        to: "/sistema"
-                    },
-                    {
-                        icon: 'chat',
-                        title: 'Mensagens',
-                        to: "/mensagem"
-                    },
-                    {
-                        icon: 'account_circle',
-                        title: 'Contas',
-                        to: "/conta"
+                        icon: 'edit',
+                        title: 'Administração',
+                        to: "/administracao"
                     },
                     {
                         icon: 'info',
