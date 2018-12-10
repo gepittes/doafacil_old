@@ -1,68 +1,66 @@
 <template>
-  <v-container fluid>
-    <v-card color="" >
-      <v-toolbar dark color="primary">
-        <v-toolbar-title>Adminstracao</v-toolbar-title>
-      </v-toolbar>
-      <v-card-text>
-        <v-layout justify-space-around>
-          <v-flex xs5>
-            <v-layout column>
-              <v-card height="200px">
+    <v-container fluid>
+        <v-card>
+            <v-toolbar dark color="primary">
+                <v-toolbar-title>Adminstração</v-toolbar-title>
+            </v-toolbar>
+            <v-card-text height="200px">
+                <!--<component :is=""-->
+                <router-view />
+            </v-card-text>
+        </v-card>
 
-                {{bottomNav}}
-                <v-bottom-nav
-                        :active.sync="bottomNav"
-                        :color="color"
-                        :value="true"
-                        absolute
-                        shift
-                >
-                  <v-btn dark value="0">
-                    <span>Video</span>
-                    <v-icon>ondemand_video</v-icon>
-                  </v-btn>
+        <v-bottom-nav
+                :active.sync="bottomNav"
+                :color="color"
+                :value="true"
+                absolute
+                shift>
+            <v-btn dark value="/plataforma" to="/plataforma">
+                <span>Plataformas</span>
+                <v-icon>devices</v-icon>
+            </v-btn>
 
-                  <v-btn dark>
-                    <span>Music</span>
-                    <v-icon>music_note</v-icon>
-                  </v-btn>
+            <v-btn dark value="/sistema" to="/sistema">
+                <span>Sistemas</span>
+                <v-icon>settings_system_daydream</v-icon>
+            </v-btn>
 
-                  <v-btn dark>
-                    <span>Book</span>
-                    <v-icon>book</v-icon>
-                  </v-btn>
+            <v-btn dark value="/mensagem" to="/mensagem">
+                <span>Mensagens</span>
+                <v-icon>chat</v-icon>
+            </v-btn>
 
-                  <v-btn dark>
-                    <span>Image</span>
-                    <v-icon>image</v-icon>
-                  </v-btn>
-                </v-bottom-nav>
-              </v-card>
-            </v-layout>
-          </v-flex>
-        </v-layout>
-      </v-card-text>
-    </v-card>
-  </v-container>
+            <v-btn dark value="/conta" to="/conta">
+                <span>Contas</span>
+                <v-icon>account_circle</v-icon>
+            </v-btn>
+        </v-bottom-nav>
+    </v-container>
 
 </template>
 
 <script>
+
+
     export default {
-        data () {
+        data() {
             return {
-                bottomNav: 3
+                bottomNav: '/plataforma'
             }
         },
 
         computed: {
-            color () {
+            color() {
                 switch (this.bottomNav) {
-                    case 0: return 'blue-grey'
-                    case 1: return 'teal'
-                    case 2: return 'brown'
-                    case 3: return 'indigo'
+                    case '/plataforma':
+                        return 'blue-grey'
+                    case '/sistema':
+                        return 'teal'
+                    case '/mensagem':
+                        return 'brown'
+                    case '/conta':
+                        return 'indigo'
                 }
             }
         }

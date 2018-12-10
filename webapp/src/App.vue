@@ -93,11 +93,6 @@
                         to: "/websocket"
                     },
                     // {
-                    //     icon: 'devices',
-                    //     title: 'Plataformas',
-                    //     to: "/plataforma"
-                    // },
-                    // {
                     //     icon: 'settings_system_daydream',
                     //     title: 'Sistemas',
                     //     to: "/sistema"
