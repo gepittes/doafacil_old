@@ -16,3 +16,27 @@
   </v-container>
 
 </template>
+
+<script>
+
+    // import FileReader from "./FileReader";
+    //
+    // export default {
+    //     name: "app",
+    //     data: () => ({ text: "" }),
+    //     components: {
+    //         FileReader
+    //     },
+    //     methods:{
+    //
+    //     }
+    // };
+    //
+    // const reader = new FileReader();
+    //
+    // reader.onload = e => this.$emit("load", e.target.result);
+    // reader.readAsText(file);
+    //
+    // console.log(read.file('../../README.md'));
+
+</script>
