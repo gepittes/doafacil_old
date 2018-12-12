@@ -10,7 +10,7 @@ O projeto foi divido em 4 módulos:
 
 - [API](./api)
 - Database - Porta 5432
-- WebApp - 
+- [WebApp](./webapp/src/README.md) - 
 - WebSocket
 
 Para reunir todos os módulos acima, foi criada uma stack Docker da aplicação, contendo os serviços abaixo:
