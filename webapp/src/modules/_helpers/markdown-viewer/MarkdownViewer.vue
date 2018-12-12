@@ -14,7 +14,6 @@ export default {
   data() {
     return {
       md_text: '# Example Title Here!',
-      // src: '/README.md',
     };
   },
   mounted() {
