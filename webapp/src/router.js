@@ -9,17 +9,18 @@ import NaoEncontrado from './views/NaoEncontrado.vue';
 import Sistema from './views/Sistema.vue';
 import Conta from './views/Conta.vue';
 import Mensagem from './views/Mensagem.vue';
+import Administracao from './views/Administracao.vue';
 
 Vue.use(Router);
 
 const routesObject = [
     {
-      path: '/login',
-      component: Login,
+        path: '/login',
+        component: Login,
     },
     {
-      path: '/cadastrar',
-      component: Cadastrar,
+        path: '/cadastrar',
+        component: Cadastrar,
     },
     {
         path: '*',
@@ -36,24 +37,46 @@ const routesObject = [
         component: WebSocket,
     },
     {
-        path: '/plataforma',
-        component: Plataforma,
-    },
-    {
-        path: '/sistema',
-        component: Sistema,
-    },
-    {
-        path: '/conta',
-        component: Conta,
-    },
-    {
-        path: '/mensagem',
-        component: Mensagem,
-    },
-    {
         path: '/sobre',
         component: () => import(/* webpackChunkName: "about" */ './views/Sobre.vue'),
+    },
+    {
+        path: '/administracao',
+        component: Administracao,
+        children: [
+            {
+                path: '/plataforma',
+                component: Plataforma,
+                name: Plataforma,
+                meta: {
+                    title: 'Plataformas',
+                },
+            },
+            {
+                path: '/sistema',
+                component: Sistema,
+                name: Sistema,
+                meta: {
+                    title: 'Sistema',
+                },
+            },
+            {
+                path: '/conta',
+                component: Conta,
+                name: Conta,
+                meta: {
+                    title: 'Conta',
+                },
+            },
+            {
+                path: '/mensagem',
+                component: Mensagem,
+                name: Mensagem,
+                meta: {
+                    title: 'Mensagem',
+                },
+            },
+        ]
     },
 ];
 

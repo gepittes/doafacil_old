@@ -1,15 +1,18 @@
 import * as types from './types';
 
 export const mutations = {
-    [types.SET_MENSAGEM](state, mensagem) {
-        state.mensagem = mensagem
+    [types.DEFINIR_MENSAGENS](state, mensagens) {
+        state.mensagens = mensagens
     },
-    [types.DELETE_MENSAGEM](state, mensagem_id) {
-        var index = state.mensagem.findIndex(mensagem => mensagem.mensagem_id === mensagem_id);
-        state.mensagem.splice(index, 1);
+    [types.ACRESCENTAR_MENSAGEM](state, mensagem) {
+        state.mensagens.push(mensagem);
+    },
+    [types.REMOVER_MENSAGEM](state, mensagem_id) {
+        var index = state.mensagens.findIndex(mensagem => mensagem.mensagem_id === mensagem_id);
+        state.mensagens.splice(index, 1);
     },
     [types.ATUALIZAR_MENSAGEM](state, mensagem_editada) {
-        var index = state.mensagem.findIndex(mensagem => mensagem.mensagem_id === mensagem_editada.mensagem_id);
-        Object.assign(state.mensagem[index], mensagem_editada)
+        var index = state.mensagens.findIndex(mensagem => mensagem.mensagem_id === mensagem_editada.mensagem_id);
+        Object.assign(state.mensagens[index], mensagem_editada)
     },
 }
