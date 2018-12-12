@@ -8,11 +8,7 @@
                 <v-layout justify-space-around>
                     <v-flex xs5>
                         <v-layout column>
-
-                            <!-- -->
-                            <div class="well well-sm pre-scrollable" v-html='previewText'></div>
-                            <!-- -->
-
+                            <MarkdownViewer src="/README.md"></MarkdownViewer>
                         </v-layout>
                     </v-flex>
                 </v-layout>
@@ -24,38 +20,12 @@
 
 <script>
 
-import axios from 'axios';
-
-const marked = require('marked');
+import MarkdownViewer from '../modules/_helpers/markdown-viewer/MarkdownViewer.vue';
 
 export default {
-  name: 'app',
-  // props: ['src'],
-  data() {
-    return {
-      md_text: '# Title 2',
-      src: '/README.md',
-    };
-  },
-  mounted() {
-    axios.get(this.src).then((response) => {
-      this.md_text = response.data;
-    });
-  },
-  computed: {
-    previewText() {
-      marked.setOptions({
-        renderer: new marked.Renderer(),
-        gfm: true,
-        pedantic: true,
-        sanitize: true,
-        tables: true,
-        breaks: true,
-        smartypants: true,
-        smartLists: true,
-      });
-      return marked(this.md_text);
-    },
+  name: 'sobre',
+  components: {
+    MarkdownViewer
   },
 };
 </script>

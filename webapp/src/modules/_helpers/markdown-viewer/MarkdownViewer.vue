@@ -10,11 +10,11 @@ const marked = require('marked');
 
 export default {
   name: 'app',
-// props: ['src'],
+  props: ['src'],
   data() {
     return {
       md_text: '# Example Title Here!',
-      src: '/README.md',
+      // src: '/README.md',
     };
   },
   mounted() {
