@@ -9,12 +9,9 @@
                     <v-flex xs5>
                         <v-layout column>
 
-<!-- -->
-                            <div id="preview">
-                                <h2 class="text-success text-center">Preview</h2>
-                                <div class="well well-sm pre-scrollable" v-html='previewText'></div>
-                            </div>
-<!-- -->
+                            <!-- -->
+                            <div class="well well-sm pre-scrollable" v-html='previewText'></div>
+                            <!-- -->
 
                         </v-layout>
                     </v-flex>
@@ -27,37 +24,38 @@
 
 <script>
 
-    let marked = require('marked');
+import axios from 'axios';
 
-    import axios from 'axios';
+const marked = require('marked');
 
-    export default {
-        name: 'app',
-        props: ['src'],
-        data() {
-            return {
-                md_text: '# Title 2',
-            }
-        },
-        mounted() {
-            console.log(axios.get(this.src).then(response => {this.md_text = response.data}))
-        },
-        computed: {
-            previewText() {
-                marked.setOptions({
-                    renderer: new marked.Renderer(),
-                    gfm: true,
-                    tables: true,
-                    breaks: true,
-                    pedantic: false,
-                    sanitize: true,
-                    smartLists: true,
-                    smartypants: false
-                });
-                return marked(this.md_text)
-            }
-        },
-    }
-
-
+export default {
+  name: 'app',
+  // props: ['src'],
+  data() {
+    return {
+      md_text: '# Title 2',
+      src: '/README.md',
+    };
+  },
+  mounted() {
+    axios.get(this.src).then((response) => {
+      this.md_text = response.data;
+    });
+  },
+  computed: {
+    previewText() {
+      marked.setOptions({
+        renderer: new marked.Renderer(),
+        gfm: true,
+        pedantic: true,
+        sanitize: true,
+        tables: true,
+        breaks: true,
+        smartypants: true,
+        smartLists: true,
+      });
+      return marked(this.md_text);
+    },
+  },
+};
 </script>
