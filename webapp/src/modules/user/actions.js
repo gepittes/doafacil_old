@@ -15,7 +15,7 @@ export const getAll = ({ commit }) => {
 export const _delete = ({ commit }, id) => {
     commit(types.DELETEREQUEST, id);
 
-    userService.delete(id)
+    userService.remove(id)
         .then(
             user => commit(types.DELETESUCCESS, id),
             error => commit(types.DELETESUCCESS, { id, error: error.toString() })
