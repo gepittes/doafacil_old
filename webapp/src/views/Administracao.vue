@@ -42,26 +42,26 @@
 <script>
 
 
-    export default {
-        data() {
-            return {
-                bottomNav: '/plataforma'
-            }
-        },
+export default {
+  data() {
+    return {
+      bottomNav: '/plataforma',
+    };
+  },
 
-        computed: {
-            color() {
-                switch (this.bottomNav) {
-                    case '/plataforma':
-                        return 'blue-grey'
-                    case '/sistema':
-                        return 'teal'
-                    case '/mensagem':
-                        return 'brown'
-                    case '/conta':
-                        return 'indigo'
-                }
-            }
-        }
-    }
+  computed: {
+    color() {
+      switch (this.bottomNav) {
+        case '/plataforma':
+          return 'blue-grey';
+        case '/sistema':
+          return 'teal';
+        case '/mensagem':
+          return 'brown';
+        case '/conta':
+          return 'indigo';
+      }
+    },
+  },
+};
 </script>
