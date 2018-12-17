@@ -2,6 +2,23 @@ import { authHeader } from '../_helpers';
 import axios from 'axios';
 import * as types from '../plataforma/types';
 
+function handleResponse(response) {
+  // response.data.status
+  if (response.data.status === 401) {
+    // auto logout if 401 response returned from api
+    this.logout();
+    window.location.reload(true);
+  }
+  const error = (response.data &&  response.data.error) ||  response.data.status;
+  
+console.log((error));
+return false;
+  return Promise.reject(error);
+
+
+  return data.data;
+}
+
 function login(email, password) {
   return axios.post('http://localhost/v1/autenticacao/login', {
     email,
@@ -10,18 +27,13 @@ function login(email, password) {
 }
 
 function logout() {
-  console.log('logout')
+  console.log('logout');
   localStorage.removeItem('user');
 }
 
 function register(user) {
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(user),
-  };
-
-  return fetch('http://localhost/v1/conta', requestOptions).then(handleResponse);
+  return axios.post('http://localhost/v1/conta', JSON.parse(JSON.stringify(user))).then(handleResponse);
+  // return fetch('http://localhost/v1/conta', requestOptions).then(handleResponse);
 }
 
 function getAll() {
@@ -63,25 +75,6 @@ function remove(id) {
   return fetch(`http://localhost/v1/conta/${id}`, requestOptions).then(handleResponse);
 }
 
-function handleResponse(response) {
-  return response.text().then((text) => {
-    console.log(text);
-    const data = text && JSON.parse(text);
-    console.log(data);
-    if (!response.ok) {
-      if (response.status === 401) {
-        // auto logout if 401 response returned from api
-        logout();
-        window.location.reload(true);
-      }
-
-      const error = (data && data.message) || response.statusText;
-      return Promise.reject(error);
-    }
-
-    return data;
-  });
-}
 
 export const userService = {
   login,
@@ -91,4 +84,4 @@ export const userService = {
   getById,
   update,
   remove,
-}
+};
