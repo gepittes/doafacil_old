@@ -10,7 +10,7 @@ O projeto foi divido em 4 módulos:
 
 - [API](./api)
 - Database - Porta 5432
-- WebApp - 
+- [WebApp](./webapp/public/README.md) - 
 - WebSocket
 
 Para reunir todos os módulos acima, foi criada uma stack Docker da aplicação, contendo os serviços abaixo:
@@ -99,32 +99,32 @@ docker-compose up --build --force-recreate
     - [ ] notification-service
         - [ ] painel administrativo
             - [x] plataforma
-                - [x] consultar
                 - [x] listar
                 - [x] cadastrar
+                - [x] alterar
                 - [x] remover
             - [x] sistema
-                - [x] consultar
+                - [x] listar
+                - [x] cadastrar
+                - [x] alterar
+                - [x] remover
+            - [] notificacoes
+                - [ ] enviar
+                - [ ] listar
+            - [x] mensagem
                 - [x] listar
                 - [x] cadastrar
                 - [x] remover
-            - [ ] notificacoes
-                - [ ] enviar
-                - [ ] listar
-                - [ ] consultar
-            - [ ] tipo_notificacao
-                - [ ] consultar
-                - [ ] listar
-                - [ ] cadastrar
-                - [ ] remover
-            - [ ] usuario
-                - [ ] consultar
-                - [ ] listar
-                - [ ] cadastrar
-                - [ ] remover
-        - [ ] autenticacao
-            - [ ] login (senha mestra temporariamente)
-            * **consultando tabela de usuários**
+            - [x] usuario
+                - [x] listar
+                - [x] cadastrar
+                - [x] alterar
+                - [x] remover
+        - [x] autenticacao
+            - [x] login (senha mestra temporariamente)
+            - [x] login - utilizando Backend
+            - [x] login - utilizando JWT
+            - [ ] Controle de Acesso 
     - [ ] salic-minc
         - [ ] Componente Sininho
             - [ ] observar WebSocket
