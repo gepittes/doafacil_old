@@ -1,1 +1,1 @@
-export const mensagem = state => state.mensagem;
+export const mensagens = state => state.mensagens;

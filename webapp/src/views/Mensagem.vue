@@ -24,31 +24,15 @@
                                                           required></v-text-field>
 
                                             <li v-for="plataforma in this.plataformas">
-                                                <v-checkbox v-if="plataformasSelecionadas.length > 0" v-model="plataformasSelecionadas"
+                                                <v-checkbox disabled="plataformasSelecionadas.length < 1"
+                                                            v-model="plataformasSelecionadas"
                                                             :label="plataforma.descricao"
                                                             color="success"
-                                                            :value="plataforma.plataforma_id"
-                                                ></v-checkbox>
-
-                                                <v-checkbox v-if="plataformasSelecionadas.length < 1" v-model="editedItem.plataformas"
-                                                            :label="plataforma.descricao"
-                                                            color="success"
-                                                            :value="plataforma"
-                                                ></v-checkbox>
+                                                            :value="plataforma.plataforma_id"></v-checkbox>
                                             </li>
 
                                             <v-select v-model="editedItem.sistema_id"
-                                                      v-if="plataformasSelecionadas.length < 1"
-                                                      :items="sistemasRenderizados"
-                                                      :rules="[v => !!v || 'Campo obrigatório']"
-                                                      label="Sistema"
-                                                      box
-                                                      item-text="descricao"
-                                                      item-value="sistema_id"
-                                                      required></v-select>
-                                            <v-select v-model="editedItem.sistema_id"
-                                                      v-if="plataformasSelecionadas.length > 0"
-                                                      disabled
+                                                      :disabled="editedItem.sistema_id != null"
                                                       :items="sistemasRenderizados"
                                                       :rules="[v => !!v || 'Campo obrigatório']"
                                                       label="Sistema"
@@ -74,8 +58,8 @@
 
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" flat @click.native="close">Cancelar</v-btn>
-                                <v-btn v-if="!loading" color="blue darken-1" flat @click.native="save">Gravar
+                                <v-btn color="blue darken-1" @click.native="close">Fechar</v-btn>
+                                <v-btn v-if="!loading && exibirBotaoGravar" color="blue darken-1" @click.native="save">Gravar
                                 </v-btn>
                                 <v-progress-circular v-if="loading"
                                                      indeterminate
@@ -114,7 +98,7 @@
                             <td class="justify-center layout px-0">
                                 <v-icon small
                                         class="mr-2"
-                                        @click="editItem(props.item)">edit
+                                        @click="editItem(props.item)">search
                                 </v-icon>
                                 <v-icon small
                                         @click="deleteItem(props.item)">delete
@@ -138,6 +122,7 @@
         data: () => ({
             loading: false,
             dialog: false,
+            exibirBotaoGravar: true,
             modeloBuscar: '',
             plataformasSelecionadas: [],
             headers: [
@@ -187,7 +172,7 @@
                 return this.editedIndex === -1 ? 'Criar' : 'Editar'
             },
             ...mapGetters({
-                mensagens: 'mensagem/mensagem',
+                mensagens: 'mensagem/mensagens',
                 sistemas: 'sistema/sistema',
                 contas: 'conta/conta',
                 plataformas: 'plataforma/plataforma',
@@ -201,6 +186,12 @@
                 if(this.editedItem.autor_id == null) {
                     this.editedItem.autor_id = this.accountInfo.user_id;
                 }
+                this.exibirBotaoGravar = true;
+
+                if(this.editedItem.descricao != null) {
+                    this.exibirBotaoGravar = false;
+                }
+
 
                 val || this.close()
             },
@@ -238,23 +229,22 @@
             // }
         },
         mounted() {
-
-            if (this.mensagens.length == null) {
+            if (this.mensagens.length == null || this.mensagens.length == 0) {
                 this.obterMensagems();
             }
             if(this.mensagens.length > 0) {
                 this.mensagensRenderizadas = this.mensagens;
             }
-            if (this.sistemas.length == null) {
+            if (this.sistemas.length == null || this.sistemas.length == 0) {
                 this.obterSistemas();
             }
             if(this.sistemas.length > 0) {
                 this.sistemasRenderizados = this.sistemas;
             }
-            if (this.contas.length == null) {
+            if (this.contas.length == null || this.contas.length == 0) {
                 this.obterContas();
             }
-            if(this.plataformas.length == null) {
+            if(this.plataformas.length == null || this.plataformas.length == 0) {
                 this.obterPlataformas();
             }
         },

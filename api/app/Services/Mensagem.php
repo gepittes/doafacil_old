@@ -22,8 +22,8 @@ class Mensagem implements IService
     public function criar(array $dados = []): ModeloMensagem
     {
         $validator = Validator::make($dados, [
-            "descricao" => 'required|string|min:3|max:50',
-            "mensagem" => 'required|string|min:3|max:9999',
+            "titulo" => 'required|string|min:3|max:50',
+            "descricao" => 'required|string|min:3|max:9999',
             "sistema_id" => 'required|int',
             "autor_id" => 'required|int',
             "plataformas" => 'required|array|min:1',
