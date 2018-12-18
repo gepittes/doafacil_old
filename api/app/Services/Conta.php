@@ -50,6 +50,8 @@ class Conta implements IService
             'is_ativo' => true
         ]);
 
+        $dados['password'] = password_hash($dados['password'], PASSWORD_BCRYPT);
+
         return ModeloUsuario::create($dados);
     }
 
