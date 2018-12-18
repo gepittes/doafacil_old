@@ -52,7 +52,10 @@
         </v-toolbar>
 
         <v-content>
-            <v-alert :value="true" type="error" v-if="alert.message != null && alert.type == 'alert-danger'">
+            <v-alert :value="true" type="success" v-if="alert.message != null && alert.message_type == 'alert-success'">
+                {{alert.message}}
+            </v-alert>
+            <v-alert :value="true" type="error" v-if="alert.message != null && alert.message_type == 'alert-danger'">
                 {{alert.message}}
             </v-alert>
 
@@ -143,7 +146,16 @@ export default {
   watch: {
     $route(to, from) {
       // clear alert on location change
-      this.clearAlert();
+
+      // const publicPages = [
+      //   'login',
+      //   'cadastrar'
+      // ];
+      //
+      // const authRequired = !publicPages.includes(to.path);
+      //
+      // console.log(from);
+      // this.clearAlert();
     },
   },
   mounted() {
