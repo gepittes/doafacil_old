@@ -8,18 +8,19 @@
                             <v-toolbar-title>Cadastrar</v-toolbar-title>
                         </v-toolbar>
                         <v-card-text>
-                            <v-form ref="form" lazy-validation @submit.prevent="handleSubmit">
+                            <v-form ref="form" lazy-validation @submit.prevent="tratarSubmissao">
                                 <v-text-field
                                         prepend-icon="face"
                                         v-model="user.nome"
                                         label="Nome"
                                         v-validate="'required'"
                                         class="form-control"
-                                        :class="{ 'is-invalid': submitted && errors.has('nome') }"
+                                        :rules="[rules.required]"
                                         required
                                 ></v-text-field>
                                 <div v-if="submitted && errors.has('nome')"
-                                     class="invalid-feedback">{{ errors.first('nome') }}
+                                     class="invalid-feedback">{{
+                                    errors.first('nome') }}
                                 </div>
                                 <v-text-field
                                         prepend-icon="person"
@@ -27,12 +28,12 @@
                                         label="E-mail"
                                         v-validate="'required'"
                                         class="form-control"
-                                        :class="{ 'is-invalid': submitted && errors.has('nome') }"
-
+                                        :rules="[rules.required, rules.email]"
                                         required
                                 ></v-text-field>
                                 <div v-if="submitted && errors.has('email')"
-                                     class="invalid-feedback">{{ errors.first('email') }}
+                                     class="invalid-feedback">{{
+                                    errors.first('email') }}
                                 </div>
                                 <v-text-field
                                         prepend-icon="lock"
@@ -41,7 +42,7 @@
                                         label="Senha"
                                         v-validate="{ required: true, min: 6 }"
                                         class="form-control"
-                                        :class="{ 'is-invalid': submitted && errors.has('nome') }"
+                                        :rules="[rules.required]"
                                         required
                                 ></v-text-field>
                                 <div v-if="submitted && errors.has('password')"
@@ -67,31 +68,39 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+  import {mapState, mapActions} from 'vuex';
 
-export default {
-  data() {
-    return {
-      user: {
-        nome: '',
-        email: '',
-        password: '',
-      },
-      submitted: false,
-    };
-  },
-  computed: {
-    ...mapState('account', ['status']),
-  },
-  methods: {
-    ...mapActions('account', ['register']),
-    handleSubmit(e) {
-      console.log(e);
-      this.submitted = true;
-      if (this.$refs.form.validate()) {
-        this.register(this.user);
-      }
+  export default {
+    data() {
+      return {
+        user: {
+          nome: '',
+          email: '',
+          password: '',
+        },
+        submitted: false,
+        rules: {
+          required: value => !!value || 'Required.',
+          email: value => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return pattern.test(value) || 'Invalid e-mail.'
+          }
+        },
+      };
     },
-  },
-};
+    computed: {
+      ...mapState('account', ['status']),
+    },
+    methods: {
+      ...mapActions('account', ['register']),
+      tratarSubmissao(e) {
+        console.log(e);
+        this.submitted = true;
+        if (this.$refs.form.validate()) {
+            this.register(this.user);
+          }
+        },
+      },
+    }
+  ;
 </script>

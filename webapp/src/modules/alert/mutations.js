@@ -5,15 +5,15 @@ export default {
         state.all = { loading: true };
     },
     [types.SUCCESS](state, message) {
-        state.type = 'alert-success';
+        state.message_type = 'alert-success';
         state.message = message;
     },
     [types.ERROR](state, message) {
-        state.type = 'alert-danger';
+        state.message_type = 'alert-danger';
         state.message = message;
     },
     [types.CLEAR](state) {
-        state.type = null;
+        state.message_type = null;
         state.message = null;
     }
 }

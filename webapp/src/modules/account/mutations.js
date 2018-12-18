@@ -20,6 +20,8 @@ export default {
     state.status = {};
     state.user = null;
     state.accountInfo = null;
+    state.message = null;
+    state.message_type = null;
   },
   [types.REGISTERREQUEST](state, user) {
     state.status = { registering: true };
