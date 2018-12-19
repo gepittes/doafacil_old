@@ -14,93 +14,97 @@ import Administracao from './views/Administracao.vue';
 Vue.use(Router);
 
 const routesObject = [
-    {
-        path: '/login',
-        component: Login,
-    },
-    {
-        path: '/cadastrar',
-        component: Cadastrar,
-    },
-    {
-        path: '*',
-        component: NaoEncontrado,
-        // redirect: '/'
-    },
-    {
-        path: '/',
-        component: Home,
-        name: 'home'
-    },
-    {
-        path: '/websocket',
-        component: WebSocket,
-    },
-    {
-        path: '/sobre',
-        component: () => import(/* webpackChunkName: "about" */ './views/Sobre.vue'),
-    },
-    {
-        path: '/administracao',
-        component: Administracao,
-        children: [
-            {
-                path: '/plataforma',
-                component: Plataforma,
-                name: Plataforma,
-                meta: {
-                    title: 'Plataformas',
-                },
-            },
-            {
-                path: '/sistema',
-                component: Sistema,
-                name: Sistema,
-                meta: {
-                    title: 'Sistema',
-                },
-            },
-            {
-                path: '/conta',
-                component: Conta,
-                name: Conta,
-                meta: {
-                    title: 'Conta',
-                },
-            },
-            {
-                path: '/mensagem',
-                component: Mensagem,
-                name: Mensagem,
-                meta: {
-                    title: 'Mensagem',
-                },
-            },
-        ]
-    },
+  {
+    path: '/login',
+    component: Login,
+  },
+  {
+    path: '/cadastrar',
+    component: Cadastrar,
+  },
+  {
+    path: '*',
+    component: NaoEncontrado,
+    // redirect: '/'
+  },
+  {
+    path: '/',
+    component: Home,
+    name: 'home',
+  },
+  {
+    path: '/websocket',
+    component: WebSocket,
+  },
+  {
+    path: '/sobre',
+    component: () => import(/* webpackChunkName: "about" */ './views/Sobre.vue'),
+  },
+  {
+    path: '/administracao',
+    component: Administracao,
+    children: [
+      {
+        path: '/plataforma',
+        component: Plataforma,
+        name: Plataforma,
+        meta: {
+          title: 'Plataformas',
+        },
+      },
+      {
+        path: '/sistema',
+        component: Sistema,
+        name: Sistema,
+        meta: {
+          title: 'Sistema',
+        },
+      },
+      {
+        path: '/conta',
+        component: Conta,
+        name: Conta,
+        meta: {
+          title: 'Conta',
+        },
+      },
+      {
+        path: '/mensagem',
+        component: Mensagem,
+        name: Mensagem,
+        meta: {
+          title: 'Mensagem',
+        },
+      },
+    ],
+  },
 ];
 
 const router = new Router({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes: routesObject,
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes: routesObject,
 });
 
 router.beforeEach((to, from, next) => {
+  const publicPages = [
+    '/login',
+    '/cadastrar',
+  ];
 
-    const publicPages = [
-        '/login',
-        '/cadastrar'
-    ];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem('user');
 
-    const authRequired = !publicPages.includes(to.path);
-    const loggedIn = localStorage.getItem('user');
+  if (to.path === '/logout') {
+      // ### 1 - Definir aqui dispatch para account/loggout
+      // ### 2 - utilizar `return next('/login');`
+  }
+  
+  if (authRequired && !loggedIn) {
+    return next('/login');
+  }
 
-    if (authRequired && !loggedIn) {
-        return next('/login');
-    }
-
-    next();
-})
+  next();
+});
 
 export default router;
