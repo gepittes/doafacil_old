@@ -55,18 +55,15 @@
 
         <v-content>
             {{alert.message_type}}
-            {{alert.message}}
-            <v-card v-if="alert.message != null && (
-                    alert.message_type == 'alert-success' || alert.message_type == 'alert-danger'
-                    )">
-                <v-card-text>asdasdasdasd
-                    <v-alert :value="true"
-                             :class="alert.message_type"
-                    >
-                        {{alert.message}}
-                    </v-alert>
-                </v-card-text>
-            </v-card>
+            <v-alert transition="fade-transition"
+                     :value="true"
+                     :type="alert.message_type"
+                     v-if="alert.message != null && (
+                    alert.message_type == 'success' || alert.message_type == 'error'
+                    )"
+                     dismissible>
+                {{alert.message}}
+            </v-alert>
 
             <router-view/>
         </v-content>
@@ -78,100 +75,100 @@
 
 <script>
 
-import { mapState, mapActions, mapGetters } from 'vuex';
+  import {mapState, mapActions, mapGetters} from 'vuex';
 
-export default {
-  name: 'App',
-  data() {
-    return {
-      clipped: false,
-      drawer: true,
-      fixed: false,
-      items: [
-        {
-          icon: 'home',
-          title: 'Início',
-          to: '/',
-        },
-        {
-          icon: 'chat',
-          title: 'Chat',
-          to: '/websocket',
-        },
-        // {
-        //     icon: 'settings_system_daydream',
-        //     title: 'Sistemas',
-        //     to: "/sistema"
-        // },
-        // {
-        //     icon: 'chat',
-        //     title: 'Mensagens',
-        //     to: "/mensagem"
-        // },
-        // {
-        //     icon: 'account_circle',
-        //     title: 'Contas',
-        //     to: "/conta"
-        // },
-        {
-          icon: 'edit',
-          title: 'Administração',
-          to: '/administracao',
-        },
-        {
-          icon: 'info',
-          title: 'Sobre',
-          to: '/sobre',
-        },
-        {
-          icon: 'exit_to_app',
-          title: 'Sair',
-          to: '/logout',
-        },
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Notification WebApp',
-    };
-  },
-  computed: {
-    ...mapState({
-      alert: state => state.alert,
-      // isLoggedIn: state => state.isLoggedIn
-      // status: state => state.status
-    }),
-    ...mapGetters({
-      status: 'account/status',
-      user: 'account/user',
-      accountInfo: 'account/accountInfo',
-    }),
-  },
-  methods: {
-    ...mapActions({
-      clearAlert: 'alert/clear',
-    }),
-  },
-  watch: {
-    $route(to, from) {
-      // clear alert on location change
-
-      // const publicPages = [
-      //   'login',
-      //   'cadastrar'
-      // ];
-      //
-      // const authRequired = !publicPages.includes(to.path);
-      //
-      // console.log(from);
-
-      // if (to !== from) {
-      //   this.clearAlert();
-      // }
+  export default {
+    name: 'App',
+    data() {
+      return {
+        clipped: false,
+        drawer: true,
+        fixed: false,
+        items: [
+          {
+            icon: 'home',
+            title: 'Início',
+            to: '/',
+          },
+          {
+            icon: 'chat',
+            title: 'Chat',
+            to: '/websocket',
+          },
+          // {
+          //     icon: 'settings_system_daydream',
+          //     title: 'Sistemas',
+          //     to: "/sistema"
+          // },
+          // {
+          //     icon: 'chat',
+          //     title: 'Mensagens',
+          //     to: "/mensagem"
+          // },
+          // {
+          //     icon: 'account_circle',
+          //     title: 'Contas',
+          //     to: "/conta"
+          // },
+          {
+            icon: 'edit',
+            title: 'Administração',
+            to: '/administracao',
+          },
+          {
+            icon: 'info',
+            title: 'Sobre',
+            to: '/sobre',
+          },
+          {
+            icon: 'exit_to_app',
+            title: 'Sair',
+            to: '/logout',
+          },
+        ],
+        miniVariant: false,
+        right: true,
+        rightDrawer: false,
+        title: 'Notification WebApp',
+      };
     },
-  },
-  mounted() {
-  },
+    computed: {
+      ...mapState({
+        alert: state => state.alert,
+        // isLoggedIn: state => state.isLoggedIn
+        // status: state => state.status
+      }),
+      ...mapGetters({
+        status: 'account/status',
+        user: 'account/user',
+        accountInfo: 'account/accountInfo',
+      }),
+    },
+    methods: {
+      ...mapActions({
+        clearAlert: 'alert/clear',
+      }),
+    },
+    watch: {
+      $route(to, from) {
+        // clear alert on location change
 
-};
+        // const publicPages = [
+        //   'login',
+        //   'cadastrar'
+        // ];
+        //
+        // const authRequired = !publicPages.includes(to.path);
+        //
+        // console.log(from);
+
+        // if (to !== from) {
+        //   this.clearAlert();
+        // }
+      },
+    },
+    mounted() {
+    },
+
+  };
 </script>
