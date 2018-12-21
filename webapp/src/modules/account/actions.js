@@ -23,7 +23,9 @@ export const login = ({ dispatch, commit }, { email, password }) => {
 
           router.push({ name: 'home' });
         } else {
-          console.log(response)
+          dispatch('alert/error', 'Falha ao realizar login.', {
+            root: true,
+          });
         }
       }
     })
