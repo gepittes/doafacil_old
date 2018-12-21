@@ -51,7 +51,7 @@ export const register = ({ dispatch, commit }, user) => {
         commit(types.REGISTERSUCCESS, user);
         router.push('/login');
         setTimeout(() => {
-          dispatch('alert/success', 'Registration successful', { root: true });
+          dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
         });
       },
       (error) => {

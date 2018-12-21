@@ -74,100 +74,100 @@
 
 <script>
 
-  import {mapState, mapActions, mapGetters} from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
-  export default {
-    name: 'App',
-    data() {
-      return {
-        clipped: false,
-        drawer: true,
-        fixed: false,
-        items: [
-          {
-            icon: 'home',
-            title: 'Início',
-            to: '/',
-          },
-          {
-            icon: 'chat',
-            title: 'Chat',
-            to: '/websocket',
-          },
-          // {
-          //     icon: 'settings_system_daydream',
-          //     title: 'Sistemas',
-          //     to: "/sistema"
-          // },
-          // {
-          //     icon: 'chat',
-          //     title: 'Mensagens',
-          //     to: "/mensagem"
-          // },
-          // {
-          //     icon: 'account_circle',
-          //     title: 'Contas',
-          //     to: "/conta"
-          // },
-          {
-            icon: 'edit',
-            title: 'Administração',
-            to: '/administracao',
-          },
-          {
-            icon: 'info',
-            title: 'Sobre',
-            to: '/sobre',
-          },
-          {
-            icon: 'exit_to_app',
-            title: 'Sair',
-            to: '/logout',
-          },
-        ],
-        miniVariant: false,
-        right: true,
-        rightDrawer: false,
-        title: 'Notification WebApp',
-      };
-    },
-    computed: {
-      ...mapState({
-        alert: state => state.alert,
-        // isLoggedIn: state => state.isLoggedIn
-        // status: state => state.status
-      }),
-      ...mapGetters({
-        status: 'account/status',
-        user: 'account/user',
-        accountInfo: 'account/accountInfo',
-      }),
-    },
-    methods: {
-      ...mapActions({
-        clearAlert: 'alert/clear',
-      }),
-    },
-    watch: {
-      $route(to, from) {
-        // clear alert on location change
+export default {
+  name: 'App',
+  data() {
+    return {
+      clipped: false,
+      drawer: true,
+      fixed: false,
+      items: [
+        {
+          icon: 'home',
+          title: 'Início',
+          to: '/',
+        },
+        {
+          icon: 'chat',
+          title: 'Chat',
+          to: '/websocket',
+        },
+        // {
+        //     icon: 'settings_system_daydream',
+        //     title: 'Sistemas',
+        //     to: "/sistema"
+        // },
+        // {
+        //     icon: 'chat',
+        //     title: 'Mensagens',
+        //     to: "/mensagem"
+        // },
+        // {
+        //     icon: 'account_circle',
+        //     title: 'Contas',
+        //     to: "/conta"
+        // },
+        {
+          icon: 'edit',
+          title: 'Administração',
+          to: '/administracao',
+        },
+        {
+          icon: 'info',
+          title: 'Sobre',
+          to: '/sobre',
+        },
+        {
+          icon: 'exit_to_app',
+          title: 'Sair',
+          to: '/logout',
+        },
+      ],
+      miniVariant: false,
+      right: true,
+      rightDrawer: false,
+      title: 'Notification WebApp',
+    };
+  },
+  computed: {
+    ...mapState({
+      alert: state => state.alert,
+      // isLoggedIn: state => state.isLoggedIn
+      // status: state => state.status
+    }),
+    ...mapGetters({
+      status: 'account/status',
+      user: 'account/user',
+      accountInfo: 'account/accountInfo',
+    }),
+  },
+  methods: {
+    ...mapActions({
+      clearAlert: 'alert/clear',
+    }),
+  },
+  watch: {
+    $route(to, from) {
+      // clear alert on location change
 
-        // const publicPages = [
-        //   'login',
-        //   'cadastrar'
-        // ];
-        //
-        // const authRequired = !publicPages.includes(to.path);
-        //
-        // console.log(from);
+      // const publicPages = [
+      //   'login',
+      //   'cadastrar'
+      // ];
+      //
+      // const authRequired = !publicPages.includes(to.path);
+      //
+      // console.log(from);
 
-        // if (to !== from) {
-        //   this.clearAlert();
-        // }
-      },
+      // if (to !== from) {
+      //   this.clearAlert();
+      // }
     },
-    mounted() {
-    },
+  },
+  mounted() {
+  },
 
-  };
+};
 </script>

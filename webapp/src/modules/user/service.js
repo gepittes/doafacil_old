@@ -28,7 +28,7 @@ function logout() {
 }
 
 function register(user) {
-  return axios.post('http://localhost/v1/conta', JSON.parse(JSON.stringify(user))).then(handleResponse);
+  return axios.post('http://localhost/v1/conta', JSON.parse(JSON.stringify(user)));
   // return fetch('http://localhost/v1/conta', requestOptions).then(handleResponse);
 }
 
