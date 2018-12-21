@@ -54,7 +54,6 @@
         </v-toolbar>
 
         <v-content>
-            {{alert.message_type}}
             <v-alert transition="fade-transition"
                      :value="true"
                      :type="alert.message_type"
