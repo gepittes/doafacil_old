@@ -10,6 +10,10 @@ export const error = ({ dispatch, commit }, message) => {
   commit(types.ERROR, message);
   setTimeout(() => (dispatch('alert/clear', message, { root: true })), segundosDuracaoMensagem * 1000);
 };
+export const info = ({ dispatch, commit }, message) => {
+  commit(types.INFO, message);
+  setTimeout(() => (dispatch('alert/clear', message, { root: true })), segundosDuracaoMensagem * 1000);
+};
 export const clear = ({ commit }, message) => {
   commit(types.CLEAR, message);
 };
