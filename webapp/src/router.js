@@ -10,6 +10,7 @@ import Sistema from './views/Sistema.vue';
 import Conta from './views/Conta.vue';
 import Mensagem from './views/Mensagem.vue';
 import Administracao from './views/Administracao.vue';
+import store from './store';
 
 Vue.use(Router);
 
@@ -96,10 +97,9 @@ router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem('user');
 
   if (to.path === '/logout') {
-      // ### 1 - Definir aqui dispatch para account/loggout
-      // ### 2 - utilizar `return next('/login');`
+    store.dispatch('alert/info', 'Logout realizado som sucesso.', { root: true });
+    return next('/login');
   }
-  
   if (authRequired && !loggedIn) {
     return next('/login');
   }

@@ -13,7 +13,7 @@ export const login = ({ dispatch, commit }, { email, password }) => {
         if (data && data.token) {
           localStorage.setItem('user', JSON.stringify(data.token));
           commit(types.LOGINSUCCESS, data);
-          dispatch('alert/success', 'Login realizado com sucesso!', {
+          dispatch('alert/info', 'Login realizado com sucesso!', {
             root: true,
           });
 

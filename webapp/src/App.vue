@@ -6,7 +6,6 @@
                              v-model="drawer"
                              enable-resize-watcher
                              color="primary"
-                             temporary
                              app>
             <v-card dark color="primary">
                 <v-list class="pa-1">
@@ -57,9 +56,7 @@
             <v-alert transition="fade-transition"
                      :value="true"
                      :type="alert.message_type"
-                     v-if="alert.message != null && (
-                    alert.message_type == 'success' || alert.message_type == 'error'
-                    )"
+                     v-if="alert.message != null && alert.message_type != null"
                      dismissible>
                 {{alert.message}}
             </v-alert>
