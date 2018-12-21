@@ -23,13 +23,27 @@
                                                           label="Descrição"
                                                           required></v-text-field>
 
-                                            <li v-for="plataforma in this.plataformas">
-                                                <v-checkbox disabled="plataformasSelecionadas.length < 1"
-                                                            v-model="plataformasSelecionadas"
-                                                            :label="plataforma.descricao"
-                                                            color="success"
-                                                            :value="plataforma.plataforma_id"></v-checkbox>
-                                            </li>
+                                            <v-list>
+                                                <v-list-tile
+                                                        v-for="plataforma in this.plataformas"
+                                                        :key="plataforma.title"
+                                                        avatar
+                                                >
+                                                    <!--<v-list-tile-action>-->
+                                                        <!--<v-icon v-if="plataforma.icon" color="pink">star</v-icon>-->
+                                                    <!--</v-list-tile-action>-->
+
+                                                    <v-list-tile-content>
+                                                        <v-checkbox v-bind:disabled="editedItem.mensagem_id != null"
+                                                                    v-model="plataformasSelecionadas"
+                                                                    :label="plataforma.descricao"
+                                                                    color="success"
+                                                                    :value="plataforma.plataforma_id"></v-checkbox>
+                                                        <!--<v-list-tile-title v-text="plataforma.title"></v-list-tile-title>-->
+                                                    </v-list-tile-content>
+
+                                                </v-list-tile>
+                                            </v-list>
 
                                             <v-select v-model="editedItem.sistema_id"
                                                       :disabled="editedItem.sistema_id != null"
