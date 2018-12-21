@@ -63,18 +63,18 @@ class AutenticacaoController extends Controller
                 'password' => 'required'
             ]);
 
-            $usuario = Usuario::where('email', $this->request->input('email'))->first();
-            if (!$usuario) {
+            $usuarioEmail = Usuario::where('email', $this->request->input('email'))->first();
+            if (!$usuarioEmail) {
                 throw new \Exception('Email inexistente.');
             }
 
-            $usuario = Usuario::where('is_ativo', true)->first();
-            if (!$usuario) {
+            $usuarioAtivo = Usuario::where('email', $this->request->input('email'))->where('is_ativo', true)->first();
+            if (!$usuarioAtivo) {
                 throw new \Exception('Usuario inativo.');
             }
 
             $senha = $this->request->input('password');
-            $senhaBanco = $usuario->password;
+            $senhaBanco = $usuarioAtivo->password;
 
 //return response()->json([123123]);
             if (!$this->validarHash($senha, $senhaBanco)) {
@@ -82,7 +82,7 @@ class AutenticacaoController extends Controller
             }
 
             return response()->json([
-                'token' => $this->criarJWT($usuario)
+                'token' => $this->criarJWT($usuarioAtivo)
             ], 200);
         } catch (\Illuminate\Validation\ValidationException $objThrowValidationException) {
             throw new \Exception($objThrowValidationException->getMessage());
