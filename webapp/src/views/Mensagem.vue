@@ -1,12 +1,12 @@
 <template>
     <v-container fluid>
         <v-layout column justify-center>
-            <v-card flat dark>
+            <v-card flat >
                 <v-toolbar dark color="primary">
                     <v-toolbar-title>Mensagens</v-toolbar-title>
-                    <v-dialog v-model="dialog" max-width="500px">
+                    <v-dialog v-model="dialog" max-width="500px" >
                         <v-card>
-                            <v-card-title>
+                            <v-card-title light>
                                 <span class="headline">{{ formTitle }} Mensagem</span>
                             </v-card-title>
 
@@ -18,11 +18,15 @@
                                                           label="Título"
                                                           box
                                                           required></v-text-field>
-                                            <v-text-field v-model="editedItem.descricao"
-                                                          box
-                                                          label="Descrição"
-                                                          required></v-text-field>
-
+                                            <v-textarea
+                                                    v-model="editedItem.descricao"
+                                                    auto-grow
+                                                    box
+                                                    color="deep-purple"
+                                                    label="Descrição"
+                                                    required
+                                                    rows="5"
+                                            ></v-textarea>
                                             <v-list>
                                                 <v-list-tile
                                                         v-for="plataforma in this.plataformas"
@@ -64,7 +68,8 @@
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                                                      v-model="editedItem.is_ativo"></v-switch>
+                                                      v-model="editedItem.is_ativo"
+                                            :readonly="true"></v-switch>
                                         </v-flex>
                                     </v-layout>
                                 </v-container>
