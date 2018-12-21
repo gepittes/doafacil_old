@@ -6,6 +6,7 @@
                              v-model="drawer"
                              enable-resize-watcher
                              color="primary"
+                             temporary
                              app>
             <v-card dark color="primary">
                 <v-list class="pa-1">

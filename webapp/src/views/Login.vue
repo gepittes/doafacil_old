@@ -14,6 +14,8 @@
                                         v-model="email"
                                         :rules="emailRules"
                                         label="E-mail"
+                                        type="email"
+                                        name="email"
                                         required
                                 ></v-text-field>
                                 <v-text-field
@@ -22,6 +24,8 @@
                                         v-model="password"
                                         :rules="passwordRules"
                                         label="Senha"
+                                        name="password"
+                                        browser-autocomplete="new-password"
                                         required
                                 ></v-text-field>
 
