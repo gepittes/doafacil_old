@@ -80,127 +80,127 @@
 </template>
 <script>
 
-    import {mapActions, mapGetters} from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
-    export default {
-        data: () => ({
-            loading: false,
-            dialog: false,
-            headers: [
-                {
-                    text: 'Identificador',
-                    align: 'center',
-                    sortable: true,
-                    value: 'name'
-                },
-                {
-                    text: 'Nome',
-                    value: 'nome',
-                    align: 'center'
-                },
-                {
-                    text: 'E-mail',
-                    value: 'email',
-                    align: 'center'
-                },
-                {
-                    text: 'Situação',
-                    value: 'situacao',
-                    align: 'center'
-                },
-                {
-                    text: 'Ação',
-                    value: 'acao',
-                    align: 'center',
-                    sortable: false,
-                },
-            ],
-            contasIniciais: [],
-            editedIndex: -1,
-            editedItem: {
-                usuario_id: 0,
-                descricao: '',
-                is_ativo: true,
-            },
-            defaultItem: {
-                name: '',
-                calories: 0,
-                fat: 0,
-                carbs: 0,
-                protein: 0
-            }
-        }),
+export default {
+  data: () => ({
+    loading: false,
+    dialog: false,
+    headers: [
+      {
+        text: 'Identificador',
+        align: 'center',
+        sortable: true,
+        value: 'name',
+      },
+      {
+        text: 'Nome',
+        value: 'nome',
+        align: 'center',
+      },
+      {
+        text: 'E-mail',
+        value: 'email',
+        align: 'center',
+      },
+      {
+        text: 'Situação',
+        value: 'situacao',
+        align: 'center',
+      },
+      {
+        text: 'Ação',
+        value: 'acao',
+        align: 'center',
+        sortable: false,
+      },
+    ],
+    contasIniciais: [],
+    editedIndex: -1,
+    editedItem: {
+      usuario_id: 0,
+      descricao: '',
+      is_ativo: true,
+    },
+    defaultItem: {
+      name: '',
+      calories: 0,
+      fat: 0,
+      carbs: 0,
+      protein: 0,
+    },
+  }),
 
-        computed: {
-            formTitle() {
-                return this.editedIndex === -1 ? 'Criar' : 'Editar'
-            },
-            ...mapGetters({
-                contas: 'conta/conta'
-            }),
-        },
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? 'Criar' : 'Editar';
+    },
+    ...mapGetters({
+      contas: 'conta/conta',
+    }),
+  },
 
-        watch: {
-            dialog(val) {
-                val || this.close()
-            },
-            contas(value) {
-                if ('error' in value) {
-                    alert(value.error);
-                    this.contasIniciais = [];
-                } else {
-                    this.contasIniciais = value;
-                }
-            },
+  watch: {
+    dialog(val) {
+      val || this.close();
+    },
+    contas(value) {
+      if ('error' in value) {
+        alert(value.error);
+        this.contasIniciais = [];
+      } else {
+        this.contasIniciais = value;
+      }
+    },
 
-        },
+  },
 
-        created() {
-            this.obterContas();
-        },
+  created() {
+    this.obterContas();
+  },
 
-        methods: {
+  methods: {
 
-            ...mapActions({
-                obterContas: 'conta/obterContas',
-                removerConta: 'conta/removerConta',
-                cadastrarConta: 'conta/cadastrarConta',
-                atualizarConta: 'conta/atualizarConta',
-            }),
+    ...mapActions({
+      obterContas: 'conta/obterContas',
+      removerConta: 'conta/removerConta',
+      cadastrarConta: 'conta/cadastrarConta',
+      atualizarConta: 'conta/atualizarConta',
+    }),
 
-            editItem(item) {
-                this.editedIndex = this.contas.indexOf(item)
-                this.editedItem = Object.assign({}, item)
-                this.dialog = true
-            },
+    editItem(item) {
+      this.editedIndex = this.contas.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
 
-            deleteItem(item) {
-                if (confirm('Deseja remover esse item?')) {
-                    this.removerConta(item.usuario_id);
-                }
-            },
+    deleteItem(item) {
+      if (confirm('Deseja remover esse item?')) {
+        this.removerConta(item.usuario_id);
+      }
+    },
 
-            close() {
-                this.dialog = false
-                setTimeout(() => {
-                    this.editedItem = Object.assign({}, this.defaultItem)
-                    this.editedIndex = -1
-                }, 300)
-            },
+    close() {
+      this.dialog = false;
+      setTimeout(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      }, 300);
+    },
 
-            save() {
-                const self = this;
-                self.loading = true;
+    save() {
+      const self = this;
+      self.loading = true;
 
-                if (self.editedIndex > -1) {
-                    this.atualizarConta(self.editedItem)
-                } else {
-                    this.cadastrarConta(self.editedItem)
-                }
-                self.close()
-            }
-        }
-    }
+      if (self.editedIndex > -1) {
+        this.atualizarConta(self.editedItem);
+      } else {
+        this.cadastrarConta(self.editedItem);
+      }
+      self.close();
+    },
+  },
+};
 
 </script>
 

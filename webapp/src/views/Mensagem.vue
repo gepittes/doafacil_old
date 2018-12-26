@@ -17,6 +17,8 @@
                                             <v-text-field v-model="editedItem.titulo"
                                                           label="Título"
                                                           box
+                                                          minlength="3"
+                                                          :rules="[(object) => object.length > 3 || 'Campo obrigatório.']"
                                                           required></v-text-field>
                                             <v-textarea
                                                     v-model="editedItem.descricao"
@@ -25,6 +27,7 @@
                                                     color="deep-purple"
                                                     label="Descrição"
                                                     required
+                                                    :rules="[(object) => object.length > 3 || 'Campo obrigatório.']"
                                                     rows="5"
                                             ></v-textarea>
                                             <v-list>
@@ -33,22 +36,19 @@
                                                         :key="plataforma.title"
                                                         avatar
                                                 >
-                                                    <!--<v-list-tile-action>-->
-                                                        <!--<v-icon v-if="plataforma.icon" color="pink">star</v-icon>-->
-                                                    <!--</v-list-tile-action>-->
 
                                                     <v-list-tile-content>
                                                         <v-checkbox v-bind:disabled="editedItem.mensagem_id != null"
-                                                                    v-model="plataformasSelecionadas"
+                                                                    v-model="editedItem.plataformas"
                                                                     :label="plataforma.descricao"
                                                                     color="success"
                                                                     required
-                                                                    :value="plataforma.plataforma_id"></v-checkbox>
-                                                        <!--<v-list-tile-title v-text="plataforma.title"></v-list-tile-title>-->
+                                                                    :value="plataforma"></v-checkbox>
                                                     </v-list-tile-content>
 
                                                 </v-list-tile>
                                             </v-list>
+                                            {{editedItem.plataformas}}
 
                                             <v-select v-model="editedItem.sistema_id"
                                                       :disabled="editedItem.sistema_id != null"
@@ -113,7 +113,9 @@
                             <td class="text-xs-center">{{ props.item.mensagem_id }}</td>
                             <td class="text-xs-center">{{ props.item.titulo }}</td>
                             <td class="text-xs-center">{{ props.item.descricao }}</td>
-                            <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
+                            <td class="text-xs-center">
+                                {{ props.item.is_ativo ? "Ativo" : "Inativo" }}
+                            </td>
                             <td class="justify-center layout px-0">
                                 <v-icon small
                                         class="mr-2"
@@ -229,12 +231,12 @@ export default {
     },
     editedItem(value) {
       this.plataformasSelecionadas = [];
-      for (const index in value.plataformas) {
-        this.plataformasSelecionadas.push(value.plataformas[index].plataforma_id);
-      }
-
       if (this.editedItem.autor_id == null) {
         this.editedItem.autor_id = this.accountInfo.user_id;
+      } else {
+        for (const index in value.plataformas) {
+          this.plataformasSelecionadas.push(value.plataformas[index]);
+        }
       }
     },
   },
@@ -304,6 +306,7 @@ export default {
       if (self.editedIndex > -1) {
         this.atualizarMensagem(self.editedItem);
       } else {
+        console.log(self.editedItem);
         this.cadastrarMensagem(self.editedItem);
       }
       self.close();
