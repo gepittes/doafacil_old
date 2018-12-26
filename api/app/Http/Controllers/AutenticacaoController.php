@@ -57,32 +57,36 @@ class AutenticacaoController extends Controller
 
     public function autenticar(Usuario $usuario)
     {
-        $this->validate($this->request, [
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+        try {
+            $this->validate($this->request, [
+                'email' => 'required|email',
+                'password' => 'required'
+            ]);
 
-        $usuario = Usuario::where('email', $this->request->input('email'))->first();
-        if (!$usuario) {
-            throw new \Exception('Email inexistente.');
-        }
+            $usuarioEmail = Usuario::where('email', $this->request->input('email'))->first();
+            if (!$usuarioEmail) {
+                throw new \Exception('Email inexistente.');
+            }
 
-        $usuario = Usuario::where('is_ativo', true)->first();
-        if (!$usuario) {
-            throw new \Exception('Usuario inativo.');
-        }
+            $usuarioAtivo = Usuario::where('email', $this->request->input('email'))->where('is_ativo', true)->first();
+            if (!$usuarioAtivo) {
+                throw new \Exception('Usuario inativo.');
+            }
 
-        $senha = $this->request->input('password');
-        $senhaBanco = $usuario->password;
+            $senha = $this->request->input('password');
+            $senhaBanco = $usuarioAtivo->password;
 
 //return response()->json([123123]);
-        if (!$this->validarHash($senha, $senhaBanco)) {
-            throw new \Exception('Email ou senha incorretos.');
-        }
+            if (!$this->validarHash($senha, $senhaBanco)) {
+                throw new \Exception('Email ou senha incorretos.');
+            }
 
-        return response()->json([
-            'token' => $this->criarJWT($usuario)
-        ], 200);
+            return response()->json([
+                'token' => $this->criarJWT($usuarioAtivo)
+            ], 200);
+        } catch (\Illuminate\Validation\ValidationException $objThrowValidationException) {
+            throw new \Exception($objThrowValidationException->getMessage());
+        }
     }
 
 }

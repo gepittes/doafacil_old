@@ -24,6 +24,7 @@ class JsonResponseStyle
         /**
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
+        $statusCode = '400';
         if (empty(trim($response->exception))) {
             $dados = json_decode($response->getContent(), true);
             if(is_array($dados)) {
@@ -33,7 +34,6 @@ class JsonResponseStyle
             $statusCode = '200';
         } else {
             $responseData['error'] = $response->exception->getMessage();
-            $statusCode = '400';
         }
 
         $content = json_encode($responseData);

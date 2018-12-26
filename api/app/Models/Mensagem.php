@@ -27,4 +27,12 @@ class Mensagem extends Model
             'plataforma_id'
         )->as('mensagem_has_plataforma');
     }
+
+    public function delete()
+    {
+        $this->plataformas()->delete();
+
+        return parent::delete();
+    }
+
 }

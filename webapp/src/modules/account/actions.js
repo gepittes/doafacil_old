@@ -10,12 +10,10 @@ export const login = ({ dispatch, commit }, { email, password }) => {
     .then((response) => {
       if (response.data && response.data.data) {
         const data = response.data.data;
-        if (data) {
-          if (data.token) {
-            localStorage.setItem('user', JSON.stringify(data.token));
-          }
+        if (data && data.token) {
+          localStorage.setItem('user', JSON.stringify(data.token));
           commit(types.LOGINSUCCESS, data);
-          dispatch('alert/success', 'Login realizado com sucesso!', {
+          dispatch('alert/info', 'Login realizado com sucesso!', {
             root: true,
           });
 
@@ -24,6 +22,10 @@ export const login = ({ dispatch, commit }, { email, password }) => {
           commit(types.SETACCOUNTINFO, tokenDecodificada.user);
 
           router.push({ name: 'home' });
+        } else {
+          dispatch('alert/error', 'Falha ao realizar login.', {
+            root: true,
+          });
         }
       }
     })
@@ -51,7 +53,7 @@ export const register = ({ dispatch, commit }, user) => {
         commit(types.REGISTERSUCCESS, user);
         router.push('/login');
         setTimeout(() => {
-          dispatch('alert/success', 'Registration successful', { root: true });
+          dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
         });
       },
       (error) => {

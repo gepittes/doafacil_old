@@ -86,4 +86,9 @@ class Mensagem implements IService
         }
     }
 
+    public function remover($id)
+    {
+        $plataforma = ModeloMensagem::findOrFail($id);
+        return $plataforma->delete();
+    }
 }

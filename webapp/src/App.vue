@@ -46,16 +46,19 @@
             </v-list>
         </v-navigation-drawer>
         <v-toolbar app :clipped-left="clipped" dark color="primary">
-            <v-toolbar-side-icon v-if="status.loggedIn" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+            <v-toolbar-side-icon
+                    v-if="status.loggedIn"
+                    @click.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-toolbar-title v-text="title"></v-toolbar-title>
             <v-spacer></v-spacer>
         </v-toolbar>
 
         <v-content>
-            <v-alert :value="true" type="success" v-if="alert.message != null && alert.message_type == 'alert-success'">
-                {{alert.message}}
-            </v-alert>
-            <v-alert :value="true" type="error" v-if="alert.message != null && alert.message_type == 'alert-danger'">
+            <v-alert transition="fade-transition"
+                     :value="true"
+                     :type="alert.message_type"
+                     v-if="alert.message != null && alert.message_type != null"
+                     dismissible>
                 {{alert.message}}
             </v-alert>
 
@@ -117,7 +120,7 @@ export default {
         {
           icon: 'exit_to_app',
           title: 'Sair',
-          to: '/login',
+          to: '/logout',
         },
       ],
       miniVariant: false,
@@ -155,7 +158,10 @@ export default {
       // const authRequired = !publicPages.includes(to.path);
       //
       // console.log(from);
-      // this.clearAlert();
+
+      // if (to !== from) {
+      //   this.clearAlert();
+      // }
     },
   },
   mounted() {

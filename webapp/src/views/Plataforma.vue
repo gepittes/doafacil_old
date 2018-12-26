@@ -78,122 +78,122 @@
 </template>
 <script>
 
-    import {mapActions, mapGetters} from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
-    export default {
-        data: () => ({
-            loading: false,
-            dialog: false,
-            headers: [
-                {
-                    text: 'Identificador',
-                    align: 'center',
-                    sortable: true,
-                    value: 'name'
-                },
-                {
-                    text: 'Descrição',
-                    value: 'descricao',
-                    align: 'center'
-                },
-                {
-                    text: 'Situação',
-                    value: 'situacao',
-                    align: 'center'
-                },
-                {
-                    text: 'Ação',
-                    value: 'acao',
-                    align: 'center',
-                    sortable: false,
-                },
-            ],
-            plataformasIniciais: [],
-            editedIndex: -1,
-            editedItem: {
-                plataforma_id: 0,
-                descricao: '',
-                is_ativo: true,
-            },
-            defaultItem: {
-                name: '',
-                calories: 0,
-                fat: 0,
-                carbs: 0,
-                protein: 0
-            }
-        }),
+export default {
+  data: () => ({
+    loading: false,
+    dialog: false,
+    headers: [
+      {
+        text: 'Identificador',
+        align: 'center',
+        sortable: true,
+        value: 'name',
+      },
+      {
+        text: 'Descrição',
+        value: 'descricao',
+        align: 'center',
+      },
+      {
+        text: 'Situação',
+        value: 'situacao',
+        align: 'center',
+      },
+      {
+        text: 'Ação',
+        value: 'acao',
+        align: 'center',
+        sortable: false,
+      },
+    ],
+    plataformasIniciais: [],
+    editedIndex: -1,
+    editedItem: {
+      plataforma_id: 0,
+      descricao: '',
+      is_ativo: true,
+    },
+    defaultItem: {
+      name: '',
+      calories: 0,
+      fat: 0,
+      carbs: 0,
+      protein: 0,
+    },
+  }),
 
-        computed: {
-            formTitle() {
-                return this.editedIndex === -1 ? 'Criar' : 'Editar'
-            },
-            ...mapGetters({
-                plataformas: 'plataforma/plataforma'
-            }),
-        },
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? 'Criar' : 'Editar';
+    },
+    ...mapGetters({
+      plataformas: 'plataforma/plataforma',
+    }),
+  },
 
-        watch: {
-            dialog(val) {
-                val || this.close()
-            },
-            plataformas(value) {
-                if ('error' in value) {
-                    alert(value.error);
-                    this.plataformasIniciais = [];
-                } else {
-                    this.plataformasIniciais = value;
-                }
-            },
+  watch: {
+    dialog(val) {
+      val || this.close();
+    },
+    plataformas(value) {
+      if ('error' in value) {
+        alert(value.error);
+        this.plataformasIniciais = [];
+      } else {
+        this.plataformasIniciais = value;
+      }
+    },
 
-        },
+  },
 
-        created() {
-            this.obterPlataformas();
-        },
+  created() {
+    this.obterPlataformas();
+  },
 
-        methods: {
+  methods: {
 
-            ...mapActions({
-                obterPlataformas: 'plataforma/obterPlataformas',
-                removerPlataforma: 'plataforma/removerPlataforma',
-                cadastrarPlataforma: 'plataforma/cadastrarPlataforma',
-                atualizarPlataforma: 'plataforma/atualizarPlataforma',
-            }),
+    ...mapActions({
+      obterPlataformas: 'plataforma/obterPlataformas',
+      removerPlataforma: 'plataforma/removerPlataforma',
+      cadastrarPlataforma: 'plataforma/cadastrarPlataforma',
+      atualizarPlataforma: 'plataforma/atualizarPlataforma',
+    }),
 
-            editItem(item) {
-                this.editedIndex = this.plataformas.indexOf(item)
-                this.editedItem = Object.assign({}, item)
-                this.dialog = true
-            },
+    editItem(item) {
+      this.editedIndex = this.plataformas.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
 
-            deleteItem(item) {
-                if (confirm('Deseja remover esse item?')) {
-                    this.removerPlataforma(item.plataforma_id);
-                }
-            },
+    deleteItem(item) {
+      if (confirm('Deseja remover esse item?')) {
+        this.removerPlataforma(item.plataforma_id);
+      }
+    },
 
-            close() {
-                this.dialog = false
-                setTimeout(() => {
-                    this.editedItem = Object.assign({}, this.defaultItem)
-                    this.editedIndex = -1
-                }, 300)
-            },
+    close() {
+      this.dialog = false;
+      setTimeout(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      }, 300);
+    },
 
-            save() {
-                const self = this;
-                self.loading = true;
+    save() {
+      const self = this;
+      self.loading = true;
 
-                if (self.editedIndex > -1) {
-                    this.atualizarPlataforma(self.editedItem)
-                } else {
-                    this.cadastrarPlataforma(self.editedItem)
-                }
-                self.close()
-            }
-        }
-    }
+      if (self.editedIndex > -1) {
+        this.atualizarPlataforma(self.editedItem);
+      } else {
+        this.cadastrarPlataforma(self.editedItem);
+      }
+      self.close();
+    },
+  },
+};
 
 </script>
 

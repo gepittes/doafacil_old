@@ -14,6 +14,8 @@
                                         v-model="email"
                                         :rules="emailRules"
                                         label="E-mail"
+                                        type="email"
+                                        name="email"
                                         required
                                 ></v-text-field>
                                 <v-text-field
@@ -22,6 +24,8 @@
                                         v-model="password"
                                         :rules="passwordRules"
                                         label="Senha"
+                                        name="password"
+                                        browser-autocomplete="new-password"
                                         required
                                 ></v-text-field>
 
@@ -29,12 +33,13 @@
                                     <!--<v-btn @click="clear">Limpar</v-btn>-->
                                     <!--<v-spacer></v-spacer>-->
 
-                                    <v-btn color="primary" type="submit" :disabled="!valid"> Entrar</v-btn>
+                                    <v-btn color="primary"
+                                           type="submit" :disabled="!valid"> Entrar
+                                    </v-btn>
                                     <router-link to="/cadastrar"
                                                  class="btn btn-link"
                                                  style="margin-left: 20px"
-                                    >Cadastre-se
-                                    </router-link>
+                                    >Cadastre-se</router-link>
 
                                 </v-card-actions>
                             </v-form>
@@ -47,7 +52,7 @@
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import { mapState, mapActions } from 'vuex';
 
 export default {
   data() {
