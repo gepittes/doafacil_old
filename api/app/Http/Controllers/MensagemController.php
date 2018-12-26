@@ -52,6 +52,6 @@ class MensagemController extends Controller
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json($mensagem->desabilitar($id));
+        return $response->json($mensagem->remover($id));
     }
 }
