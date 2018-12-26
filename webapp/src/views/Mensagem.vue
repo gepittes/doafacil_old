@@ -42,6 +42,7 @@
                                                                     v-model="plataformasSelecionadas"
                                                                     :label="plataforma.descricao"
                                                                     color="success"
+                                                                    required
                                                                     :value="plataforma.plataforma_id"></v-checkbox>
                                                         <!--<v-list-tile-title v-text="plataforma.title"></v-list-tile-title>-->
                                                     </v-list-tile-content>
@@ -77,9 +78,8 @@
 
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" @click.native="close">Fechar</v-btn>
-                                <v-btn v-if="!loading && exibirBotaoGravar" color="blue darken-1" @click.native="save">Gravar
-                                </v-btn>
+                                <v-btn color="error" @click.native="close">Fechar</v-btn>
+                                <v-btn v-if="!loading && exibirBotaoGravar" color="blue darken-1" @click.native="save">Gravar</v-btn>
                                 <v-progress-circular v-if="loading"
                                                      indeterminate
                                                      color="primary"></v-progress-circular>
@@ -205,8 +205,7 @@ export default {
         this.editedItem.autor_id = this.accountInfo.user_id;
       }
       this.exibirBotaoGravar = true;
-
-      if (this.editedItem.descricao != null) {
+      if (this.editedItem.mensagem_id != null) {
         this.exibirBotaoGravar = false;
       }
 
