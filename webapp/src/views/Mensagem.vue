@@ -34,8 +34,7 @@
                                                 <v-list-tile
                                                         v-for="plataforma in this.plataformas"
                                                         :key="plataforma.title"
-                                                        avatar
-                                                >
+                                                        avatar>
 
                                                     <v-list-tile-content>
                                                         <v-checkbox v-bind:disabled="editedItem.mensagem_id != null"
@@ -48,7 +47,6 @@
 
                                                 </v-list-tile>
                                             </v-list>
-                                            {{editedItem.plataformas}}
 
                                             <v-select v-model="editedItem.sistema_id"
                                                       :disabled="editedItem.sistema_id != null"
