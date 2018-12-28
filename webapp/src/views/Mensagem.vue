@@ -89,9 +89,6 @@
                                 <v-spacer></v-spacer>
                                 <v-btn color="error" @click.native="close">Fechar</v-btn>
                                 <v-btn v-if="!loading && exibirBotaoGravar" color="blue darken-1" @click.native="save">Gravar</v-btn>
-                                <v-progress-circular v-if="loading"
-                                                     indeterminate
-                                                     color="primary"></v-progress-circular>
                             </v-card-actions>
                         </v-card>
                         <v-btn color="blue"
