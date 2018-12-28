@@ -87,10 +87,15 @@ export default {
           title: 'Início',
           to: '/',
         },
+        // {
+        //   icon: 'chat',
+        //   title: 'Chat Interno',
+        //   to: '/websocket',
+        // },
         {
           icon: 'chat',
-          title: 'Chat',
-          to: '/websocket',
+          title: 'Notificacao',
+          to: '/notificacao',
         },
         // {
         //     icon: 'settings_system_daydream',
