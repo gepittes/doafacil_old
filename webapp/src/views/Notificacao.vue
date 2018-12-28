@@ -110,7 +110,7 @@
                 <v-card-text>
                     <v-data-table light
                                   :headers="headers"
-                                  :items="mensagensRenderizadas"
+                                  :items="notificacoesRenderizadas"
                                   :search="modeloBuscar"
                                   :rows-per-page-items="[ 10, 25, 40 ]"
                                   :rows-per-page-text="'Registros por página'"
@@ -181,7 +181,7 @@ export default {
         sortable: false,
       },
     ],
-    mensagensRenderizadas: [],
+    notificacoesRenderizadas: [],
     sistemasRenderizados: [],
     editedIndex: -1,
     editedItem: {
@@ -199,7 +199,7 @@ export default {
       return this.editedIndex === -1 ? 'Criar' : 'Editar';
     },
     ...mapGetters({
-      mensagens: 'notificacao/mensagens',
+      notificacoes: 'notificacao/notificacoes',
       sistemas: 'sistema/sistema',
       contas: 'conta/conta',
       plataformas: 'plataforma/plataforma',
@@ -220,12 +220,12 @@ export default {
 
       val || this.close();
     },
-    mensagens(value) {
+    notificacoes(value) {
       if ('error' in value) {
         alert(value.error);
-        this.mensagensRenderizadas = [];
+        this.notificacoesRenderizadas = [];
       } else {
-        this.mensagensRenderizadas = value;
+        this.notificacoesRenderizadas = value;
       }
     },
     sistemas(value) {
@@ -253,11 +253,11 @@ export default {
     // }
   },
   mounted() {
-    if (this.mensagens.length == null || this.mensagens.length == 0) {
+    if (this.notificacoes.length == null || this.notificacoes.length == 0) {
       this.obterNotificacaos();
     }
-    if (this.mensagens.length > 0) {
-      this.mensagensRenderizadas = this.mensagens;
+    if (this.notificacoes.length > 0) {
+      this.notificacoesRenderizadas = this.notificacoes;
     }
     if (this.sistemas.length == null || this.sistemas.length == 0) {
       this.obterSistemas();
@@ -286,7 +286,7 @@ export default {
     }),
 
     editItem(item) {
-      this.editedIndex = this.mensagens.indexOf(item);
+      this.editedIndex = this.notificacoes.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
