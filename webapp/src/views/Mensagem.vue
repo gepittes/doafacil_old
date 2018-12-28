@@ -31,19 +31,30 @@
                                                     rows="5"
                                             ></v-textarea>
                                             <v-list>
-                                                <v-list-tile
+                                                <v-list-tile v-if="editedItem.mensagem_id == null"
                                                         v-for="plataforma in this.plataformas"
                                                         :key="plataforma.title"
                                                         avatar>
 
                                                     <v-list-tile-content>
-                                                        <v-checkbox v-bind:disabled="editedItem.mensagem_id != null"
-                                                                    v-model="editedItem.plataformas"
+                                                        <v-checkbox v-model="editedItem.plataformas"
                                                                     :label="plataforma.descricao"
                                                                     color="success"
                                                                     required
                                                                     :value="plataforma"></v-checkbox>
                                                     </v-list-tile-content>
+
+                                                </v-list-tile>
+                                                <h3 v-if="editedItem.mensagem_id != null"> Plataformas </h3>
+                                                <v-list-tile v-if="editedItem.mensagem_id != null"
+                                                        v-for="plataforma in editedItem.plataformas"
+                                                        :key="plataforma.title"
+                                                        avatar>
+
+                                                    <v-list-tile-content>
+                                                            {{plataforma.descricao}}
+                                                    </v-list-tile-content>
+
 
                                                 </v-list-tile>
                                             </v-list>
