@@ -13,14 +13,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 
-    modules: {
-        account,
-        user,
-        alert,
-        plataforma,
-        sistema,
-        conta,
-        mensagem
-    },
-    strict: true
+  modules: {
+    account,
+    user,
+    alert,
+    plataforma,
+    sistema,
+    conta,
+    mensagem,
+  },
+  strict: true,
 });
