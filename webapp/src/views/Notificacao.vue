@@ -160,18 +160,23 @@ export default {
         value: 'name',
       },
       {
-        text: 'Título',
-        value: 'titulo',
+        text: 'Destinatário',
+        value: 'destinatario_id',
         align: 'center',
       },
       {
-        text: 'Descrição',
-        value: 'descricao',
+        text: 'Mensagem',
+        value: 'mensagem_id',
         align: 'center',
       },
       {
-        text: 'Situação',
-        value: 'situacao',
+        text: 'Data de envio',
+        value: 'data_envio',
+        align: 'center',
+      },
+      {
+        text: 'Notificação Lida',
+        value: 'is_notificacao_lida',
         align: 'center',
       },
       {
