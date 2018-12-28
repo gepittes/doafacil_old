@@ -8,19 +8,21 @@ import conta from '@/modules/conta';
 import plataforma from '@/modules/plataforma';
 import sistema from '@/modules/sistema';
 import mensagem from '@/modules/mensagem';
+import notificacao from '@/modules/notificacao';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
 
-    modules: {
-        account,
-        user,
-        alert,
-        plataforma,
-        sistema,
-        conta,
-        mensagem
-    },
-    strict: true
+  modules: {
+    account,
+    user,
+    alert,
+    plataforma,
+    sistema,
+    conta,
+    mensagem,
+    notificacao,
+  },
+  strict: true,
 });

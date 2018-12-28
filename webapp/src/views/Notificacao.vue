@@ -3,11 +3,11 @@
         <v-layout column justify-center>
             <v-card flat >
                 <v-toolbar dark color="primary">
-                    <v-toolbar-title>Mensagens</v-toolbar-title>
+                    <v-toolbar-title>Notificacaos</v-toolbar-title>
                     <v-dialog v-model="dialog" max-width="500px" >
                         <v-card>
                             <v-card-title light>
-                                <span class="headline">{{ formTitle }} Mensagem</span>
+                                <span class="headline">{{ formTitle }} Notificacao</span>
                             </v-card-title>
 
                             <v-card-text>
@@ -31,7 +31,7 @@
                                                     rows="5"
                                             ></v-textarea>
                                             <v-list>
-                                                <v-list-tile v-if="editedItem.mensagem_id == null"
+                                                <v-list-tile v-if="editedItem.notificacao_id == null"
                                                         v-for="plataforma in this.plataformas"
                                                         :key="plataforma.title"
                                                         avatar>
@@ -45,8 +45,8 @@
                                                     </v-list-tile-content>
 
                                                 </v-list-tile>
-                                                <h3 v-if="editedItem.mensagem_id != null"> Plataformas </h3>
-                                                <v-list-tile v-if="editedItem.mensagem_id != null"
+                                                <h3 v-if="editedItem.notificacao_id != null"> Plataformas </h3>
+                                                <v-list-tile v-if="editedItem.notificacao_id != null"
                                                         v-for="plataforma in editedItem.plataformas"
                                                         :key="plataforma.title"
                                                         avatar>
@@ -110,13 +110,13 @@
                 <v-card-text>
                     <v-data-table light
                                   :headers="headers"
-                                  :items="mensagensRenderizadas"
+                                  :items="notificacoesRenderizadas"
                                   :search="modeloBuscar"
                                   :rows-per-page-items="[ 10, 25, 40 ]"
                                   :rows-per-page-text="'Registros por página'"
                                   class="elevation-1">
                         <template slot="items" slot-scope="props">
-                            <td class="text-xs-center">{{ props.item.mensagem_id }}</td>
+                            <td class="text-xs-center">{{ props.item.notificacao_id }}</td>
                             <td class="text-xs-center">{{ props.item.titulo }}</td>
                             <td class="text-xs-center">{{ props.item.descricao }}</td>
                             <td class="text-xs-center">
@@ -133,7 +133,7 @@
                             </td>
                         </template>
                         <template slot="no-data">
-                            <v-btn color="primary" @click="this.obterMensagems">Reset</v-btn>
+                            <v-btn color="primary" @click="this.obterNotificacaos">Reset</v-btn>
                         </template>
                     </v-data-table>
                 </v-card-text>
@@ -160,18 +160,23 @@ export default {
         value: 'name',
       },
       {
-        text: 'Título',
-        value: 'titulo',
+        text: 'Destinatário',
+        value: 'destinatario_id',
         align: 'center',
       },
       {
-        text: 'Descrição',
-        value: 'descricao',
+        text: 'Mensagem',
+        value: 'mensagem_id',
         align: 'center',
       },
       {
-        text: 'Situação',
-        value: 'situacao',
+        text: 'Data de envio',
+        value: 'data_envio',
+        align: 'center',
+      },
+      {
+        text: 'Notificação Lida',
+        value: 'is_notificacao_lida',
         align: 'center',
       },
       {
@@ -181,11 +186,11 @@ export default {
         sortable: false,
       },
     ],
-    mensagensRenderizadas: [],
+    notificacoesRenderizadas: [],
     sistemasRenderizados: [],
     editedIndex: -1,
     editedItem: {
-      mensagem_id: null,
+      notificacao_id: null,
       autor_id: null,
       sistema_id: null,
       descricao: '',
@@ -199,7 +204,7 @@ export default {
       return this.editedIndex === -1 ? 'Criar' : 'Editar';
     },
     ...mapGetters({
-      mensagens: 'mensagem/mensagens',
+      notificacoes: 'notificacao/notificacoes',
       sistemas: 'sistema/sistema',
       contas: 'conta/conta',
       plataformas: 'plataforma/plataforma',
@@ -213,19 +218,19 @@ export default {
         this.editedItem.autor_id = this.accountInfo.user_id;
       }
       this.exibirBotaoGravar = true;
-      if (this.editedItem.mensagem_id != null) {
+      if (this.editedItem.notificacao_id != null) {
         this.exibirBotaoGravar = false;
       }
 
 
       val || this.close();
     },
-    mensagens(value) {
+    notificacoes(value) {
       if ('error' in value) {
         alert(value.error);
-        this.mensagensRenderizadas = [];
+        this.notificacoesRenderizadas = [];
       } else {
-        this.mensagensRenderizadas = value;
+        this.notificacoesRenderizadas = value;
       }
     },
     sistemas(value) {
@@ -253,11 +258,11 @@ export default {
     // }
   },
   mounted() {
-    if (this.mensagens.length == null || this.mensagens.length == 0) {
-      this.obterMensagems();
+    if (this.notificacoes.length == null || this.notificacoes.length == 0) {
+      this.obterNotificacaos();
     }
-    if (this.mensagens.length > 0) {
-      this.mensagensRenderizadas = this.mensagens;
+    if (this.notificacoes.length > 0) {
+      this.notificacoesRenderizadas = this.notificacoes;
     }
     if (this.sistemas.length == null || this.sistemas.length == 0) {
       this.obterSistemas();
@@ -277,23 +282,23 @@ export default {
 
     ...mapActions({
       obterSistemas: 'sistema/obterSistemas',
-      obterMensagems: 'mensagem/obterMensagems',
+      obterNotificacaos: 'notificacao/obterNotificacaos',
       obterContas: 'conta/obterContas',
       obterPlataformas: 'plataforma/obterPlataformas',
-      removerMensagem: 'mensagem/removerMensagem',
-      cadastrarMensagem: 'mensagem/cadastrarMensagem',
-      atualizarMensagem: 'mensagem/atualizarMensagem',
+      removerNotificacao: 'notificacao/removerNotificacao',
+      cadastrarNotificacao: 'notificacao/cadastrarNotificacao',
+      atualizarNotificacao: 'notificacao/atualizarNotificacao',
     }),
 
     editItem(item) {
-      this.editedIndex = this.mensagens.indexOf(item);
+      this.editedIndex = this.notificacoes.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 
     deleteItem(item) {
       if (confirm('Deseja remover esse item?')) {
-        this.removerMensagem(item.mensagem_id);
+        this.removerNotificacao(item.notificacao_id);
       }
     },
 
@@ -310,30 +315,30 @@ export default {
       self.loading = true;
 
       if (self.editedIndex > -1) {
-        this.atualizarMensagem(self.editedItem);
+        this.atualizarNotificacao(self.editedItem);
       } else {
         console.log(self.editedItem);
-        this.cadastrarMensagem(self.editedItem);
+        this.cadastrarNotificacao(self.editedItem);
       }
       self.close();
     },
 
-    obterNomeAutor(usuario_id) {
+    obterNomeAutor(usuarioId) {
       // console.log(usuario_id);
       if (this.contas.length == null) {
         this.obterContas();
       }
 
       for (const index in this.contas) {
-        if (this.contas[index].usuario_id == usuario_id) {
+        if (this.contas[index].usuario_id == usuarioId) {
           return this.contas[index].nome;
         }
       }
     },
 
-    isPlataformaSelecionada(plataformasSelecionadas, plataforma_id) {
+    isPlataformaSelecionada(plataformasSelecionadas, plataformaId) {
       for (const index in plataformasSelecionadas) {
-        if (plataformasSelecionadas[index].plataforma_id == plataforma_id) {
+        if (plataformasSelecionadas[index].plataforma_id == plataformaId) {
           return true;
         }
       }
