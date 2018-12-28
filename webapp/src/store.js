@@ -8,6 +8,7 @@ import conta from '@/modules/conta';
 import plataforma from '@/modules/plataforma';
 import sistema from '@/modules/sistema';
 import mensagem from '@/modules/mensagem';
+import notificacao from '@/modules/notificacao';
 
 Vue.use(Vuex);
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     sistema,
     conta,
     mensagem,
+    notificacao,
   },
   strict: true,
 });
