@@ -9,7 +9,7 @@ class Notificacao extends Model
     public $timestamps = false;
     public $incrementing = true;
     protected $fillable = [
-        'destinatario_id',
+        'codigo_destinatario',
         'mensagem_id',
         'data_envio',
         'is_notificacao_lida'
