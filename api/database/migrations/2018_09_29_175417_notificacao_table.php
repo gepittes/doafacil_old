@@ -15,7 +15,7 @@ class NotificacaoTable extends Migration
     {
         Schema::create('notificacao.notificacao', function (Blueprint $table) {
             $table->increments('notificacao_id');
-            $table->string('codigo_destinatario');
+            $table->text('codigo_destinatario');
             $table->integer('mensagem_id');
             $table->dateTime('data_envio');
             $table->boolean('is_notificacao_lida');

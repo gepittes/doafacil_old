@@ -59,7 +59,7 @@ CREATE SCHEMA "notificacao";
 -- -- -----------------------------------------------------
 -- CREATE TABLE IF NOT EXISTS "notificacao"."notificacao" (
 --   "notificacao_id" SERIAL NOT NULL,
---   "codigo_destinatario" VARCHAR(255) NOT NULL,
+--   "codigo_destinatario" TEXT NOT NULL,
 --   "tipo_notificacao_id" INT NOT NULL,
 --   "is_notificacao_lida" BOOLEAN NULL,
 --   "data_envio" TIMESTAMP NULL,

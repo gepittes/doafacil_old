@@ -23,7 +23,7 @@ class Notificacao implements IService
     public function criar(array $dados = []): ModeloNotificacao
     {
         $validator = Validator::make($dados, [
-            "codigo_destinatario" => 'required|int',
+            "codigo_destinatario" => 'required|string',
             "mensagem_id" => 'required|int',
         ]);
 
@@ -44,7 +44,7 @@ class Notificacao implements IService
     {
         $validator = Validator::make($dados, [
             "is_notificacao_lida" => 'bool',
-            "codigo_destinatario" => 'int',
+            "codigo_destinatario" => 'string',
             "mensagem_id" => 'int',
         ]);
 
