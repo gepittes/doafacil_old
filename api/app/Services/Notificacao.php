@@ -12,9 +12,9 @@ class Notificacao implements IService
     public function obter($id = null)
     {
         if (!empty(trim($id))) {
-            $data = ModeloNotificacao::findOrFail($id);
+            $data = ModeloNotificacao::with('mensagem')->findOrFail($id);
         } else {
-            $data = ModeloNotificacao::all();
+            $data = ModeloNotificacao::with('mensagem')->get();
         }
 
         return $data;

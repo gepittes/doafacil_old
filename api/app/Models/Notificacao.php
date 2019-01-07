@@ -17,10 +17,12 @@ class Notificacao extends Model
     protected $primaryKey = "notificacao_id";
     protected $table = 'notificacao.notificacao';
 
-    public function mensagens()
+    public function mensagem()
     {
-        return $this->hasMany(
-            'App\Models\Mensagem'
+        return $this->hasOne(
+            'App\Models\Mensagem',
+            'mensagem_id',
+            'mensagem_id'
         );
     }
 }
