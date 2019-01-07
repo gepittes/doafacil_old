@@ -1,1 +1,1 @@
-export const notificacao = state => state.notificacao;
+export const notificacoes = state => state.notificacoes;

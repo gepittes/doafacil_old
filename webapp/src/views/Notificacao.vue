@@ -3,83 +3,37 @@
         <v-layout column justify-center>
             <v-card flat >
                 <v-toolbar dark color="primary">
-                    <v-toolbar-title>Notificacaos</v-toolbar-title>
+                    <v-toolbar-title>Notificacões</v-toolbar-title>
                     <v-dialog v-model="dialog" max-width="500px" >
                         <v-card>
                             <v-card-title light>
-                                <span class="headline">{{ formTitle }} Notificacao</span>
+                                <span class="headline">{{ formTitle }} Notificação</span>
                             </v-card-title>
 
                             <v-card-text>
                                 <v-container grid-list-md>
                                     <v-layout wrap>
                                         <v-flex xs12 sm6 md12>
-                                            <v-text-field v-model="editedItem.titulo"
-                                                          label="Título"
-                                                          box
-                                                          minlength="3"
-                                                          :rules="[(object) => object.length > 3 || 'Campo obrigatório.']"
-                                                          required></v-text-field>
                                             <v-textarea
-                                                    v-model="editedItem.descricao"
+                                                    v-model="editedItem.codigo_destinatario"
+                                                    label="Código Destinatário"
                                                     auto-grow
                                                     box
                                                     color="deep-purple"
-                                                    label="Descrição"
                                                     required
                                                     :rules="[(object) => object.length > 3 || 'Campo obrigatório.']"
-                                                    rows="5"
-                                            ></v-textarea>
-                                            <v-list>
-                                                <v-list-tile v-if="editedItem.notificacao_id == null"
-                                                        v-for="plataforma in this.plataformas"
-                                                        :key="plataforma.title"
-                                                        avatar>
+                                                    rows="5"></v-textarea>
 
-                                                    <v-list-tile-content>
-                                                        <v-checkbox v-model="editedItem.plataformas"
-                                                                    :label="plataforma.descricao"
-                                                                    color="success"
-                                                                    required
-                                                                    :value="plataforma"></v-checkbox>
-                                                    </v-list-tile-content>
-
-                                                </v-list-tile>
-                                                <h3 v-if="editedItem.notificacao_id != null"> Plataformas </h3>
-                                                <v-list-tile v-if="editedItem.notificacao_id != null"
-                                                        v-for="plataforma in editedItem.plataformas"
-                                                        :key="plataforma.title"
-                                                        avatar>
-
-                                                    <v-list-tile-content>
-                                                            {{plataforma.descricao}}
-                                                    </v-list-tile-content>
-
-
-                                                </v-list-tile>
-                                            </v-list>
-
-                                            <v-select v-model="editedItem.sistema_id"
-                                                      :disabled="editedItem.sistema_id != null"
-                                                      :items="sistemasRenderizados"
+                                            <v-select v-model="editedItem.mensagem_id"
+                                                      :disabled="editedItem.notificacao_id != null"
+                                                      :items="mensagensRenderizadas"
                                                       :rules="[v => !!v || 'Campo obrigatório']"
-                                                      label="Sistema"
+                                                      label="Mensagem"
                                                       box
                                                       item-text="descricao"
-                                                      item-value="sistema_id"
+                                                      item-value="mensagem_id"
                                                       required></v-select>
 
-                                            <v-text-field disabled
-                                                          :value="this.obterNomeAutor(editedItem.autor_id)"
-                                                          v-if="plataformasSelecionadas.length > 0"
-                                                          label="Autor"
-                                                          box></v-text-field>
-
-                                        </v-flex>
-                                        <v-flex xs12 sm6 md12>
-                                            <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                                                      v-model="editedItem.is_ativo"
-                                            :readonly="true"></v-switch>
                                         </v-flex>
                                     </v-layout>
                                 </v-container>
@@ -88,7 +42,9 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="error" @click.native="close">Fechar</v-btn>
-                                <v-btn v-if="!loading && exibirBotaoGravar" color="blue darken-1" @click.native="save">Gravar</v-btn>
+                                <v-btn v-if="!loading && exibirBotaoGravar"
+                                       color="blue darken-1"
+                                       @click.native="save">Gravar</v-btn>
                             </v-card-actions>
                         </v-card>
                         <v-btn color="blue"
@@ -151,7 +107,6 @@ export default {
     dialog: false,
     exibirBotaoGravar: true,
     modeloBuscar: '',
-    plataformasSelecionadas: [],
     headers: [
       {
         text: 'Identificador',
@@ -160,13 +115,13 @@ export default {
         value: 'name',
       },
       {
-        text: 'Destinatário',
-        value: 'destinatario_id',
+        text: 'Código Destinatário',
+        value: 'codigo_destinatario',
         align: 'center',
       },
       {
         text: 'Mensagem',
-        value: 'mensagem_id',
+        value: 'mensagem.titulo',
         align: 'center',
       },
       {
@@ -187,12 +142,12 @@ export default {
       },
     ],
     notificacoesRenderizadas: [],
-    sistemasRenderizados: [],
+    mensagensRenderizadas: [],
     editedIndex: -1,
     editedItem: {
       notificacao_id: null,
       autor_id: null,
-      sistema_id: null,
+      mensagem_id: null,
       descricao: '',
       is_ativo: true,
       plataformas: [],
@@ -205,7 +160,7 @@ export default {
     },
     ...mapGetters({
       notificacoes: 'notificacao/notificacoes',
-      sistemas: 'sistema/sistema',
+      mensagens: 'mensagem/mensagens',
       contas: 'conta/conta',
       plataformas: 'plataforma/plataforma',
       accountInfo: 'account/accountInfo',
@@ -226,28 +181,22 @@ export default {
       val || this.close();
     },
     notificacoes(value) {
+      this.notificacoesRenderizadas = value;
       if ('error' in value) {
         alert(value.error);
         this.notificacoesRenderizadas = [];
-      } else {
-        this.notificacoesRenderizadas = value;
       }
     },
-    sistemas(value) {
+    mensagens(value) {
       if ('error' in value) {
-        this.sistemasRenderizados = [];
+        this.mensagensRenderizadas = [];
       } else {
-        this.sistemasRenderizados = value;
+        this.mensagensRenderizadas = value;
       }
     },
     editedItem(value) {
-      this.plataformasSelecionadas = [];
       if (this.editedItem.autor_id == null) {
         this.editedItem.autor_id = this.accountInfo.user_id;
-      } else {
-        for (const index in value.plataformas) {
-          this.plataformasSelecionadas.push(value.plataformas[index]);
-        }
       }
     },
   },
@@ -258,22 +207,22 @@ export default {
     // }
   },
   mounted() {
-    if (this.notificacoes.length == null || this.notificacoes.length == 0) {
+    if (this.notificacoes.length == null || this.notificacoes.length === 0) {
       this.obterNotificacaos();
     }
     if (this.notificacoes.length > 0) {
       this.notificacoesRenderizadas = this.notificacoes;
     }
-    if (this.sistemas.length == null || this.sistemas.length == 0) {
-      this.obterSistemas();
+    if (this.mensagens.length == null || this.mensagens.length === 0) {
+      this.obterMensagems();
     }
-    if (this.sistemas.length > 0) {
-      this.sistemasRenderizados = this.sistemas;
+    if (this.mensagens.length > 0) {
+      this.mensagensRenderizadas = this.mensagens;
     }
-    if (this.contas.length == null || this.contas.length == 0) {
+    if (this.contas.length == null || this.contas.length === 0) {
       this.obterContas();
     }
-    if (this.plataformas.length == null || this.plataformas.length == 0) {
+    if (this.plataformas.length == null || this.plataformas.length === 0) {
       this.obterPlataformas();
     }
   },
@@ -281,7 +230,7 @@ export default {
   methods: {
 
     ...mapActions({
-      obterSistemas: 'sistema/obterSistemas',
+      obterMensagems: 'mensagem/obterMensagems',
       obterNotificacaos: 'notificacao/obterNotificacaos',
       obterContas: 'conta/obterContas',
       obterPlataformas: 'plataforma/obterPlataformas',
@@ -323,26 +272,6 @@ export default {
       self.close();
     },
 
-    obterNomeAutor(usuarioId) {
-      // console.log(usuario_id);
-      if (this.contas.length == null) {
-        this.obterContas();
-      }
-
-      for (const index in this.contas) {
-        if (this.contas[index].usuario_id == usuarioId) {
-          return this.contas[index].nome;
-        }
-      }
-    },
-
-    isPlataformaSelecionada(plataformasSelecionadas, plataformaId) {
-      for (const index in plataformasSelecionadas) {
-        if (plataformasSelecionadas[index].plataforma_id == plataformaId) {
-          return true;
-        }
-      }
-    },
   },
 };
 

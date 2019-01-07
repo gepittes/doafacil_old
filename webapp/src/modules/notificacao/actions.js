@@ -4,6 +4,7 @@ import * as types from './types';
 export const obterNotificacaos = ({ commit }) => {
   axios.get('http://localhost/v1/notificacao')
     .then((response) => {
+console.log(response.data)
       const data = response.data;
       commit(types.DEFINIR_NOTIFICACOES, data.data);
     })
