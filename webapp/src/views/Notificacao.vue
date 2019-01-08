@@ -73,11 +73,10 @@
                                   class="elevation-1">
                         <template slot="items" slot-scope="props">
                             <td class="text-xs-center">{{ props.item.notificacao_id }}</td>
-                            <td class="text-xs-center">{{ props.item.titulo }}</td>
-                            <td class="text-xs-center">{{ props.item.descricao }}</td>
-                            <td class="text-xs-center">
-                                {{ props.item.is_ativo ? "Ativo" : "Inativo" }}
-                            </td>
+                            <td class="text-xs-center">{{ props.item.codigo_destinatario }}</td>
+                            <td class="text-xs-center">{{ props.item.mensagem.titulo }}</td>
+                            <td class="text-xs-center">{{ props.item.data_envio | formatDate }}</td>
+                            <td class="text-xs-center">{{ (props.item.is_notificacao_lida) ? 'Sim' :  'Não' }}</td>
                             <td class="justify-center layout px-0">
                                 <v-icon small
                                         class="mr-2"
@@ -181,11 +180,13 @@ export default {
       val || this.close();
     },
     notificacoes(value) {
-      this.notificacoesRenderizadas = value;
       if ('error' in value) {
         alert(value.error);
         this.notificacoesRenderizadas = [];
+      } else {
+          this.notificacoesRenderizadas = value;
       }
+console.log(value)
     },
     mensagens(value) {
       if ('error' in value) {
