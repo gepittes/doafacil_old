@@ -21,7 +21,7 @@
                                                     box
                                                     color="deep-purple"
                                                     required
-                                                    :rules="[(object) => object.length > 3 || 'Campo obrigatório.']"
+                                                    :rules="[(object) => object != null && object.length != null && object.length > 3 || 'Campo obrigatório.']"
                                                     rows="5"></v-textarea>
 
                                             <v-select v-model="editedItem.mensagem_id"
@@ -76,7 +76,10 @@
                             <td class="text-xs-center">{{ props.item.codigo_destinatario }}</td>
                             <td class="text-xs-center">{{ props.item.mensagem.titulo }}</td>
                             <td class="text-xs-center">{{ props.item.data_envio | formatDate }}</td>
-                            <td class="text-xs-center">{{ (props.item.is_notificacao_lida) ? 'Sim' :  'Não' }}</td>
+                            <td class="text-xs-center">
+                                <v-icon v-if="props.item.is_notificacao_lida">thumb_up</v-icon>
+                                <v-icon v-if="!props.item.is_notificacao_lida">thumb_down</v-icon>
+                            </td>
                             <td class="justify-center layout px-0">
                                 <v-icon small
                                         @click="deleteItem(props.item)">delete
@@ -107,7 +110,7 @@ export default {
         text: 'Identificador',
         align: 'center',
         sortable: true,
-        value: 'name',
+        value: 'notificacao_id',
       },
       {
         text: 'Código Destinatário',
