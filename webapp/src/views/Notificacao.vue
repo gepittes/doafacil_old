@@ -79,10 +79,6 @@
                             <td class="text-xs-center">{{ (props.item.is_notificacao_lida) ? 'Sim' :  'Não' }}</td>
                             <td class="justify-center layout px-0">
                                 <v-icon small
-                                        class="mr-2"
-                                        @click="editItem(props.item)">search
-                                </v-icon>
-                                <v-icon small
                                         @click="deleteItem(props.item)">delete
                                 </v-icon>
                             </td>
@@ -186,7 +182,6 @@ export default {
       } else {
           this.notificacoesRenderizadas = value;
       }
-console.log(value)
     },
     mensagens(value) {
       if ('error' in value) {
