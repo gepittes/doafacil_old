@@ -37,7 +37,9 @@ class Notificacao implements IService
             'data_envio' => Carbon::now()
         ]);
 
-        return ModeloNotificacao::create($dados);
+        $modeloNotificacao = ModeloNotificacao::create($dados);
+
+        return $this->obter($modeloNotificacao->notificacao_id);
     }
 
     public function alterar($id, array $dados = [])
@@ -59,5 +61,10 @@ class Notificacao implements IService
         return ModeloNotificacao::where('notificacao_id', $id)->update($dados);
     }
 
+    public function remover($id)
+    {
+        $plataforma = ModeloNotificacao::findOrFail($id);
+        return $plataforma->delete();
+    }
 
 }

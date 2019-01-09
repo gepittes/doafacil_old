@@ -25,4 +25,5 @@ class Notificacao extends Model
             'mensagem_id'
         );
     }
+
 }
