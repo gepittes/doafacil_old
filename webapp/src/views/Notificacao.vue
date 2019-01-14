@@ -150,6 +150,9 @@ export default {
       is_ativo: true,
       plataformas: [],
     },
+    websocket: {
+      connection: new WebSocket('ws://localhost:8001'),
+    },
   }),
 
   computed: {
@@ -224,6 +227,17 @@ export default {
     if (this.plataformas.length == null || this.plataformas.length === 0) {
       this.obterPlataformas();
     }
+
+    this.websocket.connection = new WebSocket('ws://localhost:8001');
+
+    this.websocket.connection.onopen = function (e) {
+      console.log(`Conexão estabelecida`);
+      console.log(e);
+    };
+
+    this.websocket.connection.onmessage = function (e) {
+      console.log(e.data);
+    };
   },
   // editedItem
   methods: {
@@ -269,6 +283,21 @@ export default {
         this.cadastrarNotificacao(self.editedItem);
       }
       self.close();
+    },
+
+    sendMessage(e) {
+      // console.log(this.$refs['botaoEnviar'].hide);
+
+      const base = this;
+      base.isEnviando = true;
+
+      setTimeout(() => {
+        base.isEnviando = false;
+      }, 1000);
+      this.websocket.connection.send(`${this.sistema}|${this.usuario}:${this.mensagem}`);
+      e.preventDefault();
+
+      this.$refs.mensagem.reset();
     },
 
   },
