@@ -13,10 +13,10 @@ services:
     ports:
       - "8080:8080"
     environment:
-      #    - NODE_CONFIG_ENV=production
-      #    - NODE_ENV=production
       - NODE_CONFIG_ENV=production
       - NODE_ENV=production
+      #- NODE_CONFIG_ENV=production
+      #- NODE_ENV=production
 
   api-service:
     container_name: notification-api
