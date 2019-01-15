@@ -20,7 +20,7 @@ services:
 
   api-service:
     container_name: notification-api
-    #build: .
+    build: .
     image: culturagovbr/notification-php-fpm:1.0.1
     working_dir: /application
     volumes:
@@ -29,6 +29,12 @@ services:
     environment:
       #  - UPDATE_COMPOSER_DEPENDENCIES=true
       - USE_PHP_FPM=true
+      - DB_CONNECTION=pgsql
+      - DB_HOST=notification-database
+      - DB_PORT=5432
+      - DB_DATABASE=notificacao
+      - DB_USERNAME=notificacao
+      - DB_PASSWORD=senhaNotificacao
     depends_on:
       - database-service
 
