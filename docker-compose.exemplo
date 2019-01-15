@@ -13,24 +13,21 @@ services:
     ports:
       - "8080:8080"
     environment:
-#    - NODE_CONFIG_ENV=production
-#    - NODE_ENV=production
+      #    - NODE_CONFIG_ENV=production
+      #    - NODE_ENV=production
       - NODE_CONFIG_ENV=production
       - NODE_ENV=production
 
   api-service:
     container_name: notification-api
-    build: .
-    image: notification-php-fpm:1.0.0
+    #build: .
+    image: culturagovbr/notification-php-fpm:1.0.1
     working_dir: /application
-#    command: "/usr/bin/php-fpm -D"
-    command:
-      sh -c 'php -D && php artisan migrate && php artisan db:seed'
     volumes:
       - ./api:/application
       - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
     environment:
-    #  - UPDATE_COMPOSER_DEPENDENCIES=true
+      #  - UPDATE_COMPOSER_DEPENDENCIES=true
       - USE_PHP_FPM=true
     depends_on:
       - database-service
