@@ -15,6 +15,8 @@ fi
 
 echo "[ ****************** ] Ending Endpoint of Application"
 
+php artisan migrate && php artisan db:seed
+
 if [ "$USE_PHP_FPM" == "true" ]; then
     set -- php-fpm
 fi
