@@ -11,6 +11,8 @@ import VeeValidate from 'vee-validate';
 
 // process.env.NODE_CONFIG_DIR = './config'
 
+console.log(process.env)
+
 import { configureFakeBackend } from './modules/_helpers';
 
 Vue.use(VeeValidate);

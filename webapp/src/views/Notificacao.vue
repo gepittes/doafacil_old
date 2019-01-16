@@ -151,7 +151,7 @@ export default {
       plataformas: [],
     },
     websocket: {
-      connection: new WebSocket(`ws://${process.env.WEBSOCKET_HOST}:${process.env.WEBSOCKET_PORT}`),
+      connection: null,
     },
   }),
 
@@ -186,7 +186,7 @@ export default {
         alert(value.error);
         this.notificacoesRenderizadas = [];
       } else {
-          this.notificacoesRenderizadas = value;
+        this.notificacoesRenderizadas = value;
       }
     },
     mensagens(value) {
@@ -209,6 +209,8 @@ export default {
     // }
   },
   mounted() {
+    this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
+
     if (this.notificacoes.length == null || this.notificacoes.length === 0) {
       this.obterNotificacaos();
     }
@@ -228,10 +230,13 @@ export default {
       this.obterPlataformas();
     }
 
-    this.websocket.connection = new WebSocket('ws://localhost:8001');
+    console.log('ws://localhost:8001');
+    console.log(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
+
+    // this.websocket.connection = new WebSocket('ws://localhost:8001');
 
     this.websocket.connection.onopen = function (e) {
-      console.log(`Conexão estabelecida`);
+      console.log('Conexão estabelecida');
       console.log(e);
     };
 
