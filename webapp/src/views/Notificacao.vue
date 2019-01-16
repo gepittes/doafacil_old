@@ -151,7 +151,7 @@ export default {
       plataformas: [],
     },
     websocket: {
-      connection: new WebSocket('ws://localhost:8001'),
+      connection: new WebSocket(`ws://${process.env.WEBSOCKET_HOST}:${process.env.WEBSOCKET_PORT}`),
     },
   }),
 
@@ -281,23 +281,18 @@ export default {
       } else {
         console.log(self.editedItem);
         this.cadastrarNotificacao(self.editedItem);
+        this.sendMessage(self.editedItem);
       }
       self.close();
     },
 
-    sendMessage(e) {
-      // console.log(this.$refs['botaoEnviar'].hide);
-
-      const base = this;
-      base.isEnviando = true;
-
+    sendMessage(mensagem) {
+      const self = this;
+      self.loading = true;
       setTimeout(() => {
-        base.isEnviando = false;
+        self.loading = false;
       }, 1000);
-      this.websocket.connection.send(`${this.sistema}|${this.usuario}:${this.mensagem}`);
-      e.preventDefault();
-
-      this.$refs.mensagem.reset();
+      this.websocket.connection.send(mensagem);
     },
 
   },
