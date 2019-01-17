@@ -12,6 +12,7 @@ class Usuario extends Model
         'nome',
         'email',
         'password',
+        'id_admin',
         'is_ativo'
     ];
     protected $primaryKey = "usuario_id";
