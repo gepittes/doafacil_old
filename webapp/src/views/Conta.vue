@@ -20,6 +20,11 @@
                                                           label="E-mail"></v-text-field>
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
+                                            Administrador:
+                                            <v-switch :label="`${editedItem.is_admin ? 'Sim' : 'Não'}`"
+                                                      v-model="editedItem.id_admin"></v-switch>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
                                                       v-model="editedItem.is_ativo"></v-switch>
                                         </v-flex>
@@ -55,6 +60,7 @@
                             <td class="text-xs-center">{{ props.item.nome }}</td>
                             <td class="text-xs-center">{{ props.item.email }}</td>
                             <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
+                            <td class="text-xs-center">{{ props.item.is_admin ? "Sim" : "Não" }}</td>
                             <td class="justify-center layout px-0">
                                 <v-icon small
                                         class="mr-2"
@@ -106,6 +112,11 @@ export default {
       {
         text: 'Situação',
         value: 'situacao',
+        align: 'center',
+      },
+      {
+        text: 'Administrador',
+        value: 'is_admin',
         align: 'center',
       },
       {
