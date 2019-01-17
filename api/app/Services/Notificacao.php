@@ -12,9 +12,9 @@ class Notificacao implements IService
     public function obter($id = null)
     {
         if (!empty(trim($id))) {
-            $data = ModeloNotificacao::findOrFail($id);
+            $data = ModeloNotificacao::with('mensagem')->findOrFail($id);
         } else {
-            $data = ModeloNotificacao::all();
+            $data = ModeloNotificacao::with('mensagem')->get();
         }
 
         return $data;
@@ -23,7 +23,7 @@ class Notificacao implements IService
     public function criar(array $dados = []): ModeloNotificacao
     {
         $validator = Validator::make($dados, [
-            "destinatario_id" => 'required|int',
+            "codigo_destinatario" => 'required|string',
             "mensagem_id" => 'required|int',
         ]);
 
@@ -37,14 +37,16 @@ class Notificacao implements IService
             'data_envio' => Carbon::now()
         ]);
 
-        return ModeloNotificacao::create($dados);
+        $modeloNotificacao = ModeloNotificacao::create($dados);
+
+        return $this->obter($modeloNotificacao->notificacao_id);
     }
 
     public function alterar($id, array $dados = [])
     {
         $validator = Validator::make($dados, [
             "is_notificacao_lida" => 'bool',
-            "destinatario_id" => 'int',
+            "codigo_destinatario" => 'string',
             "mensagem_id" => 'int',
         ]);
 
@@ -59,5 +61,10 @@ class Notificacao implements IService
         return ModeloNotificacao::where('notificacao_id', $id)->update($dados);
     }
 
+    public function remover($id)
+    {
+        $plataforma = ModeloNotificacao::findOrFail($id);
+        return $plataforma->delete();
+    }
 
 }

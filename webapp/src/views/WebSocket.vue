@@ -51,47 +51,47 @@
 </template>
 
 <script>
-    export default {
-        name: "WebSocket",
-        data() {
-            return {
-                isEnviando: false,
-                usuario: "",
-                sistema: "",
-                mensagem: "",
-                websocket: {
-                    connection: new WebSocket('ws://localhost:8001')
-                }
-            }
-        },
-        methods: {
-            sendMessage(e) {
-                // console.log(this.$refs['botaoEnviar'].hide);
+export default {
+  name: 'WebSocket',
+  data() {
+    return {
+      isEnviando: false,
+      usuario: '',
+      sistema: '',
+      mensagem: '',
+      websocket: {
+        connection: new WebSocket('ws://localhost:8001'),
+      },
+    };
+  },
+  methods: {
+    sendMessage(e) {
+      // console.log(this.$refs['botaoEnviar'].hide);
 
-                let base = this;
-                base.isEnviando = true;
+      const base = this;
+      base.isEnviando = true;
 
-                setTimeout(function () {
-                    base.isEnviando = false;
-                }, 1000)
-                this.websocket.connection.send(this.sistema + '|' + this.usuario + ':' + this.mensagem);
-                e.preventDefault();
+      setTimeout(() => {
+        base.isEnviando = false;
+      }, 1000);
+      this.websocket.connection.send(`${this.sistema}|${this.usuario}:${this.mensagem}`);
+      e.preventDefault();
 
-                this.$refs['mensagem'].reset();
-            }
-        },
-        created() {
-            this.websocket.connection = new WebSocket('ws://localhost:8001');
+      this.$refs.mensagem.reset();
+    },
+  },
+  created() {
+    this.websocket.connection = new WebSocket('ws://localhost:8001');
 
-            this.websocket.connection.onopen = function (e) {
-                console.log("Conexão estabelecida " + e);
-            }
+    this.websocket.connection.onopen = function (e) {
+      console.log(`Conexão estabelecida ${e}`);
+    };
 
-            this.websocket.connection.onmessage = function (e) {
-                console.log(e.data);
-            }
-        }
-    }
+    this.websocket.connection.onmessage = function (e) {
+      console.log(e.data);
+    };
+  },
+};
 </script>
 
 <style scoped>

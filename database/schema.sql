@@ -59,14 +59,11 @@ CREATE SCHEMA "notificacao";
 -- -- -----------------------------------------------------
 -- CREATE TABLE IF NOT EXISTS "notificacao"."notificacao" (
 --   "notificacao_id" SERIAL NOT NULL,
---   "destinatario_id" INT NOT NULL,
+--   "codigo_destinatario" TEXT NOT NULL,
 --   "tipo_notificacao_id" INT NOT NULL,
 --   "is_notificacao_lida" BOOLEAN NULL,
 --   "data_envio" TIMESTAMP NULL,
 --   PRIMARY KEY ("notificacao_id"),
---   CONSTRAINT "fk_notificacao_usuario1"
---   FOREIGN KEY ("destinatario_id")
---   REFERENCES "notificacao"."usuario" ("usuario_id")
 --   ON DELETE NO ACTION
 --   ON UPDATE NO ACTION,
 --   CONSTRAINT "fk_notificacao_tipo_notificacao1"
@@ -76,7 +73,6 @@ CREATE SCHEMA "notificacao";
 --   ON UPDATE NO ACTION)
 -- ;
 --
--- CREATE INDEX "fk_notificacao_usuario1_idx" ON "notificacao"."notificacao" ("destinatario_id");
 --
 -- CREATE INDEX "fk_notificacao_tipo_notificacao1_idx" ON "notificacao"."notificacao" ("tipo_notificacao_id");
 --
