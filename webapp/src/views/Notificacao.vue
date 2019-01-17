@@ -230,11 +230,6 @@ export default {
       this.obterPlataformas();
     }
 
-    console.log('ws://localhost:8001');
-    console.log(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
-
-    // this.websocket.connection = new WebSocket('ws://localhost:8001');
-
     this.websocket.connection.onopen = function (e) {
       console.log('Conexão estabelecida');
       console.log(e);
@@ -286,18 +281,28 @@ export default {
       } else {
         console.log(self.editedItem);
         this.cadastrarNotificacao(self.editedItem);
-        this.sendMessage(self.editedItem);
+        this.sendNotification(self.editedItem);
       }
       self.close();
     },
 
-    sendMessage(mensagem) {
+    sendNotification(editedItem) {
+      const arrayNotificacao = {
+        sistema: editedItem.sistema_id,
+        codigo_destinatario: editedItem.codigo_destinatario,
+        mensagem: editedItem.mensagem,
+        data_envio: editedItem.data_envio
+      };
+      this.sendMessage(JSON.stringify(arrayNotificacao));
+    },
+
+    sendMessage(message) {
       const self = this;
       self.loading = true;
       setTimeout(() => {
         self.loading = false;
       }, 1000);
-      this.websocket.connection.send(mensagem);
+      this.websocket.connection.send(message);
     },
 
   },
