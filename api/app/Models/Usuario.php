@@ -17,4 +17,22 @@ class Usuario extends Model
     ];
     protected $primaryKey = "usuario_id";
     protected $table = 'notificacao.usuario';
+
+    public function sistemas()
+    {
+        return $this->belongsToMany(
+            \App\Models\Sistema::class,
+            'notificacao.usuario_has_sistema',
+            'usuario_id',
+            'sistema_id'
+        )->as('usuario_has_sistema');
+    }
+
+    public function delete()
+    {
+        $this->sistemas()->delete();
+
+        return parent::delete();
+    }
+
 }

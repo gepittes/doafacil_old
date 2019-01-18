@@ -12,6 +12,17 @@ class Sistema extends Model
         'descricao',
         'is_ativo'
     ];
+
     protected $primaryKey = "sistema_id";
     protected $table = 'notificacao.sistema';
+
+    public function usuarios()
+    {
+        return $this->belongsToMany(
+            \App\Models\Usuario::class,
+            'notificacao.usuario_has_sistema',
+            'sistema_id',
+            'usuario_id'
+        )->as('usuario_has_sistema');
+    }
 }
