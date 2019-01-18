@@ -28,19 +28,19 @@
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
                                                       v-model="editedItem.is_ativo"></v-switch>
                                         </v-flex>
+                                        <v-flex xs12 sm6 md12>
+                                            OBS: Senha padrão é <b>12345</b>
+                                        </v-flex>
                                     </v-layout>
                                 </v-container>
                             </v-card-text>
 
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" flat @click.native="close">Cancelar</v-btn>
-                                <v-btn v-if="!loading" color="blue darken-1" flat @click.native="save">Gravar
-                                </v-btn>
-                                <v-progress-circular
-                                        v-if="loading"
-                                        indeterminate
-                                        color="primary"></v-progress-circular>
+                                <v-btn color="error" @click.native="close">Fechar</v-btn>
+                                <v-btn v-if="!loading"
+                                       color="blue darken-1"
+                                       @click.native="save">Gravar</v-btn>
                             </v-card-actions>
                         </v-card>
                         <v-btn color="blue"
@@ -54,6 +54,7 @@
                     <v-data-table light
                             :headers="headers"
                             :items="contasIniciais"
+                            :rows-per-page-items="[ 10, 25, 40 ]"
                             class="elevation-1">
                         <template slot="items" slot-scope="props">
                             <td class="text-xs-center">{{ props.item.usuario_id }}</td>
@@ -132,7 +133,7 @@ export default {
       usuario_id: 0,
       descricao: '',
       is_ativo: true,
-      is_admin: false
+      is_admin: false,
     },
     defaultItem: {
       name: '',
