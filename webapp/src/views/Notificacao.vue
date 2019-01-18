@@ -286,21 +286,20 @@ export default {
     },
 
     sendNotification(editedItem) {
-
       let objetoMensagem = {};
-      for(let index in this.mensagensRenderizadas) {
-        if(this.mensagensRenderizadas[index].mensagem_id == editedItem.mensagem_id) {
+      for (const index in this.mensagensRenderizadas) {
+        if (this.mensagensRenderizadas[index].mensagem_id === editedItem.mensagem_id) {
           objetoMensagem = this.mensagensRenderizadas[index];
         }
       }
-      if(Object.keys(objetoMensagem).length > 0) {
-          const objetoNotificacao = {
-            sistema: editedItem.sistema_id,
-            codigo_destinatario: editedItem.codigo_destinatario,
-            mensagem: objetoMensagem,
-            data_envio: editedItem.data_envio
-          };
-          this.sendMessage(JSON.stringify(objetoNotificacao));
+      if (Object.keys(objetoMensagem).length > 0) {
+        const objetoNotificacao = {
+          sistema: editedItem.sistema_id,
+          codigo_destinatario: editedItem.codigo_destinatario,
+          mensagem: objetoMensagem,
+          data_envio: editedItem.data_envio,
+        };
+        this.sendMessage(JSON.stringify(objetoNotificacao));
       }
     },
 
