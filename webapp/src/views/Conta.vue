@@ -22,7 +22,7 @@
                                         <v-flex xs12 sm6 md12>
                                             Administrador:
                                             <v-switch :label="`${editedItem.is_admin ? 'Sim' : 'Não'}`"
-                                                      v-model="editedItem.id_admin"></v-switch>
+                                                      v-model="editedItem.is_admin"></v-switch>
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
@@ -132,6 +132,7 @@ export default {
       usuario_id: 0,
       descricao: '',
       is_ativo: true,
+      is_admin: false
     },
     defaultItem: {
       name: '',

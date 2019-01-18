@@ -17,6 +17,7 @@ class CreateUsuarioTable extends Migration
             $table->increments('usuario_id');
             $table->string('nome');
             $table->boolean('is_ativo');
+            $table->boolean('is_admin');
             $table->string('email')->unique();
             $table->string('password');
             $table->timestamps();
