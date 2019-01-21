@@ -40,7 +40,8 @@ class Mensagem implements IService
 
         $mensagem = ModeloMensagem::create($dados);
         $this->vincularPlataforma($mensagem->mensagem_id, $dados['plataformas']);
-        return $mensagem;
+
+        return $this->obter($mensagem->mensagem_id);
 
     }
 

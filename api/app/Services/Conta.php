@@ -54,6 +54,9 @@ class Conta implements IService
 
         $dados['password'] = password_hash($dados['password'], PASSWORD_BCRYPT);
         $modeloUsuario = ModeloUsuario::create($dados);
+
+        $this->vincularSistema($modeloUsuario->usuario_id, $dados['sistemas']);
+
         return $this->obter($modeloUsuario->usuario_id);
     }
 
@@ -90,5 +93,13 @@ class Conta implements IService
         return $this->alterar($id, [
             'is_ativo' => true
         ]);
+    }
+
+    public function vincularSistema($usuario_id, array $sistemas)
+    {
+        foreach ($sistemas as $sistema) {
+            $usuario = ModeloMensagem::findOrFail($usuario_id);
+            $usuario->sistemas()->attach($sistema['plataforma_id']);
+        }
     }
 }

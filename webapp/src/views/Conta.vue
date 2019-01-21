@@ -43,6 +43,24 @@
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
                                                       v-model="editedItem.is_ativo"></v-switch>
                                         </v-flex>
+                                        <v-flex xs12 sm6 md12>
+                                            <h3> Sistemas </h3>
+                                            <v-list>
+                                                <v-list-tile v-for="sistema in this.sistemas"
+                                                             :key="sistema.title"
+                                                             avatar>
+
+                                                    <v-list-tile-content>
+                                                        <v-checkbox v-model="editedItem.sistemas"
+                                                                    :label="sistema.descricao"
+                                                                    color="success"
+                                                                    required
+                                                                    :value="sistema"></v-checkbox>
+                                                    </v-list-tile-content>
+
+                                                </v-list-tile>
+                                            </v-list>
+                                        </v-flex>
                                     </v-layout>
                                 </v-container>
                             </v-card-text>
@@ -145,10 +163,11 @@ export default {
     contasIniciais: [],
     editedIndex: -1,
     editedItem: {
-      usuario_id: 0,
+      usuario_id: null,
       descricao: '',
       is_ativo: true,
       is_admin: false,
+      sistemas: [],
     },
     defaultItem: {
       name: '',
@@ -172,6 +191,7 @@ export default {
       return this.editedIndex === -1 ? 'Criar' : 'Editar';
     },
     ...mapGetters({
+      sistemas: 'sistema/sistema',
       contas: 'conta/conta',
     }),
   },
@@ -188,6 +208,9 @@ export default {
         this.contasIniciais = value;
       }
     },
+    sistemas(value) {
+      console.log(value);
+    },
 
   },
 
@@ -199,6 +222,7 @@ export default {
 
     ...mapActions({
       obterContas: 'conta/obterContas',
+      obterSistemas: 'sistema/obterSistemas',
       removerConta: 'conta/removerConta',
       cadastrarConta: 'conta/cadastrarConta',
       atualizarConta: 'conta/atualizarConta',
@@ -236,6 +260,12 @@ export default {
       self.loading = false;
       self.close();
     },
+  },
+  mounted() {
+    console.log(this.sistemas);
+    if (this.sistemas.length == null || this.sistemas.length === 0) {
+      this.obterSistemas();
+    }
   },
 };
 
