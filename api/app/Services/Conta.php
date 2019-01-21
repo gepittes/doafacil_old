@@ -14,7 +14,8 @@ class Conta implements IService
             'usuario_id',
             'nome',
             'email',
-            'is_ativo'
+            'is_ativo',
+            'is_admin'
         );
         if (!empty(trim($id))) {
             $data = $modelUsuario->where('usuario_id', $id)->get();
@@ -67,7 +68,7 @@ class Conta implements IService
         if (isset($dados['usuario_id'])) {
             unset($dados['usuario_id']);
         }
-
+throw new \Exception (json_encode($dados));
         return ModeloUsuario::where('usuario_id', $id)->update($dados);
     }
 

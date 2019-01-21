@@ -20,15 +20,14 @@
                                                           label="E-mail"></v-text-field>
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
-                                            Administrador:
-                                            <v-switch :label="`${editedItem.is_admin ? 'Sim' : 'Não'}`"
+                                            <v-switch :label="`${editedItem.is_admin ? 'É Administrador' : 'Não é Administrador'}`"
                                                       v-model="editedItem.is_admin"></v-switch>
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
                                                       v-model="editedItem.is_ativo"></v-switch>
                                         </v-flex>
-                                        <v-flex xs12 sm6 md12>
+                                        <v-flex xs12 sm6 md12 v-if="editedItem.usuario_id == null">
                                             OBS: Senha padrão é <b>12345</b>
                                         </v-flex>
                                     </v-layout>
@@ -61,7 +60,7 @@
                             <td class="text-xs-center">{{ props.item.nome }}</td>
                             <td class="text-xs-center">{{ props.item.email }}</td>
                             <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
-                            <td class="text-xs-center">{{ props.item.is_admin ? "Sim" : "Não" }}</td>
+                            <td class="text-xs-center">{{ props.item.is_admin ? "Sim" : "Não" }} </td>
                             <td class="justify-center layout px-0">
                                 <v-icon small
                                         class="mr-2"
@@ -142,6 +141,12 @@ export default {
       carbs: 0,
       protein: 0,
     },
+    rules: {
+      email: (value) => {
+        const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return pattern.test(value) || 'E-mail inválido.';
+      },
+    }
   }),
 
   computed: {
