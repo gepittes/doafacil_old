@@ -48,6 +48,4 @@ create table usuario_has_sistema
     constraint notificacao_usuario_has_sistema_sistema_id_foreign
     references sistema
 )
-;
-
  */

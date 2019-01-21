@@ -69,7 +69,7 @@ class Conta implements IService
         if (isset($dados['usuario_id'])) {
             unset($dados['usuario_id']);
         }
-throw new \Exception (json_encode($dados));
+        unset($dados['sistemas']);
         return ModeloUsuario::where('usuario_id', $id)->update($dados);
     }
 

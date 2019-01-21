@@ -1,11 +1,11 @@
 <template>
     <v-container fluid>
         <v-layout column justify-center>
-            <v-card flat dark>
+            <v-card flat light>
                 <v-toolbar dark color="primary">
                     <v-toolbar-title>Contas</v-toolbar-title>
                     <v-dialog v-model="dialog" max-width="500px">
-                        <v-card>
+                        <v-card light>
                             <v-card-title>
                                 <span class="headline">{{ formTitle }} Conta</span>
                             </v-card-title>
@@ -14,20 +14,26 @@
                                 <v-container grid-list-md>
                                     <v-layout wrap>
                                         <v-flex xs12 sm6 md12>
-                                            <v-text-field v-model="editedItem.nome"
-                                                          label="Nome"></v-text-field>
-                                            <v-text-field v-model="editedItem.email"
-                                                          label="E-mail"></v-text-field>
+                                            <v-text-field
+                                                    prepend-icon="face"
+                                                    v-model="editedItem.nome"
+                                                    :rules="[rules.required, rules.minLength]"
+                                                    required
+                                                    label="Nome"></v-text-field>
+                                            <v-text-field
+                                                    prepend-icon="person"
+                                                    v-model="editedItem.email"
+                                                    :rules="[rules.required, rules.email, rules.minLength]"
+                                                    required
+                                                    label="E-mail"></v-text-field>
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_admin ? 'É Administrador' : 'Não é Administrador'}`"
                                                       v-model="editedItem.is_admin"></v-switch>
-                                        </v-flex>
-                                        <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
                                                       v-model="editedItem.is_ativo"></v-switch>
                                         </v-flex>
-                                        <v-flex xs12 sm6 md12 v-if="editedItem.usuario_id == null">
+                                        <v-flex xs12 sm6 md12 v-if="editedItem.usuario_id == 0">
                                             OBS: Senha padrão é <b>12345</b>
                                         </v-flex>
                                     </v-layout>
@@ -39,6 +45,7 @@
                                 <v-btn color="error" @click.native="close">Fechar</v-btn>
                                 <v-btn v-if="!loading"
                                        color="blue darken-1"
+                                       dark
                                        @click.native="save">Gravar</v-btn>
                             </v-card-actions>
                         </v-card>
@@ -142,11 +149,13 @@ export default {
       protein: 0,
     },
     rules: {
+      required: value => !!value || 'Campo Obrigatório.',
+      minLength: object => (object != null && object.length != null && object.length > 3) || 'Campo obrigatório.',
       email: (value) => {
         const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return pattern.test(value) || 'E-mail inválido.';
       },
-    }
+    },
   }),
 
   computed: {
