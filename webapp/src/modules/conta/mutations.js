@@ -6,8 +6,6 @@ export const mutations = {
   },
   [types.ACRESCENTAR_CONTA](state, conta) {
     state.conta.push(conta);
-    console.log(conta)
-    console.log(state.conta)
   },
   [types.DELETE_CONTA](state, usuario_id) {
     const index = state.conta.findIndex(conta => conta.usuario_id === usuario_id);

@@ -43,9 +43,6 @@
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
                                                       v-model="editedItem.is_ativo"></v-switch>
                                         </v-flex>
-                                        <v-flex xs12 sm6 md12 v-if="editedItem.usuario_id == 0">
-                                            OBS: Senha padrão é <b>12345</b>
-                                        </v-flex>
                                     </v-layout>
                                 </v-container>
                             </v-card-text>
