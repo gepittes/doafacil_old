@@ -19,7 +19,7 @@ class Conta implements IService
         );
         //ModeloMensagem::with('plataformas')->get();
         if (!empty(trim($id))) {
-            $data = $modelUsuario->where('usuario_id', $id)->get();
+            $data = $modelUsuario->where('usuario_id', $id)->findOrFail($id);
         } else {
             $data = $modelUsuario->get();
 //            $data = ModeloUsuario::all();
@@ -28,7 +28,7 @@ class Conta implements IService
         return $data;
     }
 
-    public function criar(array $dados = []): ModeloUsuario
+    public function criar(array $dados = [])
     {
         $validator = Validator::make($dados, [
             "nome" => 'required|string|min:3|max:50',
@@ -53,8 +53,8 @@ class Conta implements IService
         ]);
 
         $dados['password'] = password_hash($dados['password'], PASSWORD_BCRYPT);
-
-        return ModeloUsuario::create($dados);
+        $modeloUsuario = ModeloUsuario::create($dados);
+        return $this->obter($modeloUsuario->usuario_id);
     }
 
     public function alterar($id, array $dados = [])

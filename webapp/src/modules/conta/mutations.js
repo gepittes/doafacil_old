@@ -1,8 +1,13 @@
 import * as types from './types';
 
 export const mutations = {
-  [types.SET_CONTA](state, conta) {
+  [types.OBTER_CONTAS](state, conta) {
     state.conta = conta;
+  },
+  [types.ACRESCENTAR_CONTA](state, conta) {
+    state.conta.push(conta);
+    console.log(conta)
+    console.log(state.conta)
   },
   [types.DELETE_CONTA](state, usuario_id) {
     const index = state.conta.findIndex(conta => conta.usuario_id === usuario_id);
