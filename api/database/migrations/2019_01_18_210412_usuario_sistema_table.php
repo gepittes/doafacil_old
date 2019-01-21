@@ -37,3 +37,17 @@ class UsuarioSistemaTable extends Migration
         Schema::dropIfExists('notificacao.usuario_has_sistema');
     }
 }
+/*
+ *
+create table usuario_has_sistema
+(
+  usuario_id integer not null
+    constraint notificacao_usuario_has_sistema_usuario_id_foreign
+    references usuario,
+  sistema_id integer not null
+    constraint notificacao_usuario_has_sistema_sistema_id_foreign
+    references sistema
+)
+;
+
+ */
