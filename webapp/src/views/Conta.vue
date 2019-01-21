@@ -67,7 +67,9 @@
                             <td class="text-xs-center">{{ props.item.nome }}</td>
                             <td class="text-xs-center">{{ props.item.email }}</td>
                             <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
-                            <td class="text-xs-center">{{ props.item.is_admin ? "Sim" : "Não" }} </td>
+                            <td class="text-xs-center">
+                                <v-icon v-if="props.item.is_admin" color="primary">check_circle_outline</v-icon>
+                            </td>
                             <td class="justify-center layout px-0">
                                 <v-icon small
                                         class="mr-2"
