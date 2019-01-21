@@ -26,6 +26,16 @@
                                                     :rules="[rules.required, rules.email, rules.minLength]"
                                                     required
                                                     label="E-mail"></v-text-field>
+                                            <v-text-field
+                                                    prepend-icon="lock"
+                                                    type="password"
+                                                    v-model="editedItem.password"
+                                                    label="Senha"
+                                                    v-validate="{ required: true, min: 6 }"
+                                                    class="form-control"
+                                                    :rules="[rules.required, rules.minLength]"
+                                                    required
+                                            ></v-text-field>
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_admin ? 'É Administrador' : 'Não é Administrador'}`"
@@ -43,7 +53,7 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="error" @click.native="close">Fechar</v-btn>
-                                <v-btn v-if="!loading"
+                                <v-btn :loading="loading"
                                        color="blue darken-1"
                                        dark
                                        @click.native="save">Gravar</v-btn>
