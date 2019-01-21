@@ -236,6 +236,7 @@ export default {
       } else {
         this.cadastrarConta(self.editedItem);
       }
+      self.loading = false;
       self.close();
     },
   },
