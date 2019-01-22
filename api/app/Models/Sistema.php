@@ -10,6 +10,7 @@ class Sistema extends Model
     public $incrementing = true;
     protected $fillable = [
         'descricao',
+        'url',
         'is_ativo'
     ];
 
