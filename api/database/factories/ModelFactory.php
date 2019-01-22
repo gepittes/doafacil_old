@@ -33,6 +33,7 @@ $factory->define(App\Models\Plataforma::class, function(Faker\Generator $faker) 
 $factory->define(App\Models\Sistema::class, function(Faker\Generator $faker) {
     return [
         'descricao' => $faker->name,
+        'url' => $faker->url,
         'is_ativo' => $faker->boolean,
         'created_at' => $faker->dateTime
     ];
