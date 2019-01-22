@@ -32,3 +32,7 @@ class SistemaTable extends Migration
         Schema::dropIfExists('notificacao.sistema');
     }
 }
+
+/**
+ * alter table sistema add url varchar(255);
+ */
