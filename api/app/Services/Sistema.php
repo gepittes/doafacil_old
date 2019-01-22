@@ -24,6 +24,9 @@ class Sistema implements IService
         $validator = Validator::make($dados, [
             "descricao" => 'required|string|min:3|max:50'
         ]);
+        $validator = Validator::make($dados, [
+            "url" => 'required|string|min:3|max:50'
+        ]);
 
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->first());
@@ -40,6 +43,9 @@ class Sistema implements IService
     {
         $validator = Validator::make($dados, [
             "descricao" => 'required|string|min:3|max:50'
+        ]);
+        $validator = Validator::make($dados, [
+            "url" => 'required|string|min:3|max:50'
         ]);
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->first());
