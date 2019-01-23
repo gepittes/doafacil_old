@@ -1,10 +1,10 @@
 <template>
     <v-btn flat>
         <v-badge right color="red">
-            <span slot="badge">6</span>
+            <span slot="badge">{{quantidade_notificacoes}}</span>
             <v-icon
-                    large
-                    color="white lighten-1">
+                    dark
+                    color="white darken-1">
                 notifications
             </v-icon>
         </v-badge>
@@ -14,6 +14,11 @@
 <script>
 export default {
   name: 'NotificacaoBadge',
+  data() {
+    return {
+        quantidade_notificacoes: 0,
+    };
+  },
 };
 </script>
 
