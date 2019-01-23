@@ -51,6 +51,9 @@
                     @click.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-toolbar-title v-text="title"></v-toolbar-title>
             <v-spacer></v-spacer>
+            <v-toolbar-items class="hidden-sm-and-down">
+                <NotificacaoBadge></NotificacaoBadge>
+            </v-toolbar-items>
         </v-toolbar>
 
         <v-content>
@@ -73,6 +76,7 @@
 <script>
 
 import { mapState, mapActions, mapGetters } from 'vuex';
+import NotificacaoBadge from './views/NotificacaoBadge.vue';
 
 export default {
   name: 'App',
@@ -170,6 +174,9 @@ export default {
     },
   },
   mounted() {
+  },
+  components: {
+    NotificacaoBadge,
   },
 
 };
