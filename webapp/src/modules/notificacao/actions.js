@@ -5,7 +5,6 @@ export const obterNotificacaos = ({ commit }) => {
   axios.get('http://localhost/v1/notificacao')
     .then((response) => {
       const data = response.data;
-console.log(response.data)
       commit(types.DEFINIR_NOTIFICACOES, data.data);
     })
     .catch((error) => {
