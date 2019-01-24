@@ -1,7 +1,7 @@
 <template>
     <v-btn flat>
         <v-badge right color="red">
-            <span slot="badge">{{quantidade_notificacoes}}</span>
+            <span slot="badge">{{this.notificacoes.length}}</span>
             <v-icon
                     dark
                     color="white darken-1">
@@ -12,12 +12,30 @@
 </template>
 
 <script>
+
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   name: 'NotificacaoBadge',
   data() {
     return {
-        quantidade_notificacoes: 0,
+        quantidade_notificacoes: [],
     };
+  },
+  computed: {
+    ...mapGetters({
+      notificacoes: 'notificacao/notificacoes',
+    }),
+  },
+  methods: {
+    ...mapActions({
+      obterNotificacaos: 'notificacao/obterNotificacaos',
+    }),
+  },
+  mounted() {
+    if (this.notificacoes.length == null || this.notificacoes.length === 0) {
+      this.obterNotificacaos();
+    }
   },
 };
 </script>
