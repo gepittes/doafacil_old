@@ -54,7 +54,7 @@ class Notificacao implements IService
             throw new \Exception($validator->errors()->first());
         }
 
-        if(isset($dados['notificacao_id'])) {
+        if (isset($dados['notificacao_id'])) {
             unset($dados['notificacao_id']);
         }
 
@@ -67,4 +67,24 @@ class Notificacao implements IService
         return $plataforma->delete();
     }
 
+    public function obterNotificacoesSistema($usuario_id)
+    {
+
+        $contaService = new Conta();
+        $usuario = $contaService->obter($usuario_id);
+
+        if($usuario) {
+
+            $arraySistemas = [];
+            foreach($usuario->sistemas() as $sistema) {
+                $arraySistemas[] = $sistema->sistema_id;
+            }
+
+            $modeloNotificacao = ModeloNotificacao::with('mensagem')
+                ->where('sistema_id', 'IN', $arraySistemas)
+                ->get();
+
+            return $modeloNotificacao;
+        }
+    }
 }

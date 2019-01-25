@@ -8,15 +8,15 @@ use Psr\Http\Message\ServerRequestInterface;
 use Validator;
 use Laravel\Lumen\Routing\Controller;
 
-class NotificacaoController extends Controller
+class NotificacaoSistemaController extends Controller
 {
-    public function get(ServerRequestInterface $request, $id = null)
+    public function get(ServerRequestInterface $request, $sistema_id = null)
     {
         $notificacao = new \App\Services\Notificacao();
         /**
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json($notificacao->obter($id));
+        return $response->json($notificacao->obterNotificacoesSistema($sistema_id));
     }
 }
