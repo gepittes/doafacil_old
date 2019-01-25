@@ -12,8 +12,7 @@
                dark>
             <v-badge right color="red">
                 <span slot="badge">{{this.notificacoes.length}}</span>
-                <v-icon
-                        dark
+                <v-icon dark
                         color="white darken-1">
                     notifications
                 </v-icon>
@@ -32,8 +31,9 @@
                             :to="minhaNotificacao">
 
                     <v-list-tile-content @click="fav = !fav">
-                        <v-list-tile-title>John Leider</v-list-tile-title>
-                        <v-list-tile-sub-title>Founder of Vuetify.js</v-list-tile-sub-title>
+                        <!--<v-list-tile-title>John Leider</v-list-tile-title>-->
+                        <v-list-tile-title>{{minhaNotificacao.mensagem.titulo}}</v-list-tile-title>
+                        <!--<v-list-tile-sub-title>Founder of Vuetify.js</v-list-tile-sub-title>-->
                     </v-list-tile-content>
 
                     <v-list-tile-action @click="fav = !fav">
