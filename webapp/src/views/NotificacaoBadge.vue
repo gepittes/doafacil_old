@@ -21,52 +21,31 @@
         </v-btn>
 
         <v-card>
+            <v-card-title>
+                Notificações
+            </v-card-title>
+
             <v-list>
-                <v-list-tile avatar>
 
-                    <!--<v-list-tile-avatar>-->
-                        <!--<img :src="item.avatar">-->
-                    <!--</v-list-tile-avatar>-->
+                <v-list-tile v-for="(minhaNotificacao, indexNotificacao) in this.notificacoes"
+                            :key="indexNotificacao"
+                            :to="minhaNotificacao">
 
-                    <!--<v-toolbar-side-icon></v-toolbar-side-icon>-->
-
-                    <v-list-tile-content>
+                    <v-list-tile-content @click="fav = !fav">
                         <v-list-tile-title>John Leider</v-list-tile-title>
                         <v-list-tile-sub-title>Founder of Vuetify.js</v-list-tile-sub-title>
                     </v-list-tile-content>
 
-                    <v-list-tile-action>
-                        <v-btn
-                                :class="fav ? 'red--text' : ''"
-                                icon
-                                @click="fav = !fav"
-                        >
-                            <v-icon>favorite</v-icon>
+                    <v-list-tile-action @click="fav = !fav">
+                        <v-btn :class="fav ? 'red--text' : ''"
+                                icon>
+                            <v-icon>check</v-icon>
                         </v-btn>
                     </v-list-tile-action>
                 </v-list-tile>
-
-
             </v-list>
 
             <v-divider></v-divider>
-            {{this.notificacoes}}
-
-            <!--<v-list>-->
-                <!--<v-list-tile>-->
-                    <!--<v-list-tile-action>-->
-                        <!--<v-switch v-model="message" color="purple"></v-switch>-->
-                    <!--</v-list-tile-action>-->
-                    <!--<v-list-tile-title>Enable messages</v-list-tile-title>-->
-                <!--</v-list-tile>-->
-
-                <!--<v-list-tile>-->
-                    <!--<v-list-tile-action>-->
-                        <!--<v-switch v-model="hints" color="purple"></v-switch>-->
-                    <!--</v-list-tile-action>-->
-                    <!--<v-list-tile-title>Enable hints</v-list-tile-title>-->
-                <!--</v-list-tile>-->
-            <!--</v-list>-->
 
             <v-card-actions>
                 <v-spacer></v-spacer>
