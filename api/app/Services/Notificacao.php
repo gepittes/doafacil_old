@@ -87,22 +87,13 @@ class Notificacao implements IService
             'is_ativo',
             'is_admin'
         );
-        $data = $modeloUsuario->where('usuario_id', $dados['usuario_id'])
+        $resultado = $modeloUsuario->where('usuario_id', $dados['usuario_id'])
             ->where('sistema_id', $dados['sistema_id'])
             ->get;
 
-        if ($usuario) {
+        if (count($resultado) > 0) {
 
-            $arraySistemas = [];
-            foreach ($usuario->sistemas() as $sistema) {
-                $arraySistemas[] = $sistema->sistema_id;
-            }
-
-            $modeloNotificacao = ModeloNotificacao::with('mensagem')
-                ->where('sistema_id', $dados['sistema_id'])
-                ->get();
-
-            return $modeloNotificacao;
+            return $resultado;
         }
     }
 }
