@@ -76,6 +76,7 @@ export default {
   computed: {
     ...mapGetters({
       notificacoes: 'notificacao/notificacoes',
+      accountInfo: 'account/accountInfo',
     }),
   },
   methods: {
@@ -84,8 +85,9 @@ export default {
     }),
   },
   mounted() {
+    console.log(this.accountInfo)
     if (this.notificacoes.length == null || this.notificacoes.length === 0) {
-      this.obterNotificacoesUsuario();
+      this.obterNotificacoesUsuario(this.accountInfo.user_id, );
     }
   },
 };

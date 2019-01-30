@@ -91,9 +91,6 @@ class Notificacao implements IService
             ->where('sistema_id', $dados['sistema_id'])
             ->get;
 
-        if (count($resultado) > 0) {
-
-            return $resultado;
-        }
+        return $resultado;
     }
 }

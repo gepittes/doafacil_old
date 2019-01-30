@@ -80,12 +80,23 @@
                             <v-icon>add</v-icon>
                         </v-btn>
                     </v-dialog>
+                    <v-spacer></v-spacer>
+                    <v-spacer></v-spacer>
+                    <v-text-field
+                            v-model="modeloBuscar"
+                            append-icon="search"
+                            label="Buscar"
+                            single-line
+                            hide-details
+                    ></v-text-field>
                 </v-toolbar>
                 <v-card-text>
                     <v-data-table light
                             :headers="headers"
                             :items="contasIniciais"
-                            :rows-per-page-items="[ 10, 25, 40 ]"
+                              :search="modeloBuscar"
+                              :rows-per-page-items="[ 10, 25, 40 ]"
+                              :rows-per-page-text="'Registros por página'"
                             class="elevation-1">
                         <template slot="items" slot-scope="props">
                             <td class="text-xs-center">{{ props.item.usuario_id }}</td>
@@ -176,6 +187,7 @@ export default {
       carbs: 0,
       protein: 0,
     },
+    modeloBuscar: '',
     rules: {
       required: value => !!value || 'Campo Obrigatório.',
       minLength: object => (object != null && object.length != null && object.length > 3) || 'Campo obrigatório.',

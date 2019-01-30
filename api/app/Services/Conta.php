@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Usuario as ModeloUsuario;
+use Ratchet\Wamp\Exception;
 use Validator;
 
 class Conta implements IService
@@ -30,34 +31,38 @@ class Conta implements IService
 
     public function criar(array $dados = [])
     {
-        $validator = Validator::make($dados, [
-            "nome" => 'required|string|min:3|max:50',
-            "email" => 'required|string|min:3|max:50',
-            "password" => 'required|string|min:3|max:50',
-        ]);
+        try {
+            $validator = Validator::make($dados, [
+                "nome" => 'required|string|min:3|max:50',
+                "email" => 'required|string|min:3|max:50',
+                "password" => 'required|string|min:3|max:50',
+            ]);
 
-        if ($validator->fails()) {
-            throw new \Exception($validator->errors()->first());
+            if ($validator->fails()) {
+                throw new \Exception($validator->errors()->first());
+            }
+
+            /**
+             * @var $usuarioExistente \Illuminate\Database\Eloquent\Collection
+             */
+            $usuarioExistente = ModeloUsuario::where('email', $dados['email'])->get();
+            if (count($usuarioExistente->toArray()) > 0) {
+                throw new \Exception("Usu&aacute;rio existente");
+            }
+
+            $dados = array_merge($dados, [
+                'is_ativo' => true
+            ]);
+
+            $dados['password'] = password_hash($dados['password'], PASSWORD_BCRYPT);
+            $modeloUsuario = ModeloUsuario::create($dados);
+
+            $this->vincularSistema($modeloUsuario->usuario_id, $dados['sistemas']);
+
+            return $this->obter($modeloUsuario->usuario_id);
+        } catch (\Exception $exception) {
+            throw new $exception;
         }
-
-        /**
-         * @var $usuarioExistente \Illuminate\Database\Eloquent\Collection
-         */
-        $usuarioExistente = ModeloUsuario::where('email', $dados['email'])->get();
-        if (count($usuarioExistente->toArray()) > 0) {
-            throw new \Exception("Usu&aacute;rio existente");
-        }
-
-        $dados = array_merge($dados, [
-            'is_ativo' => true
-        ]);
-
-        $dados['password'] = password_hash($dados['password'], PASSWORD_BCRYPT);
-        $modeloUsuario = ModeloUsuario::create($dados);
-
-        $this->vincularSistema($modeloUsuario->usuario_id, $dados['sistemas']);
-
-        return $this->obter($modeloUsuario->usuario_id);
     }
 
     public function alterar($id, array $dados = [])
@@ -72,7 +77,12 @@ class Conta implements IService
         if (isset($dados['usuario_id'])) {
             unset($dados['usuario_id']);
         }
+        $sistemas = $dados['sistemas'];
+
+        $this->desvincularSistemaUsuario($id);
+        $this->vincularSistema($id, $sistemas);
         unset($dados['sistemas']);
+
         return ModeloUsuario::where('usuario_id', $id)->update($dados);
     }
 
@@ -98,8 +108,14 @@ class Conta implements IService
     public function vincularSistema($usuario_id, array $sistemas)
     {
         foreach ($sistemas as $sistema) {
-            $usuario = ModeloMensagem::findOrFail($usuario_id);
-            $usuario->sistemas()->attach($sistema['plataforma_id']);
+            $usuario = ModeloUsuario::findOrFail($usuario_id);
+            $usuario->sistemas()->attach($sistema['sistema_id']);
         }
+    }
+
+    public function desvincularSistemaUsuario($usuario_id)
+    {
+        $usuario = $this->obter($usuario_id);
+        return $usuario->sistemas()->detach();
     }
 }
