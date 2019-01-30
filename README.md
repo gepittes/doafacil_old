@@ -86,10 +86,6 @@ docker-compose up --build --force-recreate
                 - [x] Criar Controller para Autenticação
                 - [x] Criar de JSON Web Token (JWT) encapsulando dados do usuário e de expiração da token
                 - [x] Criar Middleware para interceptar requisições HTTP e validar dados informados
-            * **ACL**
-    - salic-minc
-        - [ ] notificação
-            - [ ] enviar
 - Database
     - [x] modelagem
     - [x] criação
@@ -108,9 +104,9 @@ docker-compose up --build --force-recreate
                 - [x] cadastrar
                 - [x] alterar
                 - [x] remover
-            - [] notificacoes
-                - [ ] enviar
-                - [ ] listar
+            - [x] notificacoes
+                - [x] enviar
+                - [x] listar
             - [x] mensagem
                 - [x] listar
                 - [x] cadastrar
@@ -124,13 +120,10 @@ docker-compose up --build --force-recreate
             - [x] login (senha mestra temporariamente)
             - [x] login - utilizando Backend
             - [x] login - utilizando JWT
-            - [ ] Controle de Acesso 
-    - [ ] salic-minc
+            - [x] Controle de Acesso 
         - [ ] Componente Sininho
             - [ ] observar WebSocket
             - [ ] exibir notificações
             - [ ] bloco de notificações não lidas
             - [ ] marcar notificação como lidas
-            * **visualização de todas as notificações (link)**
-
-**OBS**: Itens com em **negrito** são sugestões para implementações futuras. 
+            - [ ] diálogo para visualização de todas as notificações
