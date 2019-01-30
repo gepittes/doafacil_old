@@ -10,13 +10,15 @@ use Laravel\Lumen\Routing\Controller;
 
 class NotificacaoSistemaController extends Controller
 {
-    public function get(ServerRequestInterface $request, $sistema_id = null)
+    public function post(ServerRequestInterface $request)
     {
+        $dados = $request->getParsedBody();
         $notificacao = new \App\Services\Notificacao();
+
         /**
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json($notificacao->obterNotificacoesSistema($sistema_id));
+        return $response->json($notificacao->obterNotificacoesSistema($dados));
     }
 }

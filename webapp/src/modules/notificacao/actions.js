@@ -12,6 +12,21 @@ export const obterNotificacaos = ({ commit }) => {
     });
 };
 
+export const obterNotificacoesUsuario = ({ commit }, usuario_id, sistema_id) => {
+  axios.post(`http://localhost/v1/notificacao-sistema`,
+    {
+      usuario_id: usuario_id,
+      sistema_id: sistema_id,
+    })
+    .then((response) => {
+      const data = response.data;
+      commit(types.DEFINIR_NOTIFICACOES, data.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 export const removerNotificacao = ({ commit }, notificacao_id) => {
   axios.delete(`http://localhost/v1/notificacao/${notificacao_id}`)
     .then(() => {

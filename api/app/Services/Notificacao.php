@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Notificacao as ModeloNotificacao;
 use Carbon\Carbon;
 use Validator;
+use App\Models\Usuario as ModeloUsuario;
 
 class Notificacao implements IService
 {
@@ -67,21 +68,38 @@ class Notificacao implements IService
         return $plataforma->delete();
     }
 
-    public function obterNotificacoesSistema($usuario_id)
+    public function obterNotificacoesSistema($dados)
     {
 
-        $contaService = new Conta();
-        $usuario = $contaService->obter($usuario_id);
+        $validator = Validator::make($dados, [
+            "usuario_id" => 'int',
+            "sistema_id" => 'int',
+        ]);
 
-        if($usuario) {
+        if ($validator->fails()) {
+            throw new \Exception($validator->errors()->first());
+        }
+
+        $modeloUsuario = ModeloUsuario::with('sistemas')->select(
+            'usuario_id',
+            'nome',
+            'email',
+            'is_ativo',
+            'is_admin'
+        );
+        $data = $modeloUsuario->where('usuario_id', $dados['usuario_id'])
+            ->where('sistema_id', $dados['sistema_id'])
+            ->get;
+
+        if ($usuario) {
 
             $arraySistemas = [];
-            foreach($usuario->sistemas() as $sistema) {
+            foreach ($usuario->sistemas() as $sistema) {
                 $arraySistemas[] = $sistema->sistema_id;
             }
 
             $modeloNotificacao = ModeloNotificacao::with('mensagem')
-                ->where('sistema_id', 'IN', $arraySistemas)
+                ->where('sistema_id', $dados['sistema_id'])
                 ->get();
 
             return $modeloNotificacao;

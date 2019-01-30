@@ -80,12 +80,12 @@ export default {
   },
   methods: {
     ...mapActions({
-      obterNotificacaos: 'notificacao/obterNotificacaos',
+      obterNotificacoesUsuario: 'notificacao/obterNotificacoesUsuario',
     }),
   },
   mounted() {
     if (this.notificacoes.length == null || this.notificacoes.length === 0) {
-      this.obterNotificacaos();
+      this.obterNotificacoesUsuario();
     }
   },
 };
