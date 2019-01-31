@@ -9,36 +9,38 @@ class JsonResponseStyle
 
     public function handle(\Illuminate\Http\Request $request, Closure $next)
     {
-        $response = $next($request);
+        try {
+            $response = $next($request);
+            $responseData = [
+                'apiVersion' => API_VERSION,
+                'data' => [],
+                'error' => []
+            ];
 
-        $responseData = [
-            'apiVersion' => API_VERSION,
-            'data' => [],
-            'error' => []
-        ];
-
-        if (!defined('API_VERSION')) {
-            $responseData['error'] = "Constante API_VERSION n&atilde;o definida.";
-        }
-
-        /**
-         * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
-         */
-        $statusCode = '400';
-        if (empty(trim($response->exception))) {
-            $dados = json_decode($response->getContent(), true);
-            if(is_array($dados)) {
-                $dados = $this->converterUTF8($dados);
+            if (!defined('API_VERSION')) {
+                $responseData['error'] = "Constante API_VERSION n&atilde;o definida.";
             }
-            $responseData['data'] = $dados;
-            $statusCode = '200';
-        } else {
-            $responseData['error'] = $response->exception->getMessage();
+            /**
+             * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
+             */
+            $statusCode = '400';
+            if (!$response->exception) {
+                $dados = json_decode($response->getContent(), true);
+                if(is_array($dados)) {
+                    $dados = $this->converterUTF8($dados);
+                }
+                $responseData['data'] = $dados;
+                $statusCode = '200';
+            } else {
+                $responseData['error'] = $response->exception->getMessage();
+            }
+
+            $content = json_encode($responseData);
+
+            return $response->setContent($content)->setStatusCode($statusCode);
+        } catch (\Exception $objException) {
+            die($objException->getMessage());
         }
-
-        $content = json_encode($responseData);
-
-        return $response->setContent($content)->setStatusCode($statusCode);
     }
 
     private function converterUTF8(array $dados)
@@ -46,9 +48,8 @@ class JsonResponseStyle
         array_walk($dados, function ($value, $key) use (&$dados) {
             if(is_array($value)) {
                 $value = $this->converterUTF8($value);
-            } else {
-                $dados[$key] = utf8_encode($value);
             }
+            $dados[$key] = utf8_encode($value);
         });
 
         return $dados;
