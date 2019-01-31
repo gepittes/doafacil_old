@@ -77,6 +77,9 @@ class Conta implements IService
         if (isset($dados['usuario_id'])) {
             unset($dados['usuario_id']);
         }
+        if (isset($dados['password'])) {
+            $dados['password'] = password_hash($dados['password'], PASSWORD_BCRYPT);
+        }
         $sistemas = $dados['sistemas'];
 
         $this->desvincularSistemaUsuario($id);
