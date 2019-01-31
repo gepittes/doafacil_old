@@ -5,7 +5,7 @@ export const obterSistemas = ({commit}) => {
     axios.get('http://localhost/v1/sistema')
         .then(response => {
             const data = response.data;
-            commit(types.SET_SISTEMA, data.data)
+            commit(types.OBTER_SISTEMAS, data.data)
         })
         .catch(error => {
             console.log(error)
@@ -23,7 +23,7 @@ export const cadastrarSistema = ({commit}, sistema) => {
     return axios.post('http://localhost/v1/sistema', sistema)
         .then((response) => {
             const data = response.data;
-            commit(types.SET_SISTEMA, data.data)
+            commit(types.ACRESCENTAR_SISTEMA, data.data)
         });
 };
 

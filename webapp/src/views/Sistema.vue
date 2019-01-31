@@ -15,7 +15,13 @@
                                     <v-layout wrap>
                                         <v-flex xs12 sm6 md12>
                                             <v-text-field v-model="editedItem.descricao"
+                                                          required
                                                           label="Descrição"></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm6 md12>
+                                            <v-text-field v-model="editedItem.url"
+                                                          required
+                                                          label="URL"></v-text-field>
                                         </v-flex>
                                         <v-flex xs12 sm6 md12>
                                             <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
@@ -51,6 +57,7 @@
                         <template slot="items" slot-scope="props">
                             <td class="text-xs-center">{{ props.item.sistema_id }}</td>
                             <td class="text-xs-center">{{ props.item.descricao }}</td>
+                            <td class="text-xs-center">{{ props.item.url }}</td>
                             <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
                             <td class="justify-center layout px-0">
                                 <v-icon small
@@ -96,6 +103,11 @@
                     align: 'center'
                 },
                 {
+                    text: 'Url',
+                    value: 'url',
+                    align: 'center'
+                },
+                {
                     text: 'Situação',
                     value: 'situacao',
                     align: 'center'
@@ -110,8 +122,9 @@
             sistemasIniciais: [],
             editedIndex: -1,
             editedItem: {
-                sistema_id: 0,
-                descricao: '',
+                sistema_id: null,
+                descricao: null,
+                url: null,
                 is_ativo: true,
             },
             defaultItem: {

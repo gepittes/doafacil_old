@@ -16,6 +16,7 @@ class SistemaTable extends Migration
         Schema::create('notificacao.sistema', function (Blueprint $table) {
             $table->increments('sistema_id');
             $table->string('descricao');
+            $table->string('url');
             $table->boolean('is_ativo');
             $table->timestamps();
         });
@@ -31,3 +32,7 @@ class SistemaTable extends Migration
         Schema::dropIfExists('notificacao.sistema');
     }
 }
+
+/**
+ * alter table sistema add url varchar(255);
+ */

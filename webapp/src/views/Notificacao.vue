@@ -146,6 +146,7 @@ export default {
       notificacao_id: null,
       autor_id: null,
       mensagem_id: null,
+      mensagem: null,
       descricao: '',
       is_ativo: true,
       plataformas: [],
@@ -177,7 +178,6 @@ export default {
       if (this.editedItem.notificacao_id != null) {
         this.exibirBotaoGravar = false;
       }
-
 
       val || this.close();
     },
@@ -279,7 +279,6 @@ export default {
       if (self.editedIndex > -1) {
         this.atualizarNotificacao(self.editedItem);
       } else {
-        console.log(self.editedItem);
         this.cadastrarNotificacao(self.editedItem);
         this.sendNotification(self.editedItem);
       }
@@ -287,13 +286,21 @@ export default {
     },
 
     sendNotification(editedItem) {
-      const arrayNotificacao = {
-        sistema: editedItem.sistema_id,
-        codigo_destinatario: editedItem.codigo_destinatario,
-        mensagem: editedItem.mensagem,
-        data_envio: editedItem.data_envio
-      };
-      this.sendMessage(JSON.stringify(arrayNotificacao));
+      let objetoMensagem = {};
+      for (const index in this.mensagensRenderizadas) {
+        if (this.mensagensRenderizadas[index].mensagem_id === editedItem.mensagem_id) {
+          objetoMensagem = this.mensagensRenderizadas[index];
+        }
+      }
+      if (Object.keys(objetoMensagem).length > 0) {
+        const objetoNotificacao = {
+          sistema: editedItem.sistema_id,
+          codigo_destinatario: editedItem.codigo_destinatario,
+          mensagem: objetoMensagem,
+          data_envio: editedItem.data_envio,
+        };
+        this.sendMessage(JSON.stringify(objetoNotificacao));
+      }
     },
 
     sendMessage(message) {
@@ -302,6 +309,7 @@ export default {
       setTimeout(() => {
         self.loading = false;
       }, 1000);
+
       this.websocket.connection.send(message);
     },
 

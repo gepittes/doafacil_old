@@ -50,6 +50,7 @@
                     v-if="status.loggedIn"
                     @click.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-toolbar-title v-text="title"></v-toolbar-title>
+            <NotificacaoBadge></NotificacaoBadge>
             <v-spacer></v-spacer>
         </v-toolbar>
 
@@ -73,6 +74,7 @@
 <script>
 
 import { mapState, mapActions, mapGetters } from 'vuex';
+import NotificacaoBadge from './views/NotificacaoBadge.vue';
 
 export default {
   name: 'App',
@@ -170,6 +172,9 @@ export default {
     },
   },
   mounted() {
+  },
+  components: {
+    NotificacaoBadge,
   },
 
 };

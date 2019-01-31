@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Notificacao as ModeloNotificacao;
 use Carbon\Carbon;
 use Validator;
+use App\Models\Usuario as ModeloUsuario;
 
 class Notificacao implements IService
 {
@@ -54,7 +55,7 @@ class Notificacao implements IService
             throw new \Exception($validator->errors()->first());
         }
 
-        if(isset($dados['notificacao_id'])) {
+        if (isset($dados['notificacao_id'])) {
             unset($dados['notificacao_id']);
         }
 
@@ -67,4 +68,29 @@ class Notificacao implements IService
         return $plataforma->delete();
     }
 
+    public function obterNotificacoesSistema($dados)
+    {
+
+        $validator = Validator::make($dados, [
+            "usuario_id" => 'int',
+            "sistema_id" => 'int',
+        ]);
+
+        if ($validator->fails()) {
+            throw new \Exception($validator->errors()->first());
+        }
+
+        $modeloUsuario = ModeloUsuario::with('sistemas')->select(
+            'usuario_id',
+            'nome',
+            'email',
+            'is_ativo',
+            'is_admin'
+        );
+        $resultado = $modeloUsuario->where('usuario_id', $dados['usuario_id'])
+            ->where('sistema_id', $dados['sistema_id'])
+            ->get;
+
+        return $resultado;
+    }
 }
