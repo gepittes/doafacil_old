@@ -128,11 +128,9 @@ docker-compose up --build --force-recreate
             - [ ] visualizar todas as notificações do usuário em um sistema específico
             - [ ] marcar notificação como lida
             - [ ] diálogo para visualização de todas as notificações
-            - [ ] Obter notificacoes por usuario
-            - [ ] Obter notificacoes por usuario e sistema
         - [ ] Outros  
-            - [ ] Definicao de usuario como administrador
-            - [ ] Restricao de acesso a alguns recursos para quem n tem perfil admin
-            - [ ] Estudo de utilizacao de CORS somente para sistemas cadastrados
-            - [ ] Definicao de vinculo entre usuario e sistemas para que a aplicacao cadastrada consiga consumir o serviço
-            - [ ] Criaçao dinamica de token para acesso pelos sistemas cadastrados ao sistema de notificacao
+            - [ ] Definição de usuario como administrador
+            - [ ] Restrição de acesso a alguns recursos para quem não tem perfil admin
+            - [ ] Estudo de utilização de CORS somente para sistemas cadastrados
+            - [ ] Definição de vinculo entre usuario e sistemas para que a aplicação cadastrada consiga consumir o serviço
+            - [ ] Criação dinâmica de token para acesso pelos sistemas cadastrados ao sistema de notificacao
