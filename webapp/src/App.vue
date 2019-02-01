@@ -50,7 +50,7 @@
                     v-if="status.loggedIn"
                     @click.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-toolbar-title v-text="title"></v-toolbar-title>
-            <NotificacaoBadge></NotificacaoBadge>
+            <NotificacaoBadge  v-if="status.loggedIn"></NotificacaoBadge>
             <v-spacer></v-spacer>
         </v-toolbar>
 
