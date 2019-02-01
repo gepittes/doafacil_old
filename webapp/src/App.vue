@@ -50,7 +50,9 @@
                     v-if="status.loggedIn"
                     @click.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-toolbar-title v-text="title"></v-toolbar-title>
-            <NotificacaoBadge  v-if="status.loggedIn"></NotificacaoBadge>
+            <v-scale-transition>
+                <NotificacaoBadge v-show="loading" v-if="status.loggedIn"></NotificacaoBadge>
+            </v-scale-transition>
             <v-spacer></v-spacer>
         </v-toolbar>
 
@@ -80,6 +82,7 @@ export default {
   name: 'App',
   data() {
     return {
+      loading: false,
       clipped: false,
       drawer: true,
       fixed: false,
@@ -172,6 +175,7 @@ export default {
     },
   },
   mounted() {
+    this.loading = true;
   },
   components: {
     NotificacaoBadge,
