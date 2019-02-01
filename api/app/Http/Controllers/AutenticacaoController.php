@@ -59,10 +59,14 @@ class AutenticacaoController extends Controller
     public function autenticar(Usuario $usuario)
     {
         try {
-            $this->validate($this->request, [
-                'email' => 'required|email',
-                'password' => 'required'
-            ]);
+
+//            $validator = $this->validate($this->request, [
+//                'email' => 'required|email',
+//                'password' => 'required'
+//            ]);
+//            if ($validator->fails()) {
+//                throw new \Exception($validator->errors()->first());
+//            }
 
             $usuarioEmail = Usuario::where('email', $this->request->input('email'))->first();
             if (!$usuarioEmail) {
@@ -77,7 +81,6 @@ class AutenticacaoController extends Controller
             $senha = $this->request->input('password');
             $senhaBanco = $usuarioAtivo->password;
 
-//return response()->json([123123]);
             if (!$this->validarHash($senha, $senhaBanco)) {
                 throw new \Exception('Email ou senha incorretos.');
             }
@@ -87,6 +90,8 @@ class AutenticacaoController extends Controller
             ], 200);
         } catch (\Illuminate\Validation\ValidationException $objThrowValidationException) {
             throw new \Exception($objThrowValidationException->getMessage());
+        } catch (\Exception $objException) {
+            throw $objException;
         }
     }
 

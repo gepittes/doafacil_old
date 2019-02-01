@@ -23,7 +23,6 @@ class Conta implements IService
             $data = $modelUsuario->where('usuario_id', $id)->findOrFail($id);
         } else {
             $data = $modelUsuario->get();
-//            $data = ModeloUsuario::all();
         }
 
         return $data;
@@ -47,21 +46,27 @@ class Conta implements IService
              */
             $usuarioExistente = ModeloUsuario::where('email', $dados['email'])->get();
             if (count($usuarioExistente->toArray()) > 0) {
-                throw new \Exception("Usu&aacute;rio existente");
+                throw new \Exception("E-mail já cadastrado.");
             }
 
             $dados = array_merge($dados, [
                 'is_ativo' => true
             ]);
 
+            if(!isset($dados['is_admin'])) {
+                $dados['is_admin'] = false;
+            }
+
             $dados['password'] = password_hash($dados['password'], PASSWORD_BCRYPT);
             $modeloUsuario = ModeloUsuario::create($dados);
 
-            $this->vincularSistema($modeloUsuario->usuario_id, $dados['sistemas']);
+            if(isset($dados['sistemas']) && count($dados['sistemas']) > 0) {
+                $this->vincularSistema($modeloUsuario->usuario_id, $dados['sistemas']);
+            }
 
             return $this->obter($modeloUsuario->usuario_id);
         } catch (\Exception $exception) {
-            throw new $exception;
+            throw $exception;
         }
     }
 

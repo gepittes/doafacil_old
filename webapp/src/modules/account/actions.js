@@ -55,8 +55,12 @@ export const register = ({ dispatch, commit }, user) => {
         router.push('/login');
       },
       (error) => {
-        commit(types.REGISTERFAILURE, error);
-        dispatch('alert/error', error, { root: true });
+        if (error.response && error.response.data) {
+          commit(types.LOGINFAILURE, error.response.data.error);
+          dispatch('alert/error', error.response.data.error, {
+            root: true,
+          });
+        }
       },
     );
 };
