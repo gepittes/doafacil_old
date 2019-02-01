@@ -47,9 +47,10 @@ class JsonResponseStyle
     {
         array_walk($dados, function ($value, $key) use (&$dados) {
             if(is_array($value)) {
-                $value = $this->converterUTF8($value);
+                $dados[$key] = $this->converterUTF8($value);
+            } else {
+                $dados[$key] = utf8_encode($value);
             }
-            $dados[$key] = utf8_encode($value);
         });
 
         return $dados;
