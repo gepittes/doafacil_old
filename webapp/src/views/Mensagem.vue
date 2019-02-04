@@ -18,7 +18,7 @@
                                                           label="Título"
                                                           box
                                                           minlength="3"
-                                                          :rules="[(object) => object.length > 3 || 'Campo obrigatório.']"
+                                                          :rules="[(object) => object!= null && object.length > 3 || 'Campo obrigatório.']"
                                                           required></v-text-field>
                                             <v-textarea
                                                     v-model="editedItem.descricao"

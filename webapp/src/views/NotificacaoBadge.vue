@@ -26,13 +26,13 @@
 
             <v-list>
 
-                <v-list-tile v-for="(minhaNotificacao, indexNotificacao) in this.notificacoes"
+                <v-list-tile v-for="(minhaNotificacao, indexNotificacao) in this.notificacoesBadge"
                             :key="indexNotificacao"
                             :to="minhaNotificacao">
 
                     <v-list-tile-content @click="fav = !fav">
                         <!--<v-list-tile-title>John Leider</v-list-tile-title>-->
-                        <v-list-tile-title>{{minhaNotificacao.mensagem.titulo}}</v-list-tile-title>
+                        <v-list-tile-title>{{minhaNotificacao.titulo}}</v-list-tile-title>
                         <!--<v-list-tile-sub-title>Founder of Vuetify.js</v-list-tile-sub-title>-->
                     </v-list-tile-content>
 
@@ -49,8 +49,7 @@
 
             <v-card-actions>
                 <v-spacer></v-spacer>
-
-                <v-btn color="primary" flat @click="menu = false">Marcar Todas como Lidas</v-btn>
+                <v-btn color="primary" flat @click="menu = false">Visualizars todas</v-btn>
             </v-card-actions>
         </v-card>
     </v-menu>
@@ -64,8 +63,6 @@ export default {
   name: 'NotificacaoBadge',
   data() {
     return {
-        quantidade_notificacoes: [],
-
       // temp
       fav: true,
       menu: false,
@@ -76,20 +73,28 @@ export default {
   computed: {
     ...mapGetters({
       notificacoes: 'notificacao/notificacoes',
+      notificacoesBadge: 'notificacaoBadge/notificacoesBadge',
       accountInfo: 'account/accountInfo',
     }),
   },
   methods: {
     ...mapActions({
-      obterNotificacoesUsuario: 'notificacao/obterNotificacoesUsuario',
+      obterNotificacoesUsuario: 'notificacaoBadge/obterNotificacoesUsuario',
     }),
   },
   mounted() {
-    console.log(this.accountInfo)
-    if (this.notificacoes.length == null || this.notificacoes.length === 0) {
-      this.obterNotificacoesUsuario(this.accountInfo.user_id, );
+    if (this.notificacoesBadge.length == null || this.notificacoesBadge.length === 0) {
+      this.obterNotificacoesUsuario(this.accountInfo.user_id);
     }
   },
+  watch: {
+    notificacoes(value)
+    {
+      if(this.notificacoes.length != this.notificacoesBadge) {
+        this.obterNotificacoesUsuario(this.accountInfo.user_id);
+      }
+    }
+  }
 };
 </script>
 
