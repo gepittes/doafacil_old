@@ -32,7 +32,7 @@
 
                     <v-list-tile-content @click="fav = !fav">
                         <!--<v-list-tile-title>John Leider</v-list-tile-title>-->
-                        <v-list-tile-title>{{minhaNotificacao.mensagem.titulo}}</v-list-tile-title>
+                        <v-list-tile-title>{{minhaNotificacao.titulo}}</v-list-tile-title>
                         <!--<v-list-tile-sub-title>Founder of Vuetify.js</v-list-tile-sub-title>-->
                     </v-list-tile-content>
 
@@ -63,8 +63,6 @@ export default {
   name: 'NotificacaoBadge',
   data() {
     return {
-        quantidade_notificacoesBadge: [],
-
       // temp
       fav: true,
       menu: false,

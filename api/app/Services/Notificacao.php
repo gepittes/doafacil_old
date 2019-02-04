@@ -82,6 +82,7 @@ class Notificacao implements IService
             ->join('notificacao.mensagem', 'notificacao.mensagem_id', '=', 'notificacao.mensagem.mensagem_id')
             ->join('notificacao.usuario_has_sistema', 'notificacao.mensagem.sistema_id', '=', 'notificacao.usuario_has_sistema.sistema_id')
             ->where('notificacao.usuario_has_sistema.usuario_id', '=', $usuario_id)
+            ->where('notificacao.notificacao.is_notificacao_lida', '=', false)
 //            ->toSql();
             ->get();
         return $resultado;
