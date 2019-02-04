@@ -11,7 +11,7 @@
                color="indigo"
                dark>
             <v-badge right color="red">
-                <span slot="badge">{{this.notificacoesBadge.length}}</span>
+                <span slot="badge">{{this.notificacoes.length}}</span>
                 <v-icon dark
                         color="white darken-1">
                     notifications
@@ -72,6 +72,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      notificacoes: 'notificacao/notificacoes',
       notificacoesBadge: 'notificacaoBadge/notificacoesBadge',
       accountInfo: 'account/accountInfo',
     }),
@@ -86,6 +87,14 @@ export default {
       this.obterNotificacoesUsuario(this.accountInfo.user_id);
     }
   },
+  watch: {
+    notificacoes(value)
+    {
+      if(this.notificacoes.length != this.notificacoesBadge) {
+        this.obterNotificacoesUsuario(this.accountInfo.user_id);
+      }
+    }
+  }
 };
 </script>
 
