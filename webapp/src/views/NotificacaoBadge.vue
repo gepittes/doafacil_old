@@ -49,8 +49,7 @@
 
             <v-card-actions>
                 <v-spacer></v-spacer>
-
-                <v-btn color="primary" flat @click="menu = false">Marcar Todas como Lidas</v-btn>
+                <v-btn color="primary" flat @click="menu = false">Visualizars todas</v-btn>
             </v-card-actions>
         </v-card>
     </v-menu>
@@ -87,7 +86,7 @@ export default {
   mounted() {
     console.log(this.accountInfo)
     if (this.notificacoes.length == null || this.notificacoes.length === 0) {
-      this.obterNotificacoesUsuario(this.accountInfo.user_id, );
+      this.obterNotificacoesUsuario(this.accountInfo.user_id);
     }
   },
 };
