@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Notificacao as ModeloNotificacao;
 use Carbon\Carbon;
+use DB;
 use Validator;
 use App\Models\Usuario as ModeloUsuario;
 
@@ -66,6 +67,24 @@ class Notificacao implements IService
     {
         $plataforma = ModeloNotificacao::findOrFail($id);
         return $plataforma->delete();
+    }
+
+    public function obterNotificacoesUsuario($usuario_id)
+    {
+        if (is_null($usuario_id)) {
+            throw new \Exception('Identificador do usuário obrigatório.');
+        }
+
+        $resultado = DB::table('notificacao.notificacao')
+//            ->select(['notificacao.notificacao.codigo_destinatario',
+//                'notificacao.notificacao.codigo_destinatario',
+//            ])
+            ->join('notificacao.mensagem', 'notificacao.mensagem_id', '=', 'notificacao.mensagem.mensagem_id')
+            ->join('notificacao.usuario_has_sistema', 'notificacao.mensagem.sistema_id', '=', 'notificacao.usuario_has_sistema.sistema_id')
+            ->where('notificacao.usuario_has_sistema.usuario_id', '=', $usuario_id)
+//            ->toSql();
+            ->get();
+        return $resultado;
     }
 
     public function obterNotificacoesSistema($dados)
