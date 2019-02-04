@@ -11,7 +11,7 @@
                color="indigo"
                dark>
             <v-badge right color="red">
-                <span slot="badge">{{this.notificacoes.length}}</span>
+                <span slot="badge">{{this.notificacoesBadge.length}}</span>
                 <v-icon dark
                         color="white darken-1">
                     notifications
@@ -26,7 +26,7 @@
 
             <v-list>
 
-                <v-list-tile v-for="(minhaNotificacao, indexNotificacao) in this.notificacoes"
+                <v-list-tile v-for="(minhaNotificacao, indexNotificacao) in this.notificacoesBadge"
                             :key="indexNotificacao"
                             :to="minhaNotificacao">
 
@@ -63,7 +63,7 @@ export default {
   name: 'NotificacaoBadge',
   data() {
     return {
-        quantidade_notificacoes: [],
+        quantidade_notificacoesBadge: [],
 
       // temp
       fav: true,
@@ -74,18 +74,17 @@ export default {
   },
   computed: {
     ...mapGetters({
-      notificacoes: 'notificacao/notificacoes',
+      notificacoesBadge: 'notificacaoBadge/notificacoesBadge',
       accountInfo: 'account/accountInfo',
     }),
   },
   methods: {
     ...mapActions({
-      obterNotificacoesUsuario: 'notificacao/obterNotificacoesUsuario',
+      obterNotificacoesUsuario: 'notificacaoBadge/obterNotificacoesUsuario',
     }),
   },
   mounted() {
-    console.log(this.accountInfo)
-    if (this.notificacoes.length == null || this.notificacoes.length === 0) {
+    if (this.notificacoesBadge.length == null || this.notificacoesBadge.length === 0) {
       this.obterNotificacoesUsuario(this.accountInfo.user_id);
     }
   },
