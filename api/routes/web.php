@@ -46,6 +46,6 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
         $router->patch('/notificacao/{id}', 'NotificacaoController@patch');
 
         $router->post('/notificacao-sistema', 'NotificacaoSistemaController@post');
-        $router->get('/notificacao-usuario/{usuario_id}', 'NotificacaoUsuarioController@get');
+        $router->get('/notificacao-usuario/{usuario_id}[/{limite}]', 'NotificacaoUsuarioController@get');
 //    });
 });
