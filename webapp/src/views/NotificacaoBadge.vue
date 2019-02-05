@@ -11,7 +11,7 @@
                color="indigo"
                dark>
             <v-badge right color="red">
-                <span slot="badge">{{this.notificacoes.length}}</span>
+                <span slot="badge">{{this.notificacoesBadge.length}}</span>
                 <v-icon dark
                         color="white darken-1">
                     notifications
