@@ -28,6 +28,7 @@
 
                 <v-list-tile v-for="(minhaNotificacao, indexNotificacao) in this.notificacoesBadge"
                             :key="indexNotificacao"
+                            v-if="indexNotificacao < 5"
                             :to="minhaNotificacao">
 
                     <v-list-tile-content @click="fav = !fav">
