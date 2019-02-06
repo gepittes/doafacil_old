@@ -123,11 +123,11 @@ docker-compose up --build --force-recreate
             - [x] Controle de Acesso 
         - [ ] Componente Sininho
             - [ ] observar WebSocket
-            - [ ] exibir 5 últimas notificações
-            - [ ] visualizar todas as notificações do usuário 
+            - [x] exibir 5 últimas notificações
+            - [x] visualizar todas as notificações do usuário 
             - [ ] visualizar todas as notificações do usuário em um sistema específico
             - [ ] marcar notificação como lida
-            - [ ] diálogo para visualização de todas as notificações
+            - [x] diálogo para visualização de todas as notificações
         - [ ] Outros  
             - [ ] Definição de usuario como administrador
             - [ ] Restrição de acesso a alguns recursos para quem não tem perfil admin
