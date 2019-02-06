@@ -83,7 +83,8 @@
 
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <!--<v-btn color="error" @click.native="close">Fechar</v-btn>-->
+                            <v-spacer></v-spacer>
+                            <v-btn color="error" @click.native="closeBadgeDialog">Fechar</v-btn>
                             <!--<v-btn v-if="!loading && exibirBotaoGravar" color="blue darken-1" @click.native="save">Gravar</v-btn>-->
                         </v-card-actions>
                     </v-card>
@@ -144,6 +145,13 @@ export default {
     ...mapActions({
       obterNotificacoesUsuario: 'notificacaoBadge/obterNotificacoesUsuario',
     }),
+    closeBadgeDialog() {
+      this.dialog = false;
+      setTimeout(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      }, 300);
+    },
   },
   mounted() {
     if (this.notificacoesBadge.length == null || this.notificacoesBadge.length === 0) {
@@ -158,7 +166,7 @@ export default {
       }
     },
     dialog(val) {
-      val || this.close();
+      val || this.closeBadgeDialog();
     },
   }
 };
