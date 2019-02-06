@@ -42,17 +42,19 @@ class Sistema implements IService
     public function alterar($id, array $dados = [])
     {
         $validator = Validator::make($dados, [
-            "descricao" => 'required|string|min:3|max:50'
-        ]);
-        $validator = Validator::make($dados, [
+            "descricao" => 'required|string|min:3|max:50',
             "url" => 'required|string|min:3|max:50'
         ]);
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->first());
         }
+
         if (isset($dados['sistema_id'])) {
             unset($dados['sistema_id']);
         }
+
+        $dataAtual = \Carbon\Carbon::now();
+        $dados['updated_at'] = $dataAtual->toDateTimeString();
 
         return ModeloSistema::where('sistema_id', $id)->update($dados);
     }
