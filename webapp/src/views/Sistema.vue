@@ -34,12 +34,9 @@
                             <v-card-actions>
                                 <v-spacer></v-spacer>
                                 <v-btn color="blue darken-1" flat @click.native="close">Cancelar</v-btn>
-                                <v-btn v-if="!loading" color="blue darken-1" flat @click.native="save">Gravar
-                                </v-btn>
-                                <v-progress-circular
-                                        v-if="loading"
-                                        indeterminate
-                                        color="primary"></v-progress-circular>
+                                <v-btn v-if="!loading"
+                                       color="blue darken-1"
+                                       @click.native="save">Gravar</v-btn>
                             </v-card-actions>
                         </v-card>
                         <v-btn color="blue"
@@ -202,6 +199,7 @@
                 } else {
                     this.cadastrarSistema(self.editedItem)
                 }
+                self.loading = false;
                 self.close()
             }
         }

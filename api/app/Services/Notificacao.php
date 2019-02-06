@@ -69,23 +69,24 @@ class Notificacao implements IService
         return $plataforma->delete();
     }
 
-    public function obterNotificacoesUsuario($usuario_id)
+    public function obterNotificacoesUsuario($usuario_id, $limite)
     {
         if (is_null($usuario_id)) {
             throw new \Exception('Identificador do usuário obrigatório.');
         }
 
-        $resultado = DB::table('notificacao.notificacao')
-//            ->select(['notificacao.notificacao.codigo_destinatario',
-//                'notificacao.notificacao.codigo_destinatario',
-//            ])
+        $consulta = DB::table('notificacao.notificacao')
             ->join('notificacao.mensagem', 'notificacao.mensagem_id', '=', 'notificacao.mensagem.mensagem_id')
             ->join('notificacao.usuario_has_sistema', 'notificacao.mensagem.sistema_id', '=', 'notificacao.usuario_has_sistema.sistema_id')
             ->where('notificacao.usuario_has_sistema.usuario_id', '=', $usuario_id)
-            ->where('notificacao.notificacao.is_notificacao_lida', '=', false)
+            ->where('notificacao.notificacao.is_notificacao_lida', '=', false);
 //            ->toSql();
-            ->get();
-        return $resultado;
+
+        if(!is_null($limite)) {
+            $consulta->limit($limite);
+        }
+
+        return $consulta->get();
     }
 
     public function obterNotificacoesSistema($dados)
