@@ -11,6 +11,11 @@ class SistemaTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Sistema::class, 5)->create();
+        $registros = DB::table('notificacao.sistema')
+            ->limit(1)
+            ->get();
+        if(count($registros) < 1) {
+            factory(App\Models\Sistema::class, 5)->create();
+        }
     }
 }
