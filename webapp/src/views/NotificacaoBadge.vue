@@ -31,17 +31,17 @@
                             v-if="indexNotificacao < 4 && minhaNotificacao.is_notificacao_lida == false"
                             :to="minhaNotificacao">
 
-                    <v-list-tile-content @click="fav = !fav">
+                    <v-list-tile-content @click="lerNotificacao(minhaNotificacao)">
                         <!--<v-list-tile-title>John Leider</v-list-tile-title>-->
                         <v-list-tile-title>{{minhaNotificacao.titulo}}</v-list-tile-title>
                         <!--<v-list-tile-sub-title>Founder of Vuetify.js</v-list-tile-sub-title>-->
                     </v-list-tile-content>
 
                     <v-list-tile-action>
-                        <v-btn @click="lerNotificacao(minhaNotificacao)"
-                                icon>
+                        <!--<v-btn -->
+                                <!--icon>-->
                             <v-icon>check</v-icon>
-                        </v-btn>
+                        <!--</v-btn>-->
                     </v-list-tile-action>
                 </v-list-tile>
             </v-list>
