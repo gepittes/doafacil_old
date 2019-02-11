@@ -22,4 +22,17 @@ class NotificacaoUsuarioController extends Controller
 //        }
         return $response->json($notificacao->obterNotificacoesUsuario($usuario_id, $limite));
     }
+
+    public function patch(ServerRequestInterface $request, $notificacao_id, $usuario_id)
+    {
+        $dados = $request->getParsedBody();
+        $notificacao = new \App\Services\Notificacao();
+        $dados = $request->getParsedBody();
+        if(!isset($dados['']))
+        /**
+         * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
+         */
+        $response = response();
+        return $response->json($notificacao->lerNotificacao($notificacao_id, $usuario_id));
+    }
 }

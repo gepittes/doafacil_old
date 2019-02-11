@@ -28,7 +28,7 @@
 
                 <v-list-tile v-for="(minhaNotificacao, indexNotificacao) in this.notificacoesBadge"
                             :key="indexNotificacao"
-                            v-if="indexNotificacao < 5"
+                            v-if="indexNotificacao < 4 && minhaNotificacao.is_notificacao_lida == false"
                             :to="minhaNotificacao">
 
                     <v-list-tile-content @click="fav = !fav">
@@ -37,8 +37,8 @@
                         <!--<v-list-tile-sub-title>Founder of Vuetify.js</v-list-tile-sub-title>-->
                     </v-list-tile-content>
 
-                    <v-list-tile-action @click="fav = !fav">
-                        <v-btn :class="fav ? 'red--text' : ''"
+                    <v-list-tile-action>
+                        <v-btn @click="lerNotificacao(minhaNotificacao)"
                                 icon>
                             <v-icon>check</v-icon>
                         </v-btn>
@@ -144,6 +144,7 @@ export default {
   methods: {
     ...mapActions({
       obterNotificacoesUsuario: 'notificacaoBadge/obterNotificacoesUsuario',
+      lerNotificacao: 'notificacaoBadge/lerNotificacao',
     }),
     closeBadgeDialog() {
       this.dialog = false;
