@@ -81,7 +81,7 @@
                                 <v-icon v-if="!props.item.is_notificacao_lida">thumb_down</v-icon>
                             </td>
                             <td class="justify-center layout px-0">
-                                <v-icon small
+                                <v-icon
                                         @click="deleteItem(props.item)">delete
                                 </v-icon>
                             </td>
