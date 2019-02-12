@@ -10,7 +10,7 @@ import Sistema from './views/Sistema.vue';
 import Conta from './views/Conta.vue';
 import Mensagem from './views/Mensagem.vue';
 import Administracao from './views/Administracao.vue';
-import Notificacao from './views/Notificacao.vue';
+import Notificacao from './modules/notificacao/Notificacao.vue';
 import store from './store';
 
 Vue.use(Router);
