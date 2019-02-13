@@ -96,6 +96,21 @@
                                fab small>
                             <v-icon>add</v-icon>
                         </v-btn>
+                        <!--<v-fab-transition>-->
+                            <!--<v-btn-->
+                                    <!--:key="activeFab.icon"-->
+                                    <!--v-model="fab"-->
+                                    <!--:color="activeFab.color"-->
+                                    <!--dark-->
+                                    <!--fab-->
+                                    <!--fixed-->
+                                    <!--bottom-->
+                                    <!--left-->
+                            <!--&gt;-->
+                                <!--<v-icon>{{ activeFab.icon }}</v-icon>-->
+                                <!--<v-icon>close</v-icon>-->
+                            <!--</v-btn>-->
+                        <!--</v-fab-transition>-->
                     </v-dialog>
                     <v-spacer></v-spacer>
                     <v-spacer></v-spacer>
@@ -127,7 +142,7 @@
                                         class="mr-2"
                                         @click="editItem(props.item)">search
                                 </v-icon>
-                                <v-icon 
+                                <v-icon
                                         @click="deleteItem(props.item)">delete
                                 </v-icon>
                             </td>
