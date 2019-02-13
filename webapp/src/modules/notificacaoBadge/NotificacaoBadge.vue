@@ -131,7 +131,10 @@ export default {
       fav: true,
       menu: false,
       message: false,
-      hints: true
+      hints: true,
+      websocket: {
+        connection: null,
+      },
     };
   },
   computed: {
@@ -155,21 +158,32 @@ export default {
     },
   },
   mounted() {
+    this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
+
+    this.websocket.connection.onopen = function (e) {
+      console.log('Conexão estabelecida');
+      console.log(e);
+    };
+
+    this.websocket.connection.onmessage = function (e) {
+      console.log(e.data);
+      this.obterNotificacoesUsuario(this.accountInfo.user_id);
+    };
+
     if (this.notificacoesBadge.length == null || this.notificacoesBadge.length === 0) {
       this.obterNotificacoesUsuario(this.accountInfo.user_id);
     }
   },
   watch: {
-    notificacoes(value)
-    {
-      if(this.notificacoes.length != this.notificacoesBadge) {
+    notificacoes(value) {
+      if (this.notificacoes.length !== this.notificacoesBadge.length) {
         this.obterNotificacoesUsuario(this.accountInfo.user_id);
       }
     },
     dialog(val) {
       val || this.closeBadgeDialog();
     },
-  }
+  },
 };
 </script>
 

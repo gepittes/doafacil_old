@@ -1,10 +1,10 @@
 <template>
     <v-container fluid>
         <v-layout column justify-center>
-            <v-card flat >
+            <v-card flat>
                 <v-toolbar dark color="primary">
                     <v-toolbar-title>Notificacões</v-toolbar-title>
-                    <v-dialog v-model="dialog" max-width="500px" >
+                    <v-dialog v-model="dialog" max-width="500px">
                         <v-card>
                             <v-card-title light>
                                 <span class="headline">{{ formTitle }} Notificação</span>
@@ -44,7 +44,8 @@
                                 <v-btn color="error" @click.native="close">Fechar</v-btn>
                                 <v-btn v-if="!loading && exibirBotaoGravar"
                                        color="blue darken-1"
-                                       @click.native="save">Gravar</v-btn>
+                                       @click.native="save">Gravar
+                                </v-btn>
                             </v-card-actions>
                         </v-card>
                         <v-btn color="blue"
@@ -151,9 +152,6 @@ export default {
       is_ativo: true,
       plataformas: [],
     },
-    websocket: {
-      connection: null,
-    },
   }),
 
   computed: {
@@ -209,8 +207,6 @@ export default {
     // }
   },
   mounted() {
-    this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
-
     if (this.notificacoes.length == null || this.notificacoes.length === 0) {
       this.obterNotificacaos();
     }
@@ -229,15 +225,6 @@ export default {
     if (this.plataformas.length == null || this.plataformas.length === 0) {
       this.obterPlataformas();
     }
-
-    this.websocket.connection.onopen = function (e) {
-      console.log('Conexão estabelecida');
-      console.log(e);
-    };
-
-    this.websocket.connection.onmessage = function (e) {
-      console.log(e.data);
-    };
   },
   // editedItem
   methods: {
