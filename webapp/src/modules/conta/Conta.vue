@@ -107,12 +107,12 @@
                                 <v-icon v-if="props.item.is_admin" color="primary">check_circle_outline</v-icon>
                             </td>
                             <td class="justify-center layout px-0">
-                                <v-icon small
+                                <v-icon
                                         class="mr-2"
                                         @click="editItem(props.item)">
                                     edit
                                 </v-icon>
-                                <v-icon small
+                                <v-icon
                                         @click="deleteItem(props.item)">
                                     delete
                                 </v-icon>
