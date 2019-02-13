@@ -1,16 +1,17 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Login from './views/Login.vue';
-import Cadastrar from './views/Cadastrar.vue';
-import Home from './views/Home.vue';
-import WebSocket from './views/WebSocket.vue';
-import Plataforma from './views/Plataforma.vue';
-import NaoEncontrado from './views/NaoEncontrado.vue';
-import Sistema from './views/Sistema.vue';
-import Conta from './views/Conta.vue';
-import Mensagem from './views/Mensagem.vue';
-import Administracao from './views/Administracao.vue';
-import Notificacao from './views/Notificacao.vue';
+import Login from './modules/conta/Login.vue';
+import Cadastrar from './modules/conta/Cadastrar.vue';
+import WebSocket from './modules/websocket/WebSocket.vue';
+import Administracao from './modules/core/Administracao.vue';
+import Home from './modules/core/Home.vue';
+import NaoEncontrado from './modules/core/NaoEncontrado.vue';
+import Sobre from './modules/core/Sobre.vue';
+import Plataforma from './modules/plataforma/Plataforma.vue';
+import Sistema from './modules/sistema/Sistema.vue';
+import Conta from './modules/conta/Conta.vue';
+import Mensagem from './modules/mensagem/Mensagem.vue';
+import Notificacao from './modules/notificacao/Notificacao.vue';
 import store from './store';
 
 Vue.use(Router);
@@ -44,7 +45,7 @@ const routesObject = [
   },
   {
     path: '/sobre',
-    component: () => import(/* webpackChunkName: "about" */ './views/Sobre.vue'),
+    component: Sobre,
   },
   {
     path: '/administracao',

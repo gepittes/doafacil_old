@@ -123,11 +123,11 @@
                                 {{ props.item.is_ativo ? "Ativo" : "Inativo" }}
                             </td>
                             <td class="justify-center layout px-0">
-                                <v-icon small
+                                <v-icon
                                         class="mr-2"
                                         @click="editItem(props.item)">search
                                 </v-icon>
-                                <v-icon small
+                                <v-icon 
                                         @click="deleteItem(props.item)">delete
                                 </v-icon>
                             </td>

@@ -28,20 +28,20 @@
 
                 <v-list-tile v-for="(minhaNotificacao, indexNotificacao) in this.notificacoesBadge"
                             :key="indexNotificacao"
-                            v-if="indexNotificacao < 5"
+                            v-if="indexNotificacao < 4 && minhaNotificacao.is_notificacao_lida == false"
                             :to="minhaNotificacao">
 
-                    <v-list-tile-content @click="fav = !fav">
+                    <v-list-tile-content @click="lerNotificacao(minhaNotificacao)">
                         <!--<v-list-tile-title>John Leider</v-list-tile-title>-->
                         <v-list-tile-title>{{minhaNotificacao.titulo}}</v-list-tile-title>
                         <!--<v-list-tile-sub-title>Founder of Vuetify.js</v-list-tile-sub-title>-->
                     </v-list-tile-content>
 
-                    <v-list-tile-action @click="fav = !fav">
-                        <v-btn :class="fav ? 'red--text' : ''"
-                                icon>
+                    <v-list-tile-action>
+                        <!--<v-btn -->
+                                <!--icon>-->
                             <v-icon>check</v-icon>
-                        </v-btn>
+                        <!--</v-btn>-->
                     </v-list-tile-action>
                 </v-list-tile>
             </v-list>
@@ -131,7 +131,10 @@ export default {
       fav: true,
       menu: false,
       message: false,
-      hints: true
+      hints: true,
+      websocket: {
+        connection: null,
+      },
     };
   },
   computed: {
@@ -144,6 +147,7 @@ export default {
   methods: {
     ...mapActions({
       obterNotificacoesUsuario: 'notificacaoBadge/obterNotificacoesUsuario',
+      lerNotificacao: 'notificacaoBadge/lerNotificacao',
     }),
     closeBadgeDialog() {
       this.dialog = false;
@@ -154,21 +158,32 @@ export default {
     },
   },
   mounted() {
+    this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
+
+    this.websocket.connection.onopen = function (e) {
+      console.log('Conexão estabelecida');
+      console.log(e);
+    };
+
+    this.websocket.connection.onmessage = function (e) {
+      console.log(e.data);
+      this.obterNotificacoesUsuario(this.accountInfo.user_id);
+    };
+
     if (this.notificacoesBadge.length == null || this.notificacoesBadge.length === 0) {
       this.obterNotificacoesUsuario(this.accountInfo.user_id);
     }
   },
   watch: {
-    notificacoes(value)
-    {
-      if(this.notificacoes.length != this.notificacoesBadge) {
+    notificacoes(value) {
+      if (this.notificacoes.length !== this.notificacoesBadge.length) {
         this.obterNotificacoesUsuario(this.accountInfo.user_id);
       }
     },
     dialog(val) {
       val || this.closeBadgeDialog();
     },
-  }
+  },
 };
 </script>
 

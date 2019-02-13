@@ -82,7 +82,7 @@ class Notificacao implements IService
             ->where('notificacao.notificacao.is_notificacao_lida', '=', false);
 //            ->toSql();
 
-        if(!is_null($limite)) {
+        if (!is_null($limite)) {
             $consulta->limit($limite);
         }
 
@@ -110,8 +110,24 @@ class Notificacao implements IService
         );
         $resultado = $modeloUsuario->where('usuario_id', $dados['usuario_id'])
             ->where('sistema_id', $dados['sistema_id'])
-            ->get;
+            ->get();
 
         return $resultado;
+    }
+
+    public function lerNotificacao($notificacao_id, $usuario_id)
+    {
+
+        $consulta = DB::table('notificacao.notificacao')
+            ->join('notificacao.mensagem', 'notificacao.mensagem_id', '=', 'notificacao.mensagem.mensagem_id')
+            ->join('notificacao.usuario_has_sistema', 'notificacao.mensagem.sistema_id', '=', 'notificacao.usuario_has_sistema.sistema_id')
+            ->where('notificacao.usuario_has_sistema.usuario_id', '=', $usuario_id)
+            ->where('notificacao.notificacao.is_notificacao_lida', '=', false);
+        $registros = $consulta->get();
+        if (!$registros) {
+            throw new \Exception("Idenfificador do Usuário e da Notificação divergentes.");
+        }
+        return ModeloNotificacao::where('notificacao_id', $notificacao_id)->update(['is_notificacao_lida' => true]);
+
     }
 }

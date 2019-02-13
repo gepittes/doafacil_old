@@ -75,111 +75,116 @@
 
 <script>
 
-import { mapState, mapActions, mapGetters } from 'vuex';
-import NotificacaoBadge from './views/NotificacaoBadge.vue';
+  import {mapState, mapActions, mapGetters} from 'vuex';
+  import NotificacaoBadge from './modules/notificacaoBadge/NotificacaoBadge.vue';
 
-export default {
-  name: 'App',
-  data() {
-    return {
-      loading: false,
-      clipped: false,
-      drawer: true,
-      fixed: false,
-      items: [
-        {
-          icon: 'home',
-          title: 'Início',
-          to: '/',
-        },
-        // {
-        //   icon: 'chat',
-        //   title: 'Chat Interno',
-        //   to: '/websocket',
-        // },
-        {
-          icon: 'chat',
-          title: 'Notificacao',
-          to: '/notificacao',
-        },
-        // {
-        //     icon: 'settings_system_daydream',
-        //     title: 'Sistemas',
-        //     to: "/sistema"
-        // },
-        // {
-        //     icon: 'chat',
-        //     title: 'Mensagens',
-        //     to: "/mensagem"
-        // },
-        // {
-        //     icon: 'account_circle',
-        //     title: 'Contas',
-        //     to: "/conta"
-        // },
-        {
-          icon: 'edit',
-          title: 'Administração',
-          to: '/administracao',
-        },
-        {
-          icon: 'info',
-          title: 'Sobre',
-          to: '/sobre',
-        },
-        {
-          icon: 'exit_to_app',
-          title: 'Sair',
-          to: '/logout',
-        },
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Notification WebApp',
-    };
-  },
-  computed: {
-    ...mapState({
-      alert: state => state.alert,
-      // isLoggedIn: state => state.isLoggedIn
-      // status: state => state.status
-    }),
-    ...mapGetters({
-      status: 'account/status',
-      user: 'account/user',
-      accountInfo: 'account/accountInfo',
-    }),
-  },
-  methods: {
-    ...mapActions({
-      clearAlert: 'alert/clear',
-    }),
-  },
-  watch: {
-    $route(to, from) {
-      // clear alert on location change
-
-      // const publicPages = [
-      //   'login',
-      //   'cadastrar'
-      // ];
-      //
-      // const authRequired = !publicPages.includes(to.path);
-      //
-      // console.log(from);
-
-      // if (to !== from) {
-      //   this.clearAlert();
-      // }
+  export default {
+    name: 'App',
+    data() {
+      return {
+        loading: false,
+        clipped: false,
+        drawer: true,
+        fixed: false,
+        items: [
+          {
+            icon: 'home',
+            title: 'Início',
+            to: '/',
+          },
+          // {
+          //   icon: 'chat',
+          //   title: 'Chat Interno',
+          //   to: '/websocket',
+          // },
+          {
+            icon: 'chat',
+            title: 'Notificacao',
+            to: '/notificacao',
+          },
+          // {
+          //     icon: 'settings_system_daydream',
+          //     title: 'Sistemas',
+          //     to: "/sistema"
+          // },
+          // {
+          //     icon: 'chat',
+          //     title: 'Mensagens',
+          //     to: "/mensagem"
+          // },
+          // {
+          //     icon: 'account_circle',
+          //     title: 'Contas',
+          //     to: "/conta"
+          // },
+          {
+            icon: 'edit',
+            title: 'Administração',
+            to: '/administracao',
+          },
+          {
+            icon: 'info',
+            title: 'Sobre',
+            to: '/sobre',
+          },
+          {
+            icon: 'chat',
+            title: '(Teste) Chat/WebSocket',
+            to: '/websocket',
+          },
+          {
+            icon: 'exit_to_app',
+            title: 'Sair',
+            to: '/logout',
+          },
+        ],
+        miniVariant: false,
+        right: true,
+        rightDrawer: false,
+        title: 'Notification WebApp',
+      };
     },
-  },
-  mounted() {
-    this.loading = true;
-  },
-  components: {
-    NotificacaoBadge,
-  },
+    computed: {
+      ...mapState({
+        alert: state => state.alert,
+        // isLoggedIn: state => state.isLoggedIn
+        // status: state => state.status
+      }),
+      ...mapGetters({
+        status: 'account/status',
+        user: 'account/user',
+        accountInfo: 'account/accountInfo',
+      }),
+    },
+    methods: {
+      ...mapActions({
+        clearAlert: 'alert/clear',
+      }),
+    },
+    watch: {
+      $route(to, from) {
+        // clear alert on location change
 
-};
+        // const publicPages = [
+        //   'login',
+        //   'cadastrar'
+        // ];
+        //
+        // const authRequired = !publicPages.includes(to.path);
+        //
+        // console.log(from);
+
+        // if (to !== from) {
+        //   this.clearAlert();
+        // }
+      },
+    },
+    mounted() {
+      this.loading = true;
+    },
+    components: {
+      NotificacaoBadge,
+    },
+
+  };
 </script>
