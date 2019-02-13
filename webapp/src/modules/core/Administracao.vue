@@ -1,36 +1,36 @@
 <template>
     <v-container fluid>
         <v-card>
-            <v-toolbar light>
-                <v-bottom-nav
-                        :active.sync="bottomNav"
-                        :color="color"
-                        :value="true"
-                        >
-                    <v-btn dark value="/plataforma" to="/plataforma">
-                        <span>Plataformas</span>
-                        <v-icon>devices</v-icon>
-                    </v-btn>
+            <v-tabs light
+                    centered
+                    color="blue darken-1"
+                    dark
+                    icons-and-text
+                    slider-color="warning"
+                    grow>
+                <v-tab dark to="/plataforma">
+                    Plataformas
+                    <v-icon>devices</v-icon>
+                </v-tab>
 
-                    <v-btn dark value="/sistema" to="/sistema">
-                        <span>Sistemas</span>
-                        <v-icon>settings_system_daydream</v-icon>
-                    </v-btn>
+                <v-tab dark to="/sistema">
+                    Sistemas
+                    <v-icon>settings_system_daydream</v-icon>
+                </v-tab>
 
-                    <v-btn dark value="/mensagem" to="/mensagem">
-                        <span>Mensagens</span>
-                        <v-icon>chat</v-icon>
-                    </v-btn>
+                <v-tab dark to="/mensagem">
+                    Mensagens
+                    <v-icon>chat</v-icon>
+                </v-tab>
 
-                    <v-btn dark value="/conta" to="/conta">
-                        <span>Contas</span>
-                        <v-icon>account_circle</v-icon>
-                    </v-btn>
-                </v-bottom-nav>
-            </v-toolbar>
+                <v-tab dark to="/conta">
+                    Contas
+                    <v-icon>account_circle</v-icon>
+                </v-tab>
+            </v-tabs>
             <v-card-text heigth="300px">
                 <!--<component :is=""-->
-                <router-view />
+                <router-view/>
             </v-card-text>
         </v-card>
 
@@ -50,18 +50,6 @@ export default {
   },
 
   computed: {
-    color() {
-      switch (this.bottomNav) {
-        case '/plataforma':
-          return 'blue-grey';
-        case '/sistema':
-          return 'teal';
-        case '/mensagem':
-          return 'brown';
-        case '/conta':
-          return 'indigo';
-      }
-    },
   },
 };
 </script>
