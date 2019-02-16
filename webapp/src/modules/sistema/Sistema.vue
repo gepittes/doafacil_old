@@ -3,49 +3,8 @@
         <v-layout column justify-center>
             <v-card flat dark>
                 <v-toolbar dark color="primary">
-                    <v-toolbar-title>Sistemas</v-toolbar-title>
-                    <v-dialog v-model="dialog" max-width="500px">
-                        <v-card>
-                            <v-card-title>
-                                <span class="headline">{{ formTitle }} Sistema</span>
-                            </v-card-title>
-
-                            <v-card-text>
-                                <v-container grid-list-md>
-                                    <v-layout wrap>
-                                        <v-flex xs12 sm6 md12>
-                                            <v-text-field v-model="editedItem.descricao"
-                                                          required
-                                                          label="Descrição"></v-text-field>
-                                        </v-flex>
-                                        <v-flex xs12 sm6 md12>
-                                            <v-text-field v-model="editedItem.url"
-                                                          required
-                                                          label="URL"></v-text-field>
-                                        </v-flex>
-                                        <v-flex xs12 sm6 md12>
-                                            <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                                                      v-model="editedItem.is_ativo"></v-switch>
-                                        </v-flex>
-                                    </v-layout>
-                                </v-container>
-                            </v-card-text>
-
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="blue darken-1" flat @click.native="close">Cancelar</v-btn>
-                                <v-btn v-if="!loading"
-                                       color="blue darken-1"
-                                       @click.native="save">Gravar
-                                </v-btn>
-                            </v-card-actions>
-                        </v-card>
-                        <v-btn color="blue"
-                               slot="activator"
-                               fab small>
-                            <v-icon>add</v-icon>
-                        </v-btn>
-                    </v-dialog>
+                    <v-spacer></v-spacer>
+                    <v-spacer></v-spacer>
                     <v-spacer></v-spacer>
                     <v-text-field
                             v-model="modeloBuscar"
@@ -88,6 +47,52 @@
             </v-card>
         </v-layout>
 
+        <v-dialog v-model="dialog" max-width="500px">
+            <v-card>
+                <v-card-title>
+                    <span class="headline">{{ formTitle }} Sistema</span>
+                </v-card-title>
+
+                <v-card-text>
+                    <v-container grid-list-md>
+                        <v-layout wrap>
+                            <v-flex xs12 sm6 md12>
+                                <v-text-field v-model="editedItem.descricao"
+                                              required
+                                              label="Descrição"></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm6 md12>
+                                <v-text-field v-model="editedItem.url"
+                                              required
+                                              label="URL"></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm6 md12>
+                                <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
+                                          v-model="editedItem.is_ativo"></v-switch>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" flat @click.native="close">Cancelar</v-btn>
+                    <v-btn v-if="!loading"
+                           color="blue darken-1"
+                           @click.native="save">Gravar
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+            <v-btn color="success"
+                   slot="activator"
+                   dark
+                   fixed
+                   bottom
+                   right
+                   fab>
+                <v-icon>add</v-icon>
+            </v-btn>
+        </v-dialog>
     </v-container>
 
 </template>

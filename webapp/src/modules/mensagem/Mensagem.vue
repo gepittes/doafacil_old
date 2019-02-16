@@ -3,100 +3,7 @@
         <v-layout column justify-center>
             <v-card flat >
                 <v-toolbar dark color="primary">
-                    <v-toolbar-title>Mensagens</v-toolbar-title>
-                    <v-dialog v-model="dialog" max-width="500px" >
-                        <v-card>
-                            <v-card-title light>
-                                <span class="headline">{{ formTitle }} Mensagem</span>
-                            </v-card-title>
-
-                            <v-card-text>
-                                <v-container grid-list-md>
-                                    <v-layout wrap>
-                                        <v-flex xs12 sm6 md12>
-                                            <v-text-field v-model="editedItem.titulo"
-                                                          label="Título"
-                                                          box
-                                                          minlength="3"
-                                                          :rules="[(object) => object!= null && object.length > 3 || 'Campo obrigatório.']"
-                                                          required></v-text-field>
-                                            <v-textarea
-                                                    v-model="editedItem.descricao"
-                                                    auto-grow
-                                                    box
-                                                    color="deep-purple"
-                                                    label="Descrição"
-                                                    required
-                                                    :rules="[(object) => object.length > 3 || 'Campo obrigatório.']"
-                                                    rows="5"
-                                            ></v-textarea>
-                                            <v-list>
-                                                <v-list-tile v-if="editedItem.mensagem_id == null"
-                                                        v-for="plataforma in this.plataformas"
-                                                        :key="plataforma.title"
-                                                        avatar>
-
-                                                    <v-list-tile-content>
-                                                        <v-checkbox v-model="editedItem.plataformas"
-                                                                    :label="plataforma.descricao"
-                                                                    color="success"
-                                                                    required
-                                                                    :value="plataforma"></v-checkbox>
-                                                    </v-list-tile-content>
-
-                                                </v-list-tile>
-                                                <h3 v-if="editedItem.mensagem_id != null"> Plataformas </h3>
-                                                <v-list-tile v-if="editedItem.mensagem_id != null"
-                                                        v-for="plataforma in editedItem.plataformas"
-                                                        :key="plataforma.title"
-                                                        avatar>
-
-                                                    <v-list-tile-content>
-                                                            {{plataforma.descricao}}
-                                                    </v-list-tile-content>
-
-
-                                                </v-list-tile>
-                                            </v-list>
-
-                                            <v-select v-model="editedItem.sistema_id"
-                                                      :disabled="editedItem.sistema_id != null"
-                                                      :items="sistemasRenderizados"
-                                                      :rules="[v => !!v || 'Campo obrigatório']"
-                                                      label="Sistema"
-                                                      box
-                                                      item-text="descricao"
-                                                      item-value="sistema_id"
-                                                      required></v-select>
-
-                                            <v-text-field disabled
-                                                          :value="this.obterNomeAutor(editedItem.autor_id)"
-                                                          v-if="plataformasSelecionadas.length > 0"
-                                                          label="Autor"
-                                                          box></v-text-field>
-
-                                        </v-flex>
-                                        <v-flex xs12 sm6 md12>
-                                            <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                                                      v-model="editedItem.is_ativo"
-                                            :readonly="true"></v-switch>
-                                        </v-flex>
-                                    </v-layout>
-                                </v-container>
-                            </v-card-text>
-
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="error" @click.native="close">Fechar</v-btn>
-                                <v-btn v-if="!loading && exibirBotaoGravar" color="blue darken-1" @click.native="save">Gravar</v-btn>
-                            </v-card-actions>
-                        </v-card>
-                        <v-btn color="blue"
-                               slot="activator"
-                               fab small>
-                            <v-icon>add</v-icon>
-                        </v-btn>
-                    </v-dialog>
+                    <v-spacer></v-spacer>
                     <v-spacer></v-spacer>
                     <v-spacer></v-spacer>
                     <v-text-field
@@ -127,7 +34,7 @@
                                         class="mr-2"
                                         @click="editItem(props.item)">search
                                 </v-icon>
-                                <v-icon 
+                                <v-icon
                                         @click="deleteItem(props.item)">delete
                                 </v-icon>
                             </td>
@@ -136,9 +43,111 @@
                             <v-btn color="primary" @click="this.obterMensagems">Reset</v-btn>
                         </template>
                     </v-data-table>
+                    <v-btn fab
+                           color="success"
+                           dark
+                           fixed
+                           bottom
+                           right
+                           @click="dialog = !dialog">
+                        <v-icon>add</v-icon>
+                    </v-btn>
                 </v-card-text>
             </v-card>
         </v-layout>
+        <v-dialog v-model="dialog" max-width="500px" >
+            <v-card>
+                <v-card-title light>
+                    <span class="headline">{{ formTitle }} Mensagem</span>
+                </v-card-title>
+
+                <v-card-text>
+                    <v-container grid-list-md>
+                        <v-layout wrap>
+                            <v-flex xs12 sm6 md12>
+                                <v-text-field v-model="editedItem.titulo"
+                                              label="Título"
+                                              box
+                                              minlength="3"
+                                              :rules="[(object) => object!= null && object.length > 3 || 'Campo obrigatório.']"
+                                              required></v-text-field>
+                                <v-textarea
+                                        v-model="editedItem.descricao"
+                                        auto-grow
+                                        box
+                                        color="deep-purple"
+                                        label="Descrição"
+                                        required
+                                        :rules="[(object) => object.length > 3 || 'Campo obrigatório.']"
+                                        rows="5"
+                                ></v-textarea>
+
+                                <h3> Plataformas </h3>
+                                <v-list style="overflow: auto; max-height: 300px">
+                                    <v-list-tile v-if="editedItem.mensagem_id == null"
+                                                 v-for="plataforma in this.plataformas"
+                                                 :key="plataforma.title"
+                                                 avatar>
+
+                                        <v-list-tile-content>
+                                            <v-checkbox v-model="editedItem.plataformas"
+                                                        :label="plataforma.descricao"
+                                                        color="success"
+                                                        required
+                                                        :value="plataforma"></v-checkbox>
+                                        </v-list-tile-content>
+
+                                    </v-list-tile>
+                                    <h3 v-if="editedItem.mensagem_id != null"> Plataformas </h3>
+                                    <v-list-tile v-if="editedItem.mensagem_id != null"
+                                                 v-for="plataforma in editedItem.plataformas"
+                                                 :key="plataforma.title"
+                                                 avatar>
+
+                                        <v-list-tile-content>
+                                            {{plataforma.descricao}}
+                                        </v-list-tile-content>
+
+
+                                    </v-list-tile>
+                                </v-list>
+                                <br />
+
+                                <v-select v-model="editedItem.sistema_id"
+                                          :disabled="editedItem.sistema_id != null"
+                                          :items="sistemasRenderizados"
+                                          :rules="[v => !!v || 'Campo obrigatório']"
+                                          label="Sistema"
+                                          box
+                                          item-text="descricao"
+                                          item-value="sistema_id"
+                                          required></v-select>
+
+                                <v-text-field disabled
+                                              :value="this.obterNomeAutor(editedItem.autor_id)"
+                                              v-if="plataformasSelecionadas.length > 0"
+                                              label="Autor"
+                                              box></v-text-field>
+
+                            </v-flex>
+                            <v-flex xs12 sm6 md12>
+                                <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
+                                          v-model="editedItem.is_ativo"
+                                          :readonly="true"></v-switch>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="error" @click.native="close">Fechar</v-btn>
+                    <v-btn v-if="!loading && exibirBotaoGravar" color="blue darken-1" @click.native="save">Gravar</v-btn>
+                </v-card-actions>
+            </v-card>
+
+
+        </v-dialog>
     </v-container>
 </template>
 <script>
