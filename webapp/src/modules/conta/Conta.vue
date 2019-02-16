@@ -104,7 +104,7 @@
                             </v-flex>
                             <v-flex xs12 sm6 md12>
                                 <h3> Sistemas </h3>
-                                <v-list>
+                                <v-list style="overflow: auto; max-height: 300px">
                                     <v-list-tile v-for="sistema in this.sistemas"
                                                  :key="sistema.title"
                                                  avatar>

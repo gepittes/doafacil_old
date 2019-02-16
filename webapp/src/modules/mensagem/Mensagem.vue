@@ -78,7 +78,7 @@
                                         color="deep-purple"
                                         label="Descrição"
                                         required
-                                        :rules="[(object) => object.length > 3 || 'Campo obrigatório.']"
+                                        :rules="[(object) => object!= null && object.length > 3 || 'Campo obrigatório.']"
                                         rows="5"
                                 ></v-textarea>
 
@@ -113,7 +113,7 @@
                                 <br />
 
                                 <v-select v-model="editedItem.sistema_id"
-                                          :disabled="editedItem.sistema_id != null"
+                                          :disabled="editedItem.mensagem_id != null"
                                           :items="sistemasRenderizados"
                                           :rules="[v => !!v || 'Campo obrigatório']"
                                           label="Sistema"
