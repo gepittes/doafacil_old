@@ -2,12 +2,25 @@
     <v-container fluid>
         <v-layout column justify-center>
             <v-card flat dark>
-                <!--<v-toolbar dark color="primary">-->
-                <!--</v-toolbar>-->
+                <v-toolbar dark color="primary">
+                    <v-spacer></v-spacer>
+                    <v-spacer></v-spacer>
+                    <v-spacer></v-spacer>
+                    <v-text-field
+                            v-model="modeloBuscar"
+                            append-icon="search"
+                            label="Buscar"
+                            single-line
+                            hide-details
+                    ></v-text-field>
+                </v-toolbar>
                 <v-card-text>
                     <v-data-table light
                                   :headers="headers"
                                   :items="plataformasIniciais"
+                                  :search="modeloBuscar"
+                                  :rows-per-page-items="[ 10, 25, 40 ]"
+                                  :rows-per-page-text="'Registros por página'"
                                   class="elevation-1">
                         <template slot="items" slot-scope="props">
                             <td class="text-xs-center">{{ props.item.plataforma_id }}</td>
@@ -88,6 +101,7 @@
     data: () => ({
       loading: false,
       dialog: false,
+      modeloBuscar: '',
       headers: [
         {
           text: 'Identificador',
