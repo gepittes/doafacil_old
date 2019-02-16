@@ -71,6 +71,7 @@
                                               label="Descrição"></v-text-field>
                             </v-flex>
                             <v-flex xs12 sm6 md12>
+                                <h3>Situação:</h3>
                                 <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
                                           v-model="editedItem.is_ativo"></v-switch>
                             </v-flex>
