@@ -145,8 +145,6 @@
                     <v-btn v-if="!loading && exibirBotaoGravar" color="blue darken-1" @click.native="save">Gravar</v-btn>
                 </v-card-actions>
             </v-card>
-
-
         </v-dialog>
     </v-container>
 </template>

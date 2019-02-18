@@ -50,9 +50,10 @@ const routesObject = [
   {
     path: '/administracao',
     component: Administracao,
+    redirect: '/administracao/plataforma',
     children: [
       {
-        path: '/plataforma',
+        path: '/administracao/plataforma',
         component: Plataforma,
         name: Plataforma,
         meta: {
@@ -60,7 +61,7 @@ const routesObject = [
         },
       },
       {
-        path: '/sistema',
+        path: '/administracao/sistema',
         component: Sistema,
         name: Sistema,
         meta: {
@@ -68,7 +69,7 @@ const routesObject = [
         },
       },
       {
-        path: '/conta',
+        path: '/administracao/conta',
         component: Conta,
         name: Conta,
         meta: {
@@ -76,7 +77,7 @@ const routesObject = [
         },
       },
       {
-        path: '/mensagem',
+        path: '/administracao/mensagem',
         component: Mensagem,
         name: Mensagem,
         meta: {
