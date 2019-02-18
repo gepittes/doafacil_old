@@ -1,7 +1,7 @@
 <template>
     <v-container fluid>
         <v-layout column justify-center>
-            <v-card flat >
+            <v-card flat dark>
                 <v-toolbar dark color="primary">
                     <v-spacer></v-spacer>
                     <v-spacer></v-spacer>
