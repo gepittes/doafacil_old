@@ -76,8 +76,22 @@ class Notificacao implements IService
         }
 
         $consulta = DB::table('notificacao.notificacao')
+            ->select([
+                'notificacao.notificacao.notificacao_id',
+                'notificacao.notificacao.codigo_destinatario',
+                'notificacao.notificacao.is_notificacao_lida',
+                'notificacao.mensagem.mensagem_id',
+                'notificacao.notificacao.data_envio',
+                'notificacao.mensagem.titulo',
+                'notificacao.mensagem.descricao',
+                'notificacao.mensagem.sistema_id',
+                'notificacao.mensagem.is_ativo',
+                'notificacao.mensagem.autor_id',
+                'notificacao.sistema.descricao as sistema',
+            ])
             ->join('notificacao.mensagem', 'notificacao.mensagem_id', '=', 'notificacao.mensagem.mensagem_id')
             ->join('notificacao.usuario_has_sistema', 'notificacao.mensagem.sistema_id', '=', 'notificacao.usuario_has_sistema.sistema_id')
+            ->join('notificacao.sistema', 'notificacao.usuario_has_sistema.sistema_id', '=', 'notificacao.sistema.sistema_id')
             ->where('notificacao.usuario_has_sistema.usuario_id', '=', $usuario_id)
             ->where('notificacao.notificacao.is_notificacao_lida', '=', false);
 //            ->toSql();

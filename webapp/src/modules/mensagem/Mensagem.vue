@@ -205,7 +205,7 @@ export default {
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? 'Criar' : 'Editar';
+      return this.editedIndex === -1 ? 'Criar' : '';
     },
     ...mapGetters({
       mensagens: 'mensagem/mensagens',
