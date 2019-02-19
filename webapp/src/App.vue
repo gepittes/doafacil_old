@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <barra-lateral></barra-lateral>
+        <barra-lateral v-model="drawer"></barra-lateral>
         <v-toolbar app :clipped-left="clipped" dark color="primary">
             <v-toolbar-side-icon
                     v-if="status.loggedIn"
@@ -11,7 +11,7 @@
         </v-toolbar>
 
         <v-content>
-            <v-alert transition="fade-transition"
+            <v-alert transition="scale-transition"
                      :value="true"
                      :type="alert.message_type"
                      v-if="alert.message != null && alert.message_type != null"
@@ -39,7 +39,7 @@
       return {
         loading: false,
         clipped: false,
-        drawer: true,
+        drawer: false,
         fixed: false,
         items: [
           {

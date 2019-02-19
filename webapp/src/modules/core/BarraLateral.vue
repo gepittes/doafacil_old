@@ -51,10 +51,16 @@
 
   export default {
     name: 'App',
+    props: {
+      value: {
+        type: Boolean,
+        default: false,
+      },
+    },
     data() {
       return {
         clipped: false,
-        drawer: true,
+        drawer: false,
         fixed: false,
         miniVariant: false,
         right: true,
@@ -68,6 +74,14 @@
         user: 'account/user',
         accountInfo: 'account/accountInfo',
       }),
+    },
+    watch: {
+      value(val) {
+        this.drawer = val;
+      },
+      drawer(val) {
+        this.$emit('input', val);
+      },
     },
     methods: {
         obterMenusLaterais() {
@@ -94,7 +108,7 @@
                 to: '/websocket',
               },
             ];
-
+console.log(this.accountInfo)
             if(this.accountInfo.is_admin === true) {
                 menusLaterais.push({
                   icon: 'edit',
