@@ -26,3 +26,13 @@ export const obterNotificacoesUsuarioSistema = ({ commit }, usuario_id, sistema_
       console.log(error);
     });
 };
+
+// lerNotificacao
+
+export const lerNotificacao = ({ commit }, notificacao) => axios.patch(`http://localhost/v1/notificacao-usuario/${notificacao.notificacao_id}/${notificacao.usuario_id}`)
+  .then(() => {
+    commit(types.ATUALIZAR_NOTIFICACAO_BADGE, notificacao);
+  })
+  .catch((error) => {
+    console.log(error);
+  });

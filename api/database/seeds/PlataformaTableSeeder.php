@@ -11,6 +11,11 @@ class PlataformaTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Plataforma::class, 5)->create();
+        $registros = DB::table('notificacao.plataforma')
+            ->limit(1)
+            ->get();
+        if(count($registros) < 1) {
+            factory(App\Models\Plataforma::class, 5)->create();
+        }
     }
 }

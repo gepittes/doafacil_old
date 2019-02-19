@@ -11,6 +11,11 @@ class MensagemTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Mensagem::class, 20)->create();
+        $registros = DB::table('notificacao.mensagem')
+            ->limit(1)
+            ->get();
+        if(count($registros) < 1) {
+            factory(App\Models\Mensagem::class, 20)->create();
+        }
     }
 }

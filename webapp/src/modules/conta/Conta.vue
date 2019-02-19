@@ -1,85 +1,9 @@
 <template>
     <v-container fluid>
         <v-layout column justify-center>
-            <v-card flat light>
+            <v-card flat dark>
                 <v-toolbar dark color="primary">
-                    <v-toolbar-title>Contas</v-toolbar-title>
-                    <v-dialog v-model="dialog" max-width="500px">
-                        <v-card light>
-                            <v-card-title>
-                                <span class="headline">{{ formTitle }} Conta</span>
-                            </v-card-title>
-
-                            <v-card-text>
-                                <v-container grid-list-md>
-                                    <v-layout wrap>
-                                        <v-flex xs12 sm6 md12>
-                                            <v-text-field
-                                                    prepend-icon="face"
-                                                    v-model="editedItem.nome"
-                                                    :rules="[rules.required, rules.minLength]"
-                                                    required
-                                                    label="Nome"></v-text-field>
-                                            <v-text-field
-                                                    prepend-icon="person"
-                                                    v-model="editedItem.email"
-                                                    :rules="[rules.required, rules.email, rules.minLength]"
-                                                    required
-                                                    label="E-mail"></v-text-field>
-                                            <v-text-field
-                                                    prepend-icon="lock"
-                                                    type="password"
-                                                    v-model="editedItem.password"
-                                                    label="Senha"
-                                                    v-validate="{ required: true, min: 6 }"
-                                                    class="form-control"
-                                                    :rules="[rules.required, rules.minLength]"
-                                                    required
-                                            ></v-text-field>
-                                        </v-flex>
-                                        <v-flex xs12 sm6 md12>
-                                            <v-switch :label="`${editedItem.is_admin ? 'É Administrador' : 'Não é Administrador'}`"
-                                                      v-model="editedItem.is_admin"></v-switch>
-                                            <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                                                      v-model="editedItem.is_ativo"></v-switch>
-                                        </v-flex>
-                                        <v-flex xs12 sm6 md12>
-                                            <h3> Sistemas </h3>
-                                            <v-list>
-                                                <v-list-tile v-for="sistema in this.sistemas"
-                                                             :key="sistema.title"
-                                                             avatar>
-
-                                                    <v-list-tile-content>
-                                                        <v-checkbox v-model="editedItem.sistemas"
-                                                                    :label="sistema.descricao"
-                                                                    color="success"
-                                                                    required
-                                                                    :value="sistema"></v-checkbox>
-                                                    </v-list-tile-content>
-
-                                                </v-list-tile>
-                                            </v-list>
-                                        </v-flex>
-                                    </v-layout>
-                                </v-container>
-                            </v-card-text>
-
-                            <v-card-actions>
-                                <v-spacer></v-spacer>
-                                <v-btn color="error" @click.native="close">Fechar</v-btn>
-                                <v-btn :loading="loading"
-                                       color="blue darken-1"
-                                       dark
-                                       @click.native="save">Gravar</v-btn>
-                            </v-card-actions>
-                        </v-card>
-                        <v-btn color="blue"
-                               slot="activator"
-                               fab small>
-                            <v-icon>add</v-icon>
-                        </v-btn>
-                    </v-dialog>
+                    <v-spacer></v-spacer>
                     <v-spacer></v-spacer>
                     <v-spacer></v-spacer>
                     <v-text-field
@@ -107,12 +31,12 @@
                                 <v-icon v-if="props.item.is_admin" color="primary">check_circle_outline</v-icon>
                             </td>
                             <td class="justify-center layout px-0">
-                                <v-icon small
+                                <v-icon
                                         class="mr-2"
                                         @click="editItem(props.item)">
                                     edit
                                 </v-icon>
-                                <v-icon small
+                                <v-icon
                                         @click="deleteItem(props.item)">
                                     delete
                                 </v-icon>
@@ -122,10 +46,95 @@
                             <v-btn color="primary" @click="this.obterContas">Reset</v-btn>
                         </template>
                     </v-data-table>
+                    <v-btn fab
+                           color="success"
+                           dark
+                           fixed
+                           bottom
+                           right
+                           @click="dialog = !dialog">
+                        <v-icon>add</v-icon>
+                    </v-btn>
                 </v-card-text>
             </v-card>
         </v-layout>
 
+        <v-dialog v-model="dialog" max-width="500px">
+            <v-card light>
+                <v-card-title>
+                    <span class="headline">{{ formTitle }} Conta</span>
+                </v-card-title>
+
+                <v-card-text>
+                    <v-container grid-list-md>
+                        <v-layout wrap>
+                            <v-flex xs12 sm6 md12>
+                                <v-text-field
+                                        prepend-icon="face"
+                                        v-model="editedItem.nome"
+                                        :rules="[rules.required, rules.minLength]"
+                                        required
+                                        label="Nome"></v-text-field>
+                                <v-text-field
+                                        prepend-icon="person"
+                                        v-model="editedItem.email"
+                                        :rules="[rules.required, rules.email, rules.minLength]"
+                                        required
+                                        label="E-mail"></v-text-field>
+                                <v-text-field
+                                        prepend-icon="lock"
+                                        type="password"
+                                        v-model="editedItem.password"
+                                        label="Senha"
+                                        v-validate="{ required: true, min: 6 }"
+                                        class="form-control"
+                                        :rules="[rules.required, rules.minLength]"
+                                        required
+                                ></v-text-field>
+                            </v-flex>
+                            <v-flex xs12 sm6 md12>
+                                <h3>Administração</h3>
+                                <v-switch :label="`${editedItem.is_admin ? 'É Administrador' : 'Não é Administrador'}`"
+                                          v-model="editedItem.is_admin"></v-switch>
+                            </v-flex>
+                            <v-flex xs12 sm6 md12>
+                                <h3>Situação</h3>
+                                <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
+                                          v-model="editedItem.is_ativo"></v-switch>
+                            </v-flex>
+                            <v-flex xs12 sm6 md12>
+                                <h3> Sistemas </h3>
+                                <v-list style="overflow: auto; max-height: 300px">
+                                    <v-list-tile v-for="sistema in this.sistemas"
+                                                 :key="sistema.title"
+                                                 avatar>
+
+                                        <v-list-tile-content>
+                                            <v-checkbox v-model="editedItem.sistemas"
+                                                        :label="sistema.descricao"
+                                                        color="success"
+                                                        required
+                                                        :value="sistema"></v-checkbox>
+                                        </v-list-tile-content>
+
+                                    </v-list-tile>
+                                </v-list>
+                            </v-flex>
+                        </v-layout>
+                    </v-container>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="error" @click.native="close">Fechar</v-btn>
+                    <v-btn :loading="loading"
+                           color="blue darken-1"
+                           dark
+                           @click.native="save">Gravar</v-btn>
+                </v-card-actions>
+            </v-card>
+
+        </v-dialog>
     </v-container>
 
 </template>
