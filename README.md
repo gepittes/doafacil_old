@@ -86,10 +86,6 @@ docker-compose up --build --force-recreate
                 - [x] Criar Controller para Autenticação
                 - [x] Criar de JSON Web Token (JWT) encapsulando dados do usuário e de expiração da token
                 - [x] Criar Middleware para interceptar requisições HTTP e validar dados informados
-            * **ACL**
-    - salic-minc
-        - [ ] notificação
-            - [ ] enviar
 - Database
     - [x] modelagem
     - [x] criação
@@ -108,9 +104,9 @@ docker-compose up --build --force-recreate
                 - [x] cadastrar
                 - [x] alterar
                 - [x] remover
-            - [] notificacoes
-                - [ ] enviar
-                - [ ] listar
+            - [x] notificacoes
+                - [x] enviar
+                - [x] listar
             - [x] mensagem
                 - [x] listar
                 - [x] cadastrar
@@ -124,13 +120,17 @@ docker-compose up --build --force-recreate
             - [x] login (senha mestra temporariamente)
             - [x] login - utilizando Backend
             - [x] login - utilizando JWT
-            - [ ] Controle de Acesso 
-    - [ ] salic-minc
+            - [x] Controle de Acesso 
         - [ ] Componente Sininho
             - [ ] observar WebSocket
-            - [ ] exibir notificações
-            - [ ] bloco de notificações não lidas
-            - [ ] marcar notificação como lidas
-            * **visualização de todas as notificações (link)**
-
-**OBS**: Itens com em **negrito** são sugestões para implementações futuras. 
+            - [x] exibir 5 últimas notificações
+            - [x] visualizar todas as notificações do usuário 
+            - [ ] visualizar todas as notificações do usuário em um sistema específico
+            - [ ] marcar notificação como lida
+            - [x] diálogo para visualização de todas as notificações
+        - [ ] Outros  
+            - [ ] Definição de usuario como administrador
+            - [ ] Restrição de acesso a alguns recursos para quem não tem perfil admin
+            - [ ] Estudo de utilização de CORS somente para sistemas cadastrados
+            - [ ] Definição de vinculo entre usuario e sistemas para que a aplicação cadastrada consiga consumir o serviço
+            - [ ] Criação dinâmica de token para acesso pelos sistemas cadastrados ao sistema de notificacao
