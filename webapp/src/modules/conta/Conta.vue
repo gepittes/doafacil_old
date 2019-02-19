@@ -1,7 +1,7 @@
 <template>
     <v-container fluid>
         <v-layout column justify-center>
-            <v-card flat light>
+            <v-card flat dark>
                 <v-toolbar dark color="primary">
                     <v-spacer></v-spacer>
                     <v-spacer></v-spacer>
@@ -93,14 +93,18 @@
                                 ></v-text-field>
                             </v-flex>
                             <v-flex xs12 sm6 md12>
+                                <h3>Administração</h3>
                                 <v-switch :label="`${editedItem.is_admin ? 'É Administrador' : 'Não é Administrador'}`"
                                           v-model="editedItem.is_admin"></v-switch>
+                            </v-flex>
+                            <v-flex xs12 sm6 md12>
+                                <h3>Situação</h3>
                                 <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
                                           v-model="editedItem.is_ativo"></v-switch>
                             </v-flex>
                             <v-flex xs12 sm6 md12>
                                 <h3> Sistemas </h3>
-                                <v-list>
+                                <v-list style="overflow: auto; max-height: 300px">
                                     <v-list-tile v-for="sistema in this.sistemas"
                                                  :key="sistema.title"
                                                  avatar>

@@ -71,6 +71,7 @@
                                               label="Descrição"></v-text-field>
                             </v-flex>
                             <v-flex xs12 sm6 md12>
+                                <h3>Situação:</h3>
                                 <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
                                           v-model="editedItem.is_ativo"></v-switch>
                             </v-flex>
@@ -80,13 +81,8 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" flat @click.native="close">Cancelar</v-btn>
-                    <v-btn v-if="!loading" color="blue darken-1" flat @click.native="save">Gravar
-                    </v-btn>
-                    <v-progress-circular
-                            v-if="loading"
-                            indeterminate
-                            color="primary"></v-progress-circular>
+                    <v-btn color="error"  @click.native="close">Cancelar</v-btn>
+                    <v-btn dark v-if="!loading" color="blue darken-1" @click.native="save">Gravar</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>

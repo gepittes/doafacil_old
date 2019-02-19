@@ -1,7 +1,7 @@
 <template>
     <v-container fluid>
         <v-layout column justify-center>
-            <v-card flat >
+            <v-card flat dark>
                 <v-toolbar dark color="primary">
                     <v-spacer></v-spacer>
                     <v-spacer></v-spacer>
@@ -78,11 +78,11 @@
                                         color="deep-purple"
                                         label="Descrição"
                                         required
-                                        :rules="[(object) => object.length > 3 || 'Campo obrigatório.']"
+                                        :rules="[(object) => object!= null && object.length > 3 || 'Campo obrigatório.']"
                                         rows="5"
                                 ></v-textarea>
 
-                                <h3> Plataformas </h3>
+                                <h3 v-if="editedItem.mensagem_id != null"> Plataformas </h3>
                                 <v-list style="overflow: auto; max-height: 300px">
                                     <v-list-tile v-if="editedItem.mensagem_id == null"
                                                  v-for="plataforma in this.plataformas"
@@ -98,7 +98,6 @@
                                         </v-list-tile-content>
 
                                     </v-list-tile>
-                                    <h3 v-if="editedItem.mensagem_id != null"> Plataformas </h3>
                                     <v-list-tile v-if="editedItem.mensagem_id != null"
                                                  v-for="plataforma in editedItem.plataformas"
                                                  :key="plataforma.title"
@@ -114,7 +113,7 @@
                                 <br />
 
                                 <v-select v-model="editedItem.sistema_id"
-                                          :disabled="editedItem.sistema_id != null"
+                                          :disabled="editedItem.mensagem_id != null"
                                           :items="sistemasRenderizados"
                                           :rules="[v => !!v || 'Campo obrigatório']"
                                           label="Sistema"
@@ -131,6 +130,7 @@
 
                             </v-flex>
                             <v-flex xs12 sm6 md12>
+                                <h3>Situação</h3>
                                 <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
                                           v-model="editedItem.is_ativo"
                                           :readonly="true"></v-switch>
@@ -145,8 +145,6 @@
                     <v-btn v-if="!loading && exibirBotaoGravar" color="blue darken-1" @click.native="save">Gravar</v-btn>
                 </v-card-actions>
             </v-card>
-
-
         </v-dialog>
     </v-container>
 </template>
@@ -205,7 +203,7 @@ export default {
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? 'Criar' : 'Editar';
+      return this.editedIndex === -1 ? 'Criar' : '';
     },
     ...mapGetters({
       mensagens: 'mensagem/mensagens',

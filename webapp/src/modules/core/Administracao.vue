@@ -8,22 +8,22 @@
                     icons-and-text
                     slider-color="warning"
                     grow>
-                <v-tab dark to="/plataforma">
+                <v-tab dark to="/administracao/plataforma">
                     Plataformas
                     <v-icon>devices</v-icon>
                 </v-tab>
 
-                <v-tab dark to="/sistema">
+                <v-tab dark to="/administracao/sistema">
                     Sistemas
                     <v-icon>settings_system_daydream</v-icon>
                 </v-tab>
 
-                <v-tab dark to="/mensagem">
+                <v-tab dark to="/administracao/mensagem">
                     Mensagens
                     <v-icon>chat</v-icon>
                 </v-tab>
 
-                <v-tab dark to="/conta">
+                <v-tab dark to="/administracao/conta">
                     Contas
                     <v-icon>account_circle</v-icon>
                 </v-tab>
