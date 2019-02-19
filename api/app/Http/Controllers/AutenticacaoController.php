@@ -39,6 +39,7 @@ class AutenticacaoController extends Controller
                 'name' => $usuario->nome,
                 'email' => $usuario->email,
                 'sistemas' => $usuario->sistemas,
+                'is_admin' => $usuario->is_admin,
             ],
             'iat' => $this->horarioEmissaoToken,
             'exp' => $this->tempoExpiracaoToken

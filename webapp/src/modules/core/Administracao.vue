@@ -40,16 +40,29 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
+  import router from '../../router';
 
+  export default {
+    data() {
+      return {
+        bottomNav: '/plataforma',
+      };
+    },
 
-export default {
-  data() {
-    return {
-      bottomNav: '/plataforma',
-    };
-  },
+    computed: {
+      ...mapGetters({
+        accountInfo: 'account/accountInfo',
+      }),
+    },
 
-  computed: {
-  },
-};
+    mounted() {
+
+      if (this.accountInfo.is_admin !== true) {
+        // store.dispatch('alert/info', 'Logout realizado som sucesso.', { root: true });
+        router.push({name: 'home'});
+      }
+      // return next('/login');
+    },
+  };
 </script>
