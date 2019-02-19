@@ -41,7 +41,6 @@
 
 <script>
   import {mapGetters} from 'vuex';
-  import router from '../../router';
 
   export default {
     data() {
@@ -60,7 +59,7 @@
 
       if (this.accountInfo.is_admin !== true) {
         this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', {root: true});
-        router.push({name: 'home'});
+        this.$router.push({name: 'home'});
       }
     },
   };
