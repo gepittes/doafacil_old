@@ -54,7 +54,7 @@ services:
       - api-service
 
   websocket-service:
-    image: notification-php-fpm:1.0.0
+    image: culturagovbr/notification-php-fpm:1.0.1
     container_name: notification-websocket
     working_dir: /application
     command: "supervisord -n"
