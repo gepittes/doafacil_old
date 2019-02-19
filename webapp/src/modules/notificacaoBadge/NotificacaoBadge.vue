@@ -1,62 +1,62 @@
 <template>
     <div>
 
-    <v-scale-transition>
-        <v-menu
-                v-model="menu"
-                :close-on-content-click="false"
-                :nudge-width="200"
-                offset-x>
-            <v-btn flat
-                   slot="activator"
-                   color="indigo"
-                   dark>
-                <v-badge right color="red">
-                    <span slot="badge">{{this.notificacoesBadge.length}}</span>
-                    <v-icon dark
-                            color="white darken-1">
-                        notifications
-                    </v-icon>
-                </v-badge>
-            </v-btn>
+        <v-scale-transition>
+            <v-menu
+                    v-model="menu"
+                    :close-on-content-click="false"
+                    :nudge-width="200"
+                    offset-x>
+                <v-btn flat
+                       slot="activator"
+                       color="indigo"
+                       dark>
+                    <v-badge right color="red">
+                        <span slot="badge">{{this.notificacoesBadge.length}}</span>
+                        <v-icon dark
+                                color="white darken-1">
+                            notifications
+                        </v-icon>
+                    </v-badge>
+                </v-btn>
 
-            <v-card>
-                <v-card-title>
-                    Notificações
-                </v-card-title>
+                <v-card>
+                    <v-card-title>
+                        Notificações
+                    </v-card-title>
 
-                <v-list>
+                    <v-list>
 
-                    <v-list-tile v-for="(minhaNotificacao, indexNotificacao) in this.notificacoesBadge"
-                                 :key="indexNotificacao"
-                                 v-if="indexNotificacao < 4 && minhaNotificacao.is_notificacao_lida == false"
-                                 :to="minhaNotificacao">
+                        <v-list-tile v-for="(minhaNotificacao, indexNotificacao) in this.notificacoesBadge"
+                                     :key="indexNotificacao"
+                                     v-if="indexNotificacao < 4 && minhaNotificacao.is_notificacao_lida == false"
+                                     :to="minhaNotificacao">
 
-                        <v-list-tile-content @click="lerNotificacao(minhaNotificacao)">
-                            <v-list-tile-title>[{{minhaNotificacao.sistema}}]</v-list-tile-title>
-                            <v-list-tile-sub-title>{{minhaNotificacao.titulo}}</v-list-tile-sub-title>
-                        </v-list-tile-content>
+                            <v-list-tile-content @click="lerNotificacao(minhaNotificacao)">
+                                <v-list-tile-title>[{{minhaNotificacao.sistema}}]</v-list-tile-title>
+                                <v-list-tile-sub-title>{{minhaNotificacao.titulo}}</v-list-tile-sub-title>
+                            </v-list-tile-content>
 
-                        <v-list-tile-action>
-                            <!--<v-btn -->
-                            <!--icon>-->
-                            <v-icon>check</v-icon>
-                            <!--</v-btn>-->
-                        </v-list-tile-action>
-                    </v-list-tile>
-                </v-list>
+                            <v-list-tile-action>
+                                <!--<v-btn -->
+                                <!--icon>-->
+                                <v-icon>check</v-icon>
+                                <!--</v-btn>-->
+                            </v-list-tile-action>
+                        </v-list-tile>
+                    </v-list>
 
-                <v-divider></v-divider>
+                    <v-divider></v-divider>
 
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="primary" @click="dialog = !dialog" flat>Visualizars todas</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-menu>
-    </v-scale-transition>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="primary" @click="dialog = !dialog" flat>Visualizars todas</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-menu>
+        </v-scale-transition>
         <v-dialog v-model="dialog"
-                  max-width="500px"
+                  max-width="800px"
         >
             <v-card>
                 <v-card-title light>
@@ -65,29 +65,26 @@
 
                 <v-card-text>
                     <v-container>
-                        <v-layout wrap>
-                            <v-flex xs12 sm6 md12>
-                                <v-data-table light
-                                              :headers="headersBadge"
-                                              :items="this.notificacoesBadge"
-                                              :search="modeloBuscarBadge"
-                                              :rows-per-page-items="[ 10, 25, 40 ]"
-                                              :rows-per-page-text="'Registros por página'"
-                                              class="elevation-1">
-                                    <template slot="items" slot-scope="props">
-                                        <td class="text-xs-center">{{ props.item.titulo }}</td>
-                                        <td class="text-xs-center">{{ props.item.data_envio | formatDate
-                                            }}
-                                        </td>
-                                        <td class="text-xs-center">
-                                            <v-icon v-if="props.item.is_notificacao_lida">thumb_up</v-icon>
-                                            <v-icon v-if="!props.item.is_notificacao_lida">thumb_down
-                                            </v-icon>
-                                        </td>
-                                    </template>
-                                </v-data-table>
-                            </v-flex>
-                        </v-layout>
+                        <v-data-table light
+                                      :headers="headersBadge"
+                                      :items="this.notificacoesBadge"
+                                      :search="modeloBuscarBadge"
+                                      :rows-per-page-items="[ 10, 25, 40 ]"
+                                      :rows-per-page-text="'Registros por página'"
+                                      class="elevation-1">
+                            <template slot="items" slot-scope="props">
+                                <td class="text-xs-center">{{ props.item.titulo }}</td>
+                                <td class="text-xs-center">{{ props.item.descricao }}</td>
+                                <td class="text-xs-center">{{ props.item.data_envio | formatDate
+                                    }}
+                                </td>
+                                <td class="text-xs-center">
+                                    <v-icon v-if="props.item.is_notificacao_lida">thumb_up</v-icon>
+                                    <v-icon v-if="!props.item.is_notificacao_lida">thumb_down
+                                    </v-icon>
+                                </td>
+                            </template>
+                        </v-data-table>
                     </v-container>
                 </v-card-text>
 
@@ -114,8 +111,13 @@
         modeloBuscarBadge: '',
         headersBadge: [
           {
-            text: 'Mensagem',
+            text: 'Título Mensagem',
             value: 'titulo',
+            align: 'center',
+          },
+          {
+            text: 'Descrição Mensagem',
+            value: 'descricao',
             align: 'center',
           },
           {
