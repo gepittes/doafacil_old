@@ -40,16 +40,28 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
+  import router from '../../router';
 
+  export default {
+    data() {
+      return {
+        bottomNav: '/plataforma',
+      };
+    },
 
-export default {
-  data() {
-    return {
-      bottomNav: '/plataforma',
-    };
-  },
+    computed: {
+      ...mapGetters({
+        accountInfo: 'account/accountInfo',
+      }),
+    },
 
-  computed: {
-  },
-};
+    mounted() {
+
+      if (this.accountInfo.is_admin !== true) {
+        this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', {root: true});
+        router.push({name: 'home'});
+      }
+    },
+  };
 </script>

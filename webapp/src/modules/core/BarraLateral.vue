@@ -31,7 +31,7 @@
         <v-list class="pt-0">
             <v-divider></v-divider>
             <v-list-tile value="true"
-                         v-for="(item, i) in items"
+                         v-for="(item, i) in obterMenusLaterais()"
                          :key="i"
                          :to="item.to">
                 <v-list-tile-action>
@@ -56,53 +56,6 @@
         clipped: false,
         drawer: true,
         fixed: false,
-        items: [
-          {
-            icon: 'home',
-            title: 'Início',
-            to: '/',
-          },
-          {
-            icon: 'chat',
-            title: 'Notificacao',
-            to: '/notificacao',
-          },
-          // {
-          //     icon: 'settings_system_daydream',
-          //     title: 'Sistemas',
-          //     to: "/sistema"
-          // },
-          // {
-          //     icon: 'chat',
-          //     title: 'Mensagens',
-          //     to: "/mensagem"
-          // },
-          // {
-          //     icon: 'account_circle',
-          //     title: 'Contas',
-          //     to: "/conta"
-          // },
-          {
-            icon: 'edit',
-            title: 'Administração',
-            to: '/administracao',
-          },
-          {
-            icon: 'info',
-            title: 'Sobre',
-            to: '/sobre',
-          },
-          {
-            icon: 'chat',
-            title: '(Teste) Chat/WebSocket',
-            to: '/websocket',
-          },
-          {
-            icon: 'exit_to_app',
-            title: 'Sair',
-            to: '/logout',
-          },
-        ],
         miniVariant: false,
         right: true,
         rightDrawer: false,
@@ -116,6 +69,49 @@
         accountInfo: 'account/accountInfo',
       }),
     },
+    methods: {
+        obterMenusLaterais() {
+
+            let menusLaterais = [
+              {
+                icon: 'home',
+                title: 'Início',
+                to: '/',
+              },
+              {
+                icon: 'chat',
+                title: 'Notificacao',
+                to: '/notificacao',
+              },
+              {
+                icon: 'info',
+                title: 'Sobre',
+                to: '/sobre',
+              },
+              {
+                icon: 'chat',
+                title: '(Teste) Chat/WebSocket',
+                to: '/websocket',
+              },
+            ];
+
+            if(this.accountInfo.is_admin === true) {
+                menusLaterais.push({
+                  icon: 'edit',
+                  title: 'Administração',
+                  to: '/administracao',
+                });
+            }
+
+            menusLaterais.push(              {
+              icon: 'exit_to_app',
+              title: 'Sair',
+              to: '/logout',
+            },);
+
+            return menusLaterais;
+        }
+    }
 
   };
 </script>
