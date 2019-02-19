@@ -59,10 +59,9 @@
     mounted() {
 
       if (this.accountInfo.is_admin !== true) {
-        // store.dispatch('alert/info', 'Logout realizado som sucesso.', { root: true });
+        this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', {root: true});
         router.push({name: 'home'});
       }
-      // return next('/login');
     },
   };
 </script>
