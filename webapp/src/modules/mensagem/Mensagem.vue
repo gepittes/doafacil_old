@@ -62,13 +62,14 @@
                 </v-card-title>
 
                 <v-card-text>
-                    <mensagem-formulario></mensagem-formulario>
+                    <mensagem-formulario
+                            :item="editedItem"
+                    ></mensagem-formulario>
                 </v-card-text>
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="error" @click.native="close">Fechar</v-btn>
-                    <v-btn v-if="!loading && exibirBotaoGravar" color="blue darken-1" @click.native="save">Gravar</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -87,15 +88,46 @@ export default {
     plataformasSelecionadas: [],
     mensagensRenderizadas: [],
     sistemasRenderizados: [],
+    modeloBuscar: '',
     editedIndex: -1,
     editedItem: {
       mensagem_id: null,
+      titulo: null,
       autor_id: null,
       sistema_id: null,
       descricao: '',
       is_ativo: true,
       plataformas: [],
     },
+    headers: [
+      {
+        text: 'Identificador',
+        align: 'center',
+        sortable: true,
+        value: 'name',
+      },
+      {
+        text: 'Título',
+        value: 'titulo',
+        align: 'center',
+      },
+      {
+        text: 'Descrição',
+        value: 'descricao',
+        align: 'center',
+      },
+      {
+        text: 'Situação',
+        value: 'situacao',
+        align: 'center',
+      },
+      {
+        text: 'Ação',
+        value: 'acao',
+        align: 'center',
+        sortable: false,
+      },
+    ],
   }),
 
   computed: {
@@ -116,11 +148,11 @@ export default {
       if (this.editedItem.autor_id == null) {
         this.editedItem.autor_id = this.accountInfo.user_id;
       }
+
       this.exibirBotaoGravar = true;
       if (this.editedItem.mensagem_id != null) {
         this.exibirBotaoGravar = false;
       }
-
 
       val || this.close();
     },
@@ -207,32 +239,6 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       }, 300);
-    },
-
-    save() {
-      const self = this;
-      self.loading = true;
-
-      if (self.editedIndex > -1) {
-        this.atualizarMensagem(self.editedItem);
-      } else {
-        console.log(self.editedItem);
-        this.cadastrarMensagem(self.editedItem);
-      }
-      self.close();
-    },
-
-    obterNomeAutor(usuario_id) {
-      // console.log(usuario_id);
-      if (this.contas.length == null) {
-        this.obterContas();
-      }
-
-      for (const index in this.contas) {
-        if (this.contas[index].usuario_id == usuario_id) {
-          return this.contas[index].nome;
-        }
-      }
     },
 
   },
