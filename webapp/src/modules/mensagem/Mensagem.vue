@@ -62,81 +62,7 @@
                 </v-card-title>
 
                 <v-card-text>
-                    <v-container grid-list-md>
-                        <v-layout wrap>
-                            <v-flex xs12 sm6 md12>
-                                <v-text-field v-model="editedItem.titulo"
-                                              label="Título"
-                                              box
-                                              minlength="3"
-                                              :rules="[(object) => object!= null && object.length > 3 || 'Campo obrigatório.']"
-                                              required></v-text-field>
-                                <v-textarea
-                                        v-model="editedItem.descricao"
-                                        auto-grow
-                                        box
-                                        color="deep-purple"
-                                        label="Descrição"
-                                        required
-                                        :rules="[(object) => object!= null && object.length > 3 || 'Campo obrigatório.']"
-                                        rows="5"
-                                ></v-textarea>
-
-                                <h3 v-if="editedItem.mensagem_id != null"> Plataformas </h3>
-                                <v-list style="overflow: auto; max-height: 300px">
-                                    <v-list-tile v-if="editedItem.mensagem_id == null"
-                                                 v-for="plataforma in this.plataformas"
-                                                 :key="plataforma.title"
-                                                 avatar>
-
-                                        <v-list-tile-content>
-                                            <v-checkbox v-model="editedItem.plataformas"
-                                                        :label="plataforma.descricao"
-                                                        color="success"
-                                                        required
-                                                        :value="plataforma"></v-checkbox>
-                                        </v-list-tile-content>
-
-                                    </v-list-tile>
-                                    <v-list-tile v-if="editedItem.mensagem_id != null"
-                                                 v-for="plataforma in editedItem.plataformas"
-                                                 :key="plataforma.title"
-                                                 avatar>
-
-                                        <v-list-tile-content>
-                                            {{plataforma.descricao}}
-                                        </v-list-tile-content>
-
-
-                                    </v-list-tile>
-                                </v-list>
-                                <br />
-
-                                <v-select v-model="editedItem.sistema_id"
-                                          :disabled="editedItem.mensagem_id != null"
-                                          :items="sistemasRenderizados"
-                                          :rules="[v => !!v || 'Campo obrigatório']"
-                                          label="Sistema"
-                                          box
-                                          item-text="descricao"
-                                          item-value="sistema_id"
-                                          required></v-select>
-
-                                <v-text-field disabled
-                                              :value="this.obterNomeAutor(editedItem.autor_id)"
-                                              v-if="plataformasSelecionadas.length > 0"
-                                              label="Autor"
-                                              box></v-text-field>
-
-                            </v-flex>
-                            <v-flex xs12 sm6 md12>
-                                <h3>Situação</h3>
-                                <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                                          v-model="editedItem.is_ativo"
-                                          :readonly="true"></v-switch>
-                            </v-flex>
-                        </v-layout>
-                    </v-container>
+                    <mensagem-formulario></mensagem-formulario>
                 </v-card-text>
 
                 <v-card-actions>
@@ -151,43 +77,14 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex';
+import MensagemFormulario from './MensagemFormulario.vue';
 
 export default {
   data: () => ({
     loading: false,
     dialog: false,
     exibirBotaoGravar: true,
-    modeloBuscar: '',
     plataformasSelecionadas: [],
-    headers: [
-      {
-        text: 'Identificador',
-        align: 'center',
-        sortable: true,
-        value: 'name',
-      },
-      {
-        text: 'Título',
-        value: 'titulo',
-        align: 'center',
-      },
-      {
-        text: 'Descrição',
-        value: 'descricao',
-        align: 'center',
-      },
-      {
-        text: 'Situação',
-        value: 'situacao',
-        align: 'center',
-      },
-      {
-        text: 'Ação',
-        value: 'acao',
-        align: 'center',
-        sortable: false,
-      },
-    ],
     mensagensRenderizadas: [],
     sistemasRenderizados: [],
     editedIndex: -1,
@@ -338,14 +235,10 @@ export default {
       }
     },
 
-    isPlataformaSelecionada(plataformasSelecionadas, plataforma_id) {
-      for (const index in plataformasSelecionadas) {
-        if (plataformasSelecionadas[index].plataforma_id == plataforma_id) {
-          return true;
-        }
-      }
-    },
   },
+  components: {
+    MensagemFormulario,
+  }
 };
 
 </script>
