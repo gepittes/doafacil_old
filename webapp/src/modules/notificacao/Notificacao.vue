@@ -81,11 +81,12 @@
                                 <v-icon v-if="props.item.is_notificacao_lida">thumb_up</v-icon>
                                 <v-icon v-if="!props.item.is_notificacao_lida">thumb_down</v-icon>
                             </td>
-                            <td class="justify-center layout px-0">
+                            <td v-if="accountInfo.is_admin" class="justify-center layout px-0">
                                 <v-icon
                                         @click="deleteItem(props.item)">delete
                                 </v-icon>
                             </td>
+                            <td v-else class="justify-center layout px-0 pt-3"> - </td>
                         </template>
                         <template slot="no-data">
                             <v-btn color="primary" @click="this.obterNotificacaos">Reset</v-btn>
@@ -246,9 +247,14 @@ export default {
     },
 
     deleteItem(item) {
-      if (confirm('Deseja remover esse item?')) {
-        this.removerNotificacao(item.notificacao_id);
-      }
+        if (confirm('Deseja remover esse item?')) {
+            if (this.accountInfo.is_admin !== true) {
+                this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', {root: true});
+            }
+            if (this.accountInfo.is_admin === true) {
+                this.removerNotificacao(item.notificacao_id);
+            }
+        }
     },
 
     close() {
