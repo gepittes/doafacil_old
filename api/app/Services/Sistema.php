@@ -43,8 +43,8 @@ class Sistema implements IService
     public function alterar($id, array $dados = [])
     {
         $validator = Validator::make($dados, [
-            "descricao" => 'required|string|min:3|max:50',
-            "url" => 'required|string|min:3|max:50'
+            "descricao" => 'required|string|min:3|max:255',
+            "url" => 'required|string|min:3|max:255'
         ]);
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->first());

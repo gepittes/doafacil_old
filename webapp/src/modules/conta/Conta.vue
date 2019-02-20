@@ -251,6 +251,7 @@ export default {
 
     editItem(item) {
       this.editedIndex = this.contas.indexOf(item);
+      this.editedItem.sistemas = [];
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },

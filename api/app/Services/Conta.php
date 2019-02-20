@@ -82,9 +82,12 @@ class Conta implements IService
         if (isset($dados['usuario_id'])) {
             unset($dados['usuario_id']);
         }
-        if (isset($dados['password'])) {
+        if (isset($dados['password']) && !empty($dados['password'])) {
             $dados['password'] = password_hash($dados['password'], PASSWORD_BCRYPT);
+        } else {
+            unset($dados['password']);
         }
+
         $sistemas = $dados['sistemas'];
 
         $this->desvincularSistemaUsuario($id);
@@ -115,15 +118,20 @@ class Conta implements IService
 
     public function vincularSistema($usuario_id, array $sistemas)
     {
-        foreach ($sistemas as $sistema) {
+        if (count($sistemas) > 0) {
             $usuario = ModeloUsuario::findOrFail($usuario_id);
-            $usuario->sistemas()->attach($sistema['sistema_id']);
+            foreach ($sistemas as $sistema) {
+                $usuario->sistemas()->attach($sistema['sistema_id']);
+            }
         }
     }
 
     public function desvincularSistemaUsuario($usuario_id)
     {
-        $usuario = $this->obter($usuario_id);
-        return $usuario->sistemas()->detach();
+        $usuario = ModeloUsuario::find($usuario_id);
+        
+        if($usuario) {
+            return $usuario->sistemas()->detach();
+        }
     }
 }
