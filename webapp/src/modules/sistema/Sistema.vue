@@ -24,8 +24,8 @@
                                   class="elevation-1">
                         <template slot="items" slot-scope="props">
                             <td class="text-xs-center">{{ props.item.sistema_id }}</td>
-                            <td class="text-xs-center">{{ props.item.descricao }}</td>
-                            <td class="text-xs-center">{{ props.item.url }}</td>
+                            <td class="text-xs-center" v-html="props.item.descricao"></td>
+                            <td class="text-xs-center" v-html="props.item.url"></td>
                             <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
                             <td class="justify-center layout px-0">
                                 <v-icon
@@ -167,7 +167,6 @@ export default {
     },
     sistemas(value) {
       if ('error' in value) {
-        alert(value.error);
         this.sistemasRenderizados = [];
       } else {
         this.sistemasRenderizados = value;

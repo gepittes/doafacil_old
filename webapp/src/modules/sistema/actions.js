@@ -12,14 +12,20 @@ export const obterSistemas = ({commit}) => {
         })
 }
 
-export const removerSistema = ({commit}, sistema_id) => {
+export const removerSistema = ({dispatch, commit}, sistema_id) => {
     axios.delete('http://localhost/v1/sistema/' + sistema_id)
         .then(function () {
             commit(types.DELETE_SISTEMA, sistema_id);
+        })
+      .catch(error => {
+        dispatch('alert/error', error.response.data.error, {
+          root: true,
         });
+      });
 }
 
 export const cadastrarSistema = ({commit}, sistema) => {
+
     return axios.post('http://localhost/v1/sistema', sistema)
         .then((response) => {
             const data = response.data;
