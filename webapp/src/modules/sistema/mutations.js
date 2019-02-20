@@ -4,8 +4,8 @@ export const mutations = {
     [types.OBTER_SISTEMAS](state, sistema) {
         state.sistema = sistema
     },
-    [types.ACRESCENTAR_SISTEMA](state, conta) {
-        state.conta.push(conta);
+    [types.ACRESCENTAR_SISTEMA](state, sistema) {
+        state.sistema.push(sistema);
     },
     [types.DELETE_SISTEMA](state, sistema_id) {
         var index = state.sistema.findIndex(sistema => sistema.sistema_id === sistema_id);
