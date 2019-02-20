@@ -129,7 +129,6 @@ class Conta implements IService
     public function desvincularSistemaUsuario($usuario_id)
     {
         $usuario = ModeloUsuario::find($usuario_id);
-        
         if($usuario) {
             return $usuario->sistemas()->detach();
         }
