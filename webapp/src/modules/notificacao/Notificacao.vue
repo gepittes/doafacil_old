@@ -82,9 +82,12 @@
                                 <v-icon v-if="!props.item.is_notificacao_lida">thumb_down</v-icon>
                             </td>
                             <td v-if="accountInfo.is_admin" class="justify-center layout px-0">
-                                <v-icon
+                                <v-btn icon>
+                                    <v-icon
+                                        color="grey darken-1"
                                         @click="deleteItem(props.item)">delete
-                                </v-icon>
+                                    </v-icon>
+                                </v-btn>
                             </td>
                             <td v-else class="justify-center layout px-0 pt-3"> - </td>
                         </template>

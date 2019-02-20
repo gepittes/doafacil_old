@@ -31,14 +31,18 @@
                                 <v-icon v-if="props.item.is_admin" color="primary">check_circle_outline</v-icon>
                             </td>
                             <td class="justify-center layout px-0">
-                                <v-icon class="mr-2"
-                                        @click="editItem(props.item)">
-                                    edit
-                                </v-icon>
-                                <v-icon
-                                        @click="deleteItem(props.item)">
-                                    delete
-                                </v-icon>
+                                <v-btn icon>
+                                    <v-icon
+                                        color="grey darken-1"
+                                        @click="editItem(props.item)">edit
+                                    </v-icon>
+                                </v-btn>
+                                <v-btn icon>
+                                    <v-icon
+                                        color="grey darken-1"
+                                        @click="deleteItem(props.item)">delete
+                                    </v-icon>
+                                </v-btn>
                             </td>
                         </template>
                         <template slot="no-data">
@@ -103,7 +107,6 @@
                             </v-flex>
                             <v-flex xs12 sm6 md12>
                                 <h3> Sistemas </h3>
-                                {{editedItem.sistemas}}
                                 <v-list style="overflow: auto; max-height: 300px">
                                     <v-list-tile v-for="sistema in this.sistemas"
                                                  :key="sistema.title"
