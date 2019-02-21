@@ -31,7 +31,8 @@ export const cadastrarSistema = ({dispatch, commit}, sistema) => {
   return axios.post('http://localhost/v1/sistema', sistema)
     .then((response) => {
       const data = response.data;
-      commit(types.ACRESCENTAR_SISTEMA, data.data)
+      commit(types.ACRESCENTAR_SISTEMA, data.data);
+      dispatch('alert/success', 'Cadastro realizado com sucesso!', {root: true});
     }).catch(error => {
       dispatch('alert/error', error.response.data.error, {
         root: true,

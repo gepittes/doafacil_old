@@ -29,6 +29,7 @@ export const cadastrarNotificacao = ({dispatch, commit}, notificacao) => axios.p
   .then((response) => {
     const data = response.data;
     commit(types.ACRESCENTAR_NOTIFICACAO, data.data);
+    dispatch('alert/success', 'Cadastro realizado com sucesso!', {root: true});
   }).catch(error => {
     dispatch('alert/error', error.response.data.error, {
       root: true,
