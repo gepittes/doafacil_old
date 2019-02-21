@@ -32,16 +32,25 @@
                                      v-if="indexNotificacao < 4 && minhaNotificacao.is_notificacao_lida == false"
                                      :to="minhaNotificacao">
 
-                            <v-list-tile-content @click="lerNotificacao(minhaNotificacao)">
+                            <!-- <v-list-tile-content @click="lerNotificacao(minhaNotificacao)"> -->
+                            <v-list-tile-content>
                                 <v-list-tile-title>[{{minhaNotificacao.sistema}}]</v-list-tile-title>
                                 <v-list-tile-sub-title>{{minhaNotificacao.titulo}}</v-list-tile-sub-title>
                             </v-list-tile-content>
 
                             <v-list-tile-action>
-                                <!--<v-btn -->
-                                <!--icon>-->
-                                <v-icon>check</v-icon>
-                                <!--</v-btn>-->
+                                <!-- <v-icon>check</v-icon> -->
+                                <v-tooltip bottom>
+                                  <v-btn
+                                      slot="activator"
+                                      flat
+                                      icon
+                                      @click="showItem(minhaNotificacao)"
+                                  >
+                                      <v-icon>visibility</v-icon>
+                                  </v-btn>
+                                  <span>Visualizar Notificação</span>
+                                </v-tooltip>
                             </v-list-tile-action>
                         </v-list-tile>
                     </v-list>
@@ -50,7 +59,7 @@
 
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="primary" @click="dialog = !dialog" flat>Visualizars todas</v-btn>
+                        <v-btn color="primary" @click="dialog = !dialog" flat>Visualizar todas</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-menu>
@@ -94,8 +103,80 @@
                     <v-btn color="error" @click.native="closeBadgeDialog">Fechar</v-btn>
                 </v-card-actions>
             </v-card>
-
         </v-dialog>
+
+        <v-dialog v-model="dialogNotificacao">
+                <v-card>
+                    <v-card-text v-if="notificacao">
+                        <v-container
+                            grid-list-md
+                            text-xs-left>
+                            <div>
+                                <v-layout
+                                    justify-space-around
+                                    row
+                                    wrap>
+                                    <v-flex
+                                        lg12
+                                        dark
+                                        class="text-xs-left">
+                                        <h4>DADOS DA NOTIFICAÇÃO</h4>
+                                        <v-divider class="pb-2"/>
+                                    </v-flex>
+                                    <v-flex>
+                                        <b>Títutlo</b><br>
+                                        <p
+                                            v-if="notificacao.titulo"
+                                        >
+                                            {{ notificacao.titulo }}
+                                        </p>
+                                        <p v-else>
+                                            -
+                                        </p>
+                                    </v-flex>
+                                    <v-flex class="text-xs-center">
+                                        <b>Sistema</b>
+                                        <p
+                                            v-if="notificacao.sistema"
+                                            class="text-xs-center"
+                                        >
+                                            {{ notificacao.sistema }}
+                                        </p>
+                                        <p v-else>
+                                            -
+                                        </p>
+                                    </v-flex>
+                                </v-layout>
+                                <v-layout
+                                    row
+                                    justify-space-between>
+                                    <v-flex xs6>
+                                        <b>Descrição</b>
+                                        <p
+                                            v-if="notificacao.descricao"
+                                            v-html="notificacao.descricao"/>
+                                        <p v-else>
+                                            -
+                                        </p>
+                                    </v-flex>
+                                </v-layout>
+                            </div>
+                        </v-container>
+                    </v-card-text>
+                    <v-divider/>
+                    <v-card-actions>
+                        <v-spacer/>
+                        <v-btn
+                            color="red"
+                            flat
+                            @click="notificacaoLida(notificacao)"
+                        >
+                            Fechar
+                        </v-btn>
+
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
     </div>
 </template>
 
@@ -108,6 +189,8 @@
     data() {
       return {
         dialog: false,
+        dialogNotificacao: false,
+        notificacao: {},
         modeloBuscarBadge: '',
         headersBadge: [
           {
@@ -159,6 +242,14 @@
           this.editedItem = Object.assign({}, this.defaultItem);
           this.editedIndex = -1;
         }, 300);
+      },
+      showItem(item) {
+        this.notificacao = item; 
+        this.dialogNotificacao = true;
+      },
+      notificacaoLida(item) {
+        this.lerNotificacao(item); 
+        this.dialogNotificacao = false;
       },
     },
     mounted() {
