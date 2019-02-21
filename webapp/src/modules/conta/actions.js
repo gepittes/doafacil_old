@@ -29,6 +29,7 @@ export const cadastrarConta = ({ dispatch, commit }, conta) => axios.post('http:
   .then((response) => {
     const data = response.data;
     commit(types.ACRESCENTAR_CONTA, data.data);
+    dispatch('alert/success', 'Cadastro realizado com sucesso!', {root: true});
   }).catch(error => {
     dispatch('alert/error', error.response.data.error, {
       root: true,
