@@ -24,19 +24,22 @@
                                   class="elevation-1">
                         <template slot="items" slot-scope="props">
                             <td class="text-xs-center">{{ props.item.sistema_id }}</td>
-                            <td class="text-xs-center">{{ props.item.descricao }}</td>
-                            <td class="text-xs-center">{{ props.item.url }}</td>
+                            <td class="text-xs-center" v-html="props.item.descricao"></td>
+                            <td class="text-xs-center" v-html="props.item.url"></td>
                             <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
                             <td class="justify-center layout px-0">
-                                <v-icon
-                                        class="mr-2"
-                                        @click="editItem(props.item)">
-                                    edit
-                                </v-icon>
-                                <v-icon
-                                        @click="deleteItem(props.item)">
-                                    delete
-                                </v-icon>
+                                <v-btn icon>
+                                    <v-icon
+                                        color="grey darken-1"
+                                        @click="editItem(props.item)">edit
+                                    </v-icon>
+                                </v-btn>
+                                <v-btn icon>
+                                    <v-icon
+                                        color="grey darken-1"
+                                        @click="deleteItem(props.item)">delete
+                                    </v-icon>
+                                </v-btn>
                             </td>
                         </template>
                         <template slot="no-data">
@@ -167,7 +170,6 @@ export default {
     },
     sistemas(value) {
       if ('error' in value) {
-        alert(value.error);
         this.sistemasRenderizados = [];
       } else {
         this.sistemasRenderizados = value;

@@ -52,6 +52,6 @@ class SistemaController extends Controller
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json($sistema->desabilitar($id));
+        return $response->json($sistema->remover($id));
     }
 }
