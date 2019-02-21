@@ -74,9 +74,9 @@
                               v-model="editedItem.is_ativo"></v-switch>
                 </v-flex>
             </v-layout>
-            <v-layout>
+            <v-layout class="text-xs-center">
                 <v-flex md12>
-                    <v-btn v-if="!loading && editedItem.autor_id != null" color="blue darken-1">
+                    <v-btn dark v-if="!loading && editedItem.autor_id != null" color="blue darken-1">
                         Gravar
                     </v-btn>
                 </v-flex>
