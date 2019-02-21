@@ -31,15 +31,18 @@
                                 <v-icon v-if="props.item.is_admin" color="primary">check_circle_outline</v-icon>
                             </td>
                             <td class="justify-center layout px-0">
-                                <v-icon
-                                        class="mr-2"
-                                        @click="editItem(props.item)">
-                                    edit
-                                </v-icon>
-                                <v-icon
-                                        @click="deleteItem(props.item)">
-                                    delete
-                                </v-icon>
+                                <v-btn icon>
+                                    <v-icon
+                                        color="grey darken-1"
+                                        @click="editItem(props.item)">edit
+                                    </v-icon>
+                                </v-btn>
+                                <v-btn icon>
+                                    <v-icon
+                                        color="grey darken-1"
+                                        @click="deleteItem(props.item)">delete
+                                    </v-icon>
+                                </v-btn>
                             </td>
                         </template>
                         <template slot="no-data">
@@ -229,10 +232,9 @@ export default {
         this.contasIniciais = value;
       }
     },
-    sistemas(value) {
-      console.log(value);
+    editedItem(value) {
+      
     },
-
   },
 
   created() {
@@ -251,8 +253,14 @@ export default {
 
     editItem(item) {
       this.editedIndex = this.contas.indexOf(item);
+      this.editedItem.sistemas = [];
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
+
+      for(var indice in this.editedItem.sistemas) {
+        delete this.editedItem.sistemas[indice]['usuario_has_sistema'];
+      }      
+      
     },
 
     deleteItem(item) {

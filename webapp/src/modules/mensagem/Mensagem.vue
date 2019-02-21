@@ -30,13 +30,18 @@
                                 {{ props.item.is_ativo ? "Ativo" : "Inativo" }}
                             </td>
                             <td class="justify-center layout px-0">
-                                <v-icon
-                                        class="mr-2"
+                                <v-btn icon>
+                                    <v-icon
+                                        color="grey darken-1"
                                         @click="editItem(props.item)">search
-                                </v-icon>
-                                <v-icon
+                                    </v-icon>
+                                </v-btn>
+                                <v-btn icon>
+                                    <v-icon
+                                        color="grey darken-1"
                                         @click="deleteItem(props.item)">delete
-                                </v-icon>
+                                    </v-icon>
+                                </v-btn>
                             </td>
                         </template>
                         <template slot="no-data">
