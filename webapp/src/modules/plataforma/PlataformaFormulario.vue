@@ -70,12 +70,14 @@ export default {
 
     save() {
       const self = this;
-      if (this.editedItem.plataforma_id !== null) {
-        this.atualizarPlataforma(self.editedItem);
-      } else {
-        this.cadastrarPlataforma(self.editedItem);
+      if(self.editedItem.is_ativo === null || self.editedItem.is_ativo === '') {
+        self.editedItem.is_ativo = false;
       }
-      self.close();
+      if (self.editedItem.plataforma_id !== null) {
+        self.atualizarPlataforma(self.editedItem);
+      } else {
+        self.cadastrarPlataforma(self.editedItem);
+      }
     },
   },
 };

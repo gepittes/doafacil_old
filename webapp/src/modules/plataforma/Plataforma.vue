@@ -52,7 +52,7 @@
                                fixed
                                bottom
                                right
-                               @click="dialog = !dialog">
+                               @click="newItem()">
                             <v-icon>add</v-icon>
                         </v-btn>
                     </v-scale-transition>
@@ -137,7 +137,6 @@ export default {
     },
     plataformas(value) {
       if ('error' in value) {
-        alert(value.error);
         this.plataformasIniciais = [];
       } else {
         this.plataformasIniciais = value;
@@ -157,9 +156,17 @@ export default {
       removerPlataforma: 'plataforma/removerPlataforma',
     }),
 
+    newItem() {
+      this.editedItem = Object.assign({}, {
+        plataforma_id: null,
+        descricao: '',
+        is_ativo: true,
+      });
+      this.dialog = true;
+    },
+
     editItem(item) {
       this.editedIndex = this.plataformas.indexOf(item);
-console.log(this.editedIndex)
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
