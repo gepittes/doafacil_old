@@ -24,7 +24,7 @@
                             class="elevation-1">
                         <template slot="items" slot-scope="props">
                             <td class="text-xs-center">{{ props.item.usuario_id }}</td>
-                            <td class="text-xs-center">{{ props.item.nome }}</td>
+                            <td class="text-xs-center" v-html="props.item.nome"></td>
                             <td class="text-xs-center">{{ props.item.email }}</td>
                             <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
                             <td class="text-xs-center">
@@ -233,7 +233,7 @@ export default {
       }
     },
     editedItem(value) {
-      
+
     },
   },
 
@@ -259,8 +259,8 @@ export default {
 
       for(var indice in this.editedItem.sistemas) {
         delete this.editedItem.sistemas[indice]['usuario_has_sistema'];
-      }      
-      
+      }
+
     },
 
     deleteItem(item) {
