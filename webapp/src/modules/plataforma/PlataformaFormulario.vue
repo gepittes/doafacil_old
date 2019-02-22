@@ -20,7 +20,7 @@
 </template>
 <script>
 
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   props: {
@@ -47,9 +47,6 @@ export default {
     formTitle() {
       return this.editedIndex === -1 ? 'Criar' : 'Editar';
     },
-    ...mapGetters({
-      plataformas: 'plataforma/plataforma',
-    }),
   },
 
   watch: {

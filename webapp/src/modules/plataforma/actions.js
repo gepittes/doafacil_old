@@ -29,7 +29,7 @@ export const cadastrarPlataforma = ({dispatch, commit}, plataforma) => {
   return axios.post('http://localhost/v1/plataforma', plataforma)
     .then((response) => {
       const data = response.data;
-      commit(types.SET_PLATAFORMA, data.data);
+      commit(types.ACRESCENTAR_PLATAFORMA, data.data);
       dispatch('alert/success', 'Cadastro realizado com sucesso!', {root: true});
     }).catch(error => {
       dispatch('alert/error', error.response.data.error, {
@@ -41,7 +41,7 @@ export const cadastrarPlataforma = ({dispatch, commit}, plataforma) => {
 export const atualizarPlataforma = ({dispatch, commit}, plataforma) => {
   return axios.patch('http://localhost/v1/plataforma/' + plataforma.plataforma_id, plataforma)
     .then(() => {
-      commit(types.ATUALIZAR_PLATAFORMA, plataforma)
+      commit(types.ATUALIZAR_PLATAFORMA, plataforma);
     })
     .catch(error => {
       dispatch('alert/error', error.response.data.error, {
