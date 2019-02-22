@@ -10,9 +10,10 @@
                 <v-btn flat
                        slot="activator"
                        color="indigo"
-                       dark>
+                       dark
+                       icon>
                     <v-badge right color="red">
-                        <span slot="badge">{{this.notificacoesBadge.length}}</span>
+                        <span slot="badge" v-if="this.notificacoesBadge.length > 0">{{this.notificacoesBadge.length}}</span>
                         <v-icon dark
                                 color="white darken-1">
                             notifications
@@ -25,8 +26,7 @@
                         Notificações
                     </v-card-title>
 
-                    <v-list>
-
+                    <v-list v-if="this.notificacoesBadge.length > 0">
                         <v-list-tile v-for="(minhaNotificacao, indexNotificacao) in this.notificacoesBadge"
                                      :key="indexNotificacao"
                                      v-if="indexNotificacao < 4 && minhaNotificacao.is_notificacao_lida == false"
@@ -55,9 +55,13 @@
                         </v-list-tile>
                     </v-list>
 
+                    <v-card-text v-else-if="this.notificacoesBadge.length === 0">
+                      Não há novas notificações.
+                    </v-card-text>
+
                     <v-divider></v-divider>
 
-                    <v-card-actions>
+                    <v-card-actions v-if="this.notificacoesBadge.length > 0">
                         <v-spacer></v-spacer>
                         <v-btn color="primary" @click="dialog = !dialog" flat>Visualizar todas</v-btn>
                     </v-card-actions>
