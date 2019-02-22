@@ -64,28 +64,15 @@
                 <v-card-title>
                     <span class="headline">{{ formTitle }} Plataforma</span>
                 </v-card-title>
-                <!--<v-subheader>Preencha os dados da plataforma.</v-subheader>-->
 
                 <v-card-text>
-                    <v-container grid-list-md>
-                        <v-layout wrap>
-                            <v-flex xs12 sm6 md12>
-                                <v-text-field v-model="editedItem.descricao"
-                                              label="Descrição"></v-text-field>
-                            </v-flex>
-                            <v-flex xs12 sm6 md12>
-                                <h3>Situação:</h3>
-                                <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                                          v-model="editedItem.is_ativo"></v-switch>
-                            </v-flex>
-                        </v-layout>
-                    </v-container>
+                    <plataforma-formulario
+                            :item="editedItem"></plataforma-formulario>
                 </v-card-text>
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="error"  @click.native="close">Cancelar</v-btn>
-                    <v-btn dark v-if="!loading" color="blue darken-1" @click.native="save">Gravar</v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -94,143 +81,104 @@
 </template>
 <script>
 
-  import {mapActions, mapGetters} from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+import PlataformaFormulario from './PlataformaFormulario.vue';
 
-  export default {
-    data: () => ({
-      loading: false,
-      dialog: false,
-      modeloBuscar: '',
-      headers: [
-        {
-          text: 'Identificador',
-          align: 'center',
-          sortable: true,
-          value: 'name',
-        },
-        {
-          text: 'Descrição',
-          value: 'descricao',
-          align: 'center',
-        },
-        {
-          text: 'Situação',
-          value: 'situacao',
-          align: 'center',
-        },
-        {
-          text: 'Ação',
-          value: 'acao',
-          align: 'center',
-          sortable: false,
-        },
-      ],
-      plataformasIniciais: [],
-      editedIndex: -1,
-      editedItem: {
-        plataforma_id: 0,
-        descricao: '',
-        is_ativo: true,
+export default {
+  components: { PlataformaFormulario },
+  data: () => ({
+    loading: false,
+    dialog: false,
+    modeloBuscar: '',
+    headers: [
+      {
+        text: 'Identificador',
+        align: 'center',
+        sortable: true,
+        value: 'name',
       },
-      defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
+      {
+        text: 'Descrição',
+        value: 'descricao',
+        align: 'center',
       },
+      {
+        text: 'Situação',
+        value: 'situacao',
+        align: 'center',
+      },
+      {
+        text: 'Ação',
+        value: 'acao',
+        align: 'center',
+        sortable: false,
+      },
+    ],
+    plataformasIniciais: [],
+    editedItem: {
+      plataforma_id: null,
+      descricao: '',
+      is_ativo: true,
+    },
+  }),
+
+  computed: {
+    formTitle() {
+      return this.editedItem.plataforma_id === null ? 'Criar' : 'Editar';
+    },
+    ...mapGetters({
+      plataformas: 'plataforma/plataforma',
+    }),
+  },
+
+  watch: {
+    dialog(val) {
+      val || this.close();
+    },
+    plataformas(value) {
+      if ('error' in value) {
+        alert(value.error);
+        this.plataformasIniciais = [];
+      } else {
+        this.plataformasIniciais = value;
+      }
+    },
+
+  },
+
+  created() {
+    this.obterPlataformas();
+  },
+
+  methods: {
+
+    ...mapActions({
+      obterPlataformas: 'plataforma/obterPlataformas',
+      removerPlataforma: 'plataforma/removerPlataforma',
     }),
 
-    computed: {
-      formTitle() {
-        return this.editedIndex === -1 ? 'Criar' : 'Editar';
-      },
-      ...mapGetters({
-        plataformas: 'plataforma/plataforma',
-      }),
+    editItem(item) {
+      this.editedIndex = this.plataformas.indexOf(item);
+console.log(this.editedIndex)
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
     },
 
-    watch: {
-      dialog(val) {
-        val || this.close();
-      },
-      plataformas(value) {
-        if ('error' in value) {
-          alert(value.error);
-          this.plataformasIniciais = [];
-        } else {
-          this.plataformasIniciais = value;
-        }
-      },
-
+    deleteItem(item) {
+      if (confirm('Deseja remover esse item?')) {
+        this.removerPlataforma(item.plataforma_id);
+      }
     },
 
-    created() {
-      this.obterPlataformas();
+    close() {
+      this.dialog = false;
+      setTimeout(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      }, 300);
     },
 
-    methods: {
-
-      ...mapActions({
-        obterPlataformas: 'plataforma/obterPlataformas',
-        removerPlataforma: 'plataforma/removerPlataforma',
-        cadastrarPlataforma: 'plataforma/cadastrarPlataforma',
-        atualizarPlataforma: 'plataforma/atualizarPlataforma',
-      }),
-
-      editItem(item) {
-        this.editedIndex = this.plataformas.indexOf(item);
-        this.editedItem = Object.assign({}, item);
-        this.dialog = true;
-      },
-
-      deleteItem(item) {
-        if (confirm('Deseja remover esse item?')) {
-          this.removerPlataforma(item.plataforma_id);
-        }
-      },
-
-      close() {
-        this.dialog = false;
-        setTimeout(() => {
-          this.editedItem = Object.assign({}, this.defaultItem);
-          this.editedIndex = -1;
-        }, 300);
-      },
-
-      save() {
-        const self = this;
-        self.loading = true;
-
-        if (self.editedIndex > -1) {
-          this.atualizarPlataforma(self.editedItem);
-        } else {
-          this.cadastrarPlataforma(self.editedItem);
-        }
-        self.close();
-      },
-    },
-  };
+  },
+};
 
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-    h1, h2 {
-        font-weight: normal;
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    li {
-        display: inline-block;
-        margin: 0 10px;
-    }
-
-    a {
-        color: #42b983;
-    }
-</style>

@@ -86,143 +86,143 @@
 </template>
 <script>
 
-  import {mapActions, mapGetters} from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
-  export default {
-    props: {
-      item: {
-        type: Object,
-        default: () => {
+export default {
+  props: {
+    item: {
+      type: Object,
+      default: () => {
+      },
+    },
+  },
+  data: () => ({
+    valid: true,
+    plataformasSelecionadas: [],
+    mensagensRenderizadas: [],
+    sistemasRenderizados: [],
+    editedIndex: -1,
+    editedItem: {
+      titulo: null,
+      mensagem_id: null,
+      autor_id: null,
+      sistema_id: null,
+      descricao: '',
+      is_ativo: true,
+      plataformas: [],
+    },
+  }),
+  watch: {
+    item(val) {
+      this.editedItem = Object.assign({}, val);
+      // this.editedItem = item;
+    },
+    mensagens(value) {
+      if ('error' in value) {
+        alert(value.error);
+        this.mensagensRenderizadas = [];
+      } else {
+        this.mensagensRenderizadas = value;
+      }
+    },
+    sistemas(value) {
+      if ('error' in value) {
+        this.sistemasRenderizados = [];
+      } else {
+        this.sistemasRenderizados = value;
+      }
+    },
+    editedItem(value) {
+      this.plataformasSelecionadas = [];
+      if (this.editedItem.autor_id == null) {
+        this.editedItem.autor_id = this.accountInfo.user_id;
+      } else {
+        for (const index in value.plataformas) {
+          this.plataformasSelecionadas.push(value.plataformas[index]);
         }
       }
     },
-    data: () => ({
-      valid: true,
-      plataformasSelecionadas: [],
-      mensagensRenderizadas: [],
-      sistemasRenderizados: [],
-      editedIndex: -1,
-      editedItem: {
-        titulo: null,
-        mensagem_id: null,
-        autor_id: null,
-        sistema_id: null,
-        descricao: '',
-        is_ativo: true,
-        plataformas: [],
-      },
+  },
+
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? 'Criar' : '';
+    },
+    ...mapGetters({
+      mensagens: 'mensagem/mensagens',
+      sistemas: 'sistema/sistema',
+      contas: 'conta/conta',
+      plataformas: 'plataforma/plataforma',
+      accountInfo: 'account/accountInfo',
     }),
-    watch: {
-      item(val) {
-        this.editedItem = Object.assign({}, val)
-        // this.editedItem = item;
-      },
-      mensagens(value) {
-        if ('error' in value) {
-          alert(value.error);
-          this.mensagensRenderizadas = [];
-        } else {
-          this.mensagensRenderizadas = value;
-        }
-      },
-      sistemas(value) {
-        if ('error' in value) {
-          this.sistemasRenderizados = [];
-        } else {
-          this.sistemasRenderizados = value;
-        }
-      },
-      editedItem(value) {
-        this.plataformasSelecionadas = [];
-        if (this.editedItem.autor_id == null) {
-          this.editedItem.autor_id = this.accountInfo.user_id;
-        } else {
-          for (const index in value.plataformas) {
-            this.plataformasSelecionadas.push(value.plataformas[index]);
-          }
-        }
-      },
+  },
+
+  created() {
+
+    // if(this.plataformas.length == null) {
+    //     this.obterPlataformas();
+    // }
+  },
+  mounted() {
+    if (this.mensagens.length == null || this.mensagens.length == 0) {
+      this.obterMensagems();
+    }
+    if (this.mensagens.length > 0) {
+      this.mensagensRenderizadas = this.mensagens;
+    }
+    if (this.sistemas.length == null || this.sistemas.length == 0) {
+      this.obterSistemas();
+    }
+    if (this.sistemas.length > 0) {
+      this.sistemasRenderizados = this.sistemas;
+    }
+    if (this.contas.length == null || this.contas.length == 0) {
+      this.obterContas();
+    }
+    if (this.plataformas.length == null || this.plataformas.length == 0) {
+      this.obterPlataformas();
+    }
+  },
+  // editedItem
+  methods: {
+
+    ...mapActions({
+      obterSistemas: 'sistema/obterSistemas',
+      obterMensagems: 'mensagem/obterMensagems',
+      obterContas: 'conta/obterContas',
+      obterPlataformas: 'plataforma/obterPlataformas',
+      removerMensagem: 'mensagem/removerMensagem',
+      cadastrarMensagem: 'mensagem/cadastrarMensagem',
+      atualizarMensagem: 'mensagem/atualizarMensagem',
+    }),
+    save() {
+      const self = this;
+      self.loading = true;
+
+      if (self.editedIndex > -1) {
+        this.atualizarMensagem(self.editedItem);
+      } else {
+        console.log(self.editedItem);
+        this.cadastrarMensagem(self.editedItem);
+      }
+      self.close();
     },
 
-    computed: {
-      formTitle() {
-        return this.editedIndex === -1 ? 'Criar' : '';
-      },
-      ...mapGetters({
-        mensagens: 'mensagem/mensagens',
-        sistemas: 'sistema/sistema',
-        contas: 'conta/conta',
-        plataformas: 'plataforma/plataforma',
-        accountInfo: 'account/accountInfo',
-      }),
-    },
-
-    created() {
-
-      // if(this.plataformas.length == null) {
-      //     this.obterPlataformas();
-      // }
-    },
-    mounted() {
-      if (this.mensagens.length == null || this.mensagens.length == 0) {
-        this.obterMensagems();
-      }
-      if (this.mensagens.length > 0) {
-        this.mensagensRenderizadas = this.mensagens;
-      }
-      if (this.sistemas.length == null || this.sistemas.length == 0) {
-        this.obterSistemas();
-      }
-      if (this.sistemas.length > 0) {
-        this.sistemasRenderizados = this.sistemas;
-      }
-      if (this.contas.length == null || this.contas.length == 0) {
+    obterNomeAutor(usuario_id) {
+      // console.log(usuario_id);
+      if (this.contas.length == null) {
         this.obterContas();
       }
-      if (this.plataformas.length == null || this.plataformas.length == 0) {
-        this.obterPlataformas();
+
+      for (const index in this.contas) {
+        if (this.contas[index].usuario_id == usuario_id) {
+          return this.contas[index].nome;
+        }
       }
     },
-    // editedItem
-    methods: {
 
-      ...mapActions({
-        obterSistemas: 'sistema/obterSistemas',
-        obterMensagems: 'mensagem/obterMensagems',
-        obterContas: 'conta/obterContas',
-        obterPlataformas: 'plataforma/obterPlataformas',
-        removerMensagem: 'mensagem/removerMensagem',
-        cadastrarMensagem: 'mensagem/cadastrarMensagem',
-        atualizarMensagem: 'mensagem/atualizarMensagem',
-      }),
-      save() {
-        const self = this;
-        self.loading = true;
-
-        if (self.editedIndex > -1) {
-          this.atualizarMensagem(self.editedItem);
-        } else {
-          console.log(self.editedItem);
-          this.cadastrarMensagem(self.editedItem);
-        }
-        self.close();
-      },
-
-      obterNomeAutor(usuario_id) {
-        // console.log(usuario_id);
-        if (this.contas.length == null) {
-          this.obterContas();
-        }
-
-        for (const index in this.contas) {
-          if (this.contas[index].usuario_id == usuario_id) {
-            return this.contas[index].nome;
-          }
-        }
-      },
-
-    },
-  };
+  },
+};
 
 </script>
 
