@@ -1,16 +1,16 @@
-import moment from 'moment'
+import moment from 'moment';
 
 export default {
-  filters: {
-    formatDate: function(value) {
-      if (value) {
-        return moment(String(value)).format('MM/DD/YYYY hh:mm')
-      }
+    filters: {
+        formatDate(value) {
+            if (value) {
+                return moment(String(value)).format('MM/DD/YYYY hh:mm');
+            }
+        },
     },
-  },
-  create: function(Vue) {
-    Object.keys(this.filters).forEach(function (filter,k) {
-      Vue.filter(filter, this.filters[filter])
-    }.bind(this))
-  }
-}
+    create(Vue) {
+        Object.keys(this.filters).forEach((filter, k) => {
+            Vue.filter(filter, this.filters[filter]);
+        });
+    },
+};
