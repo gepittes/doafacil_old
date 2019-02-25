@@ -11,7 +11,7 @@
         </v-toolbar>
 
         <v-content>
-            <alerta :colorProp="alert.message_type"
+            <alerta :color="alert.message_type"
                     v-if="alert.message != null && alert.message_type != null"
             >{{alert.message}}</alerta>
             <router-view/>
