@@ -11,14 +11,9 @@
         </v-toolbar>
 
         <v-content>
-            <v-alert transition="scale-transition"
-                     :value="true"
-                     :type="alert.message_type"
-                     v-if="alert.message != null && alert.message_type != null"
-                     dismissible>
-                {{alert.message}}
-            </v-alert>
-
+            <alerta :colorProp="alert.message_type"
+                    v-if="alert.message != null && alert.message_type != null"
+            >{{alert.message}}</alerta>
             <router-view/>
         </v-content>
         <!--<v-footer :fixed="fixed" app>-->
@@ -29,85 +24,87 @@
 
 <script>
 
-  import {mapState, mapActions, mapGetters} from 'vuex';
-  import NotificacaoBadge from './modules/notificacaoBadge/NotificacaoBadge.vue';
-  import BarraLateral from './modules/core/BarraLateral.vue';
+import { mapState, mapActions, mapGetters } from 'vuex';
+import NotificacaoBadge from './modules/notificacaoBadge/NotificacaoBadge.vue';
+import BarraLateral from './modules/core/BarraLateral.vue';
+import Alerta from './modules/alert/Alerta.vue';
 
-  export default {
-    name: 'App',
-    data() {
-      return {
-        loading: false,
-        clipped: false,
-        drawer: false,
-        fixed: false,
-        items: [
-          {
-            icon: 'home',
-            title: 'Início',
-            to: '/',
-          },
-          // {
-          //   icon: 'chat',
-          //   title: 'Chat Interno',
-          //   to: '/websocket',
-          // },
-          {
-            icon: 'chat',
-            title: 'Notificacao',
-            to: '/notificacao',
-          },
-          {
-            icon: 'edit',
-            title: 'Administração',
-            to: '/administracao',
-          },
-          {
-            icon: 'info',
-            title: 'Sobre',
-            to: '/sobre',
-          },
-          {
-            icon: 'chat',
-            title: '(Teste) Chat/WebSocket',
-            to: '/websocket',
-          },
-          {
-            icon: 'exit_to_app',
-            title: 'Sair',
-            to: '/logout',
-          },
-        ],
-        miniVariant: false,
-        right: true,
-        rightDrawer: false,
-        title: 'Notification WebApp',
-      };
-    },
-    computed: {
-      ...mapState({
-        alert: state => state.alert,
-        // isLoggedIn: state => state.isLoggedIn
-        // status: state => state.status
-      }),
-      ...mapGetters({
-        status: 'account/status',
-        user: 'account/user',
-        accountInfo: 'account/accountInfo',
-      }),
-    },
-    methods: {
-      ...mapActions({
-        clearAlert: 'alert/clear',
-      }),
-    },
-    mounted() {
-      this.loading = true;
-    },
-    components: {
-      NotificacaoBadge,
-      BarraLateral,
-    },
+export default {
+  name: 'App',
+  data() {
+    return {
+      loading: false,
+      clipped: false,
+      drawer: false,
+      fixed: false,
+      items: [
+        {
+          icon: 'home',
+          title: 'Início',
+          to: '/',
+        },
+        // {
+        //   icon: 'chat',
+        //   title: 'Chat Interno',
+        //   to: '/websocket',
+        // },
+        {
+          icon: 'chat',
+          title: 'Notificacao',
+          to: '/notificacao',
+        },
+        {
+          icon: 'edit',
+          title: 'Administração',
+          to: '/administracao',
+        },
+        {
+          icon: 'info',
+          title: 'Sobre',
+          to: '/sobre',
+        },
+        {
+          icon: 'chat',
+          title: '(Teste) Chat/WebSocket',
+          to: '/websocket',
+        },
+        {
+          icon: 'exit_to_app',
+          title: 'Sair',
+          to: '/logout',
+        },
+      ],
+      miniVariant: false,
+      right: true,
+      rightDrawer: false,
+      title: 'Notification WebApp',
+    };
+  },
+  computed: {
+    ...mapState({
+      alert: state => state.alert,
+      // isLoggedIn: state => state.isLoggedIn
+      // status: state => state.status
+    }),
+    ...mapGetters({
+      status: 'account/status',
+      user: 'account/user',
+      accountInfo: 'account/accountInfo',
+    }),
+  },
+  methods: {
+    ...mapActions({
+      clearAlert: 'alert/clear',
+    }),
+  },
+  mounted() {
+    this.loading = true;
+  },
+  components: {
+    NotificacaoBadge,
+    BarraLateral,
+    Alerta,
+  },
 
-  };
+};
 </script>
