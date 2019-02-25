@@ -81,7 +81,8 @@
 
                 <v-card-text>
                     <plataforma-formulario
-                            :item="editedItem"></plataforma-formulario>
+                            :item="editedItem"
+                            :dialog.sync="dialog"></plataforma-formulario>
                 </v-card-text>
 
                 <v-card-actions>
