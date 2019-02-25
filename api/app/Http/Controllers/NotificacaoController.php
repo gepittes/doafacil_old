@@ -43,4 +43,15 @@ class NotificacaoController extends Controller
         $response = response();
         return $response->json($notificacao->alterar($id, $dados));
     }
+
+    public function delete(ServerRequestInterface $request, $id = null)
+    {
+        $notificacao = new \App\Services\Notificacao();
+
+        /**
+         * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
+         */
+        $response = response();
+        return $response->json($notificacao->remover($id));
+    }
 }

@@ -30,8 +30,7 @@ class Mensagem extends Model
 
     public function delete()
     {
-        $this->plataformas()->delete();
-
+//        $this->plataformas()->delete();
         return parent::delete();
     }
 

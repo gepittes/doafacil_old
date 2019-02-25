@@ -88,6 +88,7 @@ class Notificacao implements IService
                 'notificacao.mensagem.is_ativo',
                 'notificacao.mensagem.autor_id',
                 'notificacao.sistema.descricao as sistema',
+                'notificacao.usuario_has_sistema.usuario_id as usuario_id'
             ])
             ->join('notificacao.mensagem', 'notificacao.mensagem_id', '=', 'notificacao.mensagem.mensagem_id')
             ->join('notificacao.usuario_has_sistema', 'notificacao.mensagem.sistema_id', '=', 'notificacao.usuario_has_sistema.sistema_id')

@@ -1,29 +1,38 @@
 <template>
     <v-container fluid>
         <v-card>
-            <v-tabs light
-                    centered
-                    color="blue darken-1"
+            <v-tabs
+                light
+                centered
+                color="blue darken-1"
+                dark
+                icons-and-text
+                slider-color="warning"
+                grow>
+                <v-tab
                     dark
-                    icons-and-text
-                    slider-color="warning"
-                    grow>
-                <v-tab dark to="/administracao/plataforma">
+                    to="/administracao/plataforma">
                     Plataformas
                     <v-icon>devices</v-icon>
                 </v-tab>
 
-                <v-tab dark to="/administracao/sistema">
+                <v-tab
+                    dark
+                    to="/administracao/sistema">
                     Sistemas
                     <v-icon>settings_system_daydream</v-icon>
                 </v-tab>
 
-                <v-tab dark to="/administracao/mensagem">
+                <v-tab
+                    dark
+                    to="/administracao/mensagem">
                     Mensagens
                     <v-icon>chat</v-icon>
                 </v-tab>
 
-                <v-tab dark to="/administracao/conta">
+                <v-tab
+                    dark
+                    to="/administracao/conta">
                     Contas
                     <v-icon>account_circle</v-icon>
                 </v-tab>
@@ -40,27 +49,26 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex';
+import { mapGetters } from 'vuex';
 
-  export default {
+export default {
     data() {
-      return {
-        bottomNav: '/plataforma',
-      };
+        return {
+            bottomNav: '/plataforma',
+        };
     },
 
     computed: {
-      ...mapGetters({
-        accountInfo: 'account/accountInfo',
-      }),
+        ...mapGetters({
+            accountInfo: 'account/accountInfo',
+        }),
     },
 
     mounted() {
-
-      if (this.accountInfo.is_admin === true) {
-        this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', {root: true});
-        this.$router.push({name: 'home'});
-      }
+        if (this.accountInfo.is_admin !== true) {
+            this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
+            this.$router.push({ name: 'home' });
+        }
     },
-  };
+};
 </script>
