@@ -1,28 +1,37 @@
 <template>
     <v-container fluid>
-        <v-layout column justify-center>
-            <v-card flat dark>
-                <v-toolbar dark color="primary">
-                    <v-spacer></v-spacer>
-                    <v-spacer></v-spacer>
-                    <v-spacer></v-spacer>
+        <v-layout
+            column
+            justify-center>
+            <v-card
+                flat
+                dark>
+                <v-toolbar
+                    dark
+                    color="primary">
+                    <v-spacer/>
+                    <v-spacer/>
+                    <v-spacer/>
                     <v-text-field
-                            v-model="modeloBuscar"
-                            append-icon="search"
-                            label="Buscar"
-                            single-line
-                            hide-details
-                    ></v-text-field>
+                        v-model="modeloBuscar"
+                        append-icon="search"
+                        label="Buscar"
+                        single-line
+                        hide-details
+                    />
                 </v-toolbar>
                 <v-card-text>
-                    <v-data-table light
-                                  :headers="headers"
-                                  :items="plataformasIniciais"
-                                  :search="modeloBuscar"
-                                  :rows-per-page-items="[ 10, 25, 40 ]"
-                                  :rows-per-page-text="'Registros por página'"
-                                  class="elevation-1">
-                        <template slot="items" slot-scope="props">
+                    <v-data-table
+                        :headers="headers"
+                        :items="plataformasIniciais"
+                        :search="modeloBuscar"
+                        :rows-per-page-items="[ 10, 25, 40 ]"
+                        :rows-per-page-text="'Registros por página'"
+                        light
+                        class="elevation-1">
+                        <template
+                            slot="items"
+                            slot-scope="props">
                             <td class="text-xs-center">{{ props.item.plataforma_id }}</td>
                             <td class="text-xs-center">{{ props.item.descricao }}</td>
                             <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
@@ -42,24 +51,29 @@
                             </td>
                         </template>
                         <template slot="no-data">
-                            <v-btn color="primary" @click="this.obterPlataformas">Reset</v-btn>
+                            <v-btn
+                                color="primary"
+                                @click="this.obterPlataformas">Reset</v-btn>
                         </template>
                     </v-data-table>
                     <v-scale-transition>
-                        <v-btn fab
-                               color="success"
-                               dark
-                               fixed
-                               bottom
-                               right
-                               @click="newItem()">
+                        <v-btn
+                            fab
+                            color="success"
+                            dark
+                            fixed
+                            bottom
+                            right
+                            @click="newItem()">
                             <v-icon>add</v-icon>
                         </v-btn>
                     </v-scale-transition>
                 </v-card-text>
             </v-card>
         </v-layout>
-        <v-dialog v-model="dialog" max-width="600px">
+        <v-dialog
+            v-model="dialog"
+            max-width="600px">
             <v-card>
                 <v-card-title>
                     <span class="headline">{{ formTitle }} Plataforma</span>
@@ -158,7 +172,7 @@ export default {
 
     newItem() {
       this.editedItem = Object.assign({}, {
-        plataforma_id: null,
+            plataforma_id: null,
         descricao: '',
         is_ativo: true,
       });

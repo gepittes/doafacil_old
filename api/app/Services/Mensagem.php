@@ -81,8 +81,8 @@ class Mensagem implements IService
 
     public function vincularPlataforma($mensagem_id, array $plataformas)
     {
+        $mensagem = ModeloMensagem::findOrFail($mensagem_id);
         foreach ($plataformas as $plataforma) {
-            $mensagem = ModeloMensagem::findOrFail($mensagem_id);
             $mensagem->plataformas()->attach($plataforma['plataforma_id']);
         }
     }
@@ -90,6 +90,9 @@ class Mensagem implements IService
     public function remover($id)
     {
         $plataforma = ModeloMensagem::findOrFail($id);
+        $plataformas = $plataforma->plataformas();
+        $plataformas->where('mensagem_id', '=', $id)->detach();
+
         return $plataforma->delete();
     }
 }

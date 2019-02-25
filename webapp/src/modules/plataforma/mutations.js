@@ -15,4 +15,4 @@ export const mutations = {
   [types.ACRESCENTAR_PLATAFORMA](state, plataforma) {
     state.plataforma.push(plataforma);
   },
-}
+};

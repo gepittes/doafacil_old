@@ -9,11 +9,11 @@ import './registerServiceWorker';
 
 import VeeValidate from 'vee-validate';
 
+import { configureFakeBackend } from './modules/_helpers';
+
 // process.env.NODE_CONFIG_DIR = './config'
 
-console.log(process.env)
-
-import { configureFakeBackend } from './modules/_helpers';
+console.log(process.env);
 
 Vue.use(VeeValidate);
 configureFakeBackend();
@@ -21,8 +21,8 @@ configureFakeBackend();
 filters.create(Vue);
 
 new Vue({
-  router,
-  store,
-  filters,
-  render: h => h(App),
+    router,
+    store,
+    filters,
+    render: h => h(App),
 }).$mount('#app');
