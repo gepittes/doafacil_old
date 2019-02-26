@@ -67,6 +67,7 @@
       defaultItem: {
         sistema_id: null,
         descricao: '',
+        url: '',
         is_ativo: true,
       },
     }),
