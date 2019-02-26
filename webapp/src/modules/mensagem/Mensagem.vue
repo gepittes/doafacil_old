@@ -85,11 +85,6 @@
                             :item="editedItem"
                     ></mensagem-formulario>
                 </v-card-text>
-
-                <v-card-actions>
-                    <v-spacer/>
-                    <v-btn color="error" @click.native="close">Fechar</v-btn>
-                </v-card-actions>
             </v-card>
         </v-dialog>
     </v-container>
@@ -101,7 +96,6 @@ import MensagemFormulario from './MensagemFormulario.vue';
 
 export default {
     data: () => ({
-        loading: false,
         dialog: false,
         exibirBotaoGravar: true,
         plataformasSelecionadas: [],

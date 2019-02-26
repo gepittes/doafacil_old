@@ -84,11 +84,6 @@
                             :item="editedItem"
                             :dialog.sync="dialog"></plataforma-formulario>
                 </v-card-text>
-
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="error"  @click.native="close">Cancelar</v-btn>
-                </v-card-actions>
             </v-card>
         </v-dialog>
     </v-container>

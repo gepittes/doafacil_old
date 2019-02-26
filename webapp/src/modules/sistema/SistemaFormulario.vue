@@ -62,7 +62,6 @@
     },
     data: () => ({
       loading: false,
-      editedIndex: -1,
       editedItem: {},
       defaultItem: {
         sistema_id: null,
@@ -84,9 +83,6 @@
     watch: {
       item(value) {
         this.editedItem = Object.assign({}, value);
-      },
-      index(value) {
-        this.editedIndex = Object.assign({}, value);
       },
     },
 
