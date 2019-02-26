@@ -76,7 +76,7 @@
     },
     computed: {
       formTitle() {
-        return this.editedIndex === -1 ? 'Criar' : 'Editar';
+        return this.editedItem.sistema_id === null ? 'Criar' : 'Editar';
       },
     },
 
