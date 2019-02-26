@@ -252,6 +252,7 @@ export default {
         ...mapGetters({
             sistemas: 'sistema/sistema',
             contas: 'conta/conta',
+            accountInfo: 'account/accountInfo',
         }),
     },
 
@@ -287,19 +288,29 @@ export default {
         }),
 
         editItem(item) {
-            this.editedIndex = this.contas.indexOf(item);
-            this.editedItem.sistemas = [];
-            this.editedItem = Object.assign({}, item);
-            this.dialog = true;
+            if (this.accountInfo.is_admin !== true) {
+                this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
+            }
+            if (this.accountInfo.is_admin === true) {
+                this.editedIndex = this.contas.indexOf(item);
+                this.editedItem.sistemas = [];
+                this.editedItem = Object.assign({}, item);
+                this.dialog = true;
 
-            for (const indice in this.editedItem.sistemas) {
-                delete this.editedItem.sistemas[indice].usuario_has_sistema;
+                for (const indice in this.editedItem.sistemas) {
+                    delete this.editedItem.sistemas[indice].usuario_has_sistema;
+                }
             }
         },
 
         deleteItem(item) {
             if (confirm('Deseja remover esse item?')) {
-                this.removerConta(item.usuario_id);
+                if (this.accountInfo.is_admin !== true) {
+                    this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
+                }
+                if (this.accountInfo.is_admin === true) {
+                    this.removerConta(item.usuario_id);
+                }
             }
         },
 
