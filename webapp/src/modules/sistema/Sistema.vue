@@ -74,51 +74,10 @@
                 </v-card-title>
 
                 <v-card-text>
-                    <v-container grid-list-md>
-                        <v-layout wrap>
-                            <v-flex
-                                xs12
-                                sm6
-                                md12>
-                                <v-text-field
-                                    v-model="editedItem.descricao"
-                                    required
-                                    label="Descrição"/>
-                            </v-flex>
-                            <v-flex
-                                xs12
-                                sm6
-                                md12>
-                                <v-text-field
-                                    v-model="editedItem.url"
-                                    required
-                                    label="URL"/>
-                            </v-flex>
-                            <v-flex
-                                xs12
-                                sm6
-                                md12>
-                                <h3>Situação</h3>
-                                <v-switch
-                                    :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                                    v-model="editedItem.is_ativo"/>
-                            </v-flex>
-                        </v-layout>
-                    </v-container>
+                    <sistema-formulario
+                            :item="editedItem"
+                            :dialog.sync="dialog"></sistema-formulario>
                 </v-card-text>
-
-                <v-card-actions>
-                    <v-spacer/>
-                    <v-btn
-                        color="blue darken-1"
-                        flat
-                        @click.native="close">Cancelar</v-btn>
-                    <v-btn
-                        v-if="!loading"
-                        color="blue darken-1"
-                        @click.native="save">Gravar
-                    </v-btn>
-                </v-card-actions>
             </v-card>
             <v-btn
                 slot="activator"
@@ -137,9 +96,11 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex';
+import SistemaFormulario from "./SistemaFormulario";
 
 export default {
-    data: () => ({
+  components: {SistemaFormulario},
+  data: () => ({
         loading: false,
         dialog: false,
         modeloBuscar: '',
@@ -237,13 +198,7 @@ export default {
             }
         },
 
-        close() {
-            this.dialog = false;
-            setTimeout(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            }, 300);
-        },
+
 
         save() {
             const self = this;
