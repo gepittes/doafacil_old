@@ -143,7 +143,11 @@
                                     <h4>DADOS DA NOTIFICAÇÃO</h4>
                                     <v-divider class="pb-2"/>
                                 </v-flex>
-                                <v-flex>
+                            </v-layout>
+                            <v-layout
+                                row
+                                justify-space-between>
+                                <v-flex xs6>
                                     <b>Títutlo</b><br>
                                     <p
                                         v-if="notificacao.titulo"
@@ -154,7 +158,7 @@
                                         -
                                     </p>
                                 </v-flex>
-                                <v-flex class="text-xs-center">
+                                <v-flex xs6 class="text-xs-center">
                                     <b>Sistema</b>
                                     <p
                                         v-if="notificacao.sistema"
