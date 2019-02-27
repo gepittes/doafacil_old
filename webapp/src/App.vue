@@ -38,6 +38,11 @@ import Alerta from './modules/alert/Alerta.vue';
 
 export default {
     name: 'App',
+    components: {
+        NotificacaoBadge,
+        BarraLateral,
+        Alerta,
+    },
     data() {
         return {
             loading: false,
@@ -99,19 +104,13 @@ export default {
             accountInfo: 'account/accountInfo',
         }),
     },
+    mounted() {
+        this.loading = true;
+    },
     methods: {
         ...mapActions({
             clearAlert: 'alert/clear',
         }),
     },
-    mounted() {
-        this.loading = true;
-    },
-    components: {
-        NotificacaoBadge,
-        BarraLateral,
-        Alerta,
-    },
-
 };
 </script>

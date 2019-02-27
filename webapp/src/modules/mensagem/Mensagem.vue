@@ -56,7 +56,7 @@
                         <template slot="no-data">
                             <v-btn
                                 color="primary"
-                                @click="this.obterMensagems">Reset</v-btn>
+                                @click="obterMensagems">Reset</v-btn>
                         </template>
                     </v-data-table>
                     <v-btn
@@ -106,13 +106,13 @@
                                 />
 
                                 <h3 v-if="editedItem.mensagem_id != null"> Plataformas </h3>
-                                <v-list style="overflow: auto; max-height: 300px">
+                                <v-list
+                                    v-if="editedItem.mensagem_id == null"
+                                    style="overflow: auto; max-height: 300px">
                                     <v-list-tile
-                                        v-for="plataforma in this.plataformas"
-                                        v-if="editedItem.mensagem_id == null"
+                                        v-for="plataforma in plataformas"
                                         :key="plataforma.title"
                                         avatar>
-
                                         <v-list-tile-content>
                                             <v-checkbox
                                                 v-model="editedItem.plataformas"
@@ -125,18 +125,15 @@
                                     </v-list-tile>
                                     <v-list-tile
                                         v-for="plataforma in editedItem.plataformas"
-                                        v-if="editedItem.mensagem_id != null"
                                         :key="plataforma.title"
                                         avatar>
-
                                         <v-list-tile-content>
                                             {{ plataforma.descricao }}
                                         </v-list-tile-content>
-
-
                                     </v-list-tile>
                                 </v-list>
-                                <br >
+
+                                <br>
 
                                 <v-select
                                     v-model="editedItem.sistema_id"
@@ -150,8 +147,8 @@
                                     required/>
 
                                 <v-text-field
-                                    v-if="plataformasSelecionadas.length > 0"
-                                    :value="this.obterNomeAutor(editedItem.autor_id)"
+                                    v-if="editedItem.autor_id !== null"
+                                    :value="obterNomeAutor(editedItem.autor_id)"
                                     disabled
                                     label="Autor"
                                     box/>
@@ -253,7 +250,7 @@ export default {
 
     watch: {
         dialog(val) {
-            if (this.editedItem.autor_id == null) {
+            if (this.editedItem.autor_id == null && this.accountInfo.user_id !== null) {
                 this.editedItem.autor_id = this.accountInfo.user_id;
             }
             this.exibirBotaoGravar = true;
@@ -261,8 +258,7 @@ export default {
                 this.exibirBotaoGravar = false;
             }
 
-
-            val || this.close();
+            return val || this.close();
         },
         mensagens(value) {
             if ('error' in value) {
@@ -280,43 +276,37 @@ export default {
             }
         },
         editedItem(value) {
-            this.plataformasSelecionadas = [];
-            if (this.editedItem.autor_id == null) {
-                this.editedItem.autor_id = this.accountInfo.user_id;
-            } else {
-                for (const index in value.plataformas) {
-                    this.plataformasSelecionadas.push(value.plataformas[index]);
-                }
+            const self = this;
+            self.plataformasSelecionadas = [];
+            if (self.editedItem.autor_id == null) {
+                self.editedItem.autor_id = self.accountInfo.user_id;
+            } else if (Object.prototype.hasOwnProperty.call(value, 'plataformas')) {
+                Object.keys(value.plataformas).forEach((indice) => {
+                    self.plataformasSelecionadas.push(value.plataformas[indice]);
+                });
             }
         },
     },
-    created() {
-
-    // if(this.plataformas.length == null) {
-    //     this.obterPlataformas();
-    // }
-    },
     mounted() {
-        if (this.mensagens.length == null || this.mensagens.length == 0) {
+        if (this.mensagens.length == null || this.mensagens.length === 0) {
             this.obterMensagems();
         }
         if (this.mensagens.length > 0) {
             this.mensagensRenderizadas = this.mensagens;
         }
-        if (this.sistemas.length == null || this.sistemas.length == 0) {
+        if (this.sistemas.length == null || this.sistemas.length === 0) {
             this.obterSistemas();
         }
         if (this.sistemas.length > 0) {
             this.sistemasRenderizados = this.sistemas;
         }
-        if (this.contas.length == null || this.contas.length == 0) {
+        if (this.contas.length == null || this.contas.length === 0) {
             this.obterContas();
         }
-        if (this.plataformas.length == null || this.plataformas.length == 0) {
+        if (this.plataformas.length == null || this.plataformas.length === 0) {
             this.obterPlataformas();
         }
     },
-    // editedItem
     methods: {
 
         ...mapActions({
@@ -336,6 +326,7 @@ export default {
         },
 
         deleteItem(item) {
+            // eslint-disable-next-line
             if (confirm('Deseja remover esse item?')) {
                 this.removerMensagem(item.mensagem_id);
             }
@@ -356,54 +347,28 @@ export default {
             if (self.editedIndex > -1) {
                 this.atualizarMensagem(self.editedItem);
             } else {
-                console.log(self.editedItem);
                 this.cadastrarMensagem(self.editedItem);
             }
             self.close();
         },
 
-        obterNomeAutor(usuario_id) {
-            // console.log(usuario_id);
+        obterNomeAutor(usuarioId) {
             if (this.contas.length == null) {
                 this.obterContas();
             }
 
-            for (const index in this.contas) {
-                if (this.contas[index].usuario_id == usuario_id) {
-                    return this.contas[index].nome;
-                }
-            }
-        },
+            let nomeAutor = '';
+            const self = this;
 
-        isPlataformaSelecionada(plataformasSelecionadas, plataforma_id) {
-            for (const index in plataformasSelecionadas) {
-                if (plataformasSelecionadas[index].plataforma_id == plataforma_id) {
-                    return true;
+            this.contas.every((item, indice) => {
+                if (this.contas[indice].usuario_id === usuarioId) {
+                    nomeAutor = self.contas[indice].nome;
+                    return false;
                 }
-            }
+                return true;
+            });
+            return nomeAutor;
         },
     },
 };
-
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-    h1, h2 {
-        font-weight: normal;
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    li {
-        display: inline-block;
-        margin: 0 10px;
-    }
-
-    a {
-        color: #42b983;
-    }
-</style>

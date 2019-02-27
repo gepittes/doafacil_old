@@ -6,6 +6,7 @@ export default {
             if (value) {
                 return moment(String(value)).format('MM/DD/YYYY hh:mm');
             }
+            return false;
         },
     },
     create(Vue) {

@@ -22,7 +22,7 @@
                     </v-list-tile-avatar>
 
                     <v-list-tile-content>
-                        <v-list-tile-title>{{ this.accountInfo.name }}</v-list-tile-title>
+                        <v-list-tile-title>{{ accountInfo.name }}</v-list-tile-title>
                     </v-list-tile-content>
 
                     <v-list-tile-action>
@@ -115,7 +115,6 @@ export default {
                     to: '/websocket',
                 },
             ];
-            console.log(this.accountInfo);
             if (this.accountInfo.is_admin === true) {
                 menusLaterais.push({
                     icon: 'edit',

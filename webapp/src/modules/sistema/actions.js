@@ -4,7 +4,7 @@ import * as types from './types';
 export const obterSistemas = ({ dispatch, commit }) => {
     axios.get('http://localhost/v1/sistema')
         .then((response) => {
-            const data = response.data;
+            const { data } = response.data;
             commit(types.OBTER_SISTEMAS, data.data);
         })
         .catch((error) => {
@@ -14,10 +14,10 @@ export const obterSistemas = ({ dispatch, commit }) => {
         });
 };
 
-export const removerSistema = ({ dispatch, commit }, sistema_id) => {
-    axios.delete(`http://localhost/v1/sistema/${sistema_id}`)
+export const removerSistema = ({ dispatch, commit }, sistemaId) => {
+    axios.delete(`http://localhost/v1/sistema/${sistemaId}`)
         .then(() => {
-            commit(types.DELETE_SISTEMA, sistema_id);
+            commit(types.DELETE_SISTEMA, sistemaId);
         })
         .catch((error) => {
             dispatch('alert/error', error.response.data.error, {
@@ -28,7 +28,7 @@ export const removerSistema = ({ dispatch, commit }, sistema_id) => {
 
 export const cadastrarSistema = ({ dispatch, commit }, sistema) => axios.post('http://localhost/v1/sistema', sistema)
     .then((response) => {
-        const data = response.data;
+        const { data } = response.data;
         commit(types.ACRESCENTAR_SISTEMA, data.data);
         dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
     }).catch((error) => {

@@ -7,12 +7,12 @@ export const mutations = {
     [types.ACRESCENTAR_SISTEMA](state, sistema) {
         state.sistema.push(sistema);
     },
-    [types.DELETE_SISTEMA](state, sistema_id) {
-        const index = state.sistema.findIndex(sistema => sistema.sistema_id === sistema_id);
+    [types.DELETE_SISTEMA](state, sistemaId) {
+        const index = state.sistema.findIndex(sistema => sistema.sistema_id === sistemaId);
         state.sistema.splice(index, 1);
     },
-    [types.ATUALIZAR_SISTEMA](state, sistema_editada) {
-        const index = state.sistema.findIndex(sistema => sistema.sistema_id === sistema_editada.sistema_id);
-        Object.assign(state.sistema[index], sistema_editada);
+    [types.ATUALIZAR_SISTEMA](state, sistemaEditada) {
+        const index = state.sistema.findIndex(sistema => sistema.sistema_id === sistemaEditada.sistema_id);
+        Object.assign(state.sistema[index], sistemaEditada);
     },
 };

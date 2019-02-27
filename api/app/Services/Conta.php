@@ -133,4 +133,10 @@ class Conta implements IService
             return $usuario->sistemas()->detach();
         }
     }
+
+    public function remover($id)
+    {
+        $usuario = ModeloUsuario::findOrFail($id);
+        return $usuario->delete();
+    }
 }
