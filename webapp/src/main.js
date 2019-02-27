@@ -1,3 +1,4 @@
+import VeeValidate from 'vee-validate';
 import '@babel/polyfill';
 import Vue from 'vue';
 import './plugins/vuetify';
@@ -7,7 +8,6 @@ import store from './store';
 import filters from './filters';
 import './registerServiceWorker';
 
-import VeeValidate from 'vee-validate';
 
 import { configureFakeBackend } from './modules/_helpers';
 
