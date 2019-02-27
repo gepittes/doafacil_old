@@ -38,14 +38,10 @@
                 </v-tab>
             </v-tabs>
             <v-card-text heigth="300px">
-                <!--<component :is=""-->
                 <router-view/>
             </v-card-text>
         </v-card>
-
-
     </v-container>
-
 </template>
 
 <script>
