@@ -1,360 +1,255 @@
 <template>
     <v-container fluid>
         <v-layout
-            column
-            justify-center>
+                column
+                justify-center>
             <v-card flat>
                 <v-toolbar
-                    dark
-                    color="primary">
+                        dark
+                        color="primary">
                     <v-toolbar-title>Notificacões</v-toolbar-title>
                     <v-dialog
-                        v-model="dialog"
-                        max-width="500px">
+                            v-model="dialog"
+                            max-width="500px">
                         <v-card>
                             <v-card-title light>
                                 <span class="headline">{{ formTitle }} Notificação</span>
                             </v-card-title>
 
                             <v-card-text>
-                                <v-container grid-list-md>
-                                    <v-layout wrap>
-                                        <v-flex
-                                            xs12
-                                            sm6
-                                            md12>
-                                            <v-textarea
-                                                v-model="editedItem.codigo_destinatario"
-                                                :rules="[(object) => object != null && object.length != null && object.length > 3 || 'Campo obrigatório.']"
-                                                label="Código Destinatário"
-                                                auto-grow
-                                                box
-                                                color="deep-purple"
-                                                required
-                                                rows="5"/>
-
-                                            <v-select
-                                                v-model="editedItem.mensagem_id"
-                                                :disabled="editedItem.notificacao_id != null"
-                                                :items="mensagensRenderizadas"
-                                                :rules="[v => !!v || 'Campo obrigatório']"
-                                                label="Mensagem"
-                                                box
-                                                item-text="descricao"
-                                                item-value="mensagem_id"
-                                                required/>
-
-                                        </v-flex>
-                                    </v-layout>
-                                </v-container>
+                                <notificacao-formulario
+                                        :item="editedItem"
+                                        :dialog.sync="dialog"></notificacao-formulario>
                             </v-card-text>
 
-                            <v-card-actions>
-                                <v-spacer/>
-                                <v-btn
-                                    color="error"
-                                    @click.native="close">Fechar</v-btn>
-                                <v-btn
-                                    v-if="!loading && exibirBotaoGravar"
-                                    color="blue darken-1"
-                                    @click.native="save">Gravar
-                                </v-btn>
-                            </v-card-actions>
                         </v-card>
-                        <v-btn
-                            slot="activator"
-                            color="blue"
-                            fab
-                            small>
-                            <v-icon>add</v-icon>
-                        </v-btn>
+
                     </v-dialog>
                     <v-spacer/>
                     <v-spacer/>
                     <v-text-field
-                        v-model="modeloBuscar"
-                        append-icon="search"
-                        label="Buscar"
-                        single-line
-                        hide-details
+                            v-model="modeloBuscar"
+                            append-icon="search"
+                            label="Buscar"
+                            single-line
+                            hide-details
                     />
                 </v-toolbar>
                 <v-card-text>
                     <v-data-table
-                        :headers="headers"
-                        :items="notificacoesRenderizadas"
-                        :search="modeloBuscar"
-                        :rows-per-page-items="[ 10, 25, 40 ]"
-                        :rows-per-page-text="'Registros por página'"
-                        light
-                        class="elevation-1">
+                            :headers="headers"
+                            :items="notificacoesRenderizadas"
+                            :search="modeloBuscar"
+                            :rows-per-page-items="[ 10, 25, 40 ]"
+                            :rows-per-page-text="'Registros por página'"
+                            light
+                            class="elevation-1">
                         <template
-                            slot="items"
-                            slot-scope="props">
+                                slot="items"
+                                slot-scope="props">
                             <td class="text-xs-center">{{ props.item.notificacao_id }}</td>
                             <td class="text-xs-center">{{ props.item.codigo_destinatario }}</td>
                             <td class="text-xs-center">{{ props.item.mensagem.titulo }}</td>
                             <td class="text-xs-center">{{ props.item.data_envio | formatDate }}</td>
                             <td class="text-xs-center">
-                                <v-icon v-if="props.item.is_notificacao_lida">thumb_up</v-icon>
-                                <v-icon v-if="!props.item.is_notificacao_lida">thumb_down</v-icon>
+                                <v-icon v-if="props.item.is_notificacao_lida" color="blue">thumb_up</v-icon>
+                                <v-icon v-if="!props.item.is_notificacao_lida" color="red">thumb_down</v-icon>
                             </td>
                             <td
-                                v-if="accountInfo.is_admin"
-                                class="justify-center layout px-0">
+                                    v-if="accountInfo.is_admin"
+                                    class="justify-center layout px-0">
                                 <v-btn icon>
                                     <v-icon
-                                        color="grey darken-1"
-                                        @click="deleteItem(props.item)">delete
+                                            color="grey darken-1"
+                                            @click="deleteItem(props.item)">delete
                                     </v-icon>
                                 </v-btn>
                             </td>
                             <td
-                                v-else
-                                class="justify-center layout px-0 pt-3"> - </td>
+                                    v-else
+                                    class="justify-center layout px-0 pt-3"> -
+                            </td>
                         </template>
                         <template slot="no-data">
                             <v-btn
-                                color="primary"
-                                @click="this.obterNotificacaos">Reset</v-btn>
+                                    color="primary"
+                                    @click="this.obterNotificacaos">Reset
+                            </v-btn>
                         </template>
                     </v-data-table>
                 </v-card-text>
             </v-card>
         </v-layout>
+        <v-scale-transition>
+            <v-btn
+                    fab
+                    color="success"
+                    dark
+                    fixed
+                    bottom
+                    right
+                    @click="newItem()">
+                <v-icon>add</v-icon>
+            </v-btn>
+        </v-scale-transition>
     </v-container>
 </template>
 <script>
 
-import { mapActions, mapGetters } from 'vuex';
+  import {mapActions, mapGetters} from 'vuex';
+  import NotificacaoFormulario from "./NotificacaoFormulario";
 
-export default {
+  export default {
+    components: {NotificacaoFormulario},
     data: () => ({
-        loading: false,
-        dialog: false,
-        exibirBotaoGravar: true,
-        modeloBuscar: '',
-        headers: [
-            {
-                text: 'Identificador',
-                align: 'center',
-                sortable: true,
-                value: 'notificacao_id',
-            },
-            {
-                text: 'Código Destinatário',
-                value: 'codigo_destinatario',
-                align: 'center',
-            },
-            {
-                text: 'Mensagem',
-                value: 'mensagem.titulo',
-                align: 'center',
-            },
-            {
-                text: 'Data de envio',
-                value: 'data_envio',
-                align: 'center',
-            },
-            {
-                text: 'Notificação Lida',
-                value: 'is_notificacao_lida',
-                align: 'center',
-            },
-            {
-                text: 'Ação',
-                value: 'acao',
-                align: 'center',
-                sortable: false,
-            },
-        ],
-        notificacoesRenderizadas: [],
-        mensagensRenderizadas: [],
-        editedIndex: -1,
-        editedItem: {
-            notificacao_id: null,
-            autor_id: null,
-            mensagem_id: null,
-            mensagem: null,
-            descricao: '',
-            is_ativo: true,
-            plataformas: [],
+      loading: false,
+      dialog: false,
+      exibirBotaoGravar: true,
+      modeloBuscar: '',
+      headers: [
+        {
+          text: 'Identificador',
+          align: 'center',
+          sortable: true,
+          value: 'notificacao_id',
         },
+        {
+          text: 'Código Destinatário',
+          value: 'codigo_destinatario',
+          align: 'center',
+        },
+        {
+          text: 'Mensagem',
+          value: 'mensagem.titulo',
+          align: 'center',
+        },
+        {
+          text: 'Data de envio',
+          value: 'data_envio',
+          align: 'center',
+        },
+        {
+          text: 'Notificação Lida',
+          value: 'is_notificacao_lida',
+          align: 'center',
+        },
+        {
+          text: 'Ação',
+          value: 'acao',
+          align: 'center',
+          sortable: false,
+        },
+      ],
+      notificacoesRenderizadas: [],
+
+      editedItem: {},
+      defaultItem: {
+        notificacao_id: null,
+        autor_id: null,
+        mensagem_id: null,
+        mensagem: null,
+        descricao: '',
+        is_ativo: true,
+        plataformas: [],
+      },
+      websocket: {
+        connection: null,
+      },
     }),
 
     computed: {
-        formTitle() {
-            return this.editedIndex === -1 ? 'Criar' : 'Editar';
-        },
-        ...mapGetters({
-            notificacoes: 'notificacao/notificacoes',
-            mensagens: 'mensagem/mensagens',
-            contas: 'conta/conta',
-            plataformas: 'plataforma/plataforma',
-            accountInfo: 'account/accountInfo',
-        }),
+      formTitle() {
+        return this.editedItem.notificacao_id === null ? 'Criar' : 'Editar';
+      },
+      ...mapGetters({
+        notificacoes: 'notificacao/notificacoes',
+        contas: 'conta/conta',
+        plataformas: 'plataforma/plataforma',
+        accountInfo: 'account/accountInfo',
+      }),
     },
 
     watch: {
-        dialog(val) {
-            if (this.editedItem.autor_id == null) {
-                this.editedItem.autor_id = this.accountInfo.user_id;
-            }
-            this.exibirBotaoGravar = true;
-            if (this.editedItem.notificacao_id != null) {
-                this.exibirBotaoGravar = false;
-            }
+      dialog(val) {
+        if (this.editedItem.autor_id == null) {
+          this.editedItem.autor_id = this.accountInfo.user_id;
+        }
+        this.exibirBotaoGravar = true;
+        if (this.editedItem.notificacao_id != null) {
+          this.exibirBotaoGravar = false;
+        }
 
-            val || this.close();
-        },
-        notificacoes(value) {
-            if ('error' in value) {
-                alert(value.error);
-                this.notificacoesRenderizadas = [];
-            } else {
-                this.notificacoesRenderizadas = value;
-            }
-        },
-        mensagens(value) {
-            if ('error' in value) {
-                this.mensagensRenderizadas = [];
-            } else {
-                this.mensagensRenderizadas = value;
-            }
-        },
-        editedItem(value) {
-            if (this.editedItem.autor_id == null) {
-                this.editedItem.autor_id = this.accountInfo.user_id;
-            }
-        },
-    },
-    created() {
+        val || this.close();
+      },
+      notificacoes(value) {
+        if ('error' in value) {
+          alert(value.error);
+          this.notificacoesRenderizadas = [];
+        } else {
+          this.notificacoesRenderizadas = value;
+        }
+      },
 
-    // if(this.plataformas.length == null) {
-    //     this.obterPlataformas();
-    // }
+      editedItem(value) {
+        if (this.editedItem.autor_id == null) {
+          this.editedItem.autor_id = this.accountInfo.user_id;
+        }
+      },
     },
     mounted() {
-        if (this.notificacoes.length == null || this.notificacoes.length === 0) {
-            this.obterNotificacaos();
-        }
-        if (this.notificacoes.length > 0) {
-            this.notificacoesRenderizadas = this.notificacoes;
-        }
-        if (this.mensagens.length == null || this.mensagens.length === 0) {
-            this.obterMensagems();
-        }
-        if (this.mensagens.length > 0) {
-            this.mensagensRenderizadas = this.mensagens;
-        }
-        if (this.contas.length == null || this.contas.length === 0) {
-            this.obterContas();
-        }
-        if (this.plataformas.length == null || this.plataformas.length === 0) {
-            this.obterPlataformas();
-        }
+      this.editedItem = Object.assign({}, this.defaultItem);
+      if (this.notificacoes.length == null || this.notificacoes.length === 0) {
+        this.obterNotificacaos();
+      }
+      if (this.notificacoes.length > 0) {
+        this.notificacoesRenderizadas = this.notificacoes;
+      }
+
+      if (this.contas.length == null || this.contas.length === 0) {
+        this.obterContas();
+      }
+      if (this.plataformas.length == null || this.plataformas.length === 0) {
+        this.obterPlataformas();
+      }
+
+      this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
+
+      this.websocket.connection.onopen = function (e) {
+        console.log('Conexão estabelecida - Componente Notificacao.vue');
+        console.log(e);
+      };
     },
     // editedItem
     methods: {
 
-        ...mapActions({
-            obterMensagems: 'mensagem/obterMensagems',
-            obterNotificacaos: 'notificacao/obterNotificacaos',
-            obterContas: 'conta/obterContas',
-            obterPlataformas: 'plataforma/obterPlataformas',
-            removerNotificacao: 'notificacao/removerNotificacao',
-            cadastrarNotificacao: 'notificacao/cadastrarNotificacao',
-            atualizarNotificacao: 'notificacao/atualizarNotificacao',
-        }),
+      ...mapActions({
+        obterNotificacaos: 'notificacao/obterNotificacaos',
+        obterContas: 'conta/obterContas',
+        obterPlataformas: 'plataforma/obterPlataformas',
+        removerNotificacao: 'notificacao/removerNotificacao',
+      }),
 
-        editItem(item) {
-            this.editedIndex = this.notificacoes.indexOf(item);
-            this.editedItem = Object.assign({}, item);
-            this.dialog = true;
-        },
+      newItem() {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.dialog = true;
+      },
 
-        deleteItem(item) {
-            if (confirm('Deseja remover esse item?')) {
-                if (this.accountInfo.is_admin !== true) {
-                    this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
-                }
-                if (this.accountInfo.is_admin === true) {
-                    this.removerNotificacao(item.notificacao_id);
-                }
-            }
-        },
+      editItem(item) {
+        this.editedItem = Object.assign({}, item);
+        this.dialog = true;
+      },
 
-        close() {
-            this.dialog = false;
-            setTimeout(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            }, 300);
-        },
-
-        save() {
-            const self = this;
-            self.loading = true;
-
-            if (self.editedIndex > -1) {
-                this.atualizarNotificacao(self.editedItem);
-            } else {
-                this.cadastrarNotificacao(self.editedItem);
-                this.sendNotification(self.editedItem);
-            }
-            self.close();
-        },
-
-        sendNotification(editedItem) {
-            let objetoMensagem = {};
-            for (const index in this.mensagensRenderizadas) {
-                if (this.mensagensRenderizadas[index].mensagem_id === editedItem.mensagem_id) {
-                    objetoMensagem = this.mensagensRenderizadas[index];
-                }
-            }
-            if (Object.keys(objetoMensagem).length > 0) {
-                const objetoNotificacao = {
-                    sistema: editedItem.sistema_id,
-                    codigo_destinatario: editedItem.codigo_destinatario,
-                    mensagem: objetoMensagem,
-                    data_envio: editedItem.data_envio,
-                };
-                this.sendMessage(JSON.stringify(objetoNotificacao));
-            }
-        },
-
-        sendMessage(message) {
-            const self = this;
-            self.loading = true;
-            setTimeout(() => {
-                self.loading = false;
-            }, 1000);
-
-            this.websocket.connection.send(message);
-        },
-
+      deleteItem(item) {
+        if (confirm('Deseja remover esse item?')) {
+          if (this.accountInfo.is_admin !== true) {
+            this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', {root: true});
+          }
+          if (this.accountInfo.is_admin === true) {
+            this.removerNotificacao(item.notificacao_id);
+          }
+        }
+      },
     },
-};
+  };
 
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-    h1, h2 {
-        font-weight: normal;
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    li {
-        display: inline-block;
-        margin: 0 10px;
-    }
-
-    a {
-        color: #42b983;
-    }
-</style>

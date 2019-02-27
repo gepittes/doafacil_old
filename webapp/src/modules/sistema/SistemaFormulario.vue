@@ -74,11 +74,6 @@
     mounted() {
       this.editedItem = Object.assign({}, this.defaultItem);
     },
-    computed: {
-      formTitle() {
-        return this.editedItem.sistema_id === null ? 'Criar' : 'Editar';
-      },
-    },
 
     watch: {
       item(value) {
