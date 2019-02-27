@@ -25,7 +25,12 @@
                                             md12>
                                             <v-textarea
                                                 v-model="editedItem.codigo_destinatario"
-                                                :rules="[(object) => object != null && object.length != null && object.length > 3 || 'Campo obrigatório.']"
+                                                :rules="[
+                                                    (object) => object != null
+                                                        && object.length != null
+                                                        && object.length > 3
+                                                        || 'Campo obrigatório.'
+                                                ]"
                                                 label="Código Destinatário"
                                                 auto-grow
                                                 box
@@ -116,7 +121,7 @@
                         <template slot="no-data">
                             <v-btn
                                 color="primary"
-                                @click="this.obterNotificacaos">Reset</v-btn>
+                                @click="obterNotificacaos">Reset</v-btn>
                         </template>
                     </v-data-table>
                 </v-card-text>
@@ -205,7 +210,7 @@ export default {
                 this.exibirBotaoGravar = false;
             }
 
-            val || this.close();
+            return val || this.close();
         },
         notificacoes(value) {
             if ('error' in value) {
@@ -222,7 +227,7 @@ export default {
                 this.mensagensRenderizadas = value;
             }
         },
-        editedItem(value) {
+        editedItem() {
             if (this.editedItem.autor_id == null) {
                 this.editedItem.autor_id = this.accountInfo.user_id;
             }
@@ -274,6 +279,7 @@ export default {
         },
 
         deleteItem(item) {
+            // eslint-disable-next-line
             if (confirm('Deseja remover esse item?')) {
                 if (this.accountInfo.is_admin !== true) {
                     this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
@@ -307,11 +313,11 @@ export default {
 
         sendNotification(editedItem) {
             let objetoMensagem = {};
-            for (const index in this.mensagensRenderizadas) {
-                if (this.mensagensRenderizadas[index].mensagem_id === editedItem.mensagem_id) {
-                    objetoMensagem = this.mensagensRenderizadas[index];
+            Object.keys(this.mensagensRenderizadas).forEach((indice) => {
+                if (this.mensagensRenderizadas[indice].mensagem_id === editedItem.mensagem_id) {
+                    objetoMensagem = this.mensagensRenderizadas[indice];
                 }
-            }
+            });
             if (Object.keys(objetoMensagem).length > 0) {
                 const objetoNotificacao = {
                     sistema: editedItem.sistema_id,

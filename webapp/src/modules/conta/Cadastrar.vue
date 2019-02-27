@@ -103,6 +103,7 @@ export default {
                 required: value => !!value || 'Required.',
                 minLength: object => object.length > 3 || 'Campo obrigatório.',
                 email: (value) => {
+                    // eslint-disable-next-line
                     const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                     return pattern.test(value) || 'Invalid e-mail.';
                 },
@@ -114,8 +115,7 @@ export default {
     },
     methods: {
         ...mapActions('account', ['register']),
-        tratarSubmissao(e) {
-            console.log(e);
+        tratarSubmissao() {
             this.submitted = true;
             if (this.$refs.form.validate()) {
                 this.register(this.user);

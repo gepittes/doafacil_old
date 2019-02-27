@@ -1,7 +1,7 @@
+import * as jwtDecode from 'jwt-decode';
 import { userService } from '../user/service';
 import * as types from './types';
 import router from '../../router';
-import jwt_decode from 'jwt-decode';
 
 export const login = ({ dispatch, commit }, { email, password }) => {
     commit(types.LOGINREQUEST, { email });
@@ -9,7 +9,7 @@ export const login = ({ dispatch, commit }, { email, password }) => {
     return userService.login(email, password)
         .then((response) => {
             if (response.data && response.data.data) {
-                const data = response.data.data;
+                const { data } = response.data;
                 if (data && data.token) {
                     localStorage.setItem('user', JSON.stringify(data.token));
                     commit(types.LOGINSUCCESS, data);
@@ -18,7 +18,7 @@ export const login = ({ dispatch, commit }, { email, password }) => {
                     });
 
                     const token = JSON.stringify(data.token);
-                    const tokenDecodificada = jwt_decode(token);
+                    const tokenDecodificada = jwtDecode(token);
                     commit(types.SETACCOUNTINFO, tokenDecodificada.user);
 
                     router.push({ name: 'home' });
@@ -45,18 +45,17 @@ export const logout = ({ commit }) => {
 };
 
 export const register = ({ dispatch, commit }, user) => {
-    commit(types.REGISTERREQUEST, user);
-
+    commit(types.REGISTERREQUEST);
     userService.register(user)
         .then(
-            (user) => {
-                commit(types.REGISTERSUCCESS, user);
+            () => {
+                commit(types.REGISTERSUCCESS);
                 dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
                 router.push('/login');
             },
             (error) => {
                 if (error.response && error.response.data) {
-                    commit(types.LOGINFAILURE, error.response.data.error);
+                    commit(types.REGISTERFAILURE);
                     dispatch('alert/error', error.response.data.error, {
                         root: true,
                     });

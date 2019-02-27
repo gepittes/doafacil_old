@@ -4,7 +4,7 @@ import * as types from './types';
 export const obterNotificacaos = ({ dispatch, commit }) => {
     axios.get('http://localhost/v1/notificacao')
         .then((response) => {
-            const data = response.data;
+            const { data } = response;
             commit(types.DEFINIR_NOTIFICACOES, data.data);
         })
         .catch((error) => {
@@ -14,10 +14,10 @@ export const obterNotificacaos = ({ dispatch, commit }) => {
         });
 };
 
-export const removerNotificacao = ({ dispatch, commit }, notificacao_id) => {
-    axios.delete(`http://localhost/v1/notificacao/${notificacao_id}`)
+export const removerNotificacao = ({ dispatch, commit }, notificacaoId) => {
+    axios.delete(`http://localhost/v1/notificacao/${notificacaoId}`)
         .then(() => {
-            commit(types.REMOVER_NOTIFICACAO, notificacao_id);
+            commit(types.REMOVER_NOTIFICACAO, notificacaoId);
         }).catch((error) => {
             dispatch('alert/error', error.response.data.error, {
                 root: true,
@@ -27,7 +27,7 @@ export const removerNotificacao = ({ dispatch, commit }, notificacao_id) => {
 
 export const cadastrarNotificacao = ({ dispatch, commit }, notificacao) => axios.post('http://localhost/v1/notificacao', notificacao)
     .then((response) => {
-        const data = response.data;
+        const { data } = response;
         commit(types.ACRESCENTAR_NOTIFICACAO, data.data);
         dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
     }).catch((error) => {

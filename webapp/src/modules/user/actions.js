@@ -14,17 +14,3 @@ export const getAll = ({ dispatch, commit }) => {
             });
         });
 };
-
-export const _delete = ({ dispatch, commit }, id) => {
-    commit(types.DELETEREQUEST, id);
-
-    userService.remove(id)
-        .then(
-            user => commit(types.DELETESUCCESS, id),
-            error => commit(types.DELETESUCCESS, { id, error: error.toString() }),
-        ).catch((error) => {
-            dispatch('alert/error', error.response.data.error, {
-                root: true,
-            });
-        });
-};

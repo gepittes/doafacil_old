@@ -17,8 +17,8 @@
                         right
                         color="red">
                         <span
-                            v-if="this.notificacoesBadge.length > 0"
-                            slot="badge">{{ this.notificacoesBadge.length }}</span>
+                            v-if="notificacoesBadge.length > 0"
+                            slot="badge">{{ notificacoesBadge.length }}</span>
                         <v-icon
                             dark
                             color="white darken-1">
@@ -32,9 +32,9 @@
                         Notificações
                     </v-card-title>
 
-                    <v-list v-if="this.notificacoesBadge.length > 0">
+                    <v-list v-if="notificacoesBadge.length > 0">
                         <v-list-tile
-                            v-for="(minhaNotificacao, indexNotificacao) in this.notificacoesBadge"
+                            v-for="(minhaNotificacao, indexNotificacao) in notificacoesBadge"
                             v-if="indexNotificacao < 4 && minhaNotificacao.is_notificacao_lida == false"
                             :key="indexNotificacao"
                             :to="minhaNotificacao">
@@ -62,13 +62,13 @@
                         </v-list-tile>
                     </v-list>
 
-                    <v-card-text v-else-if="this.notificacoesBadge.length === 0">
+                    <v-card-text v-else-if="notificacoesBadge.length === 0">
                         Não há novas notificações.
                     </v-card-text>
 
                     <v-divider/>
 
-                    <v-card-actions v-if="this.notificacoesBadge.length > 0">
+                    <v-card-actions v-if="notificacoesBadge.length > 0">
                         <v-spacer/>
                         <v-btn
                             color="primary"
@@ -91,7 +91,7 @@
                     <v-container>
                         <v-data-table
                             :headers="headersBadge"
-                            :items="this.notificacoesBadge"
+                            :items="notificacoesBadge"
                             :search="modeloBuscarBadge"
                             :rows-per-page-items="[ 10, 25, 40 ]"
                             :rows-per-page-text="'Registros por página'"
@@ -158,7 +158,9 @@
                                         -
                                     </p>
                                 </v-flex>
-                                <v-flex xs6 class="text-xs-center">
+                                <v-flex
+                                    xs6
+                                    class="text-xs-center">
                                     <b>Sistema</b>
                                     <p
                                         v-if="notificacao.sistema"
@@ -255,16 +257,44 @@ export default {
             accountInfo: 'account/accountInfo',
         }),
     },
+    watch: {
+        notificacoes() {
+            if (this.notificacoes.length !== this.notificacoesBadge.length) {
+                this.obterNotificacoesUsuario(this.accountInfo.user_id);
+            }
+        },
+        dialog(val) {
+            return val || this.closeBadgeDialog();
+        },
+    },
+    mounted() {
+        this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
+
+        this.websocket.connection.onopen = function () {
+            console.log('Conexão estabelecida');
+        };
+
+        this.websocket.connection.onmessage = function (event) {
+            console.log('Mensagem enviada!');
+            console.log(event.data);
+            this.obterNotificacoesUsuario(this.accountInfo.user_id);
+        };
+
+        if (this.notificacoesBadge.length == null || this.notificacoesBadge.length === 0) {
+            this.obterNotificacoesUsuario(this.accountInfo.user_id);
+        }
+    },
     methods: {
         ...mapActions({
             obterNotificacoesUsuario: 'notificacaoBadge/obterNotificacoesUsuario',
             lerNotificacao: 'notificacaoBadge/lerNotificacao',
         }),
         closeBadgeDialog() {
-            this.dialog = false;
+            const self = this;
+            self.dialog = false;
             setTimeout(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
+                self.editedItem = Object.assign({}, this.defaultItem);
+                self.editedIndex = -1;
             }, 300);
         },
         showItem(item) {
@@ -275,33 +305,6 @@ export default {
             this.lerNotificacao(item);
             this.dialogNotificacao = false;
         },
-    },
-    watch: {
-        notificacoes(value) {
-            if (this.notificacoes.length !== this.notificacoesBadge.length) {
-                this.obterNotificacoesUsuario(this.accountInfo.user_id);
-            }
-        },
-        dialog(val) {
-            val || this.closeBadgeDialog();
-        },
-    },
-    mounted() {
-        this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
-
-        this.websocket.connection.onopen = function (e) {
-            console.log('Conexão estabelecida');
-            console.log(e);
-        };
-
-        this.websocket.connection.onmessage = function (e) {
-            console.log(e.data);
-            this.obterNotificacoesUsuario(this.accountInfo.user_id);
-        };
-
-        if (this.notificacoesBadge.length == null || this.notificacoesBadge.length === 0) {
-            this.obterNotificacoesUsuario(this.accountInfo.user_id);
-        }
     },
 };
 </script>

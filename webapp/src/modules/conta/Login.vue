@@ -92,11 +92,6 @@ export default {
             'loggingIn',
         ]),
     },
-    watch: {
-        status: () => {
-            // console.log(this)
-        },
-    },
     mounted() {
     // reset login status
         this.logout();

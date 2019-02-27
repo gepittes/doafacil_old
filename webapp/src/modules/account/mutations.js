@@ -23,13 +23,13 @@ export default {
         state.message = null;
         state.message_type = null;
     },
-    [types.REGISTERREQUEST](state, user) {
+    [types.REGISTERREQUEST](state) {
         state.status = { registering: true };
     },
-    [types.REGISTERSUCCESS](state, user) {
+    [types.REGISTERSUCCESS](state) {
         state.status = {};
     },
-    [types.REGISTERFAILURE](state, error) {
+    [types.REGISTERFAILURE](state) {
         state.status = {};
     },
 };
