@@ -158,7 +158,9 @@
                                         -
                                     </p>
                                 </v-flex>
-                                <v-flex xs6 class="text-xs-center">
+                                <v-flex
+                                    xs6
+                                    class="text-xs-center">
                                     <b>Sistema</b>
                                     <p
                                         v-if="notificacao.sistema"
