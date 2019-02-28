@@ -270,11 +270,11 @@ export default {
     mounted() {
         this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
 
-        this.websocket.connection.onopen = function () {
+        this.websocket.connection.onopen = () => {
             console.log('Conexão estabelecida');
         };
 
-        this.websocket.connection.onmessage = function (event) {
+        this.websocket.connection.onmessage = (event) => {
             console.log('Mensagem enviada!');
             console.log(event.data);
             this.obterNotificacoesUsuario(this.accountInfo.user_id);
