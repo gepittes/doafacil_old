@@ -53,7 +53,7 @@
                         <template slot="no-data">
                             <v-btn
                                 color="primary"
-                                @click="this.obterPlataformas">Reset</v-btn>
+                                @click="obterPlataformas">Reset</v-btn>
                         </template>
                     </v-data-table>
                     <v-scale-transition>
@@ -143,7 +143,7 @@ export default {
 
   watch: {
     dialog(val) {
-      val || this.close();
+      returnval || this.close();
     },
     plataformas(value) {
       if ('error' in value) {
@@ -182,7 +182,7 @@ export default {
     },
 
     deleteItem(item) {
-      if (confirm('Deseja remover esse item?')) {
+      // eslint-disable-next-lineif (confirm('Deseja remover esse item?')) {
         this.removerPlataforma(item.plataforma_id);
       }
     },

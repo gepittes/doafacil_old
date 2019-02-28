@@ -1,5 +1,5 @@
-import { authHeader } from '../_helpers';
 import axios from 'axios';
+import { authHeader } from '../_helpers';
 
 function handleResponse(response) {
     if (response.data.status === 401) {

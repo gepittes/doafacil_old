@@ -73,7 +73,7 @@
                         <template slot="no-data">
                             <v-btn
                                     color="primary"
-                                    @click="this.obterNotificacaos">Reset
+                                    @click="obterNotificacaos">Reset
                             </v-btn>
                         </template>
                     </v-data-table>
@@ -179,7 +179,7 @@
           this.exibirBotaoGravar = false;
         }
 
-        val || this.close();
+        returnval || this.close();
       },
       notificacoes(value) {
         if ('error' in value) {
@@ -190,7 +190,7 @@
         }
       },
 
-      editedItem(value) {
+      editedItem() {
         if (this.editedItem.autor_id == null) {
           this.editedItem.autor_id = this.accountInfo.user_id;
         }

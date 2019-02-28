@@ -12,7 +12,12 @@ const marked = require('marked');
 
 export default {
     name: 'App',
-    props: ['src'],
+    props: {
+        src: {
+            type: String,
+            default: '',
+        },
+    },
     data() {
         return {
             md_text: '# Example Title Here!',

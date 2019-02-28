@@ -52,6 +52,6 @@ class ContaController extends Controller
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
         $response = response();
-        return $response->json($conta->desabilitar($id));
+        return $response->json($conta->remover($id));
     }
 }

@@ -56,7 +56,7 @@
                         <template slot="no-data">
                             <v-btn
                                 color="primary"
-                                @click="this.obterMensagems">Reset</v-btn>
+                                @click="obterMensagems">Reset</v-btn>
                         </template>
                     </v-data-table>
                     <v-btn
@@ -158,7 +158,7 @@ export default {
 
   watch: {
     dialog(val) {
-      if (this.editedItem.autor_id == null) {
+      if (this.editedItem.autor_id == null && this.accountInfo.user_id !== null) {
         this.editedItem.autor_id = this.accountInfo.user_id;
       }
 
@@ -167,7 +167,7 @@ export default {
         this.exibirBotaoGravar = false;
       }
 
-      val || this.close();
+     return val || this.close();
     },
     mensagens(value) {
       if ('error' in value) {
@@ -185,43 +185,38 @@ export default {
       }
     },
     editedItem(value) {
-      this.plataformasSelecionadas = [];
-      if (this.editedItem.autor_id == null) {
-        this.editedItem.autor_id = this.accountInfo.user_id;
-      } else {
-        for (const index in value.plataformas) {
-          this.plataformasSelecionadas.push(value.plataformas[index]);
-        }
+      const self = this;
+            self.plataformasSelecionadas = [];
+      if (self.editedItem.autor_id == null) {
+        self.editedItem.autor_id = self.accountInfo.user_id;
+      } else if (Object.prototype.hasOwnProperty.call(value, 'plataformas')){
+        Object.keys(value.plataformas).forEach((indice) => {
+          self.plataformasSelecionadas.push(value.plataformas[indice]);
+        });
       }
     },
-  },
-  created() {
 
-    // if(this.plataformas.length == null) {
-    //     this.obterPlataformas();
-    // }
     },
     mounted() {
-        if (this.mensagens.length == null || this.mensagens.length == 0) {
+        if (this.mensagens.length == null || this.mensagens.length === 0) {
             this.obterMensagems();
         }
         if (this.mensagens.length > 0) {
             this.mensagensRenderizadas = this.mensagens;
         }
-        if (this.sistemas.length == null || this.sistemas.length == 0) {
+        if (this.sistemas.length == null || this.sistemas.length === 0) {
             this.obterSistemas();
         }
         if (this.sistemas.length > 0) {
             this.sistemasRenderizados = this.sistemas;
         }
-        if (this.contas.length == null || this.contas.length == 0) {
+        if (this.contas.length == null || this.contas.length === 0) {
             this.obterContas();
         }
-        if (this.plataformas.length == null || this.plataformas.length == 0) {
+        if (this.plataformas.length == null || this.plataformas.length === 0) {
             this.obterPlataformas();
         }
     },
-    // editedItem
     methods: {
 
         ...mapActions({
@@ -241,6 +236,7 @@ export default {
         },
 
         deleteItem(item) {
+            // eslint-disable-next-line
             if (confirm('Deseja remover esse item?')) {
                 this.removerMensagem(item.mensagem_id);
             }
@@ -259,26 +255,4 @@ export default {
         MensagemFormulario,
     }
 };
-
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-    h1, h2 {
-        font-weight: normal;
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    li {
-        display: inline-block;
-        margin: 0 10px;
-    }
-
-    a {
-        color: #42b983;
-    }
-</style>

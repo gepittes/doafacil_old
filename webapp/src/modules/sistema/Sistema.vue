@@ -58,7 +58,7 @@
                         <template slot="no-data">
                             <v-btn
                                 color="primary"
-                                @click="this.obterSistemas">Reset</v-btn>
+                                @click="obterSistemas">Reset</v-btn>
                         </template>
                     </v-data-table>
                 </v-card-text>
@@ -193,6 +193,7 @@ export default {
         },
 
         deleteItem(item) {
+            // eslint-disable-next-line
             if (confirm('Deseja remover esse item?')) {
                 this.removerSistema(item.sistema_id);
             }

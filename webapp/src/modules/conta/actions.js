@@ -4,7 +4,7 @@ import * as types from './types';
 export const obterContas = ({ dispatch, commit }) => {
     axios.get('http://localhost/v1/conta')
         .then((response) => {
-            const data = response.data;
+            const { data } = response;
             commit(types.OBTER_CONTAS, data.data);
         })
         .catch((error) => {
@@ -14,10 +14,10 @@ export const obterContas = ({ dispatch, commit }) => {
         });
 };
 
-export const removerConta = ({ dispatch, commit }, usuario_id) => {
-    axios.delete(`http://localhost/v1/conta/${usuario_id}`)
+export const removerConta = ({ dispatch, commit }, usuarioId) => {
+    axios.delete(`http://localhost/v1/conta/${usuarioId}`)
         .then(() => {
-            commit(types.DELETE_CONTA, usuario_id);
+            commit(types.DELETE_CONTA, usuarioId);
         }).catch((error) => {
             dispatch('alert/error', error.response.data.error, {
                 root: true,
@@ -27,7 +27,7 @@ export const removerConta = ({ dispatch, commit }, usuario_id) => {
 
 export const cadastrarConta = ({ dispatch, commit }, conta) => axios.post('http://localhost/v1/conta', conta)
     .then((response) => {
-        const data = response.data;
+        const { data } = response;
         commit(types.ACRESCENTAR_CONTA, data.data);
         dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
     }).catch((error) => {

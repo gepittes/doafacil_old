@@ -59,7 +59,7 @@
                         <template slot="no-data">
                             <v-btn
                                 color="primary"
-                                @click="this.obterContas">Reset</v-btn>
+                                @click="obterContas">Reset</v-btn>
                         </template>
                     </v-data-table>
                     <v-btn
@@ -139,7 +139,7 @@
                                 <h3> Sistemas </h3>
                                 <v-list style="overflow: auto; max-height: 300px">
                                     <v-list-tile
-                                        v-for="sistema in this.sistemas"
+                                        v-for="sistema in sistemas"
                                         :key="sistema.title"
                                         avatar>
 
@@ -239,6 +239,7 @@ export default {
             required: value => !!value || 'Campo Obrigatório.',
             minLength: object => (object != null && object.length != null && object.length > 3) || 'Campo obrigatório.',
             email: (value) => {
+                // eslint-disable-next-line
                 const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return pattern.test(value) || 'E-mail inválido.';
             },
@@ -252,12 +253,13 @@ export default {
         ...mapGetters({
             sistemas: 'sistema/sistema',
             contas: 'conta/conta',
+            accountInfo: 'account/accountInfo',
         }),
     },
 
     watch: {
         dialog(val) {
-            val || this.close();
+            return val || this.close();
         },
         contas(value) {
             if ('error' in value) {
@@ -267,7 +269,7 @@ export default {
                 this.contasIniciais = value;
             }
         },
-        editedItem(value) {
+        editedItem() {
 
         },
     },
@@ -275,7 +277,11 @@ export default {
     created() {
         this.obterContas();
     },
-
+    mounted() {
+        if (this.sistemas.length == null || this.sistemas.length === 0) {
+            this.obterSistemas();
+        }
+    },
     methods: {
 
         ...mapActions({
@@ -287,20 +293,33 @@ export default {
         }),
 
         editItem(item) {
-            this.editedIndex = this.contas.indexOf(item);
-            this.editedItem.sistemas = [];
-            this.editedItem = Object.assign({}, item);
-            this.dialog = true;
+            const self = this;
+            if (self.accountInfo.is_admin !== true) {
+                self.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
+            }
+            if (self.accountInfo.is_admin === true) {
+                self.editedIndex = self.contas.indexOf(item);
+                self.editedItem.sistemas = [];
+                self.editedItem = Object.assign({}, item);
+                self.dialog = true;
 
-            for (const indice in this.editedItem.sistemas) {
-                delete this.editedItem.sistemas[indice].usuario_has_sistema;
-      }
+                if (Object.prototype.hasOwnProperty.call(self.editedItem, 'sistemas')) {
+                    Object.keys(self.editedItem.sistemas).forEach((indice) => {
+                        delete self.editedItem.sistemas[indice].usuario_has_sistema;
+      });
 
-    },
+    }}
+        },
 
         deleteItem(item) {
+            // eslint-disable-next-line
             if (confirm('Deseja remover esse item?')) {
-                this.removerConta(item.usuario_id);
+                if (this.accountInfo.is_admin !== true) {
+                    this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });
+                }
+                if (this.accountInfo.is_admin === true) {
+                    this.removerConta(item.usuario_id);
+                }
             }
         },
 
@@ -324,12 +343,6 @@ export default {
             self.loading = false;
             self.close();
         },
-    },
-    mounted() {
-        console.log(this.sistemas);
-        if (this.sistemas.length == null || this.sistemas.length === 0) {
-            this.obterSistemas();
-        }
     },
 };
 
