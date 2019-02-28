@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <v-scale-transition>
             <v-menu
                 v-model="menu"
@@ -17,7 +16,7 @@
                         right
                         color="red">
                         <span
-                            v-if="notificacoesBadge.length > 0"
+                            v-if="notificacoesBadge != null && notificacoesBadge.length > 0"
                             slot="badge">{{ notificacoesBadge.length }}</span>
                         <v-icon
                             dark
@@ -27,7 +26,7 @@
                     </v-badge>
                 </v-btn>
 
-                <v-card>
+                <v-card v-if="notificacoesBadge != null && notificacoesBadge.length > 0">
                     <v-card-title>
                         Notificações
                     </v-card-title>
@@ -62,13 +61,13 @@
                         </v-list-tile>
                     </v-list>
 
-                    <v-card-text v-else-if="notificacoesBadge.length === 0">
+                    <v-card-text v-else-if="notificacoesBadge != null && notificacoesBadge.length === 0">
                         Não há novas notificações.
                     </v-card-text>
 
                     <v-divider/>
 
-                    <v-card-actions v-if="notificacoesBadge.length > 0">
+                    <v-card-actions v-if="notificacoesBadge != null && notificacoesBadge.length > 0">
                         <v-spacer/>
                         <v-btn
                             color="primary"
@@ -259,7 +258,7 @@ export default {
     },
     watch: {
         notificacoes() {
-            if (this.notificacoes.length !== this.notificacoesBadge.length) {
+            if (this.notificacoes != null && this.notificacoes.length !== this.notificacoesBadge.length) {
                 this.obterNotificacoesUsuario(this.accountInfo.user_id);
             }
         },
