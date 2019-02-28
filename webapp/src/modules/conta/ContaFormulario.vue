@@ -69,6 +69,18 @@
                     </v-list-tile>
                 </v-list>
             </v-flex>
+            <v-flex class="text-xs-center">
+                <v-btn
+                    color="error"
+                    dark
+                    @click.native="close">Fechar</v-btn>
+                <v-btn
+                    v-if="!loading"
+                    dark
+                    color="blue darken-1"
+                    @click.native="save">Gravar
+                </v-btn>
+            </v-flex>
         </v-layout>
     </v-container>
 
@@ -94,17 +106,22 @@ export default {
         loading: false,
         editedItem: {},
         defaultItem: {
-            plataforma_id: null,
+            usuario_id: null,
             descricao: '',
             is_ativo: true,
+            is_admin: false,
+            sistemas: [],
+        },
+        rules: {
+            required: value => !!value || 'Campo Obrigatório.',
+            minLength: object => (object != null && object.length != null && object.length > 3) || 'Campo obrigatório.',
+            email: (value) => {
+                // eslint-disable-next-line
+                const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return pattern.test(value) || 'E-mail inválido.';
+            },
         },
     }),
-
-    computed: {
-        formTitle() {
-            return this.editedItem.plataforma_id === null ? 'Criar' : 'Editar';
-        },
-    },
 
     watch: {
         item(value) {
@@ -118,21 +135,21 @@ export default {
     methods: {
 
         ...mapActions({
-            cadastrarPlataforma: 'plataforma/cadastrarPlataforma',
-            atualizarPlataforma: 'plataforma/atualizarPlataforma',
+            cadastrarConta: 'conta/cadastrarConta',
+            atualizarConta: 'conta/atualizarConta',
         }),
 
         save() {
             const self = this;
-            if (self.editedItem.is_ativo === null || self.editedItem.is_ativo === '') {
-                self.editedItem.is_ativo = false;
-            }
-            if (self.editedItem.plataforma_id !== null) {
-                self.atualizarPlataforma(self.editedItem);
+            self.loading = true;
+
+            if (self.editedItem.usuario_id !== null) {
+                this.atualizarConta(self.editedItem);
             } else {
-                self.cadastrarPlataforma(self.editedItem);
+                this.cadastrarConta(self.editedItem);
             }
-            this.$emit('update:dialog', false);
+            self.loading = false;
+            self.close();
         },
 
         close() {

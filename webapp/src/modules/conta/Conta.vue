@@ -87,7 +87,9 @@
                 </v-card-title>
 
                 <v-card-text>
-
+                    <conta-formulario
+                        :item="editedItem"
+                        :dialog.sync="dialog"/>
                 </v-card-text>
 
                 <v-card-actions>
@@ -110,8 +112,10 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex';
+import ContaFormulario from './ContaFormulario.vue';
 
 export default {
+    components: { ContaFormulario },
     data: () => ({
         loading: false,
         dialog: false,
@@ -151,30 +155,15 @@ export default {
         ],
         contasIniciais: [],
         editedIndex: -1,
-        editedItem: {
+        editedItem: {},
+        defaultItem: {
             usuario_id: null,
             descricao: '',
             is_ativo: true,
             is_admin: false,
             sistemas: [],
         },
-        defaultItem: {
-            name: '',
-            calories: 0,
-            fat: 0,
-            carbs: 0,
-            protein: 0,
-        },
         modeloBuscar: '',
-        rules: {
-            required: value => !!value || 'Campo Obrigatório.',
-            minLength: object => (object != null && object.length != null && object.length > 3) || 'Campo obrigatório.',
-            email: (value) => {
-                // eslint-disable-next-line
-                const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                return pattern.test(value) || 'E-mail inválido.';
-            },
-        },
     }),
 
     computed: {
@@ -200,9 +189,6 @@ export default {
                 this.contasIniciais = value;
             }
         },
-        editedItem() {
-
-        },
     },
 
     created() {
@@ -219,8 +205,6 @@ export default {
             obterContas: 'conta/obterContas',
             obterSistemas: 'sistema/obterSistemas',
             removerConta: 'conta/removerConta',
-            cadastrarConta: 'conta/cadastrarConta',
-            atualizarConta: 'conta/atualizarConta',
         }),
 
         editItem(item) {
@@ -254,48 +238,8 @@ export default {
             }
         },
 
-        close() {
-            this.dialog = false;
-            setTimeout(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            }, 300);
-        },
 
-        save() {
-            const self = this;
-            self.loading = true;
-
-            if (self.editedIndex > -1) {
-                this.atualizarConta(self.editedItem);
-            } else {
-                this.cadastrarConta(self.editedItem);
-            }
-            self.loading = false;
-            self.close();
-        },
     },
 };
 
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-    h1, h2 {
-        font-weight: normal;
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    li {
-        display: inline-block;
-        margin: 0 10px;
-    }
-
-    a {
-        color: #42b983;
-    }
-</style>
