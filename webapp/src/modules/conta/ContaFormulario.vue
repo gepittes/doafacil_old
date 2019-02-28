@@ -136,7 +136,7 @@ export default {
     },
     mounted() {
         this.editedItem = Object.assign({}, this.defaultItem);
-        if (this.sistemas.length == null || this.sistemas.length === 0) {
+        if (this.sistemas == null || this.sistemas.length === 0) {
             this.obterSistemas();
         }
     },
