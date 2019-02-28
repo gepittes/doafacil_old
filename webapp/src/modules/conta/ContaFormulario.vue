@@ -87,7 +87,7 @@
 </template>
 <script>
 
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     props: {
@@ -123,6 +123,12 @@ export default {
         },
     }),
 
+    computed: {
+        ...mapGetters({
+            sistemas: 'sistema/sistema',
+        }),
+    },
+
     watch: {
         item(value) {
             this.editedItem = Object.assign({}, value);
@@ -130,12 +136,16 @@ export default {
     },
     mounted() {
         this.editedItem = Object.assign({}, this.defaultItem);
+        if (this.sistemas.length == null || this.sistemas.length === 0) {
+            this.obterSistemas();
+        }
     },
 
     methods: {
 
         ...mapActions({
             cadastrarConta: 'conta/cadastrarConta',
+            obterSistemas: 'sistema/obterSistemas',
             atualizarConta: 'conta/atualizarConta',
         }),
 

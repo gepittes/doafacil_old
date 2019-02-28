@@ -91,23 +91,9 @@
                         :item="editedItem"
                         :dialog.sync="dialog"/>
                 </v-card-text>
-
-                <v-card-actions>
-                    <v-spacer/>
-                    <v-btn
-                        color="error"
-                        @click.native="close">Fechar</v-btn>
-                    <v-btn
-                        :loading="loading"
-                        color="blue darken-1"
-                        dark
-                        @click.native="save">Gravar</v-btn>
-                </v-card-actions>
             </v-card>
-
         </v-dialog>
     </v-container>
-
 </template>
 <script>
 
@@ -171,7 +157,6 @@ export default {
             return this.editedIndex === -1 ? 'Criar' : 'Editar';
         },
         ...mapGetters({
-            sistemas: 'sistema/sistema',
             contas: 'conta/conta',
             accountInfo: 'account/accountInfo',
         }),
@@ -194,16 +179,10 @@ export default {
     created() {
         this.obterContas();
     },
-    mounted() {
-        if (this.sistemas.length == null || this.sistemas.length === 0) {
-            this.obterSistemas();
-        }
-    },
     methods: {
 
         ...mapActions({
             obterContas: 'conta/obterContas',
-            obterSistemas: 'sistema/obterSistemas',
             removerConta: 'conta/removerConta',
         }),
 
