@@ -81,8 +81,8 @@
 
                 <v-card-text>
                     <plataforma-formulario
-                            :item="editedItem"
-                            :dialog.sync="dialog"></plataforma-formulario>
+                        :item="editedItem"
+                        :dialog.sync="dialog"/>
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -95,107 +95,105 @@ import { mapActions, mapGetters } from 'vuex';
 import PlataformaFormulario from './PlataformaFormulario.vue';
 
 export default {
-  components: { PlataformaFormulario },
-  data: () => ({
-    loading: false,
-    dialog: false,
-    modeloBuscar: '',
-    headers: [
-      {
-        text: 'Identificador',
-        align: 'center',
-        sortable: true,
-        value: 'name',
-      },
-      {
-        text: 'Descrição',
-        value: 'descricao',
-        align: 'center',
-      },
-      {
-        text: 'Situação',
-        value: 'situacao',
-        align: 'center',
-      },
-      {
-        text: 'Ação',
-        value: 'acao',
-        align: 'center',
-        sortable: false,
-      },
-    ],
-    plataformasIniciais: [],
-    editedItem: {
-      plataforma_id: null,
-      descricao: '',
-      is_ativo: true,
-    },
-  }),
-
-  computed: {
-    formTitle() {
-      return this.editedItem.plataforma_id === null ? 'Criar' : 'Editar';
-    },
-    ...mapGetters({
-      plataformas: 'plataforma/plataforma',
-    }),
-  },
-
-  watch: {
-    dialog(val) {
-      returnval || this.close();
-    },
-    plataformas(value) {
-      if ('error' in value) {
-        this.plataformasIniciais = [];
-      } else {
-        this.plataformasIniciais = value;
-      }
-    },
-
-  },
-
-  created() {
-    this.obterPlataformas();
-  },
-
-  methods: {
-
-    ...mapActions({
-      obterPlataformas: 'plataforma/obterPlataformas',
-      removerPlataforma: 'plataforma/removerPlataforma',
-    }),
-
-    newItem() {
-      this.editedItem = Object.assign({}, {
+    components: { PlataformaFormulario },
+    data: () => ({
+        loading: false,
+        dialog: false,
+        modeloBuscar: '',
+        headers: [
+            {
+                text: 'Identificador',
+                align: 'center',
+                sortable: true,
+                value: 'name',
+            },
+            {
+                text: 'Descrição',
+                value: 'descricao',
+                align: 'center',
+            },
+            {
+                text: 'Situação',
+                value: 'situacao',
+                align: 'center',
+            },
+            {
+                text: 'Ação',
+                value: 'acao',
+                align: 'center',
+                sortable: false,
+            },
+        ],
+        plataformasIniciais: [],
+        editedItem: {
             plataforma_id: null,
-        descricao: '',
-        is_ativo: true,
-      });
-      this.dialog = true;
+            descricao: '',
+            is_ativo: true,
+        },
+    }),
+
+    computed: {
+        formTitle() {
+            return this.editedItem.plataforma_id === null ? 'Criar' : 'Editar';
+        },
+        ...mapGetters({
+            plataformas: 'plataforma/plataforma',
+        }),
     },
 
-    editItem(item) {
-      this.editedIndex = this.plataformas.indexOf(item);
-      this.editedItem = Object.assign({}, item);
-      this.dialog = true;
+    watch: {
+        dialog(val) {
+            return val || this.close();
+        },
+        plataformas(value) {
+            if ('error' in value) {
+                this.plataformasIniciais = [];
+            } else {
+                this.plataformasIniciais = value;
+            }
+        },
+
     },
 
-    deleteItem(item) {
-      // eslint-disable-next-lineif (confirm('Deseja remover esse item?')) {
-        this.removerPlataforma(item.plataforma_id);
-      }
+    created() {
+        this.obterPlataformas();
+    },
+
+    methods: {
+
+        ...mapActions({
+            obterPlataformas: 'plataforma/obterPlataformas',
+            removerPlataforma: 'plataforma/removerPlataforma',
+        }),
+
+        newItem() {
+            this.editedItem = Object.assign({}, {
+                plataforma_id: null,
+                descricao: '',
+                is_ativo: true,
+            });
+            this.dialog = true;
+        },
+
+        editItem(item) {
+            this.editedIndex = this.plataformas.indexOf(item);
+            this.editedItem = Object.assign({}, item);
+            this.dialog = true;
+        },
+
+        deleteItem(item) {
+            // eslint-disable-next-lineif (confirm('Deseja remover esse item?')) {
+            this.removerPlataforma(item.plataforma_id);
+        },
     },
 
     close() {
-      this.dialog = false;
-      setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      }, 300);
+        this.dialog = false;
+        setTimeout(() => {
+            this.editedItem = Object.assign({}, this.defaultItem);
+            this.editedIndex = -1;
+        }, 300);
     },
-
-  },
 };
 
 </script>
