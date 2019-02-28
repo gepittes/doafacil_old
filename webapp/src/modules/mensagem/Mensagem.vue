@@ -82,8 +82,8 @@
 
                 <v-card-text>
                     <mensagem-formulario
-                            :item="editedItem"
-                    ></mensagem-formulario>
+                        :item="editedItem"
+                    />
                 </v-card-text>
             </v-card>
         </v-dialog>
@@ -95,53 +95,56 @@ import { mapActions, mapGetters } from 'vuex';
 import MensagemFormulario from './MensagemFormulario.vue';
 
 export default {
+    components: {
+        MensagemFormulario,
+    },
     data: () => ({
         dialog: false,
         exibirBotaoGravar: true,
         plataformasSelecionadas: [],
-    mensagensRenderizadas: [],
-    sistemasRenderizados: [],
-    modeloBuscar: '',
-    editedIndex: -1,
-    editedItem: {
-      mensagem_id: null,
-      titulo: null,
-      autor_id: null,
-      sistema_id: null,
-      descricao: '',
-      is_ativo: true,
-      plataformas: [],
-    },
-    headers: [
-      {
-        text: 'Identificador',
-        align: 'center',
-        sortable: true,
-        value: 'name',
-      },
-      {
-        text: 'Título',
-        value: 'titulo',
-        align: 'center',
-      },
-      {
-        text: 'Descrição',
-        value: 'descricao',
-        align: 'center',
-      },
-      {
-        text: 'Situação',
-        value: 'situacao',
-        align: 'center',
-      },
-      {
-        text: 'Ação',
-        value: 'acao',
-        align: 'center',
-        sortable: false,
-      },
-    ],
-  }),
+        mensagensRenderizadas: [],
+        sistemasRenderizados: [],
+        modeloBuscar: '',
+        editedIndex: -1,
+        editedItem: {
+            mensagem_id: null,
+            titulo: null,
+            autor_id: null,
+            sistema_id: null,
+            descricao: '',
+            is_ativo: true,
+            plataformas: [],
+        },
+        headers: [
+            {
+                text: 'Identificador',
+                align: 'center',
+                sortable: true,
+                value: 'name',
+            },
+            {
+                text: 'Título',
+                value: 'titulo',
+                align: 'center',
+            },
+            {
+                text: 'Descrição',
+                value: 'descricao',
+                align: 'center',
+            },
+            {
+                text: 'Situação',
+                value: 'situacao',
+                align: 'center',
+            },
+            {
+                text: 'Ação',
+                value: 'acao',
+                align: 'center',
+                sortable: false,
+            },
+        ],
+    }),
 
     computed: {
         formTitle() {
@@ -156,45 +159,45 @@ export default {
         }),
     },
 
-  watch: {
-    dialog(val) {
-      if (this.editedItem.autor_id == null && this.accountInfo.user_id !== null) {
-        this.editedItem.autor_id = this.accountInfo.user_id;
-      }
+    watch: {
+        dialog(val) {
+            if (this.editedItem.autor_id == null && this.accountInfo.user_id !== null) {
+                this.editedItem.autor_id = this.accountInfo.user_id;
+            }
 
-      this.exibirBotaoGravar = true;
-      if (this.editedItem.mensagem_id != null) {
-        this.exibirBotaoGravar = false;
-      }
+            this.exibirBotaoGravar = true;
+            if (this.editedItem.mensagem_id != null) {
+                this.exibirBotaoGravar = false;
+            }
 
-     return val || this.close();
-    },
-    mensagens(value) {
-      if ('error' in value) {
-        alert(value.error);
-        this.mensagensRenderizadas = [];
-      } else {
-        this.mensagensRenderizadas = value;
-      }
-    },
-    sistemas(value) {
-      if ('error' in value) {
-        this.sistemasRenderizados = [];
-      } else {
-        this.sistemasRenderizados = value;
-      }
-    },
-    editedItem(value) {
-      const self = this;
+            return val || this.close();
+        },
+        mensagens(value) {
+            if ('error' in value) {
+                alert(value.error);
+                this.mensagensRenderizadas = [];
+            } else {
+                this.mensagensRenderizadas = value;
+            }
+        },
+        sistemas(value) {
+            if ('error' in value) {
+                this.sistemasRenderizados = [];
+            } else {
+                this.sistemasRenderizados = value;
+            }
+        },
+        editedItem(value) {
+            const self = this;
             self.plataformasSelecionadas = [];
-      if (self.editedItem.autor_id == null) {
-        self.editedItem.autor_id = self.accountInfo.user_id;
-      } else if (Object.prototype.hasOwnProperty.call(value, 'plataformas')){
-        Object.keys(value.plataformas).forEach((indice) => {
-          self.plataformasSelecionadas.push(value.plataformas[indice]);
-        });
-      }
-    },
+            if (self.editedItem.autor_id == null) {
+                self.editedItem.autor_id = self.accountInfo.user_id;
+            } else if (Object.prototype.hasOwnProperty.call(value, 'plataformas')) {
+                Object.keys(value.plataformas).forEach((indice) => {
+                    self.plataformasSelecionadas.push(value.plataformas[indice]);
+                });
+            }
+        },
 
     },
     mounted() {
@@ -250,9 +253,6 @@ export default {
             }, 300);
         },
 
-  },
-  components: {
-        MensagemFormulario,
-    }
+    },
 };
 </script>

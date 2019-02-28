@@ -75,8 +75,8 @@
 
                 <v-card-text>
                     <sistema-formulario
-                            :item="editedItem"
-                            :dialog.sync="dialog"></sistema-formulario>
+                        :item="editedItem"
+                        :dialog.sync="dialog"/>
                 </v-card-text>
             </v-card>
             <v-btn
@@ -96,11 +96,11 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex';
-import SistemaFormulario from "./SistemaFormulario";
+import SistemaFormulario from './SistemaFormulario.vue';
 
 export default {
-  components: {SistemaFormulario},
-  data: () => ({
+    components: { SistemaFormulario },
+    data: () => ({
         loading: false,
         dialog: false,
         modeloBuscar: '',
@@ -198,7 +198,6 @@ export default {
                 this.removerSistema(item.sistema_id);
             }
         },
-
 
 
         save() {
