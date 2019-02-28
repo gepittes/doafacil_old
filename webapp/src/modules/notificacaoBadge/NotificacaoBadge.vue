@@ -38,14 +38,12 @@
                             :key="indexNotificacao"
                             :to="minhaNotificacao">
 
-                            <!-- <v-list-tile-content @click="lerNotificacao(minhaNotificacao)"> -->
                             <v-list-tile-content>
                                 <v-list-tile-title>[{{ minhaNotificacao.sistema }}]</v-list-tile-title>
                                 <v-list-tile-sub-title>{{ minhaNotificacao.titulo }}</v-list-tile-sub-title>
                             </v-list-tile-content>
 
                             <v-list-tile-action>
-                                <!-- <v-icon>check</v-icon> -->
                                 <v-tooltip bottom>
                                     <v-btn
                                         slot="activator"
