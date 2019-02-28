@@ -10,7 +10,7 @@ export default {
         },
     },
     create(Vue) {
-        Object.keys(this.filters).forEach((filter, k) => {
+        Object.keys(this.filters).forEach((filter) => {
             Vue.filter(filter, this.filters[filter]);
         });
     },
