@@ -1,83 +1,104 @@
 <template>
 
     <v-container grid-list-md>
-        <v-form v-model="valid" ref="form" @submit.prevent="save()">
+        <v-form
+            ref="form"
+            v-model="valid"
+            @submit.prevent="save()">
             <v-layout wrap>
-                <v-flex xs12 sm6 md12>
-                    <v-text-field v-model="editedItem.titulo"
-                                  label="Título"
-                                  box
-                                  minlength="3"
-                                  :rules="[(object) => object!= null && object.length > 3 || 'Campo obrigatório.']"
-                                  required></v-text-field>
+                <v-flex
+                    xs12
+                    sm6
+                    md12>
+                    <v-text-field
+                        v-model="editedItem.titulo"
+                        :rules="[(object) => object!= null && object.length > 3 || 'Campo obrigatório.']"
+                        label="Título"
+                        box
+                        minlength="3"
+                        required/>
                     <v-textarea
-                            v-model="editedItem.descricao"
-                            auto-grow
-                            box
-                            color="deep-purple"
-                            label="Descrição"
-                            required
-                            :rules="[(object) => object!= null && object.length > 3 || 'Campo obrigatório.']"
-                            rows="5"
-                    ></v-textarea>
+                        v-model="editedItem.descricao"
+                        :rules="[(object) => object!= null && object.length > 3 || 'Campo obrigatório.']"
+                        auto-grow
+                        box
+                        color="deep-purple"
+                        label="Descrição"
+                        required
+                        rows="5"
+                    />
 
                     <h3 v-if="editedItem.mensagem_id != null"> Plataformas </h3>
                     <v-list style="overflow: auto; max-height: 300px">
-                        <v-list-tile v-if="editedItem.mensagem_id == null"
-                                     v-for="plataforma in this.plataformas"
-                                     :key="plataforma.title"
-                                     avatar>
+                        <v-list-tile
+                            v-for="plataforma in this.plataformas"
+                            v-if="editedItem.mensagem_id == null"
+                            :key="plataforma.title"
+                            avatar>
 
                             <v-list-tile-content>
-                                <v-checkbox v-model="editedItem.plataformas"
-                                            :label="plataforma.descricao"
-                                            color="success"
-                                            required
-                                            :value="plataforma"></v-checkbox>
+                                <v-checkbox
+                                    v-model="editedItem.plataformas"
+                                    :label="plataforma.descricao"
+                                    :value="plataforma"
+                                    color="success"
+                                    required/>
                             </v-list-tile-content>
 
                         </v-list-tile>
-                        <v-list-tile v-if="editedItem.mensagem_id != null"
-                                     v-for="plataforma in editedItem.plataformas"
-                                     :key="plataforma.title"
-                                     avatar>
+                        <v-list-tile
+                            v-for="plataforma in editedItem.plataformas"
+                            v-if="editedItem.mensagem_id != null"
+                            :key="plataforma.title"
+                            avatar>
 
                             <v-list-tile-content>
-                                {{plataforma.descricao}}
+                                {{ plataforma.descricao }}
                             </v-list-tile-content>
 
 
                         </v-list-tile>
                     </v-list>
-                    <br/>
+                    <br>
 
-                    <v-select v-model="editedItem.sistema_id"
-                              :disabled="editedItem.mensagem_id != null"
-                              :items="sistemasRenderizados"
-                              :rules="[v => !!v || 'Campo obrigatório']"
-                              label="Sistema"
-                              box
-                              item-text="descricao"
-                              item-value="sistema_id"
-                              required></v-select>
+                    <v-select
+                        v-model="editedItem.sistema_id"
+                        :disabled="editedItem.mensagem_id != null"
+                        :items="sistemasRenderizados"
+                        :rules="[v => !!v || 'Campo obrigatório']"
+                        label="Sistema"
+                        box
+                        item-text="descricao"
+                        item-value="sistema_id"
+                        required/>
 
-                    <v-text-field disabled
-                                  :value="this.obterNomeAutor(editedItem.autor_id)"
-                                  v-if="plataformasSelecionadas.length > 0"
-                                  label="Autor"
-                                  box></v-text-field>
+                    <v-text-field
+                        v-if="plataformasSelecionadas.length > 0"
+                        :value="this.obterNomeAutor(editedItem.autor_id)"
+                        disabled
+                        label="Autor"
+                        box/>
 
                 </v-flex>
-                <v-flex xs12 sm6 md12>
+                <v-flex
+                    xs12
+                    sm6
+                    md12>
                     <h3>Situação</h3>
-                    <v-switch :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                              v-model="editedItem.is_ativo"></v-switch>
+                    <v-switch
+                        :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
+                        v-model="editedItem.is_ativo"/>
                 </v-flex>
             </v-layout>
             <v-layout class="text-xs-center">
                 <v-flex md12>
-                    <v-btn color="error" @click.native="close">Fechar</v-btn>
-                    <v-btn dark v-if="!loading && editedItem.autor_id === null" color="blue darken-1">
+                    <v-btn
+                        color="error"
+                        @click.native="close">Fechar</v-btn>
+                    <v-btn
+                        v-if="!loading && editedItem.autor_id === null"
+                        dark
+                        color="blue darken-1">
                         Gravar
                     </v-btn>
                 </v-flex>
@@ -87,145 +108,144 @@
 </template>
 <script>
 
-  import {mapActions, mapGetters} from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
-  export default {
+export default {
     props: {
-      item: {
-        type: Object,
-        default: () => {
+        item: {
+            type: Object,
+            default: () => {
+            },
         },
-      },
     },
     data: () => ({
-      valid: true,
-      loading: false,
-      plataformasSelecionadas: [],
-      mensagensRenderizadas: [],
-      sistemasRenderizados: [],
-      editedItem: {
-        titulo: null,
-        mensagem_id: null,
-        autor_id: null,
-        sistema_id: null,
-        descricao: '',
-        is_ativo: true,
-        plataformas: [],
-      },
+        valid: true,
+        loading: false,
+        plataformasSelecionadas: [],
+        mensagensRenderizadas: [],
+        sistemasRenderizados: [],
+        editedItem: {
+            titulo: null,
+            mensagem_id: null,
+            autor_id: null,
+            sistema_id: null,
+            descricao: '',
+            is_ativo: true,
+            plataformas: [],
+        },
     }),
     watch: {
-      item(val) {
-        this.editedItem = Object.assign({}, val);
-      },
-      mensagens(value) {
-        if ('error' in value) {
-          alert(value.error);
-          this.mensagensRenderizadas = [];
-        } else {
-          this.mensagensRenderizadas = value;
-        }
-      },
-      sistemas(value) {
-        if ('error' in value) {
-          this.sistemasRenderizados = [];
-        } else {
-          this.sistemasRenderizados = value;
-        }
-      },
-      editedItem(value) {
-        this.plataformasSelecionadas = [];
-        if (this.editedItem.autor_id == null) {
-          this.editedItem.autor_id = this.accountInfo.user_id;
-        } else {
-          for (const index in value.plataformas) {
-            this.plataformasSelecionadas.push(value.plataformas[index]);
-          }
-        }
-      },
+        item(val) {
+            this.editedItem = Object.assign({}, val);
+        },
+        mensagens(value) {
+            if ('error' in value) {
+                alert(value.error);
+                this.mensagensRenderizadas = [];
+            } else {
+                this.mensagensRenderizadas = value;
+            }
+        },
+        sistemas(value) {
+            if ('error' in value) {
+                this.sistemasRenderizados = [];
+            } else {
+                this.sistemasRenderizados = value;
+            }
+        },
+        editedItem(value) {
+            this.plataformasSelecionadas = [];
+            if (this.editedItem.autor_id == null) {
+                this.editedItem.autor_id = this.accountInfo.user_id;
+            } else {
+                for (const index in value.plataformas) {
+                    this.plataformasSelecionadas.push(value.plataformas[index]);
+                }
+            }
+        },
     },
 
     computed: {
-      formTitle() {
-        return this.editedItem.mensagem_id === null ? 'Criar' : 'Visualizar';
-      },
-      ...mapGetters({
-        mensagens: 'mensagem/mensagens',
-        sistemas: 'sistema/sistema',
-        contas: 'conta/conta',
-        plataformas: 'plataforma/plataforma',
-        accountInfo: 'account/accountInfo',
-      }),
+        formTitle() {
+            return this.editedItem.mensagem_id === null ? 'Criar' : 'Visualizar';
+        },
+        ...mapGetters({
+            mensagens: 'mensagem/mensagens',
+            sistemas: 'sistema/sistema',
+            contas: 'conta/conta',
+            plataformas: 'plataforma/plataforma',
+            accountInfo: 'account/accountInfo',
+        }),
     },
 
     created() {
 
-      // if(this.plataformas.length == null) {
-      //     this.obterPlataformas();
-      // }
+        // if(this.plataformas.length == null) {
+        //     this.obterPlataformas();
+        // }
     },
 
     mounted() {
-      this.editedItem = Object.assign({}, this.defaultItem);
-      if (this.mensagens.length == null || this.mensagens.length == 0) {
-        this.obterMensagems();
-      }
-      if (this.mensagens.length > 0) {
-        this.mensagensRenderizadas = this.mensagens;
-      }
-      if (this.sistemas.length == null || this.sistemas.length == 0) {
-        this.obterSistemas();
-      }
-      if (this.sistemas.length > 0) {
-        this.sistemasRenderizados = this.sistemas;
-      }
-      if (this.contas.length == null || this.contas.length == 0) {
-        this.obterContas();
-      }
-      if (this.plataformas.length == null || this.plataformas.length == 0) {
-        this.obterPlataformas();
-      }
+        this.editedItem = Object.assign({}, this.defaultItem);
+        if (this.mensagens.length == null || this.mensagens.length == 0) {
+            this.obterMensagems();
+        }
+        if (this.mensagens.length > 0) {
+            this.mensagensRenderizadas = this.mensagens;
+        }
+        if (this.sistemas.length == null || this.sistemas.length == 0) {
+            this.obterSistemas();
+        }
+        if (this.sistemas.length > 0) {
+            this.sistemasRenderizados = this.sistemas;
+        }
+        if (this.contas.length == null || this.contas.length == 0) {
+            this.obterContas();
+        }
+        if (this.plataformas.length == null || this.plataformas.length == 0) {
+            this.obterPlataformas();
+        }
     },
     methods: {
 
-      ...mapActions({
-        obterSistemas: 'sistema/obterSistemas',
-        obterMensagems: 'mensagem/obterMensagems',
-        obterContas: 'conta/obterContas',
-        obterPlataformas: 'plataforma/obterPlataformas',
-        removerMensagem: 'mensagem/removerMensagem',
-        cadastrarMensagem: 'mensagem/cadastrarMensagem',
-        atualizarMensagem: 'mensagem/atualizarMensagem',
-      }),
-      save() {
-        const self = this;
-        self.loading = true;
+        ...mapActions({
+            obterSistemas: 'sistema/obterSistemas',
+            obterMensagems: 'mensagem/obterMensagems',
+            obterContas: 'conta/obterContas',
+            obterPlataformas: 'plataforma/obterPlataformas',
+            removerMensagem: 'mensagem/removerMensagem',
+            cadastrarMensagem: 'mensagem/cadastrarMensagem',
+            atualizarMensagem: 'mensagem/atualizarMensagem',
+        }),
+        save() {
+            const self = this;
+            self.loading = true;
 
-        if (self.editedItem.mensagem_id !== null) {
-          this.atualizarMensagem(self.editedItem);
-        } else {
-          this.cadastrarMensagem(self.editedItem);
-        }
-        self.close();
-      },
+            if (self.editedItem.mensagem_id !== null) {
+                this.atualizarMensagem(self.editedItem);
+            } else {
+                this.cadastrarMensagem(self.editedItem);
+            }
+            self.close();
+        },
 
-      obterNomeAutor(usuario_id) {
+        obterNomeAutor(usuario_id) {
+            if (this.contas.length == null) {
+                this.obterContas();
+            }
 
-        if (this.contas.length == null) {
-          this.obterContas();
-        }
-
-        for (const index in this.contas) {
-          if (this.contas[index].usuario_id == usuario_id) {
-            return this.contas[index].nome;
-          }
-        }
-      },
-      close() {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.$emit('update:dialog', false);
-      },
+            for (const index in this.contas) {
+                if (this.contas[index].usuario_id == usuario_id) {
+                    return this.contas[index].nome;
+                }
+            }
+        },
+        close() {
+            this.editedItem = Object.assign({}, this.defaultItem);
+            this.$emit('update:dialog', false);
+        },
 
     },
-  };
+};
 
 </script>
