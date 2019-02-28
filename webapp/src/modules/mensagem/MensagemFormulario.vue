@@ -29,36 +29,32 @@
                     />
 
                     <h3 v-if="editedItem.mensagem_id != null"> Plataformas </h3>
-                    <v-list style="overflow: auto; max-height: 300px">
-                        <v-list-tile
-                            v-for="plataforma in this.plataformas"
-                            v-if="editedItem.mensagem_id == null"
-                            :key="plataforma.title"
-                            avatar>
+                    <div style="overflow: auto; max-height: 300px">
+                        <v-list v-if="editedItem.mensagem_id == null">
+                            <v-list-tile
+                                v-for="plataforma in plataformas"
+                                :key="plataforma.title"
+                                avatar>
+                                <v-list-tile-content>
+                                    <v-checkbox
+                                        v-model="editedItem.plataformas"
+                                        :label="plataforma.descricao"
+                                        :value="plataforma"
+                                        color="success"
+                                        required/>
+                                </v-list-tile-content>
 
-                            <v-list-tile-content>
-                                <v-checkbox
-                                    v-model="editedItem.plataformas"
-                                    :label="plataforma.descricao"
-                                    :value="plataforma"
-                                    color="success"
-                                    required/>
-                            </v-list-tile-content>
-
-                        </v-list-tile>
-                        <v-list-tile
-                            v-for="plataforma in editedItem.plataformas"
-                            v-if="editedItem.mensagem_id != null"
-                            :key="plataforma.title"
-                            avatar>
-
-                            <v-list-tile-content>
-                                {{ plataforma.descricao }}
-                            </v-list-tile-content>
-
-
-                        </v-list-tile>
-                    </v-list>
+                            </v-list-tile>
+                            <v-list-tile
+                                v-for="plataforma in editedItem.plataformas"
+                                :key="plataforma.title"
+                                avatar>
+                                <v-list-tile-content>
+                                    {{ plataforma.descricao }}
+                                </v-list-tile-content>
+                            </v-list-tile>
+                        </v-list>
+                    </div>
                     <br>
 
                     <v-select
@@ -74,7 +70,7 @@
 
                     <v-text-field
                         v-if="plataformasSelecionadas.length > 0"
-                        :value="this.obterNomeAutor(editedItem.autor_id)"
+                        :value="obterNomeAutor(editedItem.autor_id)"
                         disabled
                         label="Autor"
                         box/>
@@ -134,6 +130,18 @@ export default {
             plataformas: [],
         },
     }),
+    computed: {
+        formTitle() {
+            return this.editedItem.mensagem_id === null ? 'Criar' : 'Visualizar';
+        },
+        ...mapGetters({
+            mensagens: 'mensagem/mensagens',
+            sistemas: 'sistema/sistema',
+            contas: 'conta/conta',
+            plataformas: 'plataforma/plataforma',
+            accountInfo: 'account/accountInfo',
+        }),
+    },
     watch: {
         item(val) {
             this.editedItem = Object.assign({}, val);
@@ -165,18 +173,7 @@ export default {
         },
     },
 
-    computed: {
-        formTitle() {
-            return this.editedItem.mensagem_id === null ? 'Criar' : 'Visualizar';
-        },
-        ...mapGetters({
-            mensagens: 'mensagem/mensagens',
-            sistemas: 'sistema/sistema',
-            contas: 'conta/conta',
-            plataformas: 'plataforma/plataforma',
-            accountInfo: 'account/accountInfo',
-        }),
-    },
+
 
     created() {
 
@@ -187,22 +184,22 @@ export default {
 
     mounted() {
         this.editedItem = Object.assign({}, this.defaultItem);
-        if (this.mensagens.length == null || this.mensagens.length == 0) {
+        if (this.mensagens.length == null || this.mensagens.length === 0) {
             this.obterMensagems();
         }
         if (this.mensagens.length > 0) {
             this.mensagensRenderizadas = this.mensagens;
         }
-        if (this.sistemas.length == null || this.sistemas.length == 0) {
+        if (this.sistemas.length == null || this.sistemas.length === 0) {
             this.obterSistemas();
         }
         if (this.sistemas.length > 0) {
             this.sistemasRenderizados = this.sistemas;
         }
-        if (this.contas.length == null || this.contas.length == 0) {
+        if (this.contas.length == null || this.contas.length === 0) {
             this.obterContas();
         }
-        if (this.plataformas.length == null || this.plataformas.length == 0) {
+        if (this.plataformas.length == null || this.plataformas.length === 0) {
             this.obterPlataformas();
         }
     },
@@ -229,16 +226,22 @@ export default {
             self.close();
         },
 
-        obterNomeAutor(usuario_id) {
+        obterNomeAutor(usuarioId) {
             if (this.contas.length == null) {
                 this.obterContas();
             }
 
-            for (const index in this.contas) {
-                if (this.contas[index].usuario_id == usuario_id) {
-                    return this.contas[index].nome;
+            let nomeAutor = '';
+            const self = this;
+
+            this.contas.every((item, indice) => {
+                if (this.contas[indice].usuario_id === usuarioId) {
+                    nomeAutor = self.contas[indice].nome;
+                    return false;
                 }
-            }
+                return true;
+            });
+            return nomeAutor;
         },
         close() {
             this.editedItem = Object.assign({}, this.defaultItem);
