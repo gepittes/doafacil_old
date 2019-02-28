@@ -148,7 +148,6 @@ export default {
         },
         mensagens(value) {
             if ('error' in value) {
-                alert(value.error);
                 this.mensagensRenderizadas = [];
             } else {
                 this.mensagensRenderizadas = value;
@@ -166,20 +165,11 @@ export default {
             if (this.editedItem.autor_id == null) {
                 this.editedItem.autor_id = this.accountInfo.user_id;
             } else {
-                for (const index in value.plataformas) {
-                    this.plataformasSelecionadas.push(value.plataformas[index]);
-                }
+                Object.keys(value.plataformas).forEach((indice) => {
+                    this.plataformasSelecionadas.push(value.plataformas[indice]);
+                });
             }
         },
-    },
-
-
-
-    created() {
-
-        // if(this.plataformas.length == null) {
-        //     this.obterPlataformas();
-        // }
     },
 
     mounted() {
