@@ -1,9 +1,5 @@
 import * as types from './types';
 
-export const state = {
-    plataforma: {},
-};
-
 export const mutations = {
     [types.SET_PLATAFORMA](state, plataforma) {
         state.plataforma = plataforma;
@@ -15,5 +11,8 @@ export const mutations = {
     [types.ATUALIZAR_PLATAFORMA](state, plataformaEditada) {
         const index = state.plataforma.findIndex(plataforma => plataforma.plataforma_id === plataformaEditada.plataforma_id);
         Object.assign(state.plataforma[index], plataformaEditada);
+    },
+    [types.ACRESCENTAR_PLATAFORMA](state, plataforma) {
+        state.plataforma.push(plataforma);
     },
 };

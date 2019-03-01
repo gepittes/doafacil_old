@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <v-scale-transition>
             <v-menu
                 v-model="menu"
@@ -17,7 +16,7 @@
                         right
                         color="red">
                         <span
-                            v-if="notificacoesBadge.length > 0"
+                            v-if="notificacoesBadge != null && notificacoesBadge.length > 0"
                             slot="badge">{{ notificacoesBadge.length }}</span>
                         <v-icon
                             dark
@@ -27,7 +26,7 @@
                     </v-badge>
                 </v-btn>
 
-                <v-card>
+                <v-card v-if="notificacoesBadge != null && notificacoesBadge.length > 0">
                     <v-card-title>
                         Notificações
                     </v-card-title>
@@ -39,14 +38,12 @@
                             :key="indexNotificacao"
                             :to="minhaNotificacao">
 
-                            <!-- <v-list-tile-content @click="lerNotificacao(minhaNotificacao)"> -->
                             <v-list-tile-content>
                                 <v-list-tile-title>[{{ minhaNotificacao.sistema }}]</v-list-tile-title>
                                 <v-list-tile-sub-title>{{ minhaNotificacao.titulo }}</v-list-tile-sub-title>
                             </v-list-tile-content>
 
                             <v-list-tile-action>
-                                <!-- <v-icon>check</v-icon> -->
                                 <v-tooltip bottom>
                                     <v-btn
                                         slot="activator"
@@ -62,13 +59,13 @@
                         </v-list-tile>
                     </v-list>
 
-                    <v-card-text v-else-if="notificacoesBadge.length === 0">
+                    <v-card-text v-else-if="notificacoesBadge != null && notificacoesBadge.length === 0">
                         Não há novas notificações.
                     </v-card-text>
 
                     <v-divider/>
 
-                    <v-card-actions v-if="notificacoesBadge.length > 0">
+                    <v-card-actions v-if="notificacoesBadge != null && notificacoesBadge.length > 0">
                         <v-spacer/>
                         <v-btn
                             color="primary"
@@ -259,7 +256,7 @@ export default {
     },
     watch: {
         notificacoes() {
-            if (this.notificacoes.length !== this.notificacoesBadge.length) {
+            if (this.notificacoes != null && this.notificacoes.length !== this.notificacoesBadge.length) {
                 this.obterNotificacoesUsuario(this.accountInfo.user_id);
             }
         },
@@ -270,11 +267,11 @@ export default {
     mounted() {
         this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
 
-        this.websocket.connection.onopen = function () {
+        this.websocket.connection.onopen = () => {
             console.log('Conexão estabelecida');
         };
 
-        this.websocket.connection.onmessage = function (event) {
+        this.websocket.connection.onmessage = (event) => {
             console.log('Mensagem enviada!');
             console.log(event.data);
             this.obterNotificacoesUsuario(this.accountInfo.user_id);

@@ -28,7 +28,7 @@ export const removerPlataforma = ({ dispatch, commit }, plataformaId) => {
 export const cadastrarPlataforma = ({ dispatch, commit }, plataforma) => axios.post('http://localhost/v1/plataforma', plataforma)
     .then((response) => {
         const { data } = response;
-        commit(types.SET_PLATAFORMA, data.data);
+        commit(types.ACRESCENTAR_PLATAFORMA, data.data);
         dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
     }).catch((error) => {
         dispatch('alert/error', error.response.data.error, {

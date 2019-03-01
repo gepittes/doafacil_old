@@ -5,7 +5,7 @@ export const obterSistemas = ({ dispatch, commit }) => {
     axios.get('http://localhost/v1/sistema')
         .then((response) => {
             const { data } = response.data;
-            commit(types.OBTER_SISTEMAS, data.data);
+            commit(types.OBTER_SISTEMAS, data);
         })
         .catch((error) => {
             dispatch('alert/error', error.response.data.error, {

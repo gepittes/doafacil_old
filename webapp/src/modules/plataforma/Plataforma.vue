@@ -64,7 +64,7 @@
                             fixed
                             bottom
                             right
-                            @click="dialog = !dialog">
+                            @click="newItem()">
                             <v-icon>add</v-icon>
                         </v-btn>
                     </v-scale-transition>
@@ -78,43 +78,12 @@
                 <v-card-title>
                     <span class="headline">{{ formTitle }} Plataforma</span>
                 </v-card-title>
-                <!--<v-subheader>Preencha os dados da plataforma.</v-subheader>-->
 
                 <v-card-text>
-                    <v-container grid-list-md>
-                        <v-layout wrap>
-                            <v-flex
-                                xs12
-                                sm6
-                                md12>
-                                <v-text-field
-                                    v-model="editedItem.descricao"
-                                    label="Descrição"/>
-                            </v-flex>
-                            <v-flex
-                                xs12
-                                sm6
-                                md12>
-                                <h3>Situação:</h3>
-                                <v-switch
-                                    :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                                    v-model="editedItem.is_ativo"/>
-                            </v-flex>
-                        </v-layout>
-                    </v-container>
+                    <plataforma-formulario
+                        :item="editedItem"
+                        :dialog.sync="dialog"/>
                 </v-card-text>
-
-                <v-card-actions>
-                    <v-spacer/>
-                    <v-btn
-                        color="error"
-                        @click.native="close">Cancelar</v-btn>
-                    <v-btn
-                        v-if="!loading"
-                        dark
-                        color="blue darken-1"
-                        @click.native="save">Gravar</v-btn>
-                </v-card-actions>
             </v-card>
         </v-dialog>
     </v-container>
@@ -123,8 +92,10 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex';
+import PlataformaFormulario from './PlataformaFormulario.vue';
 
 export default {
+    components: { PlataformaFormulario },
     data: () => ({
         loading: false,
         dialog: false,
@@ -154,24 +125,16 @@ export default {
             },
         ],
         plataformasIniciais: [],
-        editedIndex: -1,
         editedItem: {
-            plataforma_id: 0,
+            plataforma_id: null,
             descricao: '',
             is_ativo: true,
-        },
-        defaultItem: {
-            name: '',
-            calories: 0,
-            fat: 0,
-            carbs: 0,
-            protein: 0,
         },
     }),
 
     computed: {
         formTitle() {
-            return this.editedIndex === -1 ? 'Criar' : 'Editar';
+            return this.editedItem.plataforma_id === null ? 'Criar' : 'Editar';
         },
         ...mapGetters({
             plataformas: 'plataforma/plataforma',
@@ -179,12 +142,8 @@ export default {
     },
 
     watch: {
-        dialog(val) {
-            return val || this.close();
-        },
         plataformas(value) {
             if ('error' in value) {
-                alert(value.error);
                 this.plataformasIniciais = [];
             } else {
                 this.plataformasIniciais = value;
@@ -202,9 +161,16 @@ export default {
         ...mapActions({
             obterPlataformas: 'plataforma/obterPlataformas',
             removerPlataforma: 'plataforma/removerPlataforma',
-            cadastrarPlataforma: 'plataforma/cadastrarPlataforma',
-            atualizarPlataforma: 'plataforma/atualizarPlataforma',
         }),
+
+        newItem() {
+            this.editedItem = Object.assign({}, {
+                plataforma_id: null,
+                descricao: '',
+                is_ativo: true,
+            });
+            this.dialog = true;
+        },
 
         editItem(item) {
             this.editedIndex = this.plataformas.indexOf(item);
@@ -213,53 +179,18 @@ export default {
         },
 
         deleteItem(item) {
-            // eslint-disable-next-line
-            if (confirm('Deseja remover esse item?')) {
-                this.removerPlataforma(item.plataforma_id);
-            }
+            // eslint-disable-next-lineif (confirm('Deseja remover esse item?')) {
+            this.removerPlataforma(item.plataforma_id);
         },
+    },
 
-        close() {
-            this.dialog = false;
-            setTimeout(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            }, 300);
-        },
-
-        save() {
-            const self = this;
-            self.loading = true;
-
-            if (self.editedIndex > -1) {
-                this.atualizarPlataforma(self.editedItem);
-            } else {
-                this.cadastrarPlataforma(self.editedItem);
-            }
-            self.close();
-        },
+    close() {
+        this.dialog = false;
+        setTimeout(() => {
+            this.editedItem = Object.assign({}, this.defaultItem);
+            this.editedIndex = -1;
+        }, 300);
     },
 };
 
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-    h1, h2 {
-        font-weight: normal;
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    li {
-        display: inline-block;
-        margin: 0 10px;
-    }
-
-    a {
-        color: #42b983;
-    }
-</style>
