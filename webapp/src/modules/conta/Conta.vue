@@ -163,9 +163,6 @@ export default {
     },
 
     watch: {
-        dialog(val) {
-            return val || this.close();
-        },
         contas(value) {
             if ('error' in value) {
                 alert(value.error);

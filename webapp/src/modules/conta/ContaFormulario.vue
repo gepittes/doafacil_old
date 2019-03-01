@@ -96,11 +96,6 @@ export default {
             default: () => {
             },
         },
-        dialog: {
-            type: Boolean,
-            default: false,
-            required: false,
-        },
     },
     data: () => ({
         loading: false,
