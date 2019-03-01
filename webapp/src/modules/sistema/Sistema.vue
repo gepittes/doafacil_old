@@ -160,9 +160,6 @@ export default {
     },
 
     watch: {
-        dialog(val) {
-            return val || this.close();
-        },
         sistemas(value) {
             if ('error' in value) {
                 this.sistemasRenderizados = [];
