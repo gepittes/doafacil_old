@@ -174,7 +174,7 @@ export default {
     },
 
     watch: {
-        dialog(value) {
+        dialog() {
             if (this.editedItem.autor_id == null) {
                 this.editedItem.autor_id = this.accountInfo.user_id;
             }
@@ -182,8 +182,6 @@ export default {
             if (this.editedItem.notificacao_id != null) {
                 this.exibirBotaoGravar = false;
             }
-
-            return value || this.close();
         },
         notificacoes(value) {
             if ('error' in value) {
