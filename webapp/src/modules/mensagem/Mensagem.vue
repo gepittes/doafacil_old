@@ -160,7 +160,7 @@ export default {
     },
 
     watch: {
-        dialog(val) {
+        dialog() {
             if (this.editedItem.autor_id == null && this.accountInfo.user_id !== null) {
                 this.editedItem.autor_id = this.accountInfo.user_id;
             }
@@ -169,8 +169,6 @@ export default {
             if (this.editedItem.mensagem_id != null) {
                 this.exibirBotaoGravar = false;
             }
-
-            return val || this.close();
         },
         mensagens(value) {
             if ('error' in value) {
