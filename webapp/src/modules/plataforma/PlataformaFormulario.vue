@@ -33,7 +33,6 @@
             </v-flex>
         </v-layout>
     </v-container>
-
 </template>
 <script>
 
@@ -94,7 +93,7 @@ export default {
             } else {
                 self.cadastrarPlataforma(self.editedItem);
             }
-            this.$emit('update:dialog', false);
+            this.close();
         },
 
         close() {

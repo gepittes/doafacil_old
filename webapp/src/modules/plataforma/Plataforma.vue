@@ -142,9 +142,6 @@ export default {
     },
 
     watch: {
-        dialog(val) {
-            return val || this.close();
-        },
         plataformas(value) {
             if ('error' in value) {
                 this.plataformasIniciais = [];
