@@ -256,7 +256,8 @@ export default {
     },
     watch: {
         notificacoes() {
-            if (this.notificacoes != null && this.notificacoes.length !== this.notificacoesBadge.length) {
+            if (this.notificacoes != null || this.notificacoesBadge != null ||
+                (this.notificacoes.length !== this.notificacoesBadge.length)) {
                 this.obterNotificacoesUsuario(this.accountInfo.user_id);
             }
         },
