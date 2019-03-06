@@ -5,7 +5,7 @@ export const obterNotificacoesUsuario = ({ dispatch, commit }, usuarioId) => {
     axios.get(`http://localhost/v1/notificacao-usuario/${usuarioId}`)
         .then((response) => {
             const { data } = response.data;
-            commit(types.DEFINIR_NOTIFICACOES_BADGE, data.data);
+            commit(types.DEFINIR_NOTIFICACOES_BADGE, data);
         })
         .catch((error) => {
             dispatch('alert/error', error.response.data.error, {
