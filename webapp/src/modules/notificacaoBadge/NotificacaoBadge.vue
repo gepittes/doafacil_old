@@ -34,11 +34,10 @@
                     <v-list v-if="notificacoesBadge.length > 0">
                         <v-list-tile
                             v-for="(minhaNotificacao, indexNotificacao) in notificacoesBadge"
-                            v-if="indexNotificacao < 4 && minhaNotificacao.is_notificacao_lida == false"
                             :key="indexNotificacao"
                             :to="minhaNotificacao">
 
-                            <v-list-tile-content>
+                            <v-list-tile-content v-if="indexNotificacao < 4 && minhaNotificacao.is_notificacao_lida == false">
                                 <v-list-tile-title>[{{ minhaNotificacao.sistema }}]</v-list-tile-title>
                                 <v-list-tile-sub-title>{{ minhaNotificacao.titulo }}</v-list-tile-sub-title>
                             </v-list-tile-content>
@@ -263,6 +262,11 @@ export default {
         },
         dialog(val) {
             return val || this.closeBadgeDialog();
+        },
+        dialogNotificacao() {
+            if (this.dialogNotificacao === false && this.notificacao !== null) {
+                this.lerNotificacao(this.notificacao);
+            }
         },
     },
     mounted() {
