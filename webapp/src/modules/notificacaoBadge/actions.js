@@ -1,8 +1,12 @@
 import axios from 'axios';
 import * as types from './types';
 
-export const obterNotificacoesUsuario = ({ dispatch, commit }, usuarioId) => {
-    axios.get(`http://localhost/v1/notificacao-usuario/${usuarioId}`)
+export const obterNotificacoesUsuario = ({ dispatch, commit }, usuarioId, sistemaId) => {
+    let url = `http://localhost/v1/notificacao-usuario/${usuarioId}`;
+    if (sistemaId != null) {
+        url += `/${sistemaId}`;
+    }
+    axios.get(url)
         .then((response) => {
             const { data } = response.data;
             commit(types.DEFINIR_NOTIFICACOES_BADGE, data);

@@ -8,7 +8,7 @@ use Laravel\Lumen\Routing\Controller;
 
 class NotificacaoUsuarioController extends Controller
 {
-    public function get(ServerRequestInterface $request, $usuario_id, $limite = null)
+    public function get(ServerRequestInterface $request, $usuario_id, $sistema_id = null)
     {
         $notificacao = new \App\Services\Notificacao();
         /**
@@ -20,7 +20,7 @@ class NotificacaoUsuarioController extends Controller
 //        if(isset($dados['limite']) && (int)$dados['limite'] > 0) {
 //            $limite = (int)$dados['limite'];
 //        }
-        return $response->json($notificacao->obterNotificacoesUsuario($usuario_id, $limite));
+        return $response->json($notificacao->obterNotificacoesUsuario($usuario_id, $sistema_id));
     }
 
     public function patch(ServerRequestInterface $request, $notificacao_id, $usuario_id)
