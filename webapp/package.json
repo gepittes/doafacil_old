@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "config": "^2.0.1",
+    "jsonwebtoken": "^8.5.0",
     "jwt-decode": "^2.2.0",
     "marked": "^0.5.2",
     "moment": "^2.23.0",
