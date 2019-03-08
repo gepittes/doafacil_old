@@ -69,7 +69,7 @@ class Notificacao implements IService
         return $plataforma->delete();
     }
 
-    public function obterNotificacoesUsuario($usuario_id, $limite)
+    public function obterNotificacoesUsuario($usuario_id, $sistema_id)
     {
         if (is_null($usuario_id)) {
             throw new \Exception('Identificador do usuário obrigatório.');
@@ -97,8 +97,8 @@ class Notificacao implements IService
             ->where('notificacao.notificacao.is_notificacao_lida', '=', false);
 //            ->toSql();
 
-        if (!is_null($limite)) {
-            $consulta->limit($limite);
+        if (!is_null($sistema_id)) {
+            $consulta->where('notificacao.mensagem.sistema_id', '=', $sistema_id);
         }
 
         return $consulta->get();
