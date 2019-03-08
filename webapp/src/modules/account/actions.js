@@ -1,4 +1,5 @@
 import * as jwtDecode from 'jwt-decode';
+import * as jwt from 'jsonwebtoken';
 import { userService } from '../user/service';
 import * as types from './types';
 import router from '../../router';
@@ -16,8 +17,20 @@ export const login = ({ dispatch, commit }, { email, password }) => {
                     dispatch('alert/info', 'Login realizado com sucesso!', {
                         root: true,
                     });
-
                     const token = JSON.stringify(data.token);
+                    
+                    try {
+                        console.log('---====---');
+                        console.log(process.env.VUE_APP_JWT_SECRET)
+                        const objJWT = jwt.verify(token, process.env.VUE_APP_JWT_SECRET);
+                        console.log(objJWT);
+                        return false;
+                    } catch (Exception) {
+                        console.log('<<<<');
+                        console.log(Exception);
+                        return false;
+                    }
+
                     const tokenDecodificada = jwtDecode(token);
                     commit(types.SETACCOUNTINFO, tokenDecodificada.user);
 
