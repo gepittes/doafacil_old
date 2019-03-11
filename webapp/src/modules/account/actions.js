@@ -1,4 +1,3 @@
-import * as jwt from 'jsonwebtoken';
 import { userService } from '../user/service';
 import * as types from './types';
 import router from '../../router';
@@ -20,7 +19,6 @@ export const login = ({ dispatch, commit }, { email, password }) => {
 
                         const objetoJWT = obterInformacoesJWT();
                         commit(types.SETACCOUNTINFO, objetoJWT.user);
-
                         router.push({ name: 'home' });
                     } else {
                         dispatch('alert/error', 'Falha ao realizar login.', {
