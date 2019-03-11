@@ -13,6 +13,7 @@ import Conta from './modules/conta/Conta.vue';
 import Mensagem from './modules/mensagem/Mensagem.vue';
 import Notificacao from './modules/notificacao/Notificacao.vue';
 import store from './store';
+import { obterInformacoesJWT } from './modules/_helpers';
 
 Vue.use(Router);
 
@@ -107,11 +108,19 @@ router.beforeEach((to, from, next) => {
         store.dispatch('alert/info', 'Logout realizado som sucesso.', { root: true });
         return next('/login');
     }
+
     if (authRequired && !loggedIn) {
         return next('/login');
     }
 
-    return next();
+    try {
+        obterInformacoesJWT();
+
+        return next();
+    } catch (Exception) {
+        store.dispatch('alert/error', `Erro: ${Exception}`, { root: true });
+        return next('/login');
+    }
 });
 
 export default router;
