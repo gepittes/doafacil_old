@@ -26,12 +26,12 @@
                     </v-badge>
                 </v-btn>
 
-                <v-card v-if="notificacoesBadge != null && notificacoesBadge.length > 0">
+                <v-card>
                     <v-card-title>
                         Notificações
                     </v-card-title>
 
-                    <v-list v-if="notificacoesBadge.length > 0">
+                    <v-list v-if="notificacoesBadge != null && notificacoesBadge.length > 0">
                         <v-list-tile
                             v-for="(minhaNotificacao, indexNotificacao) in notificacoesBadge"
                             :key="indexNotificacao"
