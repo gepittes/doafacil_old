@@ -1,38 +1,41 @@
-import * as jwtDecode from 'jwt-decode';
 import { userService } from '../user/service';
 import * as types from './types';
 import router from '../../router';
+import { obterInformacoesJWT } from '../_helpers';
 
 export const login = ({ dispatch, commit }, { email, password }) => {
     commit(types.LOGINREQUEST, { email });
 
     return userService.login(email, password)
         .then((response) => {
-            if (response.data && response.data.data) {
-                const { data } = response.data;
-                if (data && data.token) {
-                    localStorage.setItem('user', JSON.stringify(data.token));
-                    commit(types.LOGINSUCCESS, data);
-                    dispatch('alert/info', 'Login realizado com sucesso!', {
-                        root: true,
-                    });
+            try {
+                if (response.data && response.data.data) {
+                    const { data } = response.data;
+                    if (data && data.token) {
+                        commit(types.LOGINSUCCESS, data.token);
+                        dispatch('alert/info', 'Login realizado com sucesso!', {
+                            root: true,
+                        });
 
-                    const token = JSON.stringify(data.token);
-                    const tokenDecodificada = jwtDecode(token);
-                    commit(types.SETACCOUNTINFO, tokenDecodificada.user);
-
-                    router.push({ name: 'home' });
-                } else {
-                    dispatch('alert/error', 'Falha ao realizar login.', {
-                        root: true,
-                    });
+                        const objetoJWT = obterInformacoesJWT();
+                        commit(types.SETACCOUNTINFO, objetoJWT.user);
+                        router.push({ name: 'home' });
+                    } else {
+                        dispatch('alert/error', 'Falha ao realizar login.', {
+                            root: true,
+                        });
+                    }
                 }
+            } catch (Exception) {
+                dispatch('alert/error', `Erro: ${Exception}`, {
+                    root: true,
+                });
             }
         })
         .catch((error) => {
             if (error.response && error.response.data) {
                 commit(types.LOGINFAILURE, error.response.data.error);
-                dispatch('alert/error', error.response.data.error, {
+                dispatch('alert/error', `Erro: ${error.response.data.error}`, {
                     root: true,
                 });
             }

@@ -1,24 +1,25 @@
 import * as types from './types';
 
 export default {
-    [types.LOGINREQUEST](state, user) {
+    [types.LOGINREQUEST](state, token) {
         state.status = { loggingIn: true };
-        state.user = user;
+        state.token = token;
     },
-    [types.LOGINSUCCESS](state, user) {
+    [types.LOGINSUCCESS](state, token) {
+        localStorage.setItem('token', token);
         state.status = { loggedIn: true };
-        state.user = user;
+        state.token = token;
     },
     [types.SETACCOUNTINFO](state, accountInfo) {
         state.accountInfo = accountInfo;
     },
     [types.LOGINFAILURE](state) {
         state.status = {};
-        state.user = null;
+        state.token = null;
     },
     [types.LOGOUT](state) {
         state.status = {};
-        state.user = null;
+        state.token = null;
         state.accountInfo = null;
         state.message = null;
         state.message_type = null;

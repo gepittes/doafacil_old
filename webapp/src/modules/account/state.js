@@ -1,12 +1,13 @@
-import * as jwtDecode from 'jwt-decode';
+import { obterInformacoesJWT } from '../_helpers/obter-informacoes-jwt';
 
-const user = JSON.parse(localStorage.getItem('user'));
-const accountInfo = user != null ? jwtDecode(user) : '';
-const loggedIn = user != null;
+const informacoesJWT = obterInformacoesJWT();
+const loggedIn = informacoesJWT !== '';
+
+console.log(informacoesJWT);
 
 export const state = {
     status: { loggedIn },
-    user: user || '',
-    accountInfo: accountInfo ? accountInfo.user : '',
+    token: informacoesJWT,
+    accountInfo: informacoesJWT ? informacoesJWT.user : '',
 };
 
