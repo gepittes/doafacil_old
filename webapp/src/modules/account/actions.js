@@ -2,35 +2,36 @@ import * as jwt from 'jsonwebtoken';
 import { userService } from '../user/service';
 import * as types from './types';
 import router from '../../router';
+import { obterInformacoesJWT } from '../_helpers';
 
 export const login = ({ dispatch, commit }, { email, password }) => {
     commit(types.LOGINREQUEST, { email });
 
     return userService.login(email, password)
         .then((response) => {
-            if (response.data && response.data.data) {
-                const { data } = response.data;
-                if (data && data.token) {
-                    commit(types.LOGINSUCCESS, data.token);
-                    dispatch('alert/info', 'Login realizado com sucesso!', {
-                        root: true,
-                    });
+            try {
+                if (response.data && response.data.data) {
+                    const { data } = response.data;
+                    if (data && data.token) {
+                        commit(types.LOGINSUCCESS, data.token);
+                        dispatch('alert/info', 'Login realizado com sucesso!', {
+                            root: true,
+                        });
 
-                    try {
-                        const objetoJWT = jwt.verify(data.token, process.env.VUE_APP_JWT_SECRET);
+                        const objetoJWT = obterInformacoesJWT();
                         commit(types.SETACCOUNTINFO, objetoJWT.user);
 
                         router.push({ name: 'home' });
-                    } catch (Exception) {
-                        dispatch('alert/error', `Erro${Exception}`, {
+                    } else {
+                        dispatch('alert/error', 'Falha ao realizar login.', {
                             root: true,
                         });
                     }
-                } else {
-                    dispatch('alert/error', 'Falha ao realizar login.', {
-                        root: true,
-                    });
                 }
+            } catch (Exception) {
+                dispatch('alert/error', `Erro${Exception}`, {
+                    root: true,
+                });
             }
         })
         .catch((error) => {
