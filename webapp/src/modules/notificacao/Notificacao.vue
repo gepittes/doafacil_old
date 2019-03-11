@@ -60,7 +60,7 @@
                                     color="red">thumb_down</v-icon>
                             </td>
                             <td
-                                v-if="accountInfo.is_admin && verificaSistema(props.item.mensagem.sistema_id)"
+                                v-if="accountInfo.is_admin && usuarioPossuiVinculoComSistema(props.item.mensagem.sistema_id)"
                                 class="justify-center layout px-0">
                                 <v-btn icon>
                                     <v-icon
@@ -102,6 +102,7 @@
 
 import { mapActions, mapGetters } from 'vuex';
 import NotificacaoFormulario from './NotificacaoFormulario';
+import { notificacaoService } from './service';
 
 export default {
     components: { NotificacaoFormulario },
@@ -160,7 +161,7 @@ export default {
             connection: null,
         },
     }),
-
+    mixins: [notificacaoService],
     computed: {
         formTitle() {
             return this.editedItem.notificacao_id === null ? 'Criar' : 'Editar';
@@ -251,18 +252,6 @@ export default {
                     this.removerNotificacao(item.notificacao_id);
                 }
             }
-        },
-        verificaSistema(sistemaNotificacao){
-            const self = this;
-            const { sistemas }  = self.accountInfo;
-            let vinculo = 0;
-            sistemas.forEach((value, index) => {
-                if (parseInt(value.sistema_id, 10) === parseInt(sistemaNotificacao, 10)) {
-                    vinculo = 1;
-                }
-            });
-
-            return vinculo;
         },
     },
 };
