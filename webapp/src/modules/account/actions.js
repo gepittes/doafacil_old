@@ -18,7 +18,6 @@ export const login = ({ dispatch, commit }, { email, password }) => {
 
                     try {
                         const objetoJWT = jwt.verify(data.token, process.env.VUE_APP_JWT_SECRET);
-console.log(objetoJWT)
                         commit(types.SETACCOUNTINFO, objetoJWT.user);
 
                         router.push({ name: 'home' });
