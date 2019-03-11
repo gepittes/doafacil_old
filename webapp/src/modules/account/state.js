@@ -1,12 +1,16 @@
 import * as jwtDecode from 'jwt-decode';
 
-const user = JSON.parse(localStorage.getItem('user'));
-const accountInfo = user != null ? jwtDecode(user) : '';
-const loggedIn = user != null;
+let token = localStorage.getItem('token');
+
+if (token !== '') {
+    token = JSON.parse(JSON.stringify(token));
+}
+const accountInfo = token != null ? jwtDecode(token) : '';
+const loggedIn = token != null;
 
 export const state = {
     status: { loggedIn },
-    user: user || '',
-    accountInfo: accountInfo ? accountInfo.user : '',
+    token: token || '',
+    accountInfo: accountInfo ? accountInfo.token : '',
 };
 

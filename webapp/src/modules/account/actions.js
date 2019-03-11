@@ -1,4 +1,3 @@
-import * as jwtDecode from 'jwt-decode';
 import * as jwt from 'jsonwebtoken';
 import { userService } from '../user/service';
 import * as types from './types';
@@ -12,15 +11,15 @@ export const login = ({ dispatch, commit }, { email, password }) => {
             if (response.data && response.data.data) {
                 const { data } = response.data;
                 if (data && data.token) {
-                    localStorage.setItem('user', JSON.stringify(data.token));
-                    commit(types.LOGINSUCCESS, data);
+                    commit(types.LOGINSUCCESS, data.token);
                     dispatch('alert/info', 'Login realizado com sucesso!', {
                         root: true,
                     });
 
                     try {
-                        const objJWT = jwt.verify(data.token, process.env.VUE_APP_JWT_SECRET);
-                        commit(types.SETACCOUNTINFO, objJWT.user);
+                        const objetoJWT = jwt.verify(data.token, process.env.VUE_APP_JWT_SECRET);
+console.log(objetoJWT)
+                        commit(types.SETACCOUNTINFO, objetoJWT.user);
 
                         router.push({ name: 'home' });
                     } catch (Exception) {
