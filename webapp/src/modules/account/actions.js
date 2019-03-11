@@ -29,7 +29,7 @@ export const login = ({ dispatch, commit }, { email, password }) => {
                     }
                 }
             } catch (Exception) {
-                dispatch('alert/error', `Erro${Exception}`, {
+                dispatch('alert/error', `Erro: ${Exception}`, {
                     root: true,
                 });
             }
@@ -37,7 +37,7 @@ export const login = ({ dispatch, commit }, { email, password }) => {
         .catch((error) => {
             if (error.response && error.response.data) {
                 commit(types.LOGINFAILURE, error.response.data.error);
-                dispatch('alert/error', error.response.data.error, {
+                dispatch('alert/error', `Erro: ${error.response.data.error}`, {
                     root: true,
                 });
             }
