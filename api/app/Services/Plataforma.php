@@ -43,6 +43,10 @@ class Plataforma implements IService
             throw new \Exception($validator->errors()->first());
         }
 
+        unset($dados['created_at']);
+        $dataAtual = \Carbon\Carbon::now();
+        $dados['updated_at'] = $dataAtual->toDateTimeString();
+
         return ModeloPlataforma::where('plataforma_id', $id)->update($dados);
     }
 

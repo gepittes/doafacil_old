@@ -79,7 +79,7 @@ export default {
     computed: {
         ...mapGetters({
             status: 'account/status',
-            user: 'account/user',
+            token: 'account/token',
             accountInfo: 'account/accountInfo',
         }),
     },

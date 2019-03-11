@@ -81,103 +81,10 @@
                 </v-card-title>
 
                 <v-card-text>
-                    <v-container grid-list-md>
-                        <v-layout wrap>
-                            <v-flex
-                                xs12
-                                sm6
-                                md12>
-                                <v-text-field
-                                    v-model="editedItem.titulo"
-                                    :rules="[(object) => object!= null && object.length > 3 || 'Campo obrigatório.']"
-                                    label="Título"
-                                    box
-                                    minlength="3"
-                                    required/>
-                                <v-textarea
-                                    v-model="editedItem.descricao"
-                                    :rules="[(object) => object!= null && object.length > 3 || 'Campo obrigatório.']"
-                                    auto-grow
-                                    box
-                                    color="deep-purple"
-                                    label="Descrição"
-                                    required
-                                    rows="5"
-                                />
-
-                                <h3 v-if="editedItem.mensagem_id != null"> Plataformas </h3>
-                                <v-list
-                                    v-if="editedItem.mensagem_id == null"
-                                    style="overflow: auto; max-height: 300px">
-                                    <v-list-tile
-                                        v-for="plataforma in plataformas"
-                                        :key="plataforma.title"
-                                        avatar>
-                                        <v-list-tile-content>
-                                            <v-checkbox
-                                                v-model="editedItem.plataformas"
-                                                :label="plataforma.descricao"
-                                                :value="plataforma"
-                                                color="success"
-                                                required/>
-                                        </v-list-tile-content>
-
-                                    </v-list-tile>
-                                    <v-list-tile
-                                        v-for="plataforma in editedItem.plataformas"
-                                        :key="plataforma.title"
-                                        avatar>
-                                        <v-list-tile-content>
-                                            {{ plataforma.descricao }}
-                                        </v-list-tile-content>
-                                    </v-list-tile>
-                                </v-list>
-
-                                <br>
-
-                                <v-select
-                                    v-model="editedItem.sistema_id"
-                                    :disabled="editedItem.mensagem_id != null"
-                                    :items="sistemasRenderizados"
-                                    :rules="[v => !!v || 'Campo obrigatório']"
-                                    label="Sistema"
-                                    box
-                                    item-text="descricao"
-                                    item-value="sistema_id"
-                                    required/>
-
-                                <v-text-field
-                                    v-if="editedItem.autor_id !== null"
-                                    :value="obterNomeAutor(editedItem.autor_id)"
-                                    disabled
-                                    label="Autor"
-                                    box/>
-
-                            </v-flex>
-                            <v-flex
-                                xs12
-                                sm6
-                                md12>
-                                <h3>Situação</h3>
-                                <v-switch
-                                    :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                                    v-model="editedItem.is_ativo"
-                                    :readonly="true"/>
-                            </v-flex>
-                        </v-layout>
-                    </v-container>
+                    <mensagem-formulario
+                        :item="editedItem"
+                    />
                 </v-card-text>
-
-                <v-card-actions>
-                    <v-spacer/>
-                    <v-btn
-                        color="error"
-                        @click.native="close">Fechar</v-btn>
-                    <v-btn
-                        v-if="!loading && exibirBotaoGravar"
-                        color="blue darken-1"
-                        @click.native="save">Gravar</v-btn>
-                </v-card-actions>
             </v-card>
         </v-dialog>
     </v-container>
@@ -185,14 +92,29 @@
 <script>
 
 import { mapActions, mapGetters } from 'vuex';
+import MensagemFormulario from './MensagemFormulario.vue';
 
 export default {
+    components: {
+        MensagemFormulario,
+    },
     data: () => ({
-        loading: false,
         dialog: false,
         exibirBotaoGravar: true,
-        modeloBuscar: '',
         plataformasSelecionadas: [],
+        mensagensRenderizadas: [],
+        sistemasRenderizados: [],
+        modeloBuscar: '',
+        editedIndex: -1,
+        editedItem: {
+            mensagem_id: null,
+            titulo: null,
+            autor_id: null,
+            sistema_id: null,
+            descricao: '',
+            is_ativo: true,
+            plataformas: [],
+        },
         headers: [
             {
                 text: 'Identificador',
@@ -222,17 +144,6 @@ export default {
                 sortable: false,
             },
         ],
-        mensagensRenderizadas: [],
-        sistemasRenderizados: [],
-        editedIndex: -1,
-        editedItem: {
-            mensagem_id: null,
-            autor_id: null,
-            sistema_id: null,
-            descricao: '',
-            is_ativo: true,
-            plataformas: [],
-        },
     }),
 
     computed: {
@@ -249,16 +160,15 @@ export default {
     },
 
     watch: {
-        dialog(val) {
+        dialog() {
             if (this.editedItem.autor_id == null && this.accountInfo.user_id !== null) {
                 this.editedItem.autor_id = this.accountInfo.user_id;
             }
+
             this.exibirBotaoGravar = true;
             if (this.editedItem.mensagem_id != null) {
                 this.exibirBotaoGravar = false;
             }
-
-            return val || this.close();
         },
         mensagens(value) {
             if ('error' in value) {
@@ -286,6 +196,7 @@ export default {
                 });
             }
         },
+
     },
     mounted() {
         if (this.mensagens.length == null || this.mensagens.length === 0) {
@@ -340,35 +251,6 @@ export default {
             }, 300);
         },
 
-        save() {
-            const self = this;
-            self.loading = true;
-
-            if (self.editedIndex > -1) {
-                this.atualizarMensagem(self.editedItem);
-            } else {
-                this.cadastrarMensagem(self.editedItem);
-            }
-            self.close();
-        },
-
-        obterNomeAutor(usuarioId) {
-            if (this.contas.length == null) {
-                this.obterContas();
-            }
-
-            let nomeAutor = '';
-            const self = this;
-
-            this.contas.every((item, indice) => {
-                if (this.contas[indice].usuario_id === usuarioId) {
-                    nomeAutor = self.contas[indice].nome;
-                    return false;
-                }
-                return true;
-            });
-            return nomeAutor;
-        },
     },
 };
 </script>

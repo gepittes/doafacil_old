@@ -33,7 +33,9 @@
                             slot="items"
                             slot-scope="props">
                             <td class="text-xs-center">{{ props.item.usuario_id }}</td>
-                            <td class="text-xs-center">{{ props.item.nome }}</td>
+                            <td
+                                class="text-xs-center"
+                                v-html="props.item.nome"/>
                             <td class="text-xs-center">{{ props.item.email }}</td>
                             <td class="text-xs-center">{{ props.item.is_ativo ? "Ativo" : "Inativo" }}</td>
                             <td class="text-xs-center">
@@ -85,102 +87,21 @@
                 </v-card-title>
 
                 <v-card-text>
-                    <v-container grid-list-md>
-                        <v-layout wrap>
-                            <v-flex
-                                xs12
-                                sm6
-                                md12>
-                                <v-text-field
-                                    v-model="editedItem.nome"
-                                    :rules="[rules.required, rules.minLength]"
-                                    prepend-icon="face"
-                                    required
-                                    label="Nome"/>
-                                <v-text-field
-                                    v-model="editedItem.email"
-                                    :rules="[rules.required, rules.email, rules.minLength]"
-                                    prepend-icon="person"
-                                    required
-                                    label="E-mail"/>
-                                <v-text-field
-                                    v-validate="{ required: true, min: 6 }"
-                                    v-model="editedItem.password"
-                                    :rules="[rules.required, rules.minLength]"
-                                    prepend-icon="lock"
-                                    type="password"
-                                    label="Senha"
-                                    class="form-control"
-                                    required
-                                />
-                            </v-flex>
-                            <v-flex
-                                xs12
-                                sm6
-                                md12>
-                                <h3>Administração</h3>
-                                <v-switch
-                                    :label="`${editedItem.is_admin ? 'É Administrador' : 'Não é Administrador'}`"
-                                    v-model="editedItem.is_admin"/>
-                            </v-flex>
-                            <v-flex
-                                xs12
-                                sm6
-                                md12>
-                                <h3>Situação</h3>
-                                <v-switch
-                                    :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
-                                    v-model="editedItem.is_ativo"/>
-                            </v-flex>
-                            <v-flex
-                                xs12
-                                sm6
-                                md12>
-                                <h3> Sistemas </h3>
-                                <v-list style="overflow: auto; max-height: 300px">
-                                    <v-list-tile
-                                        v-for="sistema in sistemas"
-                                        :key="sistema.title"
-                                        avatar>
-
-                                        <v-list-tile-content>
-                                            <v-checkbox
-                                                v-model="editedItem.sistemas"
-                                                :label="sistema.descricao"
-                                                :value="sistema"
-                                                color="success"
-                                                required/>
-                                        </v-list-tile-content>
-
-                                    </v-list-tile>
-                                </v-list>
-                            </v-flex>
-                        </v-layout>
-                    </v-container>
+                    <conta-formulario
+                        :item="editedItem"
+                        :dialog.sync="dialog"/>
                 </v-card-text>
-
-                <v-card-actions>
-                    <v-spacer/>
-                    <v-btn
-                        color="error"
-                        @click.native="close">Fechar</v-btn>
-                    <v-btn
-                        :loading="loading"
-                        color="blue darken-1"
-                        dark
-                        @click.native="save">Gravar</v-btn>
-                </v-card-actions>
             </v-card>
-
         </v-dialog>
     </v-container>
-
 </template>
 <script>
 
 import { mapActions, mapGetters } from 'vuex';
+import ContaFormulario from './ContaFormulario.vue';
 
 export default {
+    components: { ContaFormulario },
     data: () => ({
         loading: false,
         dialog: false,
@@ -220,30 +141,15 @@ export default {
         ],
         contasIniciais: [],
         editedIndex: -1,
-        editedItem: {
+        editedItem: {},
+        defaultItem: {
             usuario_id: null,
             descricao: '',
             is_ativo: true,
             is_admin: false,
             sistemas: [],
         },
-        defaultItem: {
-            name: '',
-            calories: 0,
-            fat: 0,
-            carbs: 0,
-            protein: 0,
-        },
         modeloBuscar: '',
-        rules: {
-            required: value => !!value || 'Campo Obrigatório.',
-            minLength: object => (object != null && object.length != null && object.length > 3) || 'Campo obrigatório.',
-            email: (value) => {
-                // eslint-disable-next-line
-                const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                return pattern.test(value) || 'E-mail inválido.';
-            },
-        },
     }),
 
     computed: {
@@ -251,16 +157,12 @@ export default {
             return this.editedIndex === -1 ? 'Criar' : 'Editar';
         },
         ...mapGetters({
-            sistemas: 'sistema/sistema',
             contas: 'conta/conta',
             accountInfo: 'account/accountInfo',
         }),
     },
 
     watch: {
-        dialog(val) {
-            return val || this.close();
-        },
         contas(value) {
             if ('error' in value) {
                 alert(value.error);
@@ -269,27 +171,16 @@ export default {
                 this.contasIniciais = value;
             }
         },
-        editedItem() {
-
-        },
     },
 
     created() {
         this.obterContas();
     },
-    mounted() {
-        if (this.sistemas.length == null || this.sistemas.length === 0) {
-            this.obterSistemas();
-        }
-    },
     methods: {
 
         ...mapActions({
             obterContas: 'conta/obterContas',
-            obterSistemas: 'sistema/obterSistemas',
             removerConta: 'conta/removerConta',
-            cadastrarConta: 'conta/cadastrarConta',
-            atualizarConta: 'conta/atualizarConta',
         }),
 
         editItem(item) {
@@ -323,48 +214,8 @@ export default {
             }
         },
 
-        close() {
-            this.dialog = false;
-            setTimeout(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            }, 300);
-        },
 
-        save() {
-            const self = this;
-            self.loading = true;
-
-            if (self.editedIndex > -1) {
-                this.atualizarConta(self.editedItem);
-            } else {
-                this.cadastrarConta(self.editedItem);
-            }
-            self.loading = false;
-            self.close();
-        },
     },
 };
 
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-    h1, h2 {
-        font-weight: normal;
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    li {
-        display: inline-block;
-        margin: 0 10px;
-    }
-
-    a {
-        color: #42b983;
-    }
-</style>
