@@ -17,24 +17,17 @@ export const login = ({ dispatch, commit }, { email, password }) => {
                     dispatch('alert/info', 'Login realizado com sucesso!', {
                         root: true,
                     });
-                    const token = JSON.stringify(data.token);
-                    
+
                     try {
-                        console.log('---====---');
-                        console.log(process.env.VUE_APP_JWT_SECRET)
-                        const objJWT = jwt.verify(token, process.env.VUE_APP_JWT_SECRET);
-                        console.log(objJWT);
-                        return false;
+                        const objJWT = jwt.verify(data.token, process.env.VUE_APP_JWT_SECRET);
+                        commit(types.SETACCOUNTINFO, objJWT.user);
+
+                        router.push({ name: 'home' });
                     } catch (Exception) {
-                        console.log('<<<<');
-                        console.log(Exception);
-                        return false;
+                        dispatch('alert/error', `Erro${Exception}`, {
+                            root: true,
+                        });
                     }
-
-                    const tokenDecodificada = jwtDecode(token);
-                    commit(types.SETACCOUNTINFO, tokenDecodificada.user);
-
-                    router.push({ name: 'home' });
                 } else {
                     dispatch('alert/error', 'Falha ao realizar login.', {
                         root: true,
