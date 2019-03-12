@@ -60,7 +60,7 @@
                                     color="red">thumb_down</v-icon>
                             </td>
                             <td
-                                v-if="accountInfo.is_admin"
+                                v-if="accountInfo.is_admin && usuarioPossuiVinculoComSistema(props.item.mensagem.sistema_id)"
                                 class="justify-center layout px-0">
                                 <v-btn icon>
                                     <v-icon
@@ -84,7 +84,7 @@
                 </v-card-text>
             </v-card>
         </v-layout>
-        <v-scale-transition>
+        <v-scale-transition v-if="accountInfo.is_admin">
             <v-btn
                 fab
                 color="success"
@@ -102,6 +102,7 @@
 
 import { mapActions, mapGetters } from 'vuex';
 import NotificacaoFormulario from './NotificacaoFormulario';
+import { notificacaoService } from './service';
 
 export default {
     components: { NotificacaoFormulario },
@@ -160,7 +161,7 @@ export default {
             connection: null,
         },
     }),
-
+    mixins: [notificacaoService],
     computed: {
         formTitle() {
             return this.editedItem.notificacao_id === null ? 'Criar' : 'Editar';
