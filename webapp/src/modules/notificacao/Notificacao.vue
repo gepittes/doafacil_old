@@ -42,6 +42,7 @@
                         :search="modeloBuscar"
                         :rows-per-page-items="[ 10, 25, 40 ]"
                         :rows-per-page-text="'Registros por página'"
+                        :no-data-text="'Não Há Notificações.'"
                         light
                         class="elevation-1">
                         <template
@@ -49,7 +50,8 @@
                             slot-scope="props">
                             <td class="text-xs-center">{{ props.item.notificacao_id }}</td>
                             <td class="text-xs-center">{{ props.item.codigo_destinatario }}</td>
-                            <td class="text-xs-center">{{ props.item.mensagem.titulo }}</td>
+                            <td class="text-xs-center">{{ props.item.titulo }}</td>
+                            <td class="text-xs-center">{{ props.item.sistema }}</td>
                             <td class="text-xs-center">{{ props.item.data_envio | formatDate }}</td>
                             <td class="text-xs-center">
                                 <v-icon
@@ -60,7 +62,7 @@
                                     color="red">thumb_down</v-icon>
                             </td>
                             <td
-                                v-if="accountInfo.is_admin && usuarioPossuiVinculoComSistema(props.item.mensagem.sistema_id)"
+                                v-if="accountInfo.is_admin"
                                 class="justify-center layout px-0">
                                 <v-btn icon>
                                     <v-icon
@@ -73,12 +75,6 @@
                                 v-else
                                 class="justify-center layout px-0 pt-3"> -
                             </td>
-                        </template>
-                        <template slot="no-data">
-                            <v-btn
-                                color="primary"
-                                @click="obterNotificacaos">Reset
-                            </v-btn>
                         </template>
                     </v-data-table>
                 </v-card-text>
@@ -125,7 +121,12 @@ export default {
             },
             {
                 text: 'Mensagem',
-                value: 'mensagem.titulo',
+                value: 'titulo',
+                align: 'center',
+            },
+            {
+                text: 'Sistema',
+                value: 'sistema',
                 align: 'center',
             },
             {
@@ -202,7 +203,7 @@ export default {
     mounted() {
         this.editedItem = Object.assign({}, this.defaultItem);
         if (this.notificacoes.length == null || this.notificacoes.length === 0) {
-            this.obterNotificacaos();
+            this.obterNotificacoes(this.accountInfo.user_id, true);
         }
         if (this.notificacoes.length > 0) {
             this.notificacoesRenderizadas = this.notificacoes;
@@ -226,7 +227,7 @@ export default {
     methods: {
 
         ...mapActions({
-            obterNotificacaos: 'notificacao/obterNotificacaos',
+            obterNotificacoes: 'notificacao/obterNotificacoes',
             obterContas: 'conta/obterContas',
             obterPlataformas: 'plataforma/obterPlataformas',
             removerNotificacao: 'notificacao/removerNotificacao',

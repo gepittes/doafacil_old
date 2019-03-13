@@ -1,11 +1,15 @@
 import axios from 'axios';
 import * as types from './types';
 
-export const obterNotificacaos = ({ dispatch, commit }) => {
-    axios.get('http://localhost/v1/notificacao')
+export const obterNotificacoes = ({ dispatch, commit }, usuarioId, isNotificacaoLida) => {
+    let url = `http://localhost/v1/notificacao-usuario/${usuarioId}`;
+    if (isNotificacaoLida != null) {
+        url += `/${isNotificacaoLida}`;
+    }
+    axios.get(url)
         .then((response) => {
-            const { data } = response;
-            commit(types.DEFINIR_NOTIFICACOES, data.data);
+            const { data } = response.data;
+            commit(types.DEFINIR_NOTIFICACOES, data);
         })
         .catch((error) => {
             dispatch('alert/error', error.response.data.error, {
