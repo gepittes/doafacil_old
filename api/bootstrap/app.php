@@ -74,6 +74,7 @@ $app->singleton(
 
 $app->middleware([
     App\Http\Middleware\JsonResponseStyle::class,
+    App\Http\Middleware\IsAdmin::class,
     App\Http\Middleware\CorsMiddleware::class
 ]);
 

@@ -15,6 +15,7 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
+
         $response = $next($request);
 
         return $response;

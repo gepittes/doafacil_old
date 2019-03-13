@@ -16,10 +16,15 @@ $router->get('/api', ['as' => 'api', function () use ($router) {
 define('API_VERSION', '1.0');
 $apiPattern = 'v1';
 $router->group(['prefix' => $apiPattern], function () use ($router) {
-    $router->post('/autenticacao/login', 'AutenticacaoController@post');
+//    $router->group(['middleware' => 'auth', function () use ($router) {
+//        $router->post('/autenticacao/login', 'AutenticacaoController@post');
+//
+//    }]);
+
+//    $router->post('/autenticacao/login', 'AutenticacaoController@post');
     $router->post('/conta', 'ContaController@post');
 
-    $router->group(['middleware' => 'jwt.auth'], function () use ($router) {
+//    $router->group(['middleware' => 'jwt.auth'], function () use ($router) {
         $router->get('/conta[/{id}]', 'ContaController@get');
         $router->patch('/conta/{id}', 'ContaController@patch');
         $router->delete('/conta/{id}', 'ContaController@delete');
@@ -53,5 +58,5 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
             '/notificacao-usuario/{notificacao_id}/{usuario_id}[/{sistema_id}]',
             'NotificacaoUsuarioController@patch'
         );
-    });
+//    });
 });
