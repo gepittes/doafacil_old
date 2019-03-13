@@ -47,7 +47,13 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
         $router->delete('/notificacao/{id}', 'NotificacaoController@delete');
 
         $router->post('/notificacao-sistema', 'NotificacaoSistemaController@post');
-        $router->get('/notificacao-usuario/{usuario_id}[/{sistema_id}]', 'NotificacaoUsuarioController@get');
-        $router->patch('/notificacao-usuario/{notificacao_id}/{usuario_id}[/{sistema_id}]', 'NotificacaoUsuarioController@patch');
+        $router->get(
+            '/notificacao-usuario/{usuario_id}[/{sistema_id}[/{is_notificacao_lida}]]',
+            'NotificacaoUsuarioController@get'
+        );
+        $router->patch(
+            '/notificacao-usuario/{notificacao_id}/{usuario_id}[/{sistema_id}]',
+            'NotificacaoUsuarioController@patch'
+        );
 //    });
 });
