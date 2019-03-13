@@ -69,7 +69,7 @@ class Notificacao implements IService
         return $plataforma->delete();
     }
 
-    public function obterNotificacoesUsuario(
+    public function obterNotificacoesUsuarioSistema(
         $usuario_id,
         $sistema_id,
         $is_notificacao_lida
@@ -99,6 +99,24 @@ class Notificacao implements IService
         }
 
         return $consulta->get();
+    }
+
+    public function obterNotificacoesUsuario(
+        $usuario_id,
+        $is_notificacao_lida
+    ) : \Illuminate\Support\Collection
+    {
+        if (is_null($usuario_id)) {
+            throw new \Exception('Identificador do usuário obrigatório.');
+        }
+
+        $notificacoesUsuario = $this->obterQueryNotificacoesUsuario()->where(
+            'notificacao.usuario_has_sistema.usuario_id',
+            '=',
+            $usuario_id
+        );
+
+        return $notificacoesUsuario->get();
     }
 
     private function obterQueryNotificacoesUsuario()
