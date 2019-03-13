@@ -51,6 +51,7 @@
                             <td class="text-xs-center">{{ props.item.notificacao_id }}</td>
                             <td class="text-xs-center">{{ props.item.codigo_destinatario }}</td>
                             <td class="text-xs-center">{{ props.item.titulo }}</td>
+                            <td class="text-xs-center">{{ props.item.sistema }}</td>
                             <td class="text-xs-center">{{ props.item.data_envio | formatDate }}</td>
                             <td class="text-xs-center">
                                 <v-icon
@@ -120,7 +121,12 @@ export default {
             },
             {
                 text: 'Mensagem',
-                value: 'mensagem.titulo',
+                value: 'titulo',
+                align: 'center',
+            },
+            {
+                text: 'Sistema',
+                value: 'sistema',
                 align: 'center',
             },
             {
