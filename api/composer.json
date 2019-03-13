@@ -19,7 +19,9 @@
         "phpunit/phpunit": "~7.0",
         "mockery/mockery": "~1.0",
         "vinnyfs89/x-dump": "dev-master",
-        "barryvdh/laravel-ide-helper": "^2.4"
+        "barryvdh/laravel-ide-helper": "^2.4",
+        "squizlabs/php_codesniffer": "^3.4",
+        "phpmd/phpmd": "^2.6"
     },
     "autoload": {
         "psr-4": {
