@@ -118,6 +118,7 @@ router.beforeEach((to, from, next) => {
 
         return next();
     } catch (Exception) {
+        localStorage.removeItem('token');
         store.dispatch('alert/error', `Erro: ${Exception}`, { root: true });
         return next('/login');
     }

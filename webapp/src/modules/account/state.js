@@ -1,9 +1,13 @@
 import { obterInformacoesJWT } from '../_helpers/obter-informacoes-jwt';
 
-const informacoesJWT = obterInformacoesJWT();
-const loggedIn = informacoesJWT !== '';
+let informacoesJWT = '';
+try {
+    informacoesJWT = obterInformacoesJWT();
+} catch (Exception) {
+    informacoesJWT = '';
+}
 
-console.log(informacoesJWT);
+const loggedIn = informacoesJWT !== '';
 
 export const state = {
     status: { loggedIn },
