@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Usuario;
+use Psr\Http\Message\ServerRequestInterface;
 use Validator;
 
 /**
@@ -44,7 +45,7 @@ class JWT implements IService
         }
 
         return [
-            'token' => JWT::encode($payload, env('JWT_SECRET'))
+            'token' => \Firebase\JWT\JWT::encode($payload, env('JWT_SECRET'))
         ];
     }
 }
