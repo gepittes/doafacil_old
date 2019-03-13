@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Response;
-
 $router->get('/', function () use ($router) {
     return redirect()->route('api');
 });
@@ -18,11 +16,11 @@ $router->get('/api', ['as' => 'api', function () use ($router) {
 define('API_VERSION', '1.0');
 $apiPattern = 'v1';
 $router->group(['prefix' => $apiPattern], function () use ($router) {
-    $router->post('/autenticacao/login', 'AutenticacaoController@autenticar');
+    $router->post('/autenticacao/login', 'AutenticacaoController@post');
+    $router->post('/conta', 'ContaController@post');
 
-//    $router->group(['middleware' => 'jwt.auth'], function () use ($router) {
+    $router->group(['middleware' => 'jwt.auth'], function () use ($router) {
         $router->get('/conta[/{id}]', 'ContaController@get');
-        $router->post('/conta', 'ContaController@post');
         $router->patch('/conta/{id}', 'ContaController@patch');
         $router->delete('/conta/{id}', 'ContaController@delete');
 
@@ -47,7 +45,13 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
         $router->delete('/notificacao/{id}', 'NotificacaoController@delete');
 
         $router->post('/notificacao-sistema', 'NotificacaoSistemaController@post');
-        $router->get('/notificacao-usuario/{usuario_id}[/{sistema_id}]', 'NotificacaoUsuarioController@get');
-        $router->patch('/notificacao-usuario/{notificacao_id}/{usuario_id}[/{sistema_id}]', 'NotificacaoUsuarioController@patch');
-//    });
+        $router->get(
+            '/notificacao-usuario/{usuario_id}[/{sistema_id}]',
+            'NotificacaoUsuarioController@get'
+        );
+        $router->patch(
+            '/notificacao-usuario/{notificacao_id}/{usuario_id}[/{sistema_id}]',
+            'NotificacaoUsuarioController@patch'
+        );
+    });
 });
