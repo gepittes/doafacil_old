@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Http\Request;
 
 class IsAdmin
 {
@@ -13,11 +14,25 @@ class IsAdmin
      * @param  \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $token = $request->bearerToken();
         if (!$token) {
-            abort(403, 'Acesso negado.');
+            return response()->json([
+                'error' => 'Acesso negado.'
+            ], 403);
+        }
+
+        if(!$request->auth) {
+            return response()->json([
+                'error' => 'Usuário não autenticado.'
+            ], 401);
+        }
+        $dadosUsuario = $request->user();
+        if(intval($dadosUsuario['is_admin']) === 0) {
+            return response()->json([
+                'error' => 'Usuário sem privilégios Administrativos.'
+            ], 401);
         }
 
         // antes do middleware
