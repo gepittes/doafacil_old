@@ -74,7 +74,6 @@ $app->singleton(
 
 $app->middleware([
     App\Http\Middleware\JsonResponseStyle::class,
-    App\Http\Middleware\IsAdmin::class,
     App\Http\Middleware\CorsMiddleware::class
 ]);
 
@@ -82,12 +81,9 @@ $app->middleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
 // ]);
 
-// $app->routeMiddleware([
-//     App\Http\Middleware\JsonResponseStyle::class
-// ]);
-
 $app->routeMiddleware([
-    'jwt.auth' => \App\Http\Middleware\JWTMiddleware::class
+    'jwt.auth' => \App\Http\Middleware\JWTMiddleware::class,
+    'isAdmin' => App\Http\Middleware\IsAdmin::class,
 ]);
 
 /*
