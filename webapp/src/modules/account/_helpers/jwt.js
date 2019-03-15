@@ -10,9 +10,13 @@ export function obterInformacoesJWT() {
 }
 
 export function obterCabecalhoComToken() {
-    const token = obterInformacoesJWT();
-    if (token && token.token) {
-        return { Authorization: `Bearer ${token.token}` };
+    const token = localStorage.getItem('token');
+    if (token) {
+        return {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
     }
     return {};
 }
