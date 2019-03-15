@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Laravel\Lumen\Routing\Controller;
 use Illuminate\Validation\ValidationException;
+use Psr\Http\Message\ServerRequestInterface;
 
 class AutenticacaoController extends Controller
 {
@@ -17,7 +18,7 @@ class AutenticacaoController extends Controller
         $this->request = $request;
     }
 
-    public function post(ServerRequestInterface $request)
+    public function post(\Illuminate\Http\Request $request)
     {
         try {
             /**
