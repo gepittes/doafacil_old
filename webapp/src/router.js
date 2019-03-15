@@ -13,7 +13,7 @@ import Conta from './modules/conta/Conta.vue';
 import Mensagem from './modules/mensagem/Mensagem.vue';
 import Notificacao from './modules/notificacao/Notificacao.vue';
 import store from './store';
-import { obterInformacoesJWT } from './modules/account/_helpers/obter-informacoes-jwt';
+import { obterInformacoesJWT } from './modules/account/_helpers/jwt';
 
 Vue.use(Router);
 
