@@ -1,4 +1,4 @@
-import { obterInformacoesJWT } from '../_helpers/obter-informacoes-jwt';
+import { obterInformacoesJWT } from '../account/_helpers/obter-informacoes-jwt';
 
 let informacoesJWT = '';
 try {

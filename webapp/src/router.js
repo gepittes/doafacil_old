@@ -13,7 +13,7 @@ import Conta from './modules/conta/Conta.vue';
 import Mensagem from './modules/mensagem/Mensagem.vue';
 import Notificacao from './modules/notificacao/Notificacao.vue';
 import store from './store';
-import { obterInformacoesJWT } from './modules/_helpers';
+import { obterInformacoesJWT } from './modules/account/_helpers/obter-informacoes-jwt';
 
 Vue.use(Router);
 
@@ -105,7 +105,7 @@ router.beforeEach((to, from, next) => {
     const loggedIn = localStorage.getItem('token');
 
     if (to.path === '/logout') {
-        store.dispatch('alert/info', 'Logout realizado som sucesso.', { root: true });
+        store.dispatch('alert/info', 'Logout realizado com sucesso.', { root: true });
         return next('/login');
     }
 
