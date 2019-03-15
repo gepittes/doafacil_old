@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Usuario as ModeloUsuario;
+use Psr\Http\Message\ServerRequestInterface;
 use Ratchet\Wamp\Exception;
 use Validator;
 
@@ -140,7 +141,7 @@ class Conta implements IService
         return $usuario->delete();
     }
 
-    public function autenticar(ServerRequestInterface $request) : ModeloUsuario
+    public function autenticar(\Illuminate\Http\Request $request) : ModeloUsuario
     {
         $email = $request->input('email');
         if(empty($email)) {
