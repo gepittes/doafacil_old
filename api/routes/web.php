@@ -23,45 +23,159 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
 
     $router->group(['middleware' => 'jwt.auth'], function () use ($router) {
         $router->get('/conta[/{id}]', 'ContaController@get');
-        $router->patch('/conta/{id}', 'ContaController@patch');
-        $router->delete('/conta/{id}', 'ContaController@delete');
+        $router->patch(
+            '/conta/{id}',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'ContaController@patch'
+            ]
+        );
+        $router->delete(
+            '/conta/{id}',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'ContaController@delete'
+            ]
+        );
 
-        $router->get('/plataforma[/{id}]', 'PlataformaController@get');
-        $router->post('/plataforma', 'PlataformaController@post');
-        $router->patch('/plataforma/{id}', 'PlataformaController@patch');
-        $router->delete('/plataforma/{id}', 'PlataformaController@delete');
+        $router->get(
+            '/plataforma[/{id}]',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'PlataformaController@get'
+            ]
+        );
+        $router->post(
+            '/plataforma',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'PlataformaController@post'
+            ]
+        );
+        $router->patch(
+            '/plataforma/{id}',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'PlataformaController@patch'
+            ]
+        );
+        $router->delete(
+            '/plataforma/{id}',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'PlataformaController@delete'
+            ]
+        );
 
-        $router->get('/sistema[/{id}]', 'SistemaController@get');
-        $router->post('/sistema', 'SistemaController@post');
-        $router->patch('/sistema/{id}', 'SistemaController@patch');
-        $router->delete('/sistema/{id}', 'SistemaController@delete');
+        $router->get(
+            '/sistema[/{id}]',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'SistemaController@get'
+            ]
+        );
+        $router->post(
+            '/sistema',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'SistemaController@post'
+            ]
+        );
+        $router->patch(
+            '/sistema/{id}',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'SistemaController@patch'
+            ]
+        );
+        $router->delete(
+            '/sistema/{id}',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'SistemaController@delete'
+            ]
+        );
 
-        $router->get('/mensagem[/{id}]', 'MensagemController@get');
-        $router->post('/mensagem', 'MensagemController@post');
-        $router->patch('/mensagem/{id}', 'MensagemController@patch');
-        $router->delete('/mensagem/{id}', 'MensagemController@delete');
+        $router->get(
+            '/mensagem[/{id}]',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'MensagemController@get'
+            ]
+        );
+        $router->post(
+            '/mensagem',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'MensagemController@post'
+            ]
+        );
+        $router->patch(
+            '/mensagem/{id}',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'MensagemController@patch'
+            ]
+        );
+        $router->delete(
+            '/mensagem/{id}',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'MensagemController@delete'
+            ]
+        );
 
-        $router->get('/notificacao[/{id}]', 'NotificacaoController@get');
-        $router->post('/notificacao', 'NotificacaoController@post');
-        $router->patch('/notificacao/{id}', 'NotificacaoController@patch');
-        $router->delete('/notificacao/{id}', 'NotificacaoController@delete');
+        $router->get(
+            '/notificacao[/{id}]',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'NotificacaoController@get'
+            ]
+        );
+        $router->post(
+            '/notificacao',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'NotificacaoController@post'
+            ]
+        );
+        $router->patch(
+            '/notificacao/{id}',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'NotificacaoController@patch'
+            ]
+        );
+        $router->delete(
+            '/notificacao/{id}',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'NotificacaoController@delete'
+            ]
+        );
 
-        $router->post('/notificacao-sistema', 'NotificacaoSistemaController@post');
+        $router->post(
+            '/notificacao-sistema',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'NotificacaoSistemaController@post'
+            ]
+        );
         $router->get(
             '/notificacao-usuario-sistema/{usuario_id}[/{sistema_id}[/{is_notificacao_lida}]]',
             'NotificacaoUsuarioSistemaController@get'
         );
         $router->patch(
             '/notificacao-usuario-sistema/{notificacao_id}/{usuario_id}[/{sistema_id}]',
+            [
+                'middleware' => 'isAdmin',
+                'uses' => 'NotificacaoUsuarioController@get'
+            ],
             'NotificacaoUsuarioSistemaController@patch'
         );
 
         $router->get(
             '/notificacao-usuario/{usuario_id}[/{is_notificacao_lida}]',
-//            [
-//                'middleware' => 'isAdmin',
-//                'uses' => 'NotificacaoUsuarioController@get'
-//            ]
             'NotificacaoUsuarioController@get'
         );
     });
