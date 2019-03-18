@@ -1,12 +1,12 @@
-import axios from 'axios';
 import * as types from './types';
+import { requisicaoAutorizada } from '../account/_helpers/requisicao-autorizada';
 
 export const obterNotificacoes = ({ dispatch, commit }, usuarioId, isNotificacaoLida) => {
     let url = `http://localhost/v1/notificacao-usuario/${usuarioId}`;
     if (isNotificacaoLida != null) {
         url += `/${isNotificacaoLida}`;
     }
-    axios.get(url)
+    requisicaoAutorizada.get(url)
         .then((response) => {
             const { data } = response.data;
             commit(types.DEFINIR_NOTIFICACOES, data);
@@ -19,7 +19,7 @@ export const obterNotificacoes = ({ dispatch, commit }, usuarioId, isNotificacao
 };
 
 export const removerNotificacao = ({ dispatch, commit }, notificacaoId) => {
-    axios.delete(`http://localhost/v1/notificacao/${notificacaoId}`)
+    requisicaoAutorizada.delete(`http://localhost/v1/notificacao/${notificacaoId}`)
         .then(() => {
             commit(types.REMOVER_NOTIFICACAO, notificacaoId);
         }).catch((error) => {
@@ -29,7 +29,7 @@ export const removerNotificacao = ({ dispatch, commit }, notificacaoId) => {
         });
 };
 
-export const cadastrarNotificacao = ({ dispatch, commit }, notificacao) => axios.post('http://localhost/v1/notificacao', notificacao)
+export const cadastrarNotificacao = ({ dispatch, commit }, notificacao) => requisicaoAutorizada.post('http://localhost/v1/notificacao', notificacao)
     .then((response) => {
         const { data } = response;
         commit(types.ACRESCENTAR_NOTIFICACAO, data.data);
@@ -40,7 +40,7 @@ export const cadastrarNotificacao = ({ dispatch, commit }, notificacao) => axios
         });
     });
 
-export const atualizarNotificacao = ({ dispatch, commit }, notificacao) => axios.patch(`http://localhost/v1/notificacao/${notificacao.notificacao_id}`, notificacao)
+export const atualizarNotificacao = ({ dispatch, commit }, notificacao) => requisicaoAutorizada.patch(`http://localhost/v1/notificacao/${notificacao.notificacao_id}`, notificacao)
     .then(() => {
         commit(types.ATUALIZAR_NOTIFICACAO, notificacao);
     })

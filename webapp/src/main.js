@@ -11,10 +11,6 @@ import './registerServiceWorker';
 
 import { configureFakeBackend } from './modules/_helpers';
 
-// process.env.NODE_CONFIG_DIR = './config'
-
-console.log(process.env);
-
 Vue.use(VeeValidate);
 configureFakeBackend();
 
