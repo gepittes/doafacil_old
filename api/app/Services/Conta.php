@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Usuario as ModeloUsuario;
+use Psr\Http\Message\ServerRequestInterface;
 use Ratchet\Wamp\Exception;
 use Validator;
 
@@ -138,5 +139,40 @@ class Conta implements IService
     {
         $usuario = ModeloUsuario::findOrFail($id);
         return $usuario->delete();
+    }
+
+    public function autenticar(\Illuminate\Http\Request $request) : ModeloUsuario
+    {
+        $email = $request->input('email');
+        if(empty($email)) {
+            throw new \Exception('Item `email` não informado.');
+        }
+
+        $senha = $request->input('password');
+        if(empty($senha)) {
+            throw new \Exception('Item `password` não informado.');
+        }
+
+        $usuarioAtivo = ModeloUsuario::where(
+            'email',
+            $email
+        )->where('is_ativo', true)->first();
+        if (!$usuarioAtivo) {
+            throw new \Exception('Usuario inativo.');
+        }
+
+        $senhaBanco = $usuarioAtivo->password;
+
+        if (!$this->validarSenha($senha, $senhaBanco)) {
+            throw new \Exception('Email ou senha incorretos.');
+        }
+
+        return $usuarioAtivo;
+
+    }
+
+    private function validarSenha(string $senha, string $senhaBanco)
+    {
+        return password_verify($senha, $senhaBanco);
     }
 }

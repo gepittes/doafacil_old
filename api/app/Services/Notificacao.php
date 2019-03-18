@@ -69,13 +69,60 @@ class Notificacao implements IService
         return $plataforma->delete();
     }
 
-    public function obterNotificacoesUsuario($usuario_id, $sistema_id)
+    public function obterNotificacoesUsuarioSistema(
+        $usuario_id,
+        $sistema_id,
+        $is_notificacao_lida
+    ) : \Illuminate\Support\Collection
     {
         if (is_null($usuario_id)) {
             throw new \Exception('Identificador do usuário obrigatório.');
         }
 
-        $consulta = DB::table('notificacao.notificacao')
+        $notificacoesUsuario = $this->obterQueryNotificacoesUsuario();
+
+        $consulta = $notificacoesUsuario
+            ->where(
+                'notificacao.usuario_has_sistema.usuario_id',
+                '=',
+                $usuario_id
+            )
+            ->where(
+                'notificacao.notificacao.is_notificacao_lida',
+                '=',
+                $is_notificacao_lida
+            );
+//            ->toSql();
+
+        if (!is_null($sistema_id)) {
+            $consulta->where('notificacao.mensagem.sistema_id', '=', $sistema_id);
+        }
+
+        return $consulta->get();
+    }
+
+    public function obterNotificacoesUsuario(
+        $usuario_id,
+        $is_notificacao_lida
+    ) : \Illuminate\Support\Collection
+    {
+        if (is_null($usuario_id)) {
+            throw new \Exception('Identificador do usuário obrigatório.');
+        }
+
+        $notificacoesUsuario = $this->obterQueryNotificacoesUsuario()->where(
+            'notificacao.usuario_has_sistema.usuario_id',
+            '=',
+            $usuario_id
+        );
+
+        return $notificacoesUsuario->get();
+    }
+
+    private function obterQueryNotificacoesUsuario()
+        : \Illuminate\Database\Query\Builder
+    {
+        return DB::table('notificacao.notificacao')
             ->select([
                 'notificacao.notificacao.notificacao_id',
                 'notificacao.notificacao.codigo_destinatario',
@@ -90,18 +137,24 @@ class Notificacao implements IService
                 'notificacao.sistema.descricao as sistema',
                 'notificacao.usuario_has_sistema.usuario_id as usuario_id'
             ])
-            ->join('notificacao.mensagem', 'notificacao.mensagem_id', '=', 'notificacao.mensagem.mensagem_id')
-            ->join('notificacao.usuario_has_sistema', 'notificacao.mensagem.sistema_id', '=', 'notificacao.usuario_has_sistema.sistema_id')
-            ->join('notificacao.sistema', 'notificacao.usuario_has_sistema.sistema_id', '=', 'notificacao.sistema.sistema_id')
-            ->where('notificacao.usuario_has_sistema.usuario_id', '=', $usuario_id)
-            ->where('notificacao.notificacao.is_notificacao_lida', '=', false);
-//            ->toSql();
-
-        if (!is_null($sistema_id)) {
-            $consulta->where('notificacao.mensagem.sistema_id', '=', $sistema_id);
-        }
-
-        return $consulta->get();
+            ->join(
+                'notificacao.mensagem',
+                'notificacao.mensagem_id',
+                '=',
+                'notificacao.mensagem.mensagem_id'
+            )
+            ->join(
+                'notificacao.usuario_has_sistema',
+                'notificacao.mensagem.sistema_id',
+                '=',
+                'notificacao.usuario_has_sistema.sistema_id'
+            )
+            ->join(
+                'notificacao.sistema',
+                'notificacao.usuario_has_sistema.sistema_id',
+                '=',
+                'notificacao.sistema.sistema_id'
+            );
     }
 
     public function obterNotificacoesSistema($dados)
@@ -134,15 +187,30 @@ class Notificacao implements IService
     {
 
         $consulta = DB::table('notificacao.notificacao')
-            ->join('notificacao.mensagem', 'notificacao.mensagem_id', '=', 'notificacao.mensagem.mensagem_id')
-            ->join('notificacao.usuario_has_sistema', 'notificacao.mensagem.sistema_id', '=', 'notificacao.usuario_has_sistema.sistema_id')
+            ->join(
+                'notificacao.mensagem',
+                'notificacao.mensagem_id',
+                '=',
+                'notificacao.mensagem.mensagem_id'
+            )
+            ->join(
+                'notificacao.usuario_has_sistema',
+                'notificacao.mensagem.sistema_id',
+                '=',
+                'notificacao.usuario_has_sistema.sistema_id'
+            )
             ->where('notificacao.usuario_has_sistema.usuario_id', '=', $usuario_id)
             ->where('notificacao.notificacao.is_notificacao_lida', '=', false);
         $registros = $consulta->get();
         if (!$registros) {
-            throw new \Exception("Idenfificador do Usuário e da Notificação divergentes.");
+            throw new \Exception(
+                "Idenfificador do Usuário e da Notificação divergentes."
+            );
         }
-        return ModeloNotificacao::where('notificacao_id', $notificacao_id)->update(['is_notificacao_lida' => true]);
+        return ModeloNotificacao::where(
+            'notificacao_id',
+            $notificacao_id
+        )->update(['is_notificacao_lida' => true]);
 
     }
 }

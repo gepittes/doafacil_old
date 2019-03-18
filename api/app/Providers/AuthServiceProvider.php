@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Usuario;
 use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Http\Request;
+use Firebase\JWT\JWT;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -29,11 +32,25 @@ class AuthServiceProvider extends ServiceProvider
         // application. The callback which receives the incoming request instance
         // should return either a User instance or null. You're free to obtain
         // the User instance via an API token or any other method necessary.
-
-        $this->app['auth']->viaRequest('api', function ($request) {
-            if ($request->input('api_token')) {
-                return User::where('api_token', $request->input('api_token'))->first();
+        $this->app['auth']->viaRequest('api', function (Request $request) {
+            $token = $request->bearerToken();
+            try {
+                $credentials = JWT::decode($token, env('JWT_SECRET'), ['HS256']);
+                $usuario = Usuario::find($credentials->sub);
+                if($usuario) {
+                    $dadosUsuario = $usuario->toArray();
+                    return $dadosUsuario;
+                }
+            } catch (ExpiredException $e) {
+                return response()->json([
+                    'error' => 'Token informada expirou.'
+                ], 400);
+            } catch (Exception $e) {
+                return response()->json([
+                    'error' => 'Ocorreu um erro ao decodificar a Token.'
+                ], 400);
             }
+
         });
     }
 }

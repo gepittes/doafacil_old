@@ -1,8 +1,8 @@
-import axios from 'axios';
 import * as types from './types';
+import { requisicaoAutorizada } from '../account/_helpers/requisicao-autorizada';
 
 export const obterMensagems = ({ dispatch, commit }) => {
-    axios.get('http://localhost/v1/mensagem')
+    requisicaoAutorizada.get('http://localhost/v1/mensagem')
         .then((response) => {
             const { data } = response;
             commit(types.DEFINIR_MENSAGENS, data.data);
@@ -15,7 +15,7 @@ export const obterMensagems = ({ dispatch, commit }) => {
 };
 
 export const removerMensagem = ({ dispatch, commit }, mensagemId) => {
-    axios.delete(`http://localhost/v1/mensagem/${mensagemId}`)
+    requisicaoAutorizada.delete(`http://localhost/v1/mensagem/${mensagemId}`)
         .then(() => {
             commit(types.REMOVER_MENSAGEM, mensagemId);
         }).catch((error) => {
@@ -25,7 +25,7 @@ export const removerMensagem = ({ dispatch, commit }, mensagemId) => {
         });
 };
 
-export const cadastrarMensagem = ({ dispatch, commit }, mensagem) => axios.post('http://localhost/v1/mensagem', mensagem)
+export const cadastrarMensagem = ({ dispatch, commit }, mensagem) => requisicaoAutorizada.post('http://localhost/v1/mensagem', mensagem)
     .then((response) => {
         const { data } = response;
         commit(types.ACRESCENTAR_MENSAGEM, data.data);
@@ -36,7 +36,7 @@ export const cadastrarMensagem = ({ dispatch, commit }, mensagem) => axios.post(
         });
     });
 
-export const atualizarMensagem = ({ dispatch, commit }, mensagem) => axios.patch(`http://localhost/v1/mensagem/${mensagem.mensagem_id}`, mensagem)
+export const atualizarMensagem = ({ dispatch, commit }, mensagem) => requisicaoAutorizada.patch(`http://localhost/v1/mensagem/${mensagem.mensagem_id}`, mensagem)
     .then(() => {
         commit(types.ATUALIZAR_MENSAGEM, mensagem);
     })

@@ -81,12 +81,9 @@ $app->middleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
 // ]);
 
-// $app->routeMiddleware([
-//     App\Http\Middleware\JsonResponseStyle::class
-// ]);
-
 $app->routeMiddleware([
-    'jwt.auth' => \App\Http\Middleware\JWTMiddleware::class
+    'jwt.auth' => \App\Http\Middleware\JWTMiddleware::class,
+    'isAdmin' => \App\Http\Middleware\IsAdmin::class,
 ]);
 
 /*
@@ -101,7 +98,8 @@ $app->routeMiddleware([
 */
 
 $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
 /*
