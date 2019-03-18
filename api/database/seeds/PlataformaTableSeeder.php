@@ -15,7 +15,14 @@ class PlataformaTableSeeder extends Seeder
             ->limit(1)
             ->get();
         if(count($registros) < 1) {
-            factory(App\Models\Plataforma::class, 5)->create();
+            $this->criaPlataforma('sistema', true, New DateTime());
         }
+    }
+    private function criaPlataforma($descricao, $is_ativo, $created_at) {
+        DB::table('notificacao.plataforma')->insert([
+            'descricao' => $descricao,
+            'is_ativo' => $is_ativo,
+            'created_at' => $created_at
+        ]);
     }
 }
