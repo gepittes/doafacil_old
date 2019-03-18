@@ -3,10 +3,9 @@ import * as types from './types';
 import { obterCabecalhoComToken } from '../account/_helpers/jwt';
 
 export const obterNotificacoesUsuario = ({ dispatch, commit }, usuarioId, sistemaId) => {
-
     const header = obterCabecalhoComToken();
 
-    let url = `http://localhost/v1/notificacao-usuario/${usuarioId}`;
+    let url = `http://localhost/v1/notificacao-usuario-sistema/${usuarioId}`;
     if (sistemaId != null) {
         url += `/${sistemaId}`;
     }
@@ -22,7 +21,7 @@ export const obterNotificacoesUsuario = ({ dispatch, commit }, usuarioId, sistem
         });
 };
 
-export const lerNotificacao = ({ dispatch, commit }, notificacao) => axios.patch(`http://localhost/v1/notificacao-usuario/${notificacao.notificacao_id}/${notificacao.usuario_id}`)
+export const lerNotificacao = ({ dispatch, commit }, notificacao) => axios.patch(`http://localhost/v1/notificacao-usuario-sistema/${notificacao.notificacao_id}/${notificacao.usuario_id}`)
     .then(() => {
         commit(types.ATUALIZAR_NOTIFICACAO_BADGE, notificacao);
     })

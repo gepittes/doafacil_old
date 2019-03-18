@@ -17,8 +17,6 @@ define('API_VERSION', '1.0');
 $apiPattern = 'v1';
 $router->group(['prefix' => $apiPattern], function () use ($router) {
 
-
-
     $router->post('/autenticacao/login', 'AutenticacaoController@post');
 
     $router->post('/conta', 'ContaController@post');
@@ -50,16 +48,21 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
 
         $router->post('/notificacao-sistema', 'NotificacaoSistemaController@post');
         $router->get(
-            '/notificacao-usuario/{usuario_id}[/{sistema_id}]',
+            '/notificacao-usuario-sistema/{usuario_id}[/{sistema_id}[/{is_notificacao_lida}]]',
+            'NotificacaoUsuarioSistemaController@get'
+        );
+        $router->patch(
+            '/notificacao-usuario-sistema/{notificacao_id}/{usuario_id}[/{sistema_id}]',
+            'NotificacaoUsuarioSistemaController@patch'
+        );
+
+        $router->get(
+            '/notificacao-usuario/{usuario_id}[/{is_notificacao_lida}]',
 //            [
 //                'middleware' => 'isAdmin',
 //                'uses' => 'NotificacaoUsuarioController@get'
 //            ]
             'NotificacaoUsuarioController@get'
-        );
-        $router->patch(
-            '/notificacao-usuario/{notificacao_id}/{usuario_id}[/{sistema_id}]',
-            'NotificacaoUsuarioController@patch'
         );
     });
 });
