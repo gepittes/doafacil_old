@@ -16,7 +16,6 @@ function handleResponse(response) {
 }
 
 function login(email, password) {
-    
     return axios.post('http://localhost/v1/autenticacao/login', {
         email,
         password,
