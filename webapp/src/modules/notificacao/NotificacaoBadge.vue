@@ -268,7 +268,7 @@ export default {
             return val || this.closeBadgeDialog();
         },
         dialogNotificacao() {
-            if (this.dialogNotificacao === false && this.notificacao !== null) {
+            if (this.dialogNotificacao === true && this.notificacao !== null) {
                 this.lerNotificacao(this.notificacao);
             }
         },
@@ -291,11 +291,11 @@ export default {
         };
 
         if (this.notificacoesBadge.length == null || this.notificacoesBadge.length === 0) {
+            this.obterNotificacoesUsuario(this.accountInfo.user_id);
             const params = {
                 usuarioId: this.accountInfo.user_id,
                 isNotificacaoLida: null,
             }
-            console.log('entra aqui');
             this.obterNotificacoesUsuario(params);
         }
     },

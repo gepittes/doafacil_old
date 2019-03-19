@@ -169,7 +169,7 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
             '/notificacao-usuario-sistema/{notificacao_id}/{usuario_id}[/{sistema_id}]',
             [
                 'middleware' => 'isAdmin',
-                'uses' => 'NotificacaoUsuarioController@get'
+                'uses' => 'NotificacaoUsuarioSistemaController@patch'
             ],
             'NotificacaoUsuarioSistemaController@patch'
         );
