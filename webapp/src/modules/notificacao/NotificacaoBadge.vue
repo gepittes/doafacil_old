@@ -249,7 +249,7 @@ export default {
     computed: {
         ...mapGetters({
             notificacoes: 'notificacao/notificacoes',
-            notificacoesBadge: 'notificacaoBadge/notificacoesBadge',
+            notificacoesBadge: 'notificacao/notificacoesBadge',
             accountInfo: 'account/accountInfo',
         }),
     },
@@ -288,8 +288,8 @@ export default {
     },
     methods: {
         ...mapActions({
-            obterNotificacoesUsuario: 'notificacaoBadge/obterNotificacoesUsuario',
-            lerNotificacao: 'notificacaoBadge/lerNotificacao',
+            obterNotificacoesUsuario: 'notificacao/obterNotificacoesUsuario',
+            lerNotificacao: 'notificacao/lerNotificacao',
         }),
         closeBadgeDialog() {
             const self = this;
