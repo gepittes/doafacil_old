@@ -116,6 +116,18 @@ class Notificacao implements IService
             $usuario_id
         );
 
+        if ($is_notificacao_lida == false) {
+            $notificacoesUsuario = $this->obterQueryNotificacoesUsuario()->where(
+                'notificacao.usuario_has_sistema.usuario_id',
+                '=',
+                $usuario_id
+            )->where(
+                'notificacao.notificacao.is_notificacao_lida',
+                '=',
+                $is_notificacao_lida
+            );    
+        }
+
         return $notificacoesUsuario->get();
     }
 

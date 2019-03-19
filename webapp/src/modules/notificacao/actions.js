@@ -2,10 +2,10 @@ import * as types from './types';
 import { requisicaoAutorizada } from '../account/_helpers/requisicao-autorizada';
 import { obterCabecalhoComToken } from '../account/_helpers/jwt';
 
-export const obterNotificacoes = ({ dispatch, commit }, usuarioId, isNotificacaoLida) => {
-    let url = `http://localhost/v1/notificacao-usuario/${usuarioId}`;
-    if (isNotificacaoLida != null) {
-        url += `/${isNotificacaoLida}`;
+export const obterNotificacoes = ({ dispatch, commit }, params) => {
+    let url = `http://localhost/v1/notificacao-usuario/${params.usuarioId}`;
+    if (params.isNotificacaoLida != null) {
+        url += `/${params.isNotificacaoLida}`;
     }
     requisicaoAutorizada.get(url)
         .then((response) => {
@@ -51,12 +51,11 @@ export const atualizarNotificacao = ({ dispatch, commit }, notificacao) => requi
         });
     });
 
-export const obterNotificacoesUsuario = ({ dispatch, commit }, usuarioId, sistemaId) => {
+export const obterNotificacoesUsuario = ({ dispatch, commit }, params) => {
     const cabecalho = obterCabecalhoComToken();
-
-    let url = `http://localhost/v1/notificacao-usuario-sistema/${usuarioId}`;
-    if (sistemaId != null) {
-        url += `/${sistemaId}`;
+    let url = `http://localhost/v1/notificacao-usuario/${params.usuarioId}`;
+    if (params.isNotificacaoLida != null) {
+        url += `/${params.isNotificacaoLida}`;
     }
     requisicaoAutorizada.get(url, cabecalho)
         .then((response) => {

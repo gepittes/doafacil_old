@@ -105,6 +105,7 @@ export default {
     data: () => ({
         loading: false,
         dialog: false,
+        notificacaoLida: true,
         exibirBotaoGravar: true,
         modeloBuscar: '',
         headers: [
@@ -203,7 +204,11 @@ export default {
     mounted() {
         this.editedItem = Object.assign({}, this.defaultItem);
         if (this.notificacoes.length == null || this.notificacoes.length === 0) {
-            this.obterNotificacoes(this.accountInfo.user_id, true);
+            const params = {
+                usuarioId: this.accountInfo.user_id,
+                isNotificacaoLida: this.notificacaoLida,
+            }
+            this.obterNotificacoes(params);
         }
         if (this.notificacoes.length > 0) {
             this.notificacoesRenderizadas = this.notificacoes;

@@ -257,7 +257,11 @@ export default {
         notificacoes() {
             if (this.notificacoes != null || this.notificacoesBadge != null ||
                 (this.notificacoes.length !== this.notificacoesBadge.length)) {
-                this.obterNotificacoesUsuario(this.accountInfo.user_id);
+                const params = {
+                    usuarioId: this.accountInfo.user_id,
+                    isNotificacaoLida: null,
+                }
+                this.obterNotificacoesUsuario(params);
             }
         },
         dialog(val) {
@@ -279,11 +283,20 @@ export default {
         this.websocket.connection.onmessage = (event) => {
             console.log('Mensagem enviada!');
             console.log(event.data);
-            this.obterNotificacoesUsuario(this.accountInfo.user_id);
+            const params = {
+                usuarioId: this.accountInfo.user_id,
+                isNotificacaoLida: null,
+            }
+            this.obterNotificacoesUsuario(params);
         };
 
         if (this.notificacoesBadge.length == null || this.notificacoesBadge.length === 0) {
-            this.obterNotificacoesUsuario(this.accountInfo.user_id);
+            const params = {
+                usuarioId: this.accountInfo.user_id,
+                isNotificacaoLida: null,
+            }
+            console.log('entra aqui');
+            this.obterNotificacoesUsuario(params);
         }
     },
     methods: {
