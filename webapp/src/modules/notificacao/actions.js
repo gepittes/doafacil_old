@@ -24,6 +24,7 @@ export const removerNotificacao = ({ dispatch, commit }, notificacaoId) => {
     requisicaoAutorizada.delete(`http://localhost/v1/notificacao/${notificacaoId}`)
         .then(() => {
             commit(types.REMOVER_NOTIFICACAO, notificacaoId);
+            commit(types.REMOVER_NOTIFICACAO_BADGE, notificacaoId);
         }).catch((error) => {
             dispatch('alert/error', error.response.data.error, {
                 root: true,
@@ -35,6 +36,7 @@ export const cadastrarNotificacao = ({ dispatch, commit }, notificacao) => requi
     .then((response) => {
         const { data } = response;
         commit(types.ACRESCENTAR_NOTIFICACAO, data.data);
+        commit(types.ACRESCENTAR_NOTIFICACAO_BADGE, data.data);
         dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
     }).catch((error) => {
         dispatch('alert/error', error.response.data.error, {
@@ -45,6 +47,7 @@ export const cadastrarNotificacao = ({ dispatch, commit }, notificacao) => requi
 export const atualizarNotificacao = ({ dispatch, commit }, notificacao) => requisicaoAutorizada.patch(`http://localhost/v1/notificacao/${notificacao.notificacao_id}`, notificacao)
     .then(() => {
         commit(types.ATUALIZAR_NOTIFICACAO, notificacao);
+        commit(types.ATUALIZAR_NOTIFICACAO_BADGE, notificacao);
     })
     .catch((error) => {
         dispatch('alert/error', error.response.data.error, {
@@ -73,6 +76,7 @@ export const obterNotificacoesUsuario = ({ dispatch, commit }, params) => {
 export const lerNotificacao = ({ dispatch, commit }, notificacao) => {
     requisicaoAutorizada.patch(`http://localhost/v1/notificacao-usuario-sistema/${notificacao.notificacao_id}/${notificacao.usuario_id}`)
         .then(() => {
+            commit(types.ATUALIZAR_NOTIFICACAO, notificacao);
             commit(types.ATUALIZAR_NOTIFICACAO_BADGE, notificacao);
         })
         .catch((error) => {
