@@ -291,7 +291,6 @@ export default {
         };
 
         if (this.notificacoesBadge.length == null || this.notificacoesBadge.length === 0) {
-            this.obterNotificacoesUsuario(this.accountInfo.user_id);
             const params = {
                 usuarioId: this.accountInfo.user_id,
                 isNotificacaoLida: null,
