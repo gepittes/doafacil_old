@@ -248,22 +248,11 @@ export default {
     },
     computed: {
         ...mapGetters({
-            notificacoes: 'notificacao/notificacoes',
             notificacoesBadge: 'notificacao/notificacoesBadge',
             accountInfo: 'account/accountInfo',
         }),
     },
     watch: {
-        notificacoes() {
-            if (this.notificacoes != null || this.notificacoesBadge != null ||
-                (this.notificacoes.length !== this.notificacoesBadge.length)) {
-                const params = {
-                    usuarioId: this.accountInfo.user_id,
-                    isNotificacaoLida: null,
-                }
-                this.obterNotificacoesUsuario(params);
-            }
-        },
         dialog(val) {
             return val || this.closeBadgeDialog();
         },
@@ -280,21 +269,12 @@ export default {
             console.log('Conexão estabelecida');
         };
 
-        this.websocket.connection.onmessage = (event) => {
-            console.log('Mensagem enviada!');
-            console.log(event.data);
+        if (this.notificacoesBadge == null || this.notificacoesBadge.length === 0) {
             const params = {
                 usuarioId: this.accountInfo.user_id,
                 isNotificacaoLida: null,
-            }
-            this.obterNotificacoesUsuario(params);
-        };
+            };
 
-        if (this.notificacoesBadge.length == null || this.notificacoesBadge.length === 0) {
-            const params = {
-                usuarioId: this.accountInfo.user_id,
-                isNotificacaoLida: null,
-            }
             this.obterNotificacoesUsuario(params);
         }
     },

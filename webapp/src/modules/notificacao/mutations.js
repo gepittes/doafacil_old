@@ -34,4 +34,11 @@ export const mutations = {
         const index = state.notificacoesBadge.findIndex(notificacao => notificacao.notificacao_id === notificacaoEditada.notificacao_id);
         Object.assign(state.notificacoesBadge[index], notificacaoEditada);
     },
+    [types.ACRESCENTAR_NOTIFICACAO_BADGE](state, notificacao) {
+        state.notificacoesBadge.push(notificacao);
+    },
+    [types.REMOVER_NOTIFICACAO_BADGE](state, notificacaoId) {
+        const index = state.notificacoesBadge.findIndex(notificacao => notificacao.notificacao_id === notificacaoId);
+        state.notificacoesBadge.splice(index, 1);
+    },
 };
