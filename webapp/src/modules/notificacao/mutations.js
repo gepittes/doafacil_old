@@ -32,7 +32,17 @@ export const mutations = {
     },
     [types.ATUALIZAR_NOTIFICACAO_BADGE](state, notificacaoEditada) {
         const index = state.notificacoesBadge.findIndex(notificacao => notificacao.notificacao_id === notificacaoEditada.notificacao_id);
-        Object.assign(state.notificacoesBadge[index], notificacaoEditada);
+        const isNotificacaoLida = ![
+            '',
+            null,
+            false,
+        ].includes(notificacaoEditada.is_notificacao_lida);
+
+        if (isNotificacaoLida) {
+            state.notificacoesBadge.splice(index, 1);
+        } else {
+            Object.assign(state.notificacoesBadge[index], notificacaoEditada);
+        }
     },
     [types.ACRESCENTAR_NOTIFICACAO_BADGE](state, notificacao) {
         state.notificacoesBadge.push(notificacao);

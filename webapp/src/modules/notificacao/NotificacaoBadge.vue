@@ -270,12 +270,12 @@ export default {
                 isNotificacaoLida: null,
             };
 
-            this.obterNotificacoesUsuario(params);
+            this.obterNotificacoes(params);
         }
     },
     methods: {
         ...mapActions({
-            obterNotificacoesUsuario: 'notificacao/obterNotificacoesUsuario',
+            obterNotificacoes: 'notificacao/obterNotificacoes',
             lerNotificacao: 'notificacao/lerNotificacao',
         }),
         closeBadgeDialog() {
