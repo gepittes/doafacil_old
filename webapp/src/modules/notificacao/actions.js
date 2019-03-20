@@ -11,6 +11,7 @@ export const obterNotificacoes = ({ dispatch, commit }, params) => {
         .then((response) => {
             const { data } = response.data;
             commit(types.DEFINIR_NOTIFICACOES, data);
+            commit(types.DEFINIR_NOTIFICACOES_BADGE, data);
         })
         .catch((error) => {
             dispatch('alert/error', error.response.data.error, {

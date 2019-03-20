@@ -16,7 +16,19 @@ export const mutations = {
         Object.assign(state.notificacoes[index], notificacaoEditada);
     },
     [types.DEFINIR_NOTIFICACOES_BADGE](state, notificacoesBadge) {
-        state.notificacoesBadge = notificacoesBadge;
+        const notificacoesNaoLidas = [];
+        Object.keys(notificacoesBadge).forEach((indice) => {
+            const isNotificacaoNaoLida = [
+                '',
+                null,
+                false,
+            ].includes(notificacoesBadge[indice].is_notificacao_lida);
+
+            if (isNotificacaoNaoLida) {
+                notificacoesNaoLidas.push(notificacoesBadge[indice]);
+            }
+        });
+        state.notificacoesBadge = notificacoesNaoLidas;
     },
     [types.ATUALIZAR_NOTIFICACAO_BADGE](state, notificacaoEditada) {
         const index = state.notificacoesBadge.findIndex(notificacao => notificacao.notificacao_id === notificacaoEditada.notificacao_id);
