@@ -256,11 +256,6 @@ export default {
         dialog(val) {
             return val || this.closeBadgeDialog();
         },
-        dialogNotificacao() {
-            if (this.dialogNotificacao === true && this.notificacao !== null) {
-                this.lerNotificacao(this.notificacao);
-            }
-        },
     },
     mounted() {
         this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
@@ -294,6 +289,7 @@ export default {
         showItem(item) {
             this.notificacao = item;
             this.dialogNotificacao = true;
+            this.lerNotificacao(item);
         },
         notificacaoLida(item) {
             this.lerNotificacao(item);

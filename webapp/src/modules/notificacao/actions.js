@@ -75,9 +75,10 @@ export const obterNotificacoesUsuario = ({ dispatch, commit }, params) => {
 
 export const lerNotificacao = ({ dispatch, commit }, notificacao) => {
     requisicaoAutorizada.patch(`http://localhost/v1/notificacao-usuario-sistema/${notificacao.notificacao_id}/${notificacao.usuario_id}`)
-        .then(() => {
-            commit(types.ATUALIZAR_NOTIFICACAO, notificacao);
-            commit(types.ATUALIZAR_NOTIFICACAO_BADGE, notificacao);
+        .then((response) => {
+            const { data } = response.data;
+            commit(types.ATUALIZAR_NOTIFICACAO, data);
+            commit(types.ATUALIZAR_NOTIFICACAO_BADGE, data);
         })
         .catch((error) => {
             dispatch('alert/error', error.response.data.error, {
