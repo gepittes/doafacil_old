@@ -15,4 +15,40 @@ export const mutations = {
         const index = state.notificacoes.findIndex(notificacao => notificacao.notificacao_id === notificacaoEditada.notificacao_id);
         Object.assign(state.notificacoes[index], notificacaoEditada);
     },
+    [types.DEFINIR_NOTIFICACOES_BADGE](state, notificacoesBadge) {
+        const notificacoesNaoLidas = [];
+        Object.keys(notificacoesBadge).forEach((indice) => {
+            const isNotificacaoNaoLida = [
+                '',
+                null,
+                false,
+            ].includes(notificacoesBadge[indice].is_notificacao_lida);
+
+            if (isNotificacaoNaoLida) {
+                notificacoesNaoLidas.push(notificacoesBadge[indice]);
+            }
+        });
+        state.notificacoesBadge = notificacoesNaoLidas;
+    },
+    [types.ATUALIZAR_NOTIFICACAO_BADGE](state, notificacaoEditada) {
+        const index = state.notificacoesBadge.findIndex(notificacao => notificacao.notificacao_id === notificacaoEditada.notificacao_id);
+        const isNotificacaoLida = ![
+            '',
+            null,
+            false,
+        ].includes(notificacaoEditada.is_notificacao_lida);
+
+        if (isNotificacaoLida) {
+            state.notificacoesBadge.splice(index, 1);
+        } else {
+            Object.assign(state.notificacoesBadge[index], notificacaoEditada);
+        }
+    },
+    [types.ACRESCENTAR_NOTIFICACAO_BADGE](state, notificacao) {
+        state.notificacoesBadge.push(notificacao);
+    },
+    [types.REMOVER_NOTIFICACAO_BADGE](state, notificacaoId) {
+        const index = state.notificacoesBadge.findIndex(notificacao => notificacao.notificacao_id === notificacaoId);
+        state.notificacoesBadge.splice(index, 1);
+    },
 };

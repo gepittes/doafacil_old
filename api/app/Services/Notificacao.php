@@ -60,7 +60,9 @@ class Notificacao implements IService
             unset($dados['notificacao_id']);
         }
 
-        return ModeloNotificacao::where('notificacao_id', $id)->update($dados);
+        ModeloNotificacao::where('notificacao_id', $id)->update($dados);
+
+        return $this->obter($id);
     }
 
     public function remover($id)
@@ -115,6 +117,18 @@ class Notificacao implements IService
             '=',
             $usuario_id
         );
+
+        if ($is_notificacao_lida == false) {
+            $notificacoesUsuario = $this->obterQueryNotificacoesUsuario()->where(
+                'notificacao.usuario_has_sistema.usuario_id',
+                '=',
+                $usuario_id
+            )->where(
+                'notificacao.notificacao.is_notificacao_lida',
+                '=',
+                $is_notificacao_lida
+            );
+        }
 
         return $notificacoesUsuario->get();
     }
@@ -207,10 +221,12 @@ class Notificacao implements IService
                 "Idenfificador do Usuário e da Notificação divergentes."
             );
         }
-        return ModeloNotificacao::where(
+        ModeloNotificacao::where(
             'notificacao_id',
             $notificacao_id
         )->update(['is_notificacao_lida' => true]);
+
+        return $this->obter($notificacao_id);
 
     }
 }

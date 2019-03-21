@@ -32,7 +32,7 @@
 <script>
 
 import { mapState, mapActions, mapGetters } from 'vuex';
-import NotificacaoBadge from './modules/notificacaoBadge/NotificacaoBadge.vue';
+import NotificacaoBadge from './modules/notificacao/NotificacaoBadge.vue';
 import BarraLateral from './modules/core/BarraLateral.vue';
 import Alerta from './modules/alert/Alerta.vue';
 
