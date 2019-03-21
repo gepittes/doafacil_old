@@ -248,25 +248,13 @@ export default {
     },
     computed: {
         ...mapGetters({
-            notificacoes: 'notificacao/notificacoes',
-            notificacoesBadge: 'notificacaoBadge/notificacoesBadge',
+            notificacoesBadge: 'notificacao/notificacoesBadge',
             accountInfo: 'account/accountInfo',
         }),
     },
     watch: {
-        notificacoes() {
-            if (this.notificacoes != null || this.notificacoesBadge != null ||
-                (this.notificacoes.length !== this.notificacoesBadge.length)) {
-                this.obterNotificacoesUsuario(this.accountInfo.user_id);
-            }
-        },
         dialog(val) {
             return val || this.closeBadgeDialog();
-        },
-        dialogNotificacao() {
-            if (this.dialogNotificacao === false && this.notificacao !== null) {
-                this.lerNotificacao(this.notificacao);
-            }
         },
     },
     mounted() {
@@ -276,20 +264,19 @@ export default {
             console.log('Conexão estabelecida');
         };
 
-        this.websocket.connection.onmessage = (event) => {
-            console.log('Mensagem enviada!');
-            console.log(event.data);
-            this.obterNotificacoesUsuario(this.accountInfo.user_id);
-        };
+        if (this.notificacoesBadge == null || this.notificacoesBadge.length === 0) {
+            const params = {
+                usuarioId: this.accountInfo.user_id,
+                isNotificacaoLida: null,
+            };
 
-        if (this.notificacoesBadge.length == null || this.notificacoesBadge.length === 0) {
-            this.obterNotificacoesUsuario(this.accountInfo.user_id);
+            this.obterNotificacoes(params);
         }
     },
     methods: {
         ...mapActions({
-            obterNotificacoesUsuario: 'notificacaoBadge/obterNotificacoesUsuario',
-            lerNotificacao: 'notificacaoBadge/lerNotificacao',
+            obterNotificacoes: 'notificacao/obterNotificacoes',
+            lerNotificacao: 'notificacao/lerNotificacao',
         }),
         closeBadgeDialog() {
             const self = this;
@@ -302,6 +289,7 @@ export default {
         showItem(item) {
             this.notificacao = item;
             this.dialogNotificacao = true;
+            this.lerNotificacao(item);
         },
         notificacaoLida(item) {
             this.lerNotificacao(item);

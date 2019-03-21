@@ -73,6 +73,9 @@ export default {
             is_ativo: true,
             notificacaos: [],
         },
+        websocket: {
+            connection: null,
+        },
     }),
 
     computed: {
@@ -95,6 +98,12 @@ export default {
     },
 
     mounted() {
+        this.websocket.connection = new WebSocket(`ws://${process.env.VUE_APP_WEBSOCKET_HOST}:${process.env.VUE_APP_WEBSOCKET_PORT}`);
+
+        this.websocket.connection.onopen = () => {
+            console.log('Conexão estabelecida');
+        };
+
         this.editedItem = Object.assign({}, this.defaultItem);
         if (this.mensagens.length > 0) {
             this.mensagensRenderizadas = this.mensagens;

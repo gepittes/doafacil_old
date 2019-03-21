@@ -34,7 +34,7 @@ class NotificacaoUsuarioSistemaController extends Controller
         $dados = $request->getParsedBody();
         $notificacao = new \App\Services\Notificacao();
         $dados = $request->getParsedBody();
-        if(!isset($dados['']))
+        // if(!isset($dados['']))
         /**
          * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
          */
