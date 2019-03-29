@@ -13,7 +13,7 @@ class CreateUsuarioTable extends Migration
      */
     public function up()
     {
-        Schema::create('notificacao.usuario', function (Blueprint $table) {
+        Schema::create('app.usuario', function (Blueprint $table) {
             $table->increments('usuario_id');
             $table->string('nome');
             $table->boolean('is_ativo');

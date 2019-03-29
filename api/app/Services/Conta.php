@@ -12,7 +12,7 @@ class Conta implements IService
 
     public function obter($id = null)
     {
-        $modelUsuario = ModeloUsuario::with('sistemas')->select(
+        $modelUsuario = ModeloUsuario::select(
             'usuario_id',
             'nome',
             'email',
@@ -61,10 +61,6 @@ class Conta implements IService
             $dados['password'] = password_hash($dados['password'], PASSWORD_BCRYPT);
             $modeloUsuario = ModeloUsuario::create($dados);
 
-            if(isset($dados['sistemas']) && count($dados['sistemas']) > 0) {
-                $this->vincularSistema($modeloUsuario->usuario_id, $dados['sistemas']);
-            }
-
             return $this->obter($modeloUsuario->usuario_id);
         } catch (\Exception $exception) {
             throw $exception;
@@ -89,12 +85,6 @@ class Conta implements IService
             unset($dados['password']);
         }
 
-        $sistemas = $dados['sistemas'];
-
-        $this->desvincularSistemaUsuario($id);
-        $this->vincularSistema($id, $sistemas);
-        unset($dados['sistemas']);
-
         return ModeloUsuario::where('usuario_id', $id)->update($dados);
     }
 
@@ -117,23 +107,6 @@ class Conta implements IService
         ]);
     }
 
-    public function vincularSistema($usuario_id, array $sistemas)
-    {
-        if (count($sistemas) > 0) {
-            $usuario = ModeloUsuario::findOrFail($usuario_id);
-            foreach ($sistemas as $sistema) {
-                $usuario->sistemas()->attach($sistema['sistema_id']);
-            }
-        }
-    }
-
-    public function desvincularSistemaUsuario($usuario_id)
-    {
-        $usuario = ModeloUsuario::find($usuario_id);
-        if($usuario) {
-            return $usuario->sistemas()->detach();
-        }
-    }
 
     public function remover($id)
     {
@@ -168,7 +141,6 @@ class Conta implements IService
         }
 
         return $usuarioAtivo;
-
     }
 
     private function validarSenha(string $senha, string $senhaBanco)

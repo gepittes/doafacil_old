@@ -3,7 +3,7 @@ services:
 
   webapp-service:
     image: node:8.11.4-slim
-    container_name: notification-webapp
+    container_name: app-webapp
     user: "node"
     working_dir: /home/node/app
     volumes:
@@ -11,40 +11,38 @@ services:
     command:
       sh -c 'npm run serve'
       #      sh -c 'npm run lint && npm run serve'
-      #      sh -c 'npm i && npm run lint-fix && npm run serve'
+      # sh -c 'npm i && npm run serve'
     ports:
       - "8080:8080"
     environment:
-      - NODE_CONFIG_ENV=production
-      - NODE_ENV=production
-      - WEBSOCKET_HOST=localhost
-      - WEBSOCKET_PORT=8081
+      - NODE_CONFIG_ENV=development
+      - NODE_ENV=development
       #- NODE_CONFIG_ENV=production
       #- NODE_ENV=production
 
   api-service:
-    container_name: notification-api
-    build: .
+    container_name: app-api
+    # build: .
     image: culturagovbr/notification-php-fpm:1.0.1
     working_dir: /application
     volumes:
       - ./api:/application
       - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
     environment:
-      #  - UPDATE_COMPOSER_DEPENDENCIES=true
+      # - UPDATE_COMPOSER_DEPENDENCIES=true
       - USE_PHP_FPM=true
       - DB_CONNECTION=pgsql
-      - DB_HOST=notification-database
+      - DB_HOST=app-database
       - DB_PORT=5432
-      - DB_DATABASE=notificacao
-      - DB_USERNAME=notificacao
-      - DB_PASSWORD=senhaNotificacao
+      - DB_DATABASE=unidesc_db
+      - DB_USERNAME=unidesc_usr
+      - DB_PASSWORD=123456
     depends_on:
       - database-service
 
   webserver-service:
     image: nginx:alpine
-    container_name: notification-webserver
+    container_name: app-webserver
     working_dir: /application
     volumes:
       - ./api:/application
@@ -55,30 +53,14 @@ services:
     depends_on:
       - api-service
 
-  websocket-service:
-    image: culturagovbr/notification-php-fpm:1.0.1
-    container_name: notification-websocket
-    working_dir: /application
-    command: "supervisord -n"
-    volumes:
-      - ./websocket:/application
-      - ./docker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
-      - ./docker/php-fpm/supervisor/supervisor.conf:/etc/supervisor/conf.d/supervisor.conf
-    ports:
-      - "8001:8001"
-    depends_on:
-      - api-service
-    #environment:
-    #  - UPDATE_COMPOSER_DEPENDENCIES=true
-
   database-service:
     image: postgres:10
-    container_name: notification-database
+    container_name: app-database
     environment:
-      - POSTGRES_PASSWORD=senhaNotificacao
-      - POSTGRES_USER=notificacao
-      - POSTGRES_DB=notificacao
-      - POSTGRES_DB_TEST=notificacao-test
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_USER=unidesc_usr
+      - POSTGRES_DB=unidesc_db
+      - POSTGRES_DB_TEST=unidesc_db_teste
     ports:
       - "5432:5432"
     expose:
