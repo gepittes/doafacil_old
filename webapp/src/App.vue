@@ -10,10 +10,7 @@
                 v-if="status.loggedIn"
                 @click.stop="drawer = !drawer"/>
             <v-toolbar-title v-text="title"/>
-            <notificacao-badge
-                v-show="loading"
-                v-if="status.loggedIn"/>
-            <v-spacer/>
+
         </v-toolbar>
 
         <v-content>
@@ -23,23 +20,19 @@
             >{{ alert.message }}</alerta>
             <router-view/>
         </v-content>
-        <!--<v-footer :fixed="fixed" app>-->
-        <!--<span>&copy; 2018</span>-->
-        <!--</v-footer>-->
+
     </v-app>
 </template>
 
 <script>
 
 import { mapState, mapActions, mapGetters } from 'vuex';
-import NotificacaoBadge from './modules/notificacao/NotificacaoBadge.vue';
 import BarraLateral from './modules/core/BarraLateral.vue';
 import Alerta from './modules/alert/Alerta.vue';
 
 export default {
     name: 'App',
     components: {
-        NotificacaoBadge,
         BarraLateral,
         Alerta,
     },
@@ -55,41 +48,17 @@ export default {
                     title: 'Início',
                     to: '/',
                 },
-                // {
-                //   icon: 'chat',
-                //   title: 'Chat Interno',
-                //   to: '/websocket',
-                // },
-                {
-                    icon: 'chat',
-                    title: 'Notificacao',
-                    to: '/notificacao',
-                },
                 {
                     icon: 'edit',
                     title: 'Administração',
                     to: '/administracao',
                 },
-                {
-                    icon: 'info',
-                    title: 'Sobre',
-                    to: '/sobre',
-                },
-                {
-                    icon: 'chat',
-                    title: '(Teste) Chat/WebSocket',
-                    to: '/websocket',
-                },
-                {
-                    icon: 'exit_to_app',
-                    title: 'Sair',
-                    to: '/logout',
-                },
+
             ],
             miniVariant: false,
             right: true,
             rightDrawer: false,
-            title: 'Notification WebApp',
+            title: 'Hello World',
         };
     },
     computed: {

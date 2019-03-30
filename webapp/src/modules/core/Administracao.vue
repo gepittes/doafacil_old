@@ -9,26 +9,6 @@
                 icons-and-text
                 slider-color="warning"
                 grow>
-                <v-tab
-                    dark
-                    to="/administracao/plataforma">
-                    Plataformas
-                    <v-icon>devices</v-icon>
-                </v-tab>
-
-                <v-tab
-                    dark
-                    to="/administracao/sistema">
-                    Sistemas
-                    <v-icon>settings_system_daydream</v-icon>
-                </v-tab>
-
-                <v-tab
-                    dark
-                    to="/administracao/mensagem">
-                    Mensagens
-                    <v-icon>chat</v-icon>
-                </v-tab>
 
                 <v-tab
                     dark
@@ -50,7 +30,7 @@ import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
-            bottomNav: '/plataforma',
+            bottomNav: '/conta',
         };
     },
 

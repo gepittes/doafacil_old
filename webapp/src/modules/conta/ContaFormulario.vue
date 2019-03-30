@@ -46,29 +46,6 @@
                     :label="`${editedItem.is_ativo ? 'Ativo' : 'Inativo'}`"
                     v-model="editedItem.is_ativo"/>
             </v-flex>
-            <v-flex
-                xs12
-                sm6
-                md12>
-                <h3> Sistemas </h3>
-                <v-list style="overflow: auto; max-height: 300px">
-                    <v-list-tile
-                        v-for="sistema in sistemas"
-                        :key="sistema.title"
-                        avatar>
-
-                        <v-list-tile-content>
-                            <v-checkbox
-                                v-model="editedItem.sistemas"
-                                :label="sistema.descricao"
-                                :value="sistema"
-                                color="success"
-                                required/>
-                        </v-list-tile-content>
-
-                    </v-list-tile>
-                </v-list>
-            </v-flex>
             <v-flex class="text-xs-center">
                 <v-btn
                     color="error"
@@ -105,7 +82,6 @@ export default {
             descricao: '',
             is_ativo: true,
             is_admin: false,
-            sistemas: [],
         },
         rules: {
             required: value => !!value || 'Campo Obrigatório.',
@@ -120,7 +96,6 @@ export default {
 
     computed: {
         ...mapGetters({
-            sistemas: 'sistema/sistema',
         }),
     },
 
@@ -131,16 +106,12 @@ export default {
     },
     mounted() {
         this.editedItem = Object.assign({}, this.defaultItem);
-        if (this.sistemas == null || this.sistemas.length === 0) {
-            this.obterSistemas();
-        }
     },
 
     methods: {
 
         ...mapActions({
             cadastrarConta: 'conta/cadastrarConta',
-            obterSistemas: 'sistema/obterSistemas',
             atualizarConta: 'conta/atualizarConta',
         }),
 

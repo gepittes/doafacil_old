@@ -2,16 +2,10 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './modules/conta/Login.vue';
 import Cadastrar from './modules/conta/Cadastrar.vue';
-import WebSocket from './modules/websocket/WebSocket.vue';
 import Administracao from './modules/core/Administracao.vue';
 import Home from './modules/core/Home.vue';
 import NaoEncontrado from './modules/core/NaoEncontrado.vue';
-import Sobre from './modules/core/Sobre.vue';
-import Plataforma from './modules/plataforma/Plataforma.vue';
-import Sistema from './modules/sistema/Sistema.vue';
 import Conta from './modules/conta/Conta.vue';
-import Mensagem from './modules/mensagem/Mensagem.vue';
-import Notificacao from './modules/notificacao/Notificacao.vue';
 import store from './store';
 import { obterInformacoesJWT } from './modules/account/_helpers/jwt';
 
@@ -29,7 +23,6 @@ const routesObject = [
     {
         path: '*',
         component: NaoEncontrado,
-    // redirect: '/'
     },
     {
         path: '/',
@@ -37,52 +30,16 @@ const routesObject = [
         name: 'home',
     },
     {
-        path: '/websocket',
-        component: WebSocket,
-    },
-    {
-        path: '/notificacao',
-        component: Notificacao,
-    },
-    {
-        path: '/sobre',
-        component: Sobre,
-    },
-    {
         path: '/administracao',
         component: Administracao,
-        redirect: '/administracao/plataforma',
+        redirect: '/administracao/conta',
         children: [
-            {
-                path: '/administracao/plataforma',
-                component: Plataforma,
-                name: Plataforma,
-                meta: {
-                    title: 'Plataformas',
-                },
-            },
-            {
-                path: '/administracao/sistema',
-                component: Sistema,
-                name: Sistema,
-                meta: {
-                    title: 'Sistema',
-                },
-            },
             {
                 path: '/administracao/conta',
                 component: Conta,
                 name: Conta,
                 meta: {
                     title: 'Conta',
-                },
-            },
-            {
-                path: '/administracao/mensagem',
-                component: Mensagem,
-                name: Mensagem,
-                meta: {
-                    title: 'Mensagem',
                 },
             },
         ],

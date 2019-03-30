@@ -73,7 +73,7 @@ export default {
             miniVariant: false,
             right: true,
             rightDrawer: false,
-            title: 'Notification WebApp',
+            title: 'Hello World',
         };
     },
     computed: {
@@ -98,21 +98,6 @@ export default {
                     icon: 'home',
                     title: 'Início',
                     to: '/',
-                },
-                {
-                    icon: 'chat',
-                    title: 'Notificacao',
-                    to: '/notificacao',
-                },
-                {
-                    icon: 'info',
-                    title: 'Sobre',
-                    to: '/sobre',
-                },
-                {
-                    icon: 'chat',
-                    title: '(Teste) Chat/WebSocket',
-                    to: '/websocket',
                 },
             ];
             if (this.accountInfo.is_admin === true) {
