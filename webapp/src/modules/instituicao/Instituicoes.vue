@@ -104,7 +104,6 @@ export default {
         deleteItem(item) {
                 this.removerInstituicao(item.id);
 
-            }
         },
 };
 
