@@ -49,6 +49,11 @@ export default {
                     to: '/',
                 },
                 {
+                    icon: 'home',
+                    title: 'Instituições',
+                    to: '/instituicoes',
+                },
+                {
                     icon: 'edit',
                     title: 'Administração',
                     to: '/administracao',
@@ -58,7 +63,7 @@ export default {
             miniVariant: false,
             right: true,
             rightDrawer: false,
-            title: 'Hello World',
+            title: 'DoaFácil',
         };
     },
     computed: {
