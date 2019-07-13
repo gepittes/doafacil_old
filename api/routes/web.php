@@ -20,6 +20,11 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
     $router->post('/autenticacao/login', 'AutenticacaoController@post');
 
     $router->post('/conta', 'ContaController@post');
+    $router->get('/instituicao', 'InstituicaoController@get');
+    $router->post('/instituicao', 'InstituicaoController@post');
+    $router->patch('/instituicao/{id}', 'InstituicaoController@patch');
+    $router->get('/instituicao/{id}', 'InstituicaoController@show');
+    $router->delete('/instituicao/{id}', 'InstituicaoController@delete');
 
     $router->group(['middleware' => 'jwt.auth'], function () use ($router) {
         $router->get('/conta[/{id}]', 'ContaController@get');
