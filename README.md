@@ -2,7 +2,7 @@
 
 #### Como Instalar
 
-1. Copiar e colar `docker-composer.exemplo` para `docker-compose.yml`
+1. Copiar e colar `docker-compose.exemplo` para `docker-compose.yml`
 
 2. Descomente as seguintes linhas:
 
@@ -36,7 +36,7 @@
    sh -c 'npm run serve'
    ```
 
-9. Pronto, basta executar o comando `docker-composer up` para subir todos os containers
+9. Pronto, basta executar o comando `docker-compose up` para subir todos os containers
 
 10. Agora temos que terminar algumas configuracoes do JWT e da APP_KEY da API
 
