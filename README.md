@@ -4,7 +4,7 @@
 
 1. Copiar e colar `docker-composer.exemplo` para `docker-compose.yml`
 
-2. Decomente as sequintes linhas:
+2. Descomente as seguintes linhas:
 
    ```
    sh -c 'npm i && npm run serve'
@@ -30,7 +30,7 @@
    - UPDATE_COMPOSER_DEPENDENCIES=true
    ```
 
-8. Descomente as linha
+8. Descomente a linha
 
    ```
    sh -c 'npm run serve'
@@ -38,13 +38,13 @@
 
 9. Pronto, basta executar o comando `docker-composer up` para subir todos os containers
 
-10. Agora temos que terminar algunas configuracoes do JWT e da APP_KEY da API
+10. Agora temos que terminar algumas configuracoes do JWT e da APP_KEY da API
 
 11. Na pasta **webapp** iremos copiar o arquivo `.example_env` para `.env`
 
 12. Na pasta **api** o arquivo `.env` esta com o campo `APP_KEY= ` vazio. Iremos entrar dentro do container para gerar uma chave para o projeto.
 
-13. Execute os sequintes comandos
+13. Execute os seguintes comandos
 
     ```
     docker exec -it app-api /bin/bash
@@ -55,5 +55,5 @@
 
 15. `docker-composer up`
 
-16. Pronto agora o projeto ja esta configurado e pronto para ser densenvolvido novas funcionalidades
+16. Pronto agora o projeto ja esta configurado e pronto para ser desenvolvido novas funcionalidades
 
