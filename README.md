@@ -17,7 +17,7 @@
    sh -c 'npm run serve'
    ```
 
-4.  Execute o comando `docker-composer up`
+4.  Execute o comando `docker-compose up`
 
 5. Aguarde ate terminar de criar os container e configura-los **(Isso levara muito tempo)*
 
@@ -53,7 +53,7 @@
 
 14. Logo apos de finalizar iremos derrubar os container com `Ctrl+c` e subi-los novamente
 
-15. `docker-composer up`
+15. `docker-compose up`
 
 16. Pronto agora o projeto ja esta configurado e pronto para ser desenvolvido novas funcionalidades
 
