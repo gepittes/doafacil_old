@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './modules/conta/Login.vue';
+import Instituicoes from './modules/instituicao/Instituicoes.vue';
 import Cadastrar from './modules/conta/Cadastrar.vue';
 import Administracao from './modules/core/Administracao.vue';
 import Home from './modules/core/Home.vue';
@@ -12,6 +13,11 @@ import { obterInformacoesJWT } from './modules/account/_helpers/jwt';
 Vue.use(Router);
 
 const routesObject = [
+    {
+        path: '/instituicoes',
+        component: Instituicoes,
+        nme: 'instituicoes',
+    },
     {
         path: '/login',
         component: Login,
@@ -56,6 +62,7 @@ router.beforeEach((to, from, next) => {
     const publicPages = [
         '/login',
         '/cadastrar',
+        '/instituicaes',
     ];
 
     const authRequired = !publicPages.includes(to.path);

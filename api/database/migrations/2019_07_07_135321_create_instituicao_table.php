@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsuarioTable extends Migration
+class CreateInstituicaoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateUsuarioTable extends Migration
      */
     public function up()
     {
-        Schema::create('app.usuario', function (Blueprint $table) {
-            $table->increments('usuario_id');
+        Schema::create('app.instituicao', function (Blueprint $table) {
+            $table->increments('id');
             $table->string('nome');
-            $table->boolean('is_ativo');
-            $table->boolean('is_admin');
-            $table->string('email')->unique();
-            $table->string('password');
             $table->timestamps();
         });
     }
@@ -31,6 +27,6 @@ class CreateUsuarioTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('app.usuario');
+        Schema::dropIfExists('app.instituicao');
     }
 }

@@ -73,7 +73,7 @@ export default {
             miniVariant: false,
             right: true,
             rightDrawer: false,
-            title: 'Hello World',
+            title: 'DoaFácil',
         };
     },
     computed: {
@@ -98,6 +98,11 @@ export default {
                     icon: 'home',
                     title: 'Início',
                     to: '/',
+                },
+                {
+                    icon: 'list',
+                    title: 'Instituiçoes',
+                    to: '/instituicoes',
                 },
             ];
             if (this.accountInfo.is_admin === true) {
