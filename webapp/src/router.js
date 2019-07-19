@@ -63,7 +63,7 @@ router.beforeEach((to, from, next) => {
         '/login',
         '/cadastrar',
         '/instituicaes',
-        '/'
+        '/',
     ];
 
     const authRequired = !publicPages.includes(to.path);
