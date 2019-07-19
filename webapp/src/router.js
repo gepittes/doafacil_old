@@ -4,7 +4,7 @@ import Login from './modules/conta/Login.vue';
 import Instituicoes from './modules/instituicao/Instituicoes.vue';
 import Cadastrar from './modules/conta/Cadastrar.vue';
 import Administracao from './modules/core/Administracao.vue';
-import Home from './modules/core/Home.vue';
+import Home from './views/home/Home.vue';
 import NaoEncontrado from './modules/core/NaoEncontrado.vue';
 import Conta from './modules/conta/Conta.vue';
 import store from './store';
@@ -63,6 +63,7 @@ router.beforeEach((to, from, next) => {
         '/login',
         '/cadastrar',
         '/instituicaes',
+        '/'
     ];
 
     const authRequired = !publicPages.includes(to.path);
