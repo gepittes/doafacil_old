@@ -1,4 +1,6 @@
-# DOAFACIL
+<p align="center">
+  <img src="https://i.imgur.com/YCh9nXR.png" width="300">
+</p>
 
 #### Como Instalar
 
