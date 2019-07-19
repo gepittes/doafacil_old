@@ -58,6 +58,12 @@
                                         style="margin-left: 20px"
                                     >Cadastre-se</router-link>
 
+                                    <router-link
+                                            to="/"
+                                            class="btn btn-link"
+                                            style="margin-left: 20px"
+                                    >Home</router-link>
+
                                 </v-card-actions>
                             </v-form>
                         </v-card-text>

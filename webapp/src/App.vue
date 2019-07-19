@@ -1,6 +1,10 @@
 <template>
     <v-app>
-        <barra-lateral v-model="drawer"/>
+
+        <template v-if="status.loggedIn">
+            <barra-lateral v-model="drawer"/>
+        </template>
+
         <v-toolbar
                 :clipped-left="clipped"
                 app
@@ -14,8 +18,17 @@
             <v-img
                     :max-width="100"
                     :src="logo"
-                    :color="white"
             />
+            <v-spacer></v-spacer>
+            <v-toolbar-items v-if="!status.loggedIn">
+                <v-btn flat>Quem somos</v-btn>
+
+                <router-link to="/login" tag="v-btn" class="light-blue darken-3">
+                    <v-icon class="mr-2">input</v-icon>
+                    Login
+                </router-link>
+
+            </v-toolbar-items>
         </v-toolbar>
 
         <v-content>
@@ -83,6 +96,9 @@
                 user: 'account/user',
                 accountInfo: 'account/accountInfo',
             }),
+            // user() {
+            //     return this.$store.state.account.status.loggedIn
+            // }
         },
         mounted() {
             this.loading = true;
