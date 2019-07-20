@@ -1,27 +1,51 @@
 <template>
     <v-app light>
         <section>
-            <v-parallax :src="images.main" height="600" alt="fundo com maos unidas">
-                <v-layout column align-center justify-center class="white--text">
-                    <h1 class="font-weight-black display-2">Titulo</h1>
-                    <div class="headline">
-                        Descritiva
-                    </div>
-                </v-layout>
-                <v-layout justify-center>
-                    <v-flex xs1>
-                        <router-link tag="v-btn" class="blue lighten-2 white--text" to="/login">
-                            <v-icon>accessibility_new</v-icon>
-                            QUERO DOAR!
-                        </router-link>
-                    </v-flex>
-                    <v-flex xs1>
-                        <router-link tag="v-btn" class="blue lighten-2 white--text" to="/login">
-                            QUERO RECEBER!
-                            <v-icon>grade</v-icon>
-                        </router-link>
-                    </v-flex>
-                </v-layout>
+            <v-parallax :src="images.main" height="500" alt="união de mãos">
+                <v-flex xs12>
+                    <v-container grid-list-xl>
+                        <v-layout align-center justify-center row>
+                            <v-flex xs12 md5>
+                                <v-card class="elevation-0 transparent">
+                                    <v-card-text class="text-xs-center layout justify-center">
+                                        <v-img :src="images.logoGif" :max-width="100"/>
+                                    </v-card-text>
+                                    <v-card-title primary-title class="layout justify-center">
+                                        <div class="font-weight-black display-1 text-xs-center white--text text-uppercase">
+                                            Simples de <span class="red--text t-doar">doar</span>,
+                                            <span class=" t-facil">Fácil</span>
+                                            de encontrar!
+                                        </div>
+                                    </v-card-title>
+                                    <v-card-text class="white--text">
+                                        <p class="t-justify body-2 font-italic">
+                                            <v-icon class="white--text">fas fa-quote-left</v-icon>
+                                            Vivemos rodeados por mudanças políticas, econômicas e sociais que afetam as
+                                            organizações e
+                                            as pessoas. E independe de setores da economia a qual as organizações façam
+                                            parte, as
+                                            mudanças ressaltam a crescente importância que todas elas assumem para a
+                                            sociedade
+                                            contemporânea e, consequentemente, para os homens que a constituem. (COLAUTO,
+                                            BEUREN; 2003).
+                                            <v-icon class="white--text">fas fa-quote-right</v-icon>
+                                        </p>
+                                    </v-card-text>
+                                </v-card>
+                            </v-flex>
+                        </v-layout>
+                        <v-layout align-center justify-center row>
+                            <router-link tag="v-btn" class="red darken-1 white--text text-uppercase" to="/login">
+                                <v-icon class="mr-1">fas fa-people-carry</v-icon>
+                                QUERO DOAR!
+                            </router-link>
+                            <router-link tag="v-btn" class="blue darken-1 white--text text-uppercase" to="/login">
+                                QUERO RECEBER!
+                                <v-icon class="ml-1">fas fa-hands-helping</v-icon>
+                            </router-link>
+                        </v-layout>
+                    </v-container>
+                </v-flex>
             </v-parallax>
         </section>
 
@@ -237,7 +261,8 @@
             return {
                 images: {
                     main: require('../../assets/home/union-hands.jpg'),
-                    logo: require ('../../assets/doafacil/logo-doafacil.png')
+                    logo: require('../../assets/doafacil/logos/logo-doafacil.png'),
+                    logoGif: require('../../assets/doafacil/gifs/hand-gif.gif')
                 },
                 email: "",
                 emailRules: [
@@ -272,4 +297,14 @@
 </script>
 
 <style scoped>
+    .t-doar{
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+    }
+    .t-facil{
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+        color: #00d0f9;
+    }
+    .t-justify {
+        text-align: justify;
+    }
 </style>

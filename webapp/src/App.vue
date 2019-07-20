@@ -23,7 +23,7 @@
             <v-toolbar-items v-if="!status.loggedIn">
                 <v-btn flat>Quem somos</v-btn>
 
-                <router-link to="/login" tag="v-btn" class="light-blue darken-3">
+                <router-link to="/login" tag="v-btn" class="blue darken-1">
                     <v-icon class="mr-2">input</v-icon>
                     Login
                 </router-link>
@@ -82,7 +82,7 @@
                 miniVariant: false,
                 right: true,
                 rightDrawer: false,
-                logo: require('../src/assets/doafacil/logo-doafacil.png')
+                logo: require('./assets/doafacil/logos/logo-doafacil.png')
             };
         },
         computed: {
