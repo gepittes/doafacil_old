@@ -1,3 +1,4 @@
+import '@fortawesome/fontawesome-free/css/all.css';
 import VeeValidate from 'vee-validate';
 import '@babel/polyfill';
 import Vue from 'vue';
