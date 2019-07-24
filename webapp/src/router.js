@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Login from './modules/conta/Login.vue';
-import Instituicoes from './modules/instituicao/Instituicoes.vue';
+import ListaInstituicao from './views/instituicao/Listar.vue';
+import PerfilInstituicao from './views/instituicao/Perfil.vue';
 import Cadastrar from './modules/conta/Cadastrar.vue';
 import Administracao from './modules/core/Administracao.vue';
 import Home from './views/home/Home.vue';
@@ -14,9 +15,20 @@ Vue.use(Router);
 
 const routesObject = [
     {
+        path: '/instituicao/:id',
+        component: PerfilInstituicao,
+        props: true,
+        meta: {
+            title: 'perfil',
+        },
+    },
+    {
         path: '/instituicoes',
-        component: Instituicoes,
-        nme: 'instituicoes',
+        component: ListaInstituicao,
+        meta: {
+            title: 'instituicoes',
+        },
+
     },
     {
         path: '/login',
