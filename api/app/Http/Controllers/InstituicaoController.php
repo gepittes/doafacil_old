@@ -19,9 +19,8 @@ class InstituicaoController extends Controller
     public function post(ServerRequestInterface $request)
     {
         $dados = $request->getParsedBody();
-        Instituicao::create($dados);
-
-
+        
+        return response()->json(Instituicao::create($dados));
     }
 
     public function show($id)

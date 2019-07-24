@@ -8,7 +8,14 @@ class Instituicao extends Model
 {
 //    protected $table = ['instituicoes'];
 
-    protected $fillable = ['nome'];
+    protected $fillable = [
+        'nome',
+        'telefone',
+        'banner',
+        'horario',
+        'localidade',
+        'uf',
+    ];
 
     protected $table = 'app.instituicao';
 }
