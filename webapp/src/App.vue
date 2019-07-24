@@ -7,10 +7,9 @@
 
         <v-toolbar
                 :clipped-left="clipped"
+                class="gradient-doafacil-bg"
                 app
-                dark
-                color="#00b5dd">
-
+                dark>
             <v-toolbar-side-icon
                     v-if="status.loggedIn"
                     @click.stop="drawer = !drawer"/>
@@ -23,11 +22,10 @@
             <v-toolbar-items v-if="!status.loggedIn">
                 <v-btn flat>Quem somos</v-btn>
 
-                <router-link to="/login" tag="v-btn" class="blue darken-1">
-                    <v-icon class="mr-2">input</v-icon>
+                <router-link to="/login" tag="v-btn" >
+                    <v-icon class="mr-2">fa fa-sign-in-alt</v-icon>
                     Login
                 </router-link>
-
             </v-toolbar-items>
         </v-toolbar>
 
@@ -82,7 +80,7 @@
                 miniVariant: false,
                 right: true,
                 rightDrawer: false,
-                logo: require('./assets/doafacil/logos/logo-doafacil.png')
+                logo: require('./assets/doafacil/logos/logo-doafacil-bg-white.png')
             };
         },
         computed: {

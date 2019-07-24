@@ -13,7 +13,7 @@
                                     <v-card-title primary-title class="layout justify-center">
                                         <div class="font-weight-black display-1 text-xs-center white--text text-uppercase">
                                             Simples de <span class="red--text t-doar">doar</span>,
-                                            <span class=" t-facil">Fácil</span>
+                                            <span class="t-facil">Fácil</span>
                                             de encontrar!
                                         </div>
                                     </v-card-title>
