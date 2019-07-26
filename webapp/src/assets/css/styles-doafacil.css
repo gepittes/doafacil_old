@@ -3,3 +3,26 @@
     background: -webkit-linear-gradient(to left, #0083B0, #00B4DB);
     background: linear-gradient(to left, #0083B0, #00B4DB);
 }
+
+.t-doar{
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+}
+.t-facil{
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+    color: #00d0f9;
+}
+.t-justify {
+    text-align: justify;
+}
+
+a {
+    text-decoration: none;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    background: #dad7d7;
+}
+::-webkit-scrollbar-thumb {
+    background: #00B4DB;
+}
