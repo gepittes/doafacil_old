@@ -35,7 +35,6 @@
                         <v-flex xs12 md4>
                             <v-card class="elevation-0 transparent">
                                 <v-card-text class="text-xs-center layout justify-center">
-                                    <!--                                    <v-icon x-large class="blue&#45;&#45;text text&#45;&#45;lighten-2">flash_on</v-icon>-->
                                     <v-img :src="gifs.energy" :max-width="300"/>
                                 </v-card-text>
                                 <v-card-title primary-title class="layout justify-center">

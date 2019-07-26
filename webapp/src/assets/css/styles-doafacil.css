@@ -14,3 +14,15 @@
 .t-justify {
     text-align: justify;
 }
+
+a {
+    text-decoration: none;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    background: #dad7d7;
+}
+::-webkit-scrollbar-thumb {
+    background: #00B4DB;
+}
