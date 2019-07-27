@@ -14,15 +14,26 @@
         <v-btn to="/login" flat>Login</v-btn>
       </v-toolbar-items>
       <v-toolbar-items class="pa-1" v-if="status.loggedIn">
-        <v-list-tile avatar>
-          <v-list-tile-avatar flat>
-            <i class="material-icons">account_circle</i>
-          </v-list-tile-avatar>
+        <v-menu transition="fade-transition">
+          <template v-slot:activator="{ on }">
+            <v-btn flat v-on="on">
+              <v-list-tile avatar>
+                <v-list-tile-avatar flat>
+                  <i class="material-icons">account_circle</i>
+                </v-list-tile-avatar>
 
-          <v-list-tile-content flat>
-            <v-list-tile-title flat>{{ accountInfo.name }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+                <v-list-tile-content flat>
+                  <v-list-tile-title flat>{{ accountInfo.name }}</v-list-tile-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-btn>
+          </template>
+          <v-list>
+            <v-list-tile @click.stop to="/logout">
+              <v-list-tile-title>Sair</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
       </v-toolbar-items>
     </v-toolbar>
 
