@@ -1,33 +1,10 @@
 <template>
     <v-app>
-
         <template v-if="status.loggedIn">
-            <barra-lateral v-model="drawer"/>
+            <barra-lateral/>
         </template>
 
-        <v-toolbar
-                :clipped-left="clipped"
-                class="gradient-doafacil-bg"
-                app
-                dark>
-            <v-toolbar-side-icon
-                    v-if="status.loggedIn"
-                    @click.stop="drawer = !drawer"/>
-            <v-toolbar-title/>
-            <v-img
-                    :max-width="100"
-                    :src="logo"
-            />
-            <v-spacer></v-spacer>
-            <v-toolbar-items v-if="!status.loggedIn">
-                <v-btn flat>Quem somos</v-btn>
-
-                <router-link to="/login" tag="v-btn" >
-                    <v-icon class="mr-2">fa fa-sign-in-alt</v-icon>
-                    Login
-                </router-link>
-            </v-toolbar-items>
-        </v-toolbar>
+            <Toolbar/>
 
         <v-content>
             <alerta
@@ -37,13 +14,13 @@
             </alerta>
             <router-view/>
         </v-content>
-
     </v-app>
 </template>
 
 <script>
 
     import {mapState, mapActions, mapGetters} from 'vuex';
+    import Toolbar from './components/template/Toolbar'
     import BarraLateral from './modules/core/BarraLateral.vue';
     import Alerta from './modules/alert/Alerta.vue';
 
@@ -52,37 +29,9 @@
         components: {
             BarraLateral,
             Alerta,
+            Toolbar
         },
-        data() {
-            return {
-                loading: false,
-                clipped: false,
-                drawer: false,
-                fixed: false,
-                items: [
-                    {
-                        icon: 'home',
-                        title: 'Início',
-                        to: '/',
-                    },
-                    {
-                        icon: 'home',
-                        title: 'Instituições',
-                        to: '/instituicoes',
-                    },
-                    {
-                        icon: 'edit',
-                        title: 'Administração',
-                        to: '/administracao',
-                    },
 
-                ],
-                miniVariant: false,
-                right: true,
-                rightDrawer: false,
-                logo: require('./assets/doafacil/logos/logo-doafacil-bg-white.png')
-            };
-        },
         computed: {
             ...mapState({
                 alert: state => state.alert,
@@ -97,9 +46,6 @@
             // user() {
             //     return this.$store.state.account.status.loggedIn
             // }
-        },
-        mounted() {
-            this.loading = true;
         },
         methods: {
             ...mapActions({

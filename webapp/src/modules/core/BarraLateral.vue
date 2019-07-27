@@ -1,54 +1,66 @@
 <template>
     <v-navigation-drawer
-        v-if="status.loggedIn"
-        :mini-variant="miniVariant"
-        v-model="drawer"
-        clipped="clipped"
-        enable-resize-watcher
-        color="primary"
-        temporary
-        app>
-        <v-card
-            dark
-            color="primary">
-            <v-list class="pa-1">
-                <v-list-tile
-                    avatar
-                    tag="div">
-                    <v-list-tile-avatar>
-                        <i class="material-icons">
-                            account_circle
-                        </i>
-                    </v-list-tile-avatar>
-
-                    <v-list-tile-content>
-                        <v-list-tile-title>{{ accountInfo.name }}</v-list-tile-title>
-                    </v-list-tile-content>
-
+            fixed
+            :clipped="$vuetify.breakpoint.mdAndUp"
+            app
+            v-model="drawer"
+            width="200px"
+    >
+        <v-list dense>
+            <template v-for="item in obterMenusLaterais()">
+                <v-layout
+                        row
+                        v-if="item.heading"
+                        align-center
+                        :key="item.heading"
+                >
+                    <v-flex xs6>
+                        <v-subheader v-if="item.heading">
+                            {{ item.heading }}
+                        </v-subheader>
+                    </v-flex>
+                </v-layout>
+                <v-list-group
+                        v-else-if="item.children"
+                        v-model="item.model"
+                        :key="item.text"
+                        :prepend-icon="item.model ? item.icon : item['icon-alt']"
+                        append-icon=""
+                >
+                    <v-list-tile slot="activator" :to="item.to">
+                        <v-list-tile-content>
+                            <v-list-tile-title>
+                                {{ item.text }}
+                            </v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                    <v-list-tile
+                            v-for="(child, i) in item.children"
+                            :key="i"
+                            @click=""
+                            :to="child.to"
+                    >
+                        <v-list-tile-action v-if="child.icon">
+                            <v-icon>{{ child.icon }}</v-icon>
+                        </v-list-tile-action>
+                        <v-list-tile-content>
+                            <v-list-tile-title>
+                                {{ child.text }}
+                            </v-list-tile-title>
+                        </v-list-tile-content>
+                    </v-list-tile>
+                </v-list-group>
+                <v-list-tile v-else @click="" :key="item.text" :to="item.to">
                     <v-list-tile-action>
-                        <v-btn
-                            icon
-                            @click.stop="drawer = !drawer">
-                            <v-icon>chevron_left</v-icon>
-                        </v-btn>
+                        <v-icon>{{ item.icon }}</v-icon>
                     </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>
+                            {{ item.text }}
+                        </v-list-tile-title>
+                    </v-list-tile-content>
                 </v-list-tile>
-            </v-list>
-        </v-card>
-        <v-list class="pt-0">
-            <v-divider/>
-            <v-list-tile
-                v-for="(item, i) in obterMenusLaterais()"
-                :key="i"
-                :to="item.to"
-                value="true">
-                <v-list-tile-action>
-                    <v-icon v-html="item.icon"/>
-                </v-list-tile-action>
-                <v-list-tile-content color="white">
-                    <v-list-tile-title v-text="item.title"/>
-                </v-list-tile-content>
-            </v-list-tile>
+            </template>
         </v-list>
     </v-navigation-drawer>
 </template>
@@ -59,21 +71,9 @@ import { mapGetters } from 'vuex';
 
 export default {
     name: 'App',
-    props: {
-        value: {
-            type: Boolean,
-            default: false,
-        },
-    },
     data() {
         return {
-            clipped: false,
-            drawer: false,
-            fixed: false,
-            miniVariant: false,
-            right: true,
-            rightDrawer: false,
-            title: 'DoaFácil',
+            drawer: null,
         };
     },
     computed: {
@@ -83,39 +83,51 @@ export default {
             accountInfo: 'account/accountInfo',
         }),
     },
-    watch: {
-        value(val) {
-            this.drawer = val;
-        },
-        drawer(val) {
-            this.$emit('input', val);
-        },
-    },
     methods: {
         obterMenusLaterais() {
             const menusLaterais = [
+                { icon: 'home', text: 'Inicio' , to: '/'},
+                { icon: 'contacts', text: 'Ponto de Doaçao' , to: '/doacao' },
                 {
-                    icon: 'home',
-                    title: 'Início',
-                    to: '/',
+                    icon: 'keyboard_arrow_up',
+                    'icon-alt': 'keyboard_arrow_down',
+                    text: 'Instituições',
+                    model: false,
+                    children: [
+                        { text: 'Minhas instituição',  to: '/instituicoes', icon: 'list'},
+                        // { text: 'Atualizar',  to: '#' },
+                        // { text: 'locais' },
+                        // { text: 'Eventos' },
+
+                    ],
                 },
-                {
-                    icon: 'list',
-                    title: 'Instituiçoes',
-                    to: '/instituicoes',
-                },
+                // {
+                //     icon: 'keyboard_arrow_up',
+                //     'icon-alt': 'keyboard_arrow_down',
+                //     text: 'Eventos',
+                //     model: false,
+                //     children: [
+                //         { text: 'Meus eventos' },
+                //
+                //     ],
+                // },
+                { icon: 'help', text: 'Sobre', to: '/sobre' },
+                { icon: 'settings', text: 'Configuração' },
+                { icon: 'chat_bubble', text: 'Enviar feedback' },
+                { icon: 'help', text: 'Ajuda' },
+
             ];
             if (this.accountInfo.is_admin === true) {
                 menusLaterais.push({
                     icon: 'edit',
-                    title: 'Administração',
+                    text: 'Administração',
                     to: '/administracao',
                 });
             }
 
             menusLaterais.push({
                 icon: 'exit_to_app',
-                title: 'Sair',
+                text: 'Sair',
                 to: '/logout',
             });
 

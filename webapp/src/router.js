@@ -5,10 +5,12 @@ import Instituicoes from './components/instituicao/Instituicoes.vue';
 import PerfilInstituicao from './components/instituicao/Perfil.vue';
 import Cadastrar from './modules/conta/Cadastrar.vue';
 import Administracao from './modules/core/Administracao.vue';
+import PontoDoacao from './components/doacao/PontoDoacao';
 import Home from './views/home/Home.vue';
 import NaoEncontrado from './modules/core/NaoEncontrado.vue';
 import Conta from './modules/conta/Conta.vue';
 import store from './store';
+import Sobre from './views/Sobre'
 import { obterInformacoesJWT } from './modules/account/_helpers/jwt';
 
 Vue.use(Router);
@@ -22,9 +24,18 @@ const routesObject = [
             title: 'perfil',
         },
     },
+    { path: '/sobre', component: Sobre },
+    {
+        path: '/doacao',
+        component: PontoDoacao,
+        meta: {
+            title: 'Ponto de Doação',
+        },
+    },
     {
         path: '/instituicoes',
         component: Instituicoes,
+        name: 'instituicoes',
         meta: {
             title: 'instituicoes',
         },
@@ -75,6 +86,7 @@ router.beforeEach((to, from, next) => {
         '/login',
         '/cadastrar',
         '/instituicaes',
+        '/sobre',
         '/',
     ];
 
