@@ -17,7 +17,7 @@
                                               hint="Enter your email!" persistent-hint></v-text-field>
                             </v-flex>
                             <v-flex xs12>
-                                <v-text-field box multi-line label="Bio and curiosities"></v-text-field>
+                                <v-textarea  box label="Bio and curiosities" />
                             </v-flex>
                             <v-flex xs12 class="text-xs-center">
                                 <v-btn class="blue lighten-2 mb-5" dark large>Enviar</v-btn>
