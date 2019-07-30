@@ -4,14 +4,14 @@
       <barra-lateral v-model="drawer" />
     </template>
 
-    <v-toolbar :clipped-left="clipped" app dark color="primary">
+    <v-toolbar :clipped-left="clipped" app dark class="gradient-doafacil-bg">
       <v-toolbar-side-icon v-if="status.loggedIn" @click="drawer = !drawer" />
       <v-toolbar-title />
       <v-img :max-width="100" :src="logo" />
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="!status.loggedIn">
         <v-btn to="/sobre" flat>Quem somos</v-btn>
-        <v-btn to="/login" flat>Login</v-btn>
+        <v-btn to="/login" flat><v-icon>fa fa-sign-in-alt mr-2</v-icon>Login</v-btn>
       </v-toolbar-items>
       <v-toolbar-items class="pa-1" v-if="status.loggedIn">
         <v-menu transition="fade-transition">
@@ -65,7 +65,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      logo: require("@/assets/doafacil/logos/logo-doafacil.png")
+      logo: require("@/assets/doafacil/logos/logo-doafacil-bg-white.png")
     };
   },
 
