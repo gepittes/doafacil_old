@@ -7,7 +7,7 @@
                         <v-flex xs12 md5>
                             <v-card class="elevation-0 transparent">
                                 <v-card-text class="text-xs-center layout justify-center">
-                                    <v-img :src="gifMascote" :max-width="100"/>
+                                    <MascoteGif width="100"/>
                                 </v-card-text>
                                 <v-card-title primary-title class="layout justify-center">
                                     <div class="font-weight-black display-1 text-xs-center white--text text-uppercase">
@@ -52,15 +52,14 @@
 </template>
 
 <script>
+    import MascoteGif from '../../components/genericos/MascoteGif.vue'
+
     export default {
         name: "FachadaHome",
+        components: {MascoteGif},
         props:{
             imgParalax: String,
-            gifMascote: String
         }
     }
 </script>
 
-<style scoped>
-
-</style>
