@@ -1,11 +1,12 @@
 <template>
-  <v-container fluid fill-height>
+  <v-container fluid fill-height class="doafacil-bg-img">
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md4>
         <v-layout column justify-righer>
           <v-card class="elevation-12">
-            <v-toolbar dark color="primary">
-              <v-toolbar-title>Logar</v-toolbar-title>
+            <v-toolbar dark class="gradient-doafacil-bg">
+              <MascoteGif width="50"/>
+              <v-toolbar-title class="text-uppercase">Login</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
               <v-form ref="form" v-model="valid" @submit.prevent="submit()">
@@ -47,6 +48,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import MascoteGif from '../../components/genericos/MascoteGif.vue'
 
 export default {
   data() {
@@ -61,6 +63,7 @@ export default {
       valid: true
     };
   },
+  components: {MascoteGif},
   computed: {
     ...mapState("account", ["status", "loggingIn"])
   },
