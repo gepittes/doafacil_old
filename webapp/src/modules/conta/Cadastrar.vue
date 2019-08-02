@@ -5,7 +5,7 @@
         <v-layout column justify-center>
           <v-card class="elevation-12">
             <v-toolbar dark class="gradient-doafacil-bg">
-              <MascoteGif width="50"/>
+              <MascoteGif :width="50"/>
               <v-toolbar-title class="text-uppercase">Cadastrar</v-toolbar-title>
             </v-toolbar>
             <v-card-text>
