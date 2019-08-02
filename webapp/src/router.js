@@ -10,7 +10,6 @@ import Home from './views/home/Home.vue';
 import NaoEncontrado from './modules/core/NaoEncontrado.vue';
 import Conta from './modules/conta/Conta.vue';
 import store from './store';
-import Sobre from './views/Sobre'
 import { obterInformacoesJWT } from './modules/account/_helpers/jwt';
 
 Vue.use(Router);
@@ -24,7 +23,7 @@ const routesObject = [
             title: 'perfil',
         },
     },
-    { path: '/sobre', component: Sobre },
+    { path: '/sobre', redirect: '/' },
     {
         path: '/doacao',
         component: PontoDoacao,
