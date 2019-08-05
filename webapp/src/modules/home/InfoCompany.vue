@@ -6,6 +6,7 @@
                 class="my-5"
                 align-center
                 color="white"
+                id="sobre"
         >
             <v-flex xs12>
                 <v-container grid-list-xl>

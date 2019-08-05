@@ -10,7 +10,7 @@
       <v-img :max-width="100" :src="logo" />
       <v-spacer></v-spacer>
       <v-toolbar-items v-if="!status.loggedIn">
-        <v-btn to="/sobre" flat>Quem somos</v-btn>
+        <v-btn  @click="$vuetify.goTo('#sobre', options)" flat>Quem somos</v-btn>
         <v-btn to="/login" flat><v-icon>fa fa-sign-in-alt mr-2</v-icon>Login</v-btn>
       </v-toolbar-items>
       <v-toolbar-items class="pa-1" v-if="status.loggedIn">
@@ -70,6 +70,13 @@ export default {
   },
 
   computed: {
+    options () {
+      return {
+        duration: 1300,
+        offset: 0,
+        easing: 'easeInOutCubic',
+      }
+    },
     ...mapState({
       alert: state => state.alert
       // isLoggedIn: state => state.isLoggedIn
@@ -80,9 +87,6 @@ export default {
       user: "account/user",
       accountInfo: "account/accountInfo"
     })
-    // user() {
-    //     return this.$store.state.account.status.loggedIn
-    // }
   },
   mounted() {
     this.loading = true;

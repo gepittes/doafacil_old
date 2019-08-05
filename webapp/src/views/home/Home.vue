@@ -2,14 +2,13 @@
     <v-app light>
 
         <Fachada
-                :img-paralax="images.main"
-                :gif-mascote="images.logoGif"
+            :img-paralax="images.main"
         />
 
         <InfoCards/>
 
         <GenericComp
-                :img-paralax="images.main"
+            :img-paralax="images.main"
         />
 
         <News/>
@@ -39,7 +38,6 @@
                 images: {
                     main: require('../../assets/home/union-hands.jpg'),
                     logo: require('../../assets/doafacil/logos/logo-doafacil.png'),
-                    logoGif: require('../../assets/doafacil/gifs/hand-gif.gif')
                 },
             };
         },
