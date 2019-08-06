@@ -13,11 +13,11 @@
 
                         <v-card-text>
                             <v-flex xs12>
-                                <v-text-field box label="Email address" :rules="emailRules" v-model="email"
+                                <v-text-field filled label="Email address" :rules="emailRules" v-model="email"
                                               hint="Enter your email!" persistent-hint></v-text-field>
                             </v-flex>
                             <v-flex xs12>
-                                <v-textarea  box label="Bio and curiosities" />
+                                <v-textarea  filled label="Bio and curiosities" />
                             </v-flex>
                             <v-flex xs12 class="text-xs-center">
                                 <v-btn class="blue lighten-2 mb-5" dark large>Enviar</v-btn>

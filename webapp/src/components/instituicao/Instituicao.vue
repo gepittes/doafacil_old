@@ -44,7 +44,7 @@
             <v-dialog v-model="dialog" max-width="700px">
                 <v-card light>
                     <v-card-text>
-                        <v-toolbar dark color="primary">
+                        <v-toolbar color="primary">
                             <v-toolbar-title>Atualizar Instituição</v-toolbar-title>
                         </v-toolbar>
                         <Criar :instituicaoEditar="instituicaoEditar" :dialog.sync="dialog"/>

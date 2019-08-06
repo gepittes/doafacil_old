@@ -1,6 +1,5 @@
 <template>
     <v-app>
-        <v-container fluid>
             <v-layout row wrap>
                 <Instituicao v-for="instituicao in instituicoesIniciais" :key="instituicao.id" :instituicao="instituicao" />
             </v-layout>
@@ -30,7 +29,6 @@
                         </v-card-text>
                     </v-card>
                 </v-dialog>
-        </v-container>
     </v-app>
 </template>
 <script>

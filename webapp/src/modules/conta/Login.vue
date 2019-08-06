@@ -26,7 +26,7 @@
                   type="password"
                   label="Senha"
                   name="password"
-                  browser-autocomplete="new-password"
+                  autocomplete="new-password"
                   required
                 />
 
