@@ -1,5 +1,6 @@
 import './plugins/fontawesome';
 import './plugins/doafacil';
+import './plugins/bootstrap';
 import vuetify from './plugins/vuetify';
 import VeeValidate from 'vee-validate';
 import '@babel/polyfill';
