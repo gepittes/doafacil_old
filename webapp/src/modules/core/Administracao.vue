@@ -5,13 +5,13 @@
                 light
                 centered
                 color="blue darken-1"
-                dark
+
                 icons-and-text
                 slider-color="warning"
                 grow>
 
                 <v-tab
-                    dark
+
                     to="/administracao/conta">
                     Contas
                     <v-icon>account_circle</v-icon>

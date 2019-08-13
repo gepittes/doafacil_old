@@ -1,52 +1,51 @@
 <template>
-  <v-navigation-drawer
-    v-if="status.loggedIn"
-    v-model="drawer"
-    clipped="clipped"
-    enable-resize-watcher
-    color="primary"
-    width="200px"
-    app
-  >
-    <v-list dense>
-      <template v-for="item in obterMenusLaterais()">
-        <v-layout row v-if="item.heading" align-center :key="item.heading">
-          <v-flex xs6>
-            <v-subheader v-if="item.heading">{{ item.heading }}</v-subheader>
-          </v-flex>
-        </v-layout>
-        <v-list-group
-          v-else-if="item.children"
-          v-model="item.model"
-          :key="item.text"
-          :prepend-icon="item.model ? item.icon : item['icon-alt']"
-          append-icon
+      <v-navigation-drawer
+              v-if="status.loggedIn"
+              v-model="drawer"
+              width="240px"
+              app>
+        <v-list>
+          <v-list-item>
+            <v-list-item-avatar>
+
+              <v-icon>account_circle</v-icon>
+            </v-list-item-avatar>
+          </v-list-item>
+
+          <v-list-item link>
+            <v-list-item-content>
+              <v-list-item-title class="title">{{ accountInfo.name }}</v-list-item-title>
+              <v-list-item-subtitle>{{ accountInfo.email }}</v-list-item-subtitle>
+            </v-list-item-content>
+
+            <v-list-item-action>
+              <v-icon>mdi-menu-down</v-icon>
+            </v-list-item-action>
+          </v-list-item>
+        </v-list>
+        <v-divider></v-divider>
+        <v-list
+                nav
+                dense
         >
-          <v-list-tile slot="activator" :to="item.to">
-            <v-list-tile-content>
-              <v-list-tile-title>{{ item.text }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-          <v-list-tile v-for="(child, i) in item.children" :key="i" @click.stop :to="child.to">
-            <v-list-tile-action v-if="child.icon">
-              <v-icon>{{ child.icon }}</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ child.text }}</v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-        </v-list-group>
-        <v-list-tile v-else @click.stop :key="item.text" :to="item.to">
-          <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>{{ item.text }}</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </template>
-    </v-list>
-  </v-navigation-drawer>
+          <v-list-item-group v-model="item" color="primary">
+            <v-list-item
+                    v-for="(item, i) in items"
+                    :key="i"
+                    :to="item.to"
+            >
+              <v-list-item-icon>
+                <v-icon v-text="item.icon"></v-icon>
+              </v-list-item-icon>
+
+              <v-list-item-content >
+                <v-list-item-title v-text="item.text"></v-list-item-title>
+              </v-list-item-content>
+
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
 </template>
 
 <script>
@@ -67,7 +66,17 @@ export default {
       fixed: false,
       miniVariant: false,
       right: true,
-      rightDrawer: false
+      rightDrawer: false,
+      item: 0,
+      items: [
+        { icon: "home", text: "Inicio", to: "/"},
+        { icon: "contacts", text: "Ponto de Doaçao", to: "/doacao" },
+        { text: "Instituições", to: "/instituicoes", icon: "list" },
+        { icon: "help", text: "Sobre", to: "/#/sobre" },
+        { icon: "settings", text: "Configuração" },
+        { icon: "chat_bubble", text: "Enviar feedback" },
+        { icon: "help", text: "Ajuda" },
+      ],
     };
   },
   watch: {
@@ -102,6 +111,10 @@ export default {
             // { text: 'Eventos' },
           ]
         },
+        { icon: "help", text: "Sobre", to: "/sobre" },
+        { icon: "settings", text: "Configuração" },
+        { icon: "chat_bubble", text: "Enviar feedback" },
+        { icon: "help", text: "Ajuda" },
         // {
         //     icon: 'keyboard_arrow_up',
         //     'icon-alt': 'keyboard_arrow_down',
@@ -112,10 +125,7 @@ export default {
         //
         //     ],
         // },
-        { icon: "help", text: "Sobre", to: "/sobre" },
-        { icon: "settings", text: "Configuração" },
-        { icon: "chat_bubble", text: "Enviar feedback" },
-        { icon: "help", text: "Ajuda" }
+
       ];
       if (this.accountInfo.is_admin === true) {
         menusLaterais.push({

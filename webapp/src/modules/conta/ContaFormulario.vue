@@ -49,7 +49,7 @@
             <v-flex class="text-xs-center">
                 <v-btn
                     color="error"
-                    dark
+
                     @click.native="close">Fechar</v-btn>
                 <v-btn
                     v-if="!loading"
