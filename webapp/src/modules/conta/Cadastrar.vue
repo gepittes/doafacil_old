@@ -16,7 +16,6 @@
                   :rules="[rules.required, rules.minLength]"
                   prepend-icon="face"
                   label="Nome"
-                  class="form-control"
                   required
                 />
                 <div v-if="submitted && errors.has('nome')" class="invalid-feedback">
@@ -29,7 +28,6 @@
                   :rules="[rules.required, rules.email, rules.minLength]"
                   prepend-icon="person"
                   label="E-mail"
-                  class="form-control"
                   required
                 />
                 <div v-if="submitted && errors.has('email')" class="invalid-feedback">
@@ -43,7 +41,6 @@
                   prepend-icon="lock"
                   type="password"
                   label="Senha"
-                  class="form-control"
                   required
                 />
                 <div
