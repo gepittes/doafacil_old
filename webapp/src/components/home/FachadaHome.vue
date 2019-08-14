@@ -1,10 +1,10 @@
 <template>
     <section>
         <v-parallax :src="imgParalax" height="550" alt="união de mãos">
-            <v-flex xs12>
+            <v-flex>
                 <v-container grid-list-xl>
                     <v-layout align-center justify-center row>
-                        <v-flex xs12 md5>
+                        <v-flex xl5 md7>
                             <v-card class="elevation-0 transparent">
                                 <v-card-text class="text-xs-center layout justify-center">
                                     <MascoteGif :width="100"/>
@@ -34,15 +34,24 @@
                             </v-card>
                         </v-flex>
                     </v-layout>
-                    <v-layout align-center justify-center row>
-                        <router-link tag="v-btn" class="red darken-1 white--text text-uppercase" to="/login">
-                            <v-icon class="mr-1">fas fa-people-carry</v-icon>
-                            QUERO DOAR!
-                        </router-link>
-                        <router-link tag="v-btn" class="blue darken-1 white--text text-uppercase" to="/login">
-                            QUERO RECEBER!
-                            <v-icon class="ml-1">fas fa-hands-helping</v-icon>
-                        </router-link>
+                    <v-layout align-center justify-center>
+
+                        <v-card class="elevation-0 transparent">
+                            <v-layout align-center justify-center>
+                            <v-flex xl5>
+                                <router-link tag="v-btn" class="red darken-1 white--text text-uppercase" to="/login">
+                                    <v-icon class="mr-1">fas fa-people-carry</v-icon>
+                                    QUERO DOAR!
+                                </router-link>
+                            </v-flex>
+                            <v-flex xl6>
+                                <router-link tag="v-btn" class="blue darken-1 white--text text-uppercase" to="/login">
+                                    QUERO RECEBER!
+                                    <v-icon class="ml-1">fas fa-hands-helping</v-icon>
+                                </router-link>
+                            </v-flex>
+                            </v-layout>
+                        </v-card>
                     </v-layout>
                 </v-container>
             </v-flex>
