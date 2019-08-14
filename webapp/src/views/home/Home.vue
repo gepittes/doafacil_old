@@ -1,5 +1,6 @@
 <template>
     <v-app light>
+        <BackTop/>
 
         <Fachada
             :img-paralax="images.main"
@@ -29,6 +30,7 @@
     import Social from '@/components/home/RedesSociais.vue'
     import CompInfo from '@/components/home/InfoCompany.vue'
     import Footer from '@/modules/core/Footer.vue'
+    import BackTop from "../../components/home/BackTop";
 
     export default {
         name: "Home",
@@ -37,10 +39,10 @@
                 images: {
                     main: require('@/assets/home/union-hands.jpg'),
                     logo: require('@/assets/doafacil/logos/logo-doafacil.png'),
-                },
+                }
             };
         },
-        components: {InfoCards, Social, Footer, CompInfo, Fachada, News, GenericComp},
+        components: {BackTop, InfoCards, Social, Footer, CompInfo, Fachada, News, GenericComp},
     };
 </script>
 
