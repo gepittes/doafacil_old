@@ -1,32 +1,26 @@
 <template>
     <section>
-        <v-container grid-list-md>
-            <v-layout row wrap>
-                <v-flex xs12 text-xs-center class="mt-5">
-                    <div class="headline">Deseja receber noticias de nova instituições?!</div>
-                    <br>
-                    <div>Basta preencher o formulário que encaminharemos sempre que houver novidades.</div>
+        <v-container>
+            <v-layout align-center justify-center column fill-height class="m-3">
+                <div class="headline">Deseja receber notícias de novas instituições?!</div>
+                <div>Basta preencher o formulário que encaminharemos sempre que houver novidades.</div>
+            </v-layout>
+
+            <v-layout align-center justify-center fill-height>
+                <v-flex xl3>
+                    <v-text-field filled label="Email" :rules="emailRules" v-model="email"
+                                  hint="Insira seu e-mail" persistent-hint></v-text-field>
                 </v-flex>
-                <v-flex xs8 offset-xs2>
+            </v-layout>
 
-                    <v-card class="elevation-0 transparent">
-
-                        <v-card-text>
-                            <v-flex xs12>
-                                <v-text-field filled label="Email address" :rules="emailRules" v-model="email"
-                                              hint="Enter your email!" persistent-hint></v-text-field>
-                            </v-flex>
-                            <v-flex xs12>
-                                <v-textarea  filled label="Bio and curiosities" />
-                            </v-flex>
-                            <v-flex xs12 class="text-xs-center">
-                                <v-btn class="blue lighten-2 mb-5" dark large>Enviar</v-btn>
-                            </v-flex>
-                        </v-card-text>
-
-                    </v-card>
-
+            <v-layout align-center justify-center fill-height>
+                <v-flex xl3>
+                    <v-textarea filled label="Deixe sua sugestão...."/>
                 </v-flex>
+            </v-layout>
+
+            <v-layout align-center justify-center fill-height>
+                <v-btn class="blue lighten-2 mb-5" dark large>Enviar</v-btn>
             </v-layout>
         </v-container>
     </section>
@@ -40,11 +34,11 @@
                 email: '',
                 emailRules: [
                     v => {
-                        return !!v || "E-mail is required";
+                        return !!v || "E-mail é obrigadtorio";
                     },
                     v =>
                         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
-                        "E-mail must be valid"
+                        "E-mail está inválido"
                 ],
             }
         }
