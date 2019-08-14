@@ -1,4 +1,3 @@
-import './plugins/fontawesome';
 import './plugins/doafacil';
 import './plugins/bootstrap';
 import vuetify from './plugins/vuetify';
