@@ -9,12 +9,12 @@ export const login = ({ dispatch, commit }, { email, password }) => {
 
     return requisicaoAutorizada.post(
         'http://localhost/v1/autenticacao/login',
-        { email, password },
+        {email, password},
     ).then((response) => {
         try {
-            if (response.data && response.data.data) {
-                const { data } = response.data;
-                if (data && data.token) {
+            if (response.data.data) {
+                const {data} = response.data;
+                if (data.token) {
                     commit(types.LOGINSUCCESS, data.token);
                     dispatch('alert/info', 'Login realizado com sucesso!', {
                         root: true,
@@ -22,11 +22,12 @@ export const login = ({ dispatch, commit }, { email, password }) => {
 
                     const objetoJWT = obterInformacoesJWT();
                     commit(types.SETACCOUNTINFO, objetoJWT.user);
-                    router.push({ name: 'home' });
+                    router.push({name: 'home'});
+                } else {
+                    dispatch('alert/error', 'Falha ao realizar login.', {
+                        root: true,
+                    });
                 }
-                dispatch('alert/error', 'Falha ao realizar login.', {
-                    root: true,
-                });
             }
         } catch (Exception) {
             dispatch('alert/error', `Erro: ${Exception}`, {
