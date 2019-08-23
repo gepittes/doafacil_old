@@ -1,18 +1,19 @@
 <template>
     <div>
         <v-snackbar
-            :value="true"
+            :value="snackbar"
             :top="false"
             :timeout="timeout"
             :color="color"
             :vertical="false"
             transition="scale-transition"
-            dismissible>
+            dismissible
+        >
             <slot/>
             <v-btn
                 dark
                 text
-                @click="snackbar = false">
+                @click="changeStatus">
                 Close
             </v-btn>
         </v-snackbar>
@@ -29,9 +30,14 @@ export default {
     },
     data: () => ({
         timeout: 6000,
-        snackbar: false,
+        snackbar: true,
         top: true,
     }),
+    methods: {
+        changeStatus() {
+            this.snackbar = false
+        }
+    },
     watch: {
         color() {
             this.snackbar = true;
