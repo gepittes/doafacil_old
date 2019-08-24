@@ -6,13 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Instituicao extends Model
 {
-//    protected $table = ['instituicoes'];
 
     protected $fillable = [
         'nome',
         'telefone',
-        'banner',
-        'horario',
+        'hora_open',
+        'hora_close',
         'localidade',
         'uf',
     ];
