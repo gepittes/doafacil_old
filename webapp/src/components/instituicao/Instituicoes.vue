@@ -1,45 +1,49 @@
 <template>
     <v-app>
+        <v-container fluid grid-list-md>
             <v-layout row wrap>
-                <Instituicao v-for="instituicao in instituicoesIniciais" :key="instituicao.id" :instituicao="instituicao" />
+                <Instituicao
+                    v-for="instituicao in instituicoesIniciais" :key="instituicao.id"
+                    :instituicao="instituicao"
+                />
             </v-layout>
+        </v-container>
+        <v-btn
+            fab
+            color="success"
+            dark
+            fixed
+            bottom
+            right
+            @click="dialog = !dialog">
+            <v-icon>add</v-icon>
+        </v-btn>
 
-                <v-btn
-                        fab
-                        color="success"
+        <v-dialog
+            v-model="dialog"
+            max-width="700px">
+            <v-card light>
+                <v-card-text>
+                    <v-toolbar
                         dark
-                        fixed
-                        bottom
-                        right
-                        @click="dialog = !dialog">
-                    <v-icon>add</v-icon>
-                </v-btn>
-
-                <v-dialog
-                        v-model="dialog"
-                        max-width="700px">
-                    <v-card light>
-                        <v-card-text>
-                            <v-toolbar
-                                    dark
-                                    color="primary">
-                                <v-toolbar-title>Cadastrar nova Instituição</v-toolbar-title>
-                            </v-toolbar>
-                            <InstituicaoFormulario :dialog.sync="dialog"/>
-                        </v-card-text>
-                    </v-card>
-                </v-dialog>
+                        color="primary">
+                        <v-toolbar-title>Cadastrar nova Instituição</v-toolbar-title>
+                    </v-toolbar>
+                    <InstituicaoFormulario :dialog.sync="dialog"/>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </v-app>
 </template>
 <script>
-    import { mapActions, mapGetters } from 'vuex';
+    import {mapActions, mapGetters} from 'vuex';
     import InstituicaoFormulario from './InstituicaoFormulario'
     import Perfil from './Perfil'
-    import Instituicao  from './Instituicao'
+    import Instituicao from './Instituicao'
 
     export default {
-        components: { InstituicaoFormulario, Perfil, Instituicao },
-        data(){
+        components: {InstituicaoFormulario, Perfil, Instituicao},
+        data() {
             return {
                 votos: 3,
                 instituicoesIniciais: [],

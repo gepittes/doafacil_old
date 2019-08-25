@@ -1,46 +1,64 @@
 <template>
-    <v-flex class="pr-3 pb-3" xs12 md8 lg6>
-        <v-card b-col sm="4">
-            <v-card-title primary-title>
-                <div>
-                    <div class="headline">{{ instituicao.nome }}</div>
-                    <p ma-1 class="grey--text">Cidade: {{ instituicao.localidade }}</p>
-                    <p ma-1 class="grey--text">Estado: {{ instituicao.uf }}</p>
-                    <p ma-1 class="grey--text">Membro desde: {{ instituicao.created_at }}</p>
-                </div>
-            </v-card-title>
-            <div class="text-sm-left">
+    <v-flex xs6 md3 lg3>
+        <v-card>
+            <v-img
+                src="https://myfaithmedia.org/wp-content/uploads/2018/09/Open-Hands.jpg"
+                class="white--text"
+                height="200px"
+                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+            >
+                <v-card-title primary-title class="fill-height align-end text-uppercase font-weight-bold"
+                              v-text="instituicao.nome">
+                </v-card-title>
+            </v-img>
+            <div class="ma-1">
                 <v-rating v-model="votos"></v-rating>
             </div>
             <v-card-actions>
-                <v-btn  icon :to="`/instituicao/${instituicao.id}`">
+                <div class="flex-grow-1"></div>
+                <v-btn icon :to="`/instituicao/${instituicao.id}`">
                     <v-icon>
                         store
                     </v-icon>
                 </v-btn>
-                <v-btn  icon>
-                    <v-icon >
+                <v-btn icon>
+                    <v-icon>
                         share
                     </v-icon>
                 </v-btn>
-                <v-btn  icon>
-                    <v-icon  color="warning" @click="excluirInstituicao(instituicao.id)">delete</v-icon>
+                <v-btn icon>
+                    <v-icon left color="info" @click="editarInstituicao(instituicao)">edit</v-icon>
                 </v-btn>
-
-                <v-btn  icon>
-                    <v-icon  left color="info" @click="editarInstituicao(instituicao)">edit </v-icon>
+                <v-btn icon>
+                    <v-icon color="warning" @click="excluirInstituicao(instituicao.id)">delete</v-icon>
                 </v-btn>
-                <v-btn  icon>
-                    <v-icon >
-                        thumb_up
-                    </v-icon>
-                </v-btn>
-                <v-btn  icon>
-                    <v-icon >
-                        thumb_down
-                    </v-icon>
+                <v-btn
+                    icon
+                    @click="show = !show"
+                >
+                    <v-icon>{{ show ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
                 </v-btn>
             </v-card-actions>
+            <v-expand-transition>
+                <div v-show="show">
+                    <v-card-text>
+                        <div class="title text--primary">Horários</div>
+                        <v-layout>
+                            <v-flex>
+                                <b>Abertura: </b><v-chip class="ma-1" color="green lighten-2">{{instituicao.hora_open}} hrs</v-chip>
+                                <v-spacer></v-spacer>
+                                <b>Fechamento: </b><v-chip class="ma-1" color="red lighten-2">{{instituicao.hora_close}} hrs</v-chip>
+                            </v-flex>
+                            <v-flex>
+                                <b>UF: </b><v-chip class="ma-1">{{instituicao.uf}}</v-chip>
+                                <v-spacer></v-spacer>
+                                <b>Cidade: </b><v-chip class="ma-1">{{instituicao.localidade}}</v-chip>
+                            </v-flex>
+                        </v-layout>
+
+                    </v-card-text>
+                </div>
+            </v-expand-transition>
             <v-dialog v-model="dialog" max-width="700px">
                 <v-card light>
                     <v-card-text>
@@ -56,24 +74,21 @@
 </template>
 
 <script>
-    import { mapActions, mapGetters } from 'vuex';
+    import {mapActions, mapGetters} from 'vuex';
     import Instituicoes from './Instituicoes';
     import Criar from './InstituicaoFormulario';
     import Perfil from './Perfil';
 
     export default {
         name: 'Instituicao',
-        components: {
-            Criar,
-            Perfil,
-            Instituicoes
-        },
+        components: {Criar, Perfil, Instituicoes},
         props: ['instituicao'],
         data() {
             return {
                 votos: 3,
                 instituicaoEditar: {},
                 dialog: false,
+                show: false,
             };
         },
         computed: {
@@ -93,14 +108,10 @@
                 this.removerInstituicao(id);
             },
             editarInstituicao(instituicao) {
-                this.instituicaoEditar = { ...instituicao };
+                this.instituicaoEditar = {...instituicao};
                 this.dialog = true;
             },
 
         }
     };
 </script>
-
-<style scoped>
-
-</style>

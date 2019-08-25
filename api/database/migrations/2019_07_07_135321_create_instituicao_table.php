@@ -16,11 +16,11 @@ class CreateInstituicaoTable extends Migration
         Schema::create('app.instituicao', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->string('banner');
             $table->string('telefone');
             $table->string('localidade');
             $table->string('uf');
-            $table->string('horario',null);
+            $table->string('hora_open', null);
+            $table->string('hora_close',null);
             $table->timestamps();
         });
     }
