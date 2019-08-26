@@ -26,9 +26,7 @@ class JsonResponseStyle
             $statusCode = '400';
             if (!$response->exception) {
                 $dados = json_decode($response->getContent(), true);
-                if(is_array($dados)) {
-                    $dados = $this->converterUTF8($dados);
-                }
+    
                 $responseData['data'] = $dados;
                 $statusCode = '200';
             } else {
@@ -41,19 +39,6 @@ class JsonResponseStyle
         } catch (\Exception $objException) {
             die($objException->getMessage());
         }
-    }
-
-    private function converterUTF8(array $dados)
-    {
-        array_walk($dados, function ($value, $key) use (&$dados) {
-            if(is_array($value)) {
-                $dados[$key] = $this->converterUTF8($value);
-            } else {
-                $dados[$key] = utf8_encode($value);
-            }
-        });
-
-        return $dados;
     }
 
 }
