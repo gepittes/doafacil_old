@@ -42,3 +42,8 @@ export const atualizarInstituicao = ({ dispatch, commit }, instituicao) => requi
         root: true,
     });
 });
+
+export const setDialog = ({commit}, payload) => {
+    commit('setDialog', payload)
+
+};

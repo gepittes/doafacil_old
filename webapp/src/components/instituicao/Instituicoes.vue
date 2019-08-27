@@ -8,6 +8,7 @@
                 />
             </v-layout>
         </v-container>
+
         <v-btn
             fab
             color="success"
@@ -15,24 +16,12 @@
             fixed
             bottom
             right
-            @click="dialog = !dialog">
+            @click="openDialog()">
             <v-icon>add</v-icon>
         </v-btn>
 
-        <v-dialog
-            v-model="dialog"
-            max-width="700px">
-            <v-card light>
-                <v-card-text>
-                    <v-toolbar
-                        dark
-                        color="primary">
-                        <v-toolbar-title>Cadastrar nova Instituição</v-toolbar-title>
-                    </v-toolbar>
-                    <InstituicaoFormulario :dialog.sync="dialog"/>
-                </v-card-text>
-            </v-card>
-        </v-dialog>
+        <InstituicaoFormulario/>
+
     </v-app>
 </template>
 <script>
@@ -42,13 +31,13 @@
     import Instituicao from './Instituicao'
 
     export default {
+        name: 'ListarInstituicoes',
         components: {InstituicaoFormulario, Perfil, Instituicao},
         data() {
             return {
                 votos: 3,
                 instituicoesIniciais: [],
                 instituicao: {},
-                dialog: false,
             }
         },
         watch: {
@@ -64,6 +53,7 @@
         computed: {
             ...mapGetters({
                 instituicoes: 'instituicao/instituicao',
+                dialog: 'instituicao/getDialog'
             }),
         },
         created() {
@@ -73,7 +63,11 @@
             ...mapActions({
                 obterInstituicoes: 'instituicao/obterInstituicoes',
                 removerInstituicao: 'instituicao/removerInstituicao',
+                statusDialog: 'instituicao/setDialog'
             }),
+            openDialog() {
+                this.statusDialog(true)
+            }
         }
     }
 

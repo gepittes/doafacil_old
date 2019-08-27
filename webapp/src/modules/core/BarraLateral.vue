@@ -71,7 +71,7 @@ export default {
       items: [
         { icon: "home", text: "Inicio", to: "/"},
         { icon: "contacts", text: "Ponto de Doaçao", to: "/doacao" },
-        { text: "Instituições", to: "/instituicoes", icon: "list" },
+        { text: "Minhas Instituições", to: "/instituicoes", icon: "list" },
         { icon: "help", text: "Sobre", to: "/#/sobre" },
         { icon: "settings", text: "Configuração" },
         { icon: "chat_bubble", text: "Enviar feedback" },
