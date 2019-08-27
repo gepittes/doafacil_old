@@ -17,20 +17,19 @@
                                     alt="">
                             </div>
                         </div>
-                        <template>
-                            <menu-instituicao />
-                        </template>
+                  
+						<menu-instituicao/>
+                    
                     </div>
                 </div>
-
                 <div class="col-lg-6">
                     <div class="main-sty">
                         <div class="user-tab-sec">
-                            <h3>{{ instituicao.nome }}</h3>
+                            <!-- <h3>{{ instituicao.nome }}</h3>
                             <div class="star-descp">
                                 <span>Localidade: {{ instituicao.localidade }} - {{ instituicao.uf }}</span>
-                            </div>
-                            <v-card>
+                            </div> -->
+                            <!-- <v-card>
                                 <v-tabs
                                     v-model="tab"
                                     background-color="grey lighten-4"
@@ -66,7 +65,7 @@
                                         </v-card>
                                     </v-tab-item>
                                 </v-tabs-items>
-                            </v-card>
+                            </v-card> -->
                         </div>
 
                     </div>
@@ -155,6 +154,7 @@ export default {
     props: ['id'],
     data() {
         return {
+			menuShow:true,
             tab: null,
             text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut ' +
 						'labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris' +
@@ -181,13 +181,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 
 	.user-pro-img {
 		float: left;
 		width: 100%;
 		text-align: center;
-		margin-bottom: 28px;
 		margin-top: -95px;
 		position: relative;
 	}
@@ -380,6 +379,8 @@ export default {
 	.user-gallery img {
 		width: 100%;
 	}
+
+
 
 </style>
 

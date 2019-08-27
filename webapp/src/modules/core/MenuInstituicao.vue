@@ -1,4 +1,5 @@
 <template>
+<div id="menu">
     <v-list
         class="justify-content-start"
         nav
@@ -25,6 +26,8 @@
             </v-list-item>
         </v-list-item-group>
     </v-list>
+</div>
+   
 
 </template>
 
@@ -38,6 +41,10 @@ export default {
             type: Boolean,
             default: true,
         },
+        show: {
+            type:Boolean,
+            default: true
+        }
     },
     data() {
         return {
@@ -157,3 +164,9 @@ export default {
     },
 };
 </script>
+<style >
+    @media (max-width: 600px) {
+        #menu { display: none; }
+
+    }
+</style>
