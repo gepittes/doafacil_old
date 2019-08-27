@@ -165,7 +165,6 @@ export default {
     watch: {
         contas(value) {
             if ('error' in value) {
-                alert(value.error);
                 this.contasIniciais = [];
             } else {
                 this.contasIniciais = value;
@@ -203,7 +202,7 @@ export default {
         },
 
         deleteItem(item) {
-            // eslint-disable-next-line
+            // eslint-disable-next-line no-restricted-globals,no-alert
             if (confirm('Deseja remover esse item?')) {
                 if (this.accountInfo.is_admin !== true) {
                     this.$store.dispatch('alert/error', 'Usuário sem privilégios administrativos.', { root: true });

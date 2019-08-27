@@ -3,6 +3,7 @@ const users = JSON.parse(localStorage.getItem('users')) || [];
 
 export function configureFakeBackend() {
     const realFetch = window.fetch;
+    // eslint-disable-next-line func-names
     window.fetch = function (url, opts) {
         return new Promise((resolve, reject) => {
             // wrap in timeout to simulate server api call
@@ -28,7 +29,7 @@ export function configureFakeBackend() {
                         resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(responseJson)) });
                     } else {
                         // else return error
-                        reject('Username or password is incorrect');
+                        reject(new Error('Username or password is incorrect'));
                     }
 
                     return;
@@ -41,7 +42,7 @@ export function configureFakeBackend() {
                         resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(users)) });
                     } else {
                         // return 401 not authorised if token is null or invalid
-                        reject('Unauthorised');
+                        reject(new Error('Unauthorised'));
                     }
 
                     return;
@@ -53,6 +54,7 @@ export function configureFakeBackend() {
                     if (opts.headers && opts.headers.Authorization === 'Bearer fake-jwt-token') {
                         // find user by id in users array
                         const urlParts = url.split('/');
+                        // eslint-disable-next-line radix
                         const id = parseInt(urlParts[urlParts.length - 1]);
                         const matchedUsers = users.filter(user => user.id === id);
                         const user = matchedUsers.length ? matchedUsers[0] : null;
@@ -61,7 +63,7 @@ export function configureFakeBackend() {
                         resolve({ ok: true, text: () => JSON.stringify(user) });
                     } else {
                         // return 401 not authorised if token is null or invalid
-                        reject('Unauthorised');
+                        reject(new Error('Unauthorised'));
                     }
 
                     return;
@@ -75,7 +77,7 @@ export function configureFakeBackend() {
                     // validation
                     const duplicateUser = users.filter(user => user.username === newUser.username).length;
                     if (duplicateUser) {
-                        reject(`Username "${newUser.username}" is already taken`);
+                        reject(new Error(`Username "${newUser.username}" is already taken`));
                         return;
                     }
 
@@ -96,8 +98,9 @@ export function configureFakeBackend() {
                     if (opts.headers && opts.headers.Authorization === 'Bearer fake-jwt-token') {
                         // find user by id in users array
                         const urlParts = url.split('/');
+                        // eslint-disable-next-line radix
                         const id = parseInt(urlParts[urlParts.length - 1]);
-                        for (let i = 0; i < users.length; i++) {
+                        for (let i = 0; i < users.length; i += 1) {
                             const user = users[i];
                             if (user.id === id) {
                                 // delete user
@@ -111,7 +114,7 @@ export function configureFakeBackend() {
                         resolve({ ok: true, text: () => Promise.resolve() });
                     } else {
                         // return 401 not authorised if token is null or invalid
-                        reject('Unauthorised');
+                        reject(new Error('Unauthorised'));
                     }
 
                     return;
