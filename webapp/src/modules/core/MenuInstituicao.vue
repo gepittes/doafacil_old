@@ -1,40 +1,42 @@
 <template>
-<div id="menu">
-    <div id="avatar" v-if="showAvatar">
-        <div class="user-pro-img">
-            <img
-                src="http://via.placeholder.com/150x150"
-                alt="">
+    <div id="menu">
+        <div
+            v-if="showAvatar"
+            id="avatar">
+            <div class="user-pro-img">
+                <img
+                    src="http://via.placeholder.com/150x150"
+                    alt="">
+            </div>
         </div>
+        <v-list
+            class="justify-content-start"
+            nav
+            dense
+        >
+            <v-list-item-group
+                v-model="item"
+                color="primary">
+                <v-list-item
+                    v-for="(item, i) in items"
+                    :key="i"
+                    :to="item.to"
+                >
+                    <v-list-item-icon>
+                        <v-icon v-text="item.icon"/>
+                    </v-list-item-icon>
+
+                    <v-list-item-content>
+                        <v-list-item-title
+                            left
+                            v-text="item.text"/>
+                    </v-list-item-content>
+
+                </v-list-item>
+            </v-list-item-group>
+        </v-list>
     </div>
-    <v-list
-        class="justify-content-start"
-        nav
-        dense
-    >
-        <v-list-item-group
-            v-model="item"
-            color="primary">
-            <v-list-item
-                v-for="(item, i) in items"
-                :key="i"
-                :to="item.to"
-            >
-                <v-list-item-icon>
-                    <v-icon v-text="item.icon"/>
-                </v-list-item-icon>
 
-                <v-list-item-content>
-                    <v-list-item-title
-                        left
-                        v-text="item.text"/>
-                </v-list-item-content>
-
-            </v-list-item>
-        </v-list-item-group>
-    </v-list>
-</div>
-   
 
 </template>
 
@@ -49,13 +51,13 @@ export default {
             default: true,
         },
         show: {
-            type:Boolean,
-            default: true
+            type: Boolean,
+            default: true,
         },
-        showAvatar:{
-            type:Boolean,
-            default: true
-        }
+        showAvatar: {
+            type: Boolean,
+            default: true,
+        },
     },
     data() {
         return {
@@ -99,6 +101,13 @@ export default {
             ],
         };
     },
+    computed: {
+        ...mapGetters({
+            status: 'account/status',
+            token: 'account/token',
+            accountInfo: 'account/accountInfo',
+        }),
+    },
     watch: {
         value(val) {
             this.drawer = val;
@@ -107,13 +116,7 @@ export default {
             this.$emit('input', val);
         },
     },
-    computed: {
-        ...mapGetters({
-            status: 'account/status',
-            token: 'account/token',
-            accountInfo: 'account/accountInfo',
-        }),
-    },
+
     methods: {
         obterMenusLaterais() {
             const menusLaterais = [
