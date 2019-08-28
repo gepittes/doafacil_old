@@ -9,7 +9,6 @@
             </section>
             <div class="row">
                 <div class="col-lg-3">
-                    <div class="left-sidebar">
                         <div>
                             <div class="user-pro-img">
                                 <img
@@ -18,12 +17,10 @@
                             </div>
                         </div>
                   
-						<menu-instituicao/>
+						<menu-instituicao :showAvatar="false"/>
                     
-                    </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="main-sty">
                         <div class="user-tab-sec">
                             <h3>{{ instituicao.nome }}</h3>
                             <div class="mb-3">
@@ -68,7 +65,6 @@
                             </v-card>
                         </div>
 
-                    </div>
                 </div>
                 <div class="col-lg-3">
                     <div class="right-sidebar">
@@ -263,19 +259,7 @@ export default {
 		padding-right: 5px;
 	}
 
-	/* =================== main-sty ================== */
 
-	.main-sty {
-		float: left;
-		width: 100%;
-	}
-
-	/* =============== right-sidebar ============= */
-
-	.right-sidebar {
-		float: left;
-		width: 100%;
-	}
 	.widget {
 		float: left;
 		width: 100%;

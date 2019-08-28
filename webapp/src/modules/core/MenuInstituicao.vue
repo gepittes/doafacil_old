@@ -1,6 +1,6 @@
 <template>
 <div id="menu">
-    <div id="avatar">
+    <div id="avatar" v-if="showAvatar">
         <div class="user-pro-img">
             <img
                 src="http://via.placeholder.com/150x150"
@@ -49,6 +49,10 @@ export default {
             default: true,
         },
         show: {
+            type:Boolean,
+            default: true
+        },
+        showAvatar:{
             type:Boolean,
             default: true
         }
