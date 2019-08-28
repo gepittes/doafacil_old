@@ -1,5 +1,12 @@
 <template>
 <div id="menu">
+    <div id="avatar">
+        <div class="user-pro-img">
+            <img
+                src="http://via.placeholder.com/150x150"
+                alt="">
+        </div>
+    </div>
     <v-list
         class="justify-content-start"
         nav
@@ -59,6 +66,11 @@ export default {
                 {
                     icon: 'home',
                     text: 'Inicio',
+                    to: '/main',
+                },
+                {
+                    icon: 'home',
+                    text: 'Site',
                     to: '/',
                 },
                 {
@@ -168,5 +180,36 @@ export default {
     @media (max-width: 600px) {
         #menu { display: none; }
 
+    }
+    .user-pro-img {
+        float: left;
+        width: 100%;
+        text-align: center;
+        position: relative;
+    }
+    .user-pro-img > a {
+        width: 30px;
+        height: 30px;
+        -webkit-border-radius: 100px;
+        -moz-border-radius: 100px;
+        -ms-border-radius: 100px;
+        -o-border-radius: 100px;
+        border-radius: 100px;
+        color: #fff;
+        line-height: 40px;
+        background-color: #e44d3a;
+        position: absolute;
+        top: 0;
+        left: 60%;
+    }
+
+    .user-pro-img img {
+        -webkit-border-radius: 100px;
+        -moz-border-radius: 100px;
+        -ms-border-radius: 100px;
+        -o-border-radius: 100px;
+        border-radius: 100px;
+        float: none;
+        border: 5px solid #fff;
     }
 </style>
