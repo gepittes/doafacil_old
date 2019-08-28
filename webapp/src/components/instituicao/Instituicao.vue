@@ -1,5 +1,5 @@
 <template>
-    <v-flex xs6 md3 lg3>
+    <v-flex md4  sm6 xl12  pr-3 pb-3>
         <v-card>
             <v-img
                 src="https://myfaithmedia.org/wp-content/uploads/2018/09/Open-Hands.jpg"
@@ -8,7 +8,7 @@
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
             >
                 <v-card-title primary-title class="fill-height align-end text-uppercase font-weight-bold"
-                              v-text="instituicao.nome">
+                                v-text="instituicao.nome">
                 </v-card-title>
             </v-img>
             <div class="ma-1">
