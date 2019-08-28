@@ -9,6 +9,7 @@ import PontoDoacao from './components/doacao/PontoDoacao.vue';
 import Home from './views/home/Home.vue';
 import NaoEncontrado from './modules/core/NaoEncontrado.vue';
 import Conta from './modules/conta/Conta.vue';
+import Configuracao from './modules/core/Configuracao.vue';
 import store from './store';
 import Main from './views/Main.vue';
 import { obterInformacoesJWT } from './modules/account/_helpers/jwt';
@@ -62,6 +63,11 @@ const routesObject = [
         path: '/main',
         component: Main,
         name: 'main',
+    },
+    {
+        path: '/configuracao',
+        component: Configuracao,
+        name: 'configuracao',
     },
     {
         path: '/administracao',

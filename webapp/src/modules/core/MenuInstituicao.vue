@@ -97,7 +97,9 @@ export default {
                 {
                     icon: 'settings',
                     text: 'Configuração',
+                    to: '/configuracao',
                 },
+
             ],
         };
     },
@@ -116,69 +118,20 @@ export default {
             this.$emit('input', val);
         },
     },
+    created(){
+        this.obterMenusLaterais(this.accountInfo)
+    },
 
     methods: {
-        obterMenusLaterais() {
-            const menusLaterais = [
-                {
-                    icon: 'home',
-                    text: 'Inicio',
-                    to: '/',
-                },
-                {
-                    icon: 'contacts',
-                    text: 'Ponto de Doaçao',
-                    to: '/doacao',
-                },
-                {
-                    icon: 'keyboard_arrow_up',
-                    'icon-alt': 'keyboard_arrow_down',
-                    text: 'Instituições',
-                    model: false,
-                    children: [
-                        {
-                            text: 'Minhas instituição',
-                            to: '/instituicoes',
-                            icon: 'list',
-                        },
-                        // { text: 'Atualizar',  to: '#' },
-                        // { text: 'locais' },
-                        // { text: 'Eventos' },
-                    ],
-                },
-                {
-                    icon: 'help',
-                    text: 'Sobre',
-                    to: '/sobre',
-                },
-                {
-                    icon: 'settings',
-                    text: 'Configuração',
-                },
-                {
-                    icon: 'chat_bubble',
-                    text: 'Enviar feedback',
-                },
-                {
-                    icon: 'help',
-                    text: 'Ajuda',
-                },
-
-            ];
-            if (this.accountInfo.is_admin === true) {
-                menusLaterais.push({
-                    icon: 'edit',
-                    text: 'Administração',
-                    to: '/administracao',
+        // Fica ativado por enquanto depois retira
+        obterMenusLaterais(value) {
+            if (value.is_admin === true) {
+                this.items.push({
+                    icon: "edit",
+                    text: "Administração",
+                    to: "/administracao"
                 });
             }
-            menusLaterais.push({
-                icon: 'exit_to_app',
-                text: 'Sair',
-                to: '/logout',
-            });
-
-            return menusLaterais;
         },
     },
 };
