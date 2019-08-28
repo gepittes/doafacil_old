@@ -35,7 +35,11 @@ export const cadastrarConta = ({ dispatch, commit }, conta) => axios.post('http:
 
 export const atualizarConta = ({ dispatch, commit }, conta) => requisicaoAutorizada.patch(`http://localhost/v1/conta/${conta.usuario_id}`, conta).then(() => {
     commit(types.ATUALIZAR_CONTA, conta);
+    dispatch('alert/success', 'Cadastro Atualizado com sucesso!', { root: true });
 }).catch((error) => {
+    dispatch('alert/error', 'Desculpe ação não realizada, Estamos trabalhando para resolver :(', {
+        root: true,
+    });
     dispatch('alert/error', error.response.data.error, {
         root: true,
     });

@@ -47,7 +47,7 @@
                                     <v-list-item-content text>
                                         <v-list-item-title
                                             class="user-name"
-                                            text>{{ user }}</v-list-item-title>
+                                            text>{{ userName }}</v-list-item-title>
                                     </v-list-item-content>
                                 </v-btn>
 
@@ -92,11 +92,8 @@ export default {
             user: 'account/user',
             accountInfo: 'account/accountInfo',
         }),
-        user() {
-            const user = this.accountInfo.name.split(' ')[0];
-
-
-            return user;
+        userName() {
+            return this.accountInfo.name.split(' ')[0];
         },
     },
     mounted() {
