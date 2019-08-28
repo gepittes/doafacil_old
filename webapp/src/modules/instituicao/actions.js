@@ -42,3 +42,20 @@ export const atualizarInstituicao = ({ dispatch, commit }, instituicao) => requi
         root: true,
     });
 });
+
+export const setDialog = ({commit}, payload) => {
+    commit('setDialog', payload)
+};
+
+export const buscartInstituicao = ({commit, dispatch}, instituicaoId) => {
+    requisicaoAutorizada.get(`http://localhost/v1/instituicao/buscar/${instituicaoId}`)
+        .then(resp => {
+            commit('setInstiEncontrada', resp.data.data[0])
+        })
+        .catch(error => {
+            console.log(error)
+            dispatch('alert/error', error, {
+                root: true,
+            });
+        })
+};

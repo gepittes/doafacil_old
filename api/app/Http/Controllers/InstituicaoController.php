@@ -33,7 +33,6 @@ class InstituicaoController extends Controller
 
     public function patch($id)
     {
-
        Instituicao::find($id)->update(Request::all());
 
         return response(Instituicao::find($id),'201');
@@ -44,7 +43,16 @@ class InstituicaoController extends Controller
         Instituicao::destroy($id);
 
         return response()->json($instituicao,'204');
+    }
 
+    public function buscarInsti($id)
+    {
+        // Todo implementar verificacao da chave do user, caso ele possua autorizacao de editar restorna uma chave true
+
+        $instituicao = Instituicao::buscarInstuicaoById($id);
+
+        return response($instituicao, 200);
 
     }
+
 }
