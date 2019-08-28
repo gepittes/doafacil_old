@@ -27,7 +27,7 @@
                     <div class="main-sty">
                         <div class="user-tab-sec">
                             <h3>{{ instituicao.nome }}</h3>
-                            <div class="star-descp">
+                            <div class="mb-3">
                                 <span>Localidade: {{ instituicao.localidade }} - {{ instituicao.uf }}</span>
                             </div>
                             <v-card>
@@ -151,8 +151,8 @@ import MenuInstituicao from '../../modules/core/MenuInstituicao';
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
+    name: 'perfilInstituicao',
     components: { MenuInstituicao },
-    props: ['id'],
     data() {
         return {
             tab: null,
@@ -161,21 +161,19 @@ export default {
 						' nisi ut aliquip ex ea commodo consequat.',
         };
     },
-
     created() {
         this.obterInstituicoes();
+        this.buscarInstituicoe(this.$route.params.id);
     },
     computed: {
         ...mapGetters({
-            instituicoes: 'instituicao/instituicao',
+            instituicao: 'instituicao/getInstiEncontrada',
         }),
-        instituicao() {
-            return this.instituicoes.find(e => e.id === this.id);
-        },
     },
     methods: {
         ...mapActions({
             obterInstituicoes: 'instituicao/obterInstituicoes',
+            buscarInstituicoe : 'instituicao/buscartInstituicao'
         }),
     },
 };

@@ -18,5 +18,9 @@ export const mutations = {
 
     setDialog(state, payload){
         state.dialog = payload
+    },
+
+    setInstiEncontrada(state, payload) {
+        state.instituicaoEncontrada = payload
     }
 };

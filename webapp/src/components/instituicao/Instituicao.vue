@@ -26,12 +26,6 @@
                         share
                     </v-icon>
                 </v-btn>
-                <v-btn icon>
-                    <v-icon left color="info" @click="editarInstituicao(instituicao)">edit</v-icon>
-                </v-btn>
-                <v-btn icon>
-                    <v-icon color="warning" @click="excluirInstituicao(instituicao.id)">delete</v-icon>
-                </v-btn>
                 <v-btn
                     icon
                     @click="show = !show"
@@ -59,16 +53,6 @@
                     </v-card-text>
                 </div>
             </v-expand-transition>
-            <v-dialog v-model="dialog" max-width="700px">
-                <v-card light>
-                    <v-card-text>
-                        <v-toolbar color="primary">
-                            <v-toolbar-title>Atualizar Instituição</v-toolbar-title>
-                        </v-toolbar>
-                        <Criar :instituicaoEditar="instituicaoEditar" :dialog.sync="dialog"/>
-                    </v-card-text>
-                </v-card>
-            </v-dialog>
         </v-card>
     </v-flex>
 </template>
@@ -104,14 +88,6 @@
                 obterInstituicoes: 'instituicao/obterInstituicoes',
                 removerInstituicao: 'instituicao/removerInstituicao',
             }),
-            excluirInstituicao(id) {
-                this.removerInstituicao(id);
-            },
-            editarInstituicao(instituicao) {
-                this.instituicaoEditar = {...instituicao};
-                this.dialog = true;
-            },
-
         }
     };
 </script>

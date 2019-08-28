@@ -117,9 +117,6 @@
                                         @click:minute="$refs.menuHoraClose.save(instituicao.hora_close)"
                                     ></v-time-picker>
                                 </v-menu>
-
-<!--                                todo ajustar o editar da insituicao-->
-
                             </v-flex>
                             <v-card-actions>
                                 <v-btn

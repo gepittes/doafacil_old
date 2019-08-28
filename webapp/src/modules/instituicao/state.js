@@ -1,4 +1,5 @@
 export default {
     instituicao: [],
-    dialog: false
+    dialog: false,
+    instituicaoEncontrada: []
 };

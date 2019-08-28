@@ -1,5 +1,5 @@
 export const instituicao = state => state.instituicao;
 
-export const getDialog = (state) => {
-    return state.dialog
-};
+export const getDialog = (state) => state.dialog;
+
+export const getInstiEncontrada = (state) => state.instituicaoEncontrada;
