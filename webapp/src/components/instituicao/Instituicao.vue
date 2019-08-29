@@ -1,5 +1,5 @@
 <template>
-    <v-flex xs6 md3 lg3>
+    <v-flex md4  sm6 xl12  pr-3 pb-3>
         <v-card>
             <v-img
                 src="https://myfaithmedia.org/wp-content/uploads/2018/09/Open-Hands.jpg"
@@ -8,7 +8,7 @@
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
             >
                 <v-card-title primary-title class="fill-height align-end text-uppercase font-weight-bold"
-                              v-text="instituicao.nome">
+                                v-text="instituicao.nome">
                 </v-card-title>
             </v-img>
             <div class="ma-1">
@@ -25,12 +25,6 @@
                     <v-icon>
                         share
                     </v-icon>
-                </v-btn>
-                <v-btn icon>
-                    <v-icon left color="info" @click="editarInstituicao(instituicao)">edit</v-icon>
-                </v-btn>
-                <v-btn icon>
-                    <v-icon color="warning" @click="excluirInstituicao(instituicao.id)">delete</v-icon>
                 </v-btn>
                 <v-btn
                     icon
@@ -59,16 +53,6 @@
                     </v-card-text>
                 </div>
             </v-expand-transition>
-            <v-dialog v-model="dialog" max-width="700px">
-                <v-card light>
-                    <v-card-text>
-                        <v-toolbar color="primary">
-                            <v-toolbar-title>Atualizar Instituição</v-toolbar-title>
-                        </v-toolbar>
-                        <Criar :instituicaoEditar="instituicaoEditar" :dialog.sync="dialog"/>
-                    </v-card-text>
-                </v-card>
-            </v-dialog>
         </v-card>
     </v-flex>
 </template>
@@ -104,14 +88,6 @@
                 obterInstituicoes: 'instituicao/obterInstituicoes',
                 removerInstituicao: 'instituicao/removerInstituicao',
             }),
-            excluirInstituicao(id) {
-                this.removerInstituicao(id);
-            },
-            editarInstituicao(instituicao) {
-                this.instituicaoEditar = {...instituicao};
-                this.dialog = true;
-            },
-
         }
     };
 </script>

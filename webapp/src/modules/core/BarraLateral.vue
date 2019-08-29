@@ -1,51 +1,54 @@
 <template>
-      <v-navigation-drawer
-              v-if="status.loggedIn"
-              v-model="drawer"
-              width="240px"
-              app>
-        <v-list>
-          <v-list-item>
-            <v-list-item-avatar>
+  <div id="barra-lateral">
+    <v-navigation-drawer
+            v-if="status.loggedIn"
+            v-model="drawer"
+            width="240px"
+            app>
+      <v-list>
+        <v-list-item>
+          <v-list-item-avatar>
 
-              <v-icon>account_circle</v-icon>
-            </v-list-item-avatar>
-          </v-list-item>
+            <v-icon>account_circle</v-icon>
+          </v-list-item-avatar>
+        </v-list-item>
 
-          <v-list-item link>
-            <v-list-item-content>
-              <v-list-item-title class="title">{{ accountInfo.name }}</v-list-item-title>
-              <v-list-item-subtitle>{{ accountInfo.email }}</v-list-item-subtitle>
+        <v-list-item link>
+          <v-list-item-content>
+            <v-list-item-title class="title">{{ accountInfo.name }}</v-list-item-title>
+            <v-list-item-subtitle>{{ accountInfo.email }}</v-list-item-subtitle>
+          </v-list-item-content>
+
+          <v-list-item-action>
+            <v-icon>mdi-menu-down</v-icon>
+          </v-list-item-action>
+        </v-list-item>
+      </v-list>
+      <v-divider></v-divider>
+      <v-list
+              nav
+              dense
+      >
+        <v-list-item-group v-model="item" color="primary">
+          <v-list-item
+                  v-for="(item, i) in items"
+                  :key="i"
+                  :to="item.to"
+          >
+            <v-list-item-icon>
+              <v-icon v-text="item.icon"></v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content >
+              <v-list-item-title v-text="item.text"></v-list-item-title>
             </v-list-item-content>
 
-            <v-list-item-action>
-              <v-icon>mdi-menu-down</v-icon>
-            </v-list-item-action>
           </v-list-item>
-        </v-list>
-        <v-divider></v-divider>
-        <v-list
-                nav
-                dense
-        >
-          <v-list-item-group v-model="item" color="primary">
-            <v-list-item
-                    v-for="(item, i) in items"
-                    :key="i"
-                    :to="item.to"
-            >
-              <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
-              </v-list-item-icon>
-
-              <v-list-item-content >
-                <v-list-item-title v-text="item.text"></v-list-item-title>
-              </v-list-item-content>
-
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-      </v-navigation-drawer>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+  </div>
+      
 </template>
 
 <script>
@@ -56,7 +59,7 @@ export default {
   props: {
     value: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   data() {
@@ -71,7 +74,7 @@ export default {
       items: [
         { icon: "home", text: "Inicio", to: "/"},
         { icon: "contacts", text: "Ponto de Doaçao", to: "/doacao" },
-        { text: "Instituições", to: "/instituicoes", icon: "list" },
+        { text: "Minhas Instituições", to: "/instituicoes", icon: "list" },
         { icon: "help", text: "Sobre", to: "/#/sobre" },
         { icon: "settings", text: "Configuração" },
         { icon: "chat_bubble", text: "Enviar feedback" },
@@ -145,3 +148,10 @@ export default {
   }
 };
 </script>
+<style >
+
+  @media (min-width: 600px) {
+      #barra-lateral { display: none; }
+
+  }
+</style>

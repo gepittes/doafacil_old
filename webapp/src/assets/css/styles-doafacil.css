@@ -1,7 +1,7 @@
 .gradient-doafacil-bg {
     background: #00B4DB;
-    background: -webkit-linear-gradient(to left, #0083B0, #00B4DB);
-    background: linear-gradient(to left, #0083B0, #00B4DB);
+    background: -webkit-linear-gradient(to left, #00B4DB, #00B4DB);
+    background: linear-gradient(to left, #00B4DB, #00B4DB);
 }
 
 .doafacil-bg-img {
@@ -10,7 +10,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     transform: scale(1);
-    width: 100%;
+    width: 100% !important;
     height: 100%;
 }
 
