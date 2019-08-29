@@ -9,10 +9,7 @@
             app
             dark
             class="gradient-doafacil-bg">
-            <v-container >
-                <v-app-bar
-                    flat
-                    class="gradient-doafacil-bg" >
+   
                     <v-app-bar-nav-icon
                         v-if="status.loggedIn"
                         id="menuLateral"
@@ -61,8 +58,6 @@
                             </v-list>
                         </v-menu>
                     </v-toolbar-items>
-                </v-app-bar>
-            </v-container>
         </v-app-bar>
     </div>
 
@@ -77,7 +72,7 @@ export default {
         return {
             loading: false,
             clipped: false,
-            drawer: true,
+            drawer: false,
             fixed: false,
             miniVariant: false,
             right: true,
@@ -102,17 +97,6 @@ export default {
 };
 </script>
 <style >
-
-    @media (min-width: 600px) {
-        #menuLateral { display: none; }
-
-    }
-
-    .v-toolbar__content{
-        padding-left: 0;
-        padding-right: 0;
-        /* height: 50px !important; */
-    }
 
     .user-name {
         text-transform:capitalize;
