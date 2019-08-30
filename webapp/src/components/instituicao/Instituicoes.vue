@@ -3,25 +3,17 @@
         <v-container
             fluid
             grid-list-md>
-            <div class="row">
-                <div class="col-lg-3">
 
-                    <menu-instituicao/>
-
-                </div>
-                <div class="col-lg-9 ">
-                    <v-layout
-                        row
-                        wrap>
-                        <Instituicao
-                            v-for="instituicao in instituicoesIniciais"
-                            :key="instituicao.id"
-                            :instituicao="instituicao"
-                        />
-                    </v-layout>
-                </div>
-
-            </div>
+                <v-layout
+                    row
+                    wrap>
+                    <Instituicao
+                        v-for="instituicao in instituicoesIniciais"
+                        :key="instituicao.id"
+                        :instituicao="instituicao"
+                    />
+                </v-layout>
+        
             <v-btn
                 fab
                 color="success"
@@ -32,8 +24,8 @@
                 @click="openDialog()">
                 <v-icon>add</v-icon>
             </v-btn>
-        </v-container>
 
+        </v-container>
         <InstituicaoFormulario/>
     </v-app>
 </template>

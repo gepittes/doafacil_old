@@ -59,7 +59,7 @@ export default {
   props: {
     value: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
   data() {
@@ -148,10 +148,3 @@ export default {
   }
 };
 </script>
-<style >
-
-  @media (min-width: 600px) {
-      #barra-lateral { display: none; }
-
-  }
-</style>
