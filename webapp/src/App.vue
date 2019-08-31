@@ -1,9 +1,6 @@
 <template>
     <v-app>
-
-
-       <App-bar/>
-
+        <App-bar/>
         <v-content>
             <alerta
                 v-if="alert.message != null && alert.message_type != null"

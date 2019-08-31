@@ -5,17 +5,6 @@
         <Fachada
             :img-paralax="images.main"
         />
-
-        <InfoCards/>
-
-        <GenericComp
-            :img-paralax="images.main"
-        />
-
-        <News/>
-
-        <Social :image="images.main"/>
-
         <CompInfo/>
 
         <Footer/>
@@ -24,13 +13,9 @@
 
 <script>
     import Fachada from '@/components/home/FachadaHome.vue'
-    import InfoCards from '@/components/home/InformacoesCards.vue'
-    import GenericComp from '@/components/home/GenericComp.vue'
-    import News from '@/components/home/NewsLetter.vue'
-    import Social from '@/components/home/RedesSociais.vue'
     import CompInfo from '@/components/home/InfoCompany.vue'
     import Footer from '@/modules/core/Footer.vue'
-    import BackTop from "../../components/home/BackTop";
+    import BackTop from "../../components/home/BackTop"
 
     export default {
         name: "Home",
@@ -42,7 +27,7 @@
                 }
             };
         },
-        components: {BackTop, InfoCards, Social, Footer, CompInfo, Fachada, News, GenericComp},
+        components: {BackTop, Footer, CompInfo, Fachada},
     };
 </script>
 
