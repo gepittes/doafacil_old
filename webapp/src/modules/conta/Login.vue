@@ -47,19 +47,13 @@
 
                                 <v-card-actions>
                                     <v-btn
-                                        :disabled="!valid"
-                                        color="success"
-                                        type="submit">Entrar</v-btn>
-                                    <v-spacer/>
-                                    <v-btn
-                                        to="/"
-                                        color="warning"
-                                        type="submit">Cancelar</v-btn>
-                                    <v-spacer/>
-                                    <v-btn
                                         to="/cadastrar"
                                         color="primary"
-                                        type="submit">Cadastre-se</v-btn>
+                                        type="submit">Cadastro</v-btn>
+                                    <v-btn
+                                        :disabled="!valid"
+                                        color="success"
+                                        type="submit">Login</v-btn>
                                 </v-card-actions>
                             </v-form>
                         </v-card-text>

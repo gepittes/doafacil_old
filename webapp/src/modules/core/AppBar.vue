@@ -86,9 +86,11 @@
 
                 <v-row align="center" justify="end" v-if="status.loggedIn">
                     <v-col md="8" lg="6" xl="5">
-                        <v-img
-                            :max-width="130"
-                            :src="logo"/>
+                        <router-link to="/">
+                            <v-img
+                                :max-width="130"
+                                :src="logo"/>
+                        </router-link>
                     </v-col>
 
                     <v-col md="3" lg="4" xl="4">
