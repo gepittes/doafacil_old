@@ -77,6 +77,13 @@ export default {
       ],
     };
   },
+  watch:{
+    '$route': function (val) {
+      if (val.matched[0].path === '/instituicao/:id'){
+        this.drawer = false
+      }
+    }
+  },
   computed: {
     ...mapGetters({
       status: "account/status",
