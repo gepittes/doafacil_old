@@ -1,5 +1,9 @@
 <template>
     <div>
+        <template>
+            <BarraLateral :drawer="drawer"/>
+        </template>
+
         <v-app-bar
             :clipped-left="clipped"
             app
@@ -86,14 +90,24 @@
 
                 <v-row align="center" justify="end" v-if="status.loggedIn">
                     <v-col md="8" lg="6" xl="5">
-                        <router-link to="/">
-                            <v-img
-                                :max-width="130"
-                                :src="logo"/>
-                        </router-link>
+                        <v-row align="center" justify="end">
+                            <v-col md="1" lg="2" xl="1" >
+                                <v-btn class="transparent elevation-0" @click.stop="drawer = !drawer">
+                                    <v-icon>fa fa-list</v-icon>
+                                </v-btn>
+                            </v-col>
+                            <v-col md="11" lg="10" xl="11">
+                                <router-link to="/" v-if="this.window.width >= 1024">
+                                    <v-img
+                                        :max-width="130"
+                                        :src="logo"/>
+                                </router-link>
+                            </v-col>
+                        </v-row>
+
                     </v-col>
 
-                    <v-col md="3" lg="4" xl="4">
+                    <v-col md="3" lg="4" xl="4" sm="5">
                         <v-toolbar-items
                             class="pa-1">
                             <v-menu offset-y>
@@ -137,9 +151,11 @@
 </template>
 <script>
     import {mapGetters, mapActions} from 'vuex';
+    import BarraLateral from "./BarraLateral";
 
     export default {
         name: 'AppBar',
+        components: {BarraLateral},
         data() {
             return {
                 window: {
@@ -165,6 +181,7 @@
                 if (width > 960 && this.$route.path === '/login') {
                     this.$router.push({name: 'home'});
                 }
+                this.window.width = width;
             },
         },
         methods: {

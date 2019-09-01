@@ -4,19 +4,23 @@
             <v-flex>
                 <v-container>
                     <v-row align="center" justify="center">
-                        <v-col xl="5" md="12" lg="7">
+                        <v-col xl="6" md="12" lg="9">
 
                             <v-card class="elevation-0 transparent">
                                 <v-card-text class="layout justify-center">
                                     <MascoteGif :width="100"/>
                                 </v-card-text>
-                                <v-card-title class="layout justify-center">
-                                    <div class="font-weight-black display-1 white--text text-uppercase">
-                                        Simples de <span class="red--text t-doar">doar</span>,
-                                        <span class="t-facil">Fácil</span>
-                                        de encontrar!
-                                    </div>
-                                </v-card-title>
+                                <v-row align="center" justify="center">
+                                    <v-col lg="12">
+                                        <v-card-title class="layout justify-center">
+                                            <div class="font-weight-black display-1 white--text text-uppercase">
+                                                Simples de <span class="red--text t-doar">doar</span>,
+                                                <span class="t-facil">Fácil</span>
+                                                de encontrar!
+                                            </div>
+                                        </v-card-title>
+                                    </v-col>
+                                </v-row>
 
                                 <v-row align="center" justify="center">
                                     <v-col xl="10" md="8" lg="10">
