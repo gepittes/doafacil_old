@@ -48,9 +48,7 @@
                   class="invalid-feedback"
                 >{{ errors.first('password') }}</div>
                 <v-card-actions>
-                  <v-btn to="/" color="warning">Cancelar</v-btn>
                   <v-btn to="/login" color="green darken-2" class="white--text">Login</v-btn>
-                  <v-spacer></v-spacer>
                   <v-btn :disabled="status.registering"  color="primary" type="submit">Cadastrar</v-btn>
                   <img v-show="status.registering" />
                 </v-card-actions>
@@ -77,7 +75,7 @@ export default {
       },
       submitted: false,
       rules: {
-        required: value => !!value || "Required.",
+        required: value => !!value || "Campo obrigatório.",
         minLength: object => object.length > 3 || "Campo obrigatório.",
         email: value => {
           // eslint-disable-next-line

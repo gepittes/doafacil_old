@@ -47,19 +47,13 @@
 
                                 <v-card-actions>
                                     <v-btn
-                                        :disabled="!valid"
-                                        color="success"
-                                        type="submit">Entrar</v-btn>
-                                    <v-spacer/>
-                                    <v-btn
-                                        to="/"
-                                        color="warning"
-                                        type="submit">Cancelar</v-btn>
-                                    <v-spacer/>
-                                    <v-btn
                                         to="/cadastrar"
                                         color="primary"
-                                        type="submit">Cadastre-se</v-btn>
+                                        type="submit">Cadastro</v-btn>
+                                    <v-btn
+                                        :disabled="!valid"
+                                        color="success"
+                                        type="submit">Login</v-btn>
                                 </v-card-actions>
                             </v-form>
                         </v-card-text>
@@ -78,6 +72,10 @@ export default {
     components: { MascoteGif },
     data() {
         return {
+            window: {
+                width: 0,
+                height: 0,
+            },
             email: '',
             emailRules: [
                 v => !!v || 'E-mail obrigatório',
@@ -95,16 +93,17 @@ export default {
     // reset login status
         this.logout();
     },
+    watch: {
+        'window.width': function (width) {
+            if (width > 960 && this.$route.path === '/') {
+                this.$router.push({name: 'home'});
+            }
+            this.window.width = width;
+        },
+    },
     methods: {
         submit() {
             if (this.$refs.form.validate()) {
-                // Native form submission is not yet supported
-                // axios.post('/api/submit', {
-                //     name: this.name,
-                //     email: this.email,
-                //     select: this.select,
-                //     checkbox: this.checkbox
-                // })
                 const { email, password } = this;
                 if (email && password) {
                     this.login({ email, password });

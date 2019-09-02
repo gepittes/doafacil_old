@@ -8,7 +8,6 @@
       <v-list>
         <v-list-item>
           <v-list-item-avatar>
-
             <v-icon>account_circle</v-icon>
           </v-list-item-avatar>
         </v-list-item>
@@ -57,15 +56,11 @@ import { mapGetters } from "vuex";
 export default {
   name: "App",
   props: {
-    value: {
-      type: Boolean,
-      default: true
-    }
+    drawer: Boolean
   },
   data() {
     return {
       clipped: false,
-      drawer: false,
       fixed: false,
       miniVariant: false,
       right: true,
@@ -82,12 +77,14 @@ export default {
       ],
     };
   },
-  watch: {
-    value(val) {
-      this.drawer = val;
-    },
-    drawer(val) {
-      this.$emit("input", val);
+  watch:{
+    '$route': function (val) {
+      if (val.matched[0].path === '/instituicao/:id'){
+        this.drawer = false
+      }
+      if(val.matched[0].path !== '/instituicao/:id' && window.innerWidth > 900) {
+        this.drawer = true
+      }
     }
   },
   computed: {
