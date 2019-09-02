@@ -82,6 +82,9 @@ export default {
       if (val.matched[0].path === '/instituicao/:id'){
         this.drawer = false
       }
+      if(val.matched[0].path !== '/instituicao/:id' && window.innerWidth > 900) {
+        this.drawer = true
+      }
     }
   },
   computed: {
