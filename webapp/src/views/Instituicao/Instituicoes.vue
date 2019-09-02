@@ -32,9 +32,9 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import MenuInstituicao from '../../modules/core/MenuInstituicao.vue';
-import InstituicaoFormulario from './InstituicaoFormulario.vue';
+import InstituicaoFormulario from '../../components/instituicao/InstituicaoFormulario.vue';
 import Perfil from './Perfil.vue';
-import Instituicao from './Instituicao.vue';
+import Instituicao from '../../components/instituicao/Instituicao.vue';
 
 export default {
     name: 'ListarInstituicoes',

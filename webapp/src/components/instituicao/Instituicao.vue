@@ -1,8 +1,8 @@
 <template>
-    <v-flex md4  sm6 xl12  pr-3 pb-3>
+    <v-flex md4 sm6 xl3 >
         <v-card>
             <v-img
-                src="https://myfaithmedia.org/wp-content/uploads/2018/09/Open-Hands.jpg"
+                src="https://via.placeholder.com/150"
                 class="white--text"
                 height="200px"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
@@ -59,9 +59,9 @@
 
 <script>
     import {mapActions, mapGetters} from 'vuex';
-    import Instituicoes from './Instituicoes';
+    import Instituicoes from '../../views/Instituicao/Instituicoes';
     import Criar from './InstituicaoFormulario';
-    import Perfil from './Perfil';
+    import Perfil from '../../views/Instituicao/Perfil';
 
     export default {
         name: 'Instituicao',
