@@ -22,6 +22,7 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
     $router->post('/conta', 'ContaController@post');
     $router->get('/instituicao', 'InstituicaoController@get');
     $router->get('/instituicao/buscar/{id}', 'InstituicaoController@buscarInsti');
+    $router->get('/instituicao/user/buscar/{id}', 'InstituicaoController@getInstisUser');
     $router->post('/instituicao', 'InstituicaoController@post');
     $router->patch('/instituicao/{id}', 'InstituicaoController@patch');
     $router->get('/instituicao/{id}', 'InstituicaoController@show');

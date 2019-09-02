@@ -52,6 +52,7 @@ export default {
         ...mapGetters({
             instituicoes: 'instituicao/instituicao',
             dialog: 'instituicao/getDialog',
+            accountInfo: 'account/accountInfo'
         }),
     },
     watch: {
@@ -65,12 +66,11 @@ export default {
     },
 
     created() {
-        this.obterInstituicoes();
+        this.obterInstiUser(this.accountInfo.user_id);
     },
     methods: {
         ...mapActions({
-            obterInstituicoes: 'instituicao/obterInstituicoes',
-            removerInstituicao: 'instituicao/removerInstituicao',
+            obterInstiUser: 'instituicao/obterInstiUser',
             statusDialog: 'instituicao/setDialog',
         }),
         openDialog() {

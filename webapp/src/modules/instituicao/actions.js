@@ -53,9 +53,20 @@ export const buscartInstituicao = ({commit, dispatch}, instituicaoId) => {
             commit('setInstiEncontrada', resp.data.data[0])
         })
         .catch(error => {
-            console.log(error)
             dispatch('alert/error', error, {
                 root: true,
             });
         })
+};
+
+export const obterInstiUser = ({commit, dispatch}, user_id) => {
+    requisicaoAutorizada.get(`http://localhost/v1/instituicao/user/buscar/${user_id}`)
+        .then((response) => {
+            const {data} = response;
+            commit(types.OBTER_INSTITUICOES, data.data);
+        }).catch((error) => {
+        dispatch('alert/error', error.response.data.error, {
+            root: true,
+        });
+    });
 };
