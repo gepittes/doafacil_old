@@ -58,3 +58,7 @@ export const obterInstiUser = ({commit, dispatch}, user_id) => {
         });
     });
 };
+
+export const insitituicaoEditar = ({commit}, payload) => {
+   commit(types.INSTITUICAO_EDITAR, payload)
+};

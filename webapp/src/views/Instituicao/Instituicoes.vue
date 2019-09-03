@@ -26,7 +26,7 @@
             </v-btn>
 
         </v-container>
-        <InstituicaoFormulario/>
+        <InstituicaoFormulario :instituicao-editar="this.instituicaoEditar"/>
     </v-app>
 </template>
 <script>
@@ -43,7 +43,6 @@ export default {
     },
     data() {
         return {
-            votos: 3,
             instituicoesIniciais: [],
             instituicao: {},
         };
@@ -51,6 +50,7 @@ export default {
     computed: {
         ...mapGetters({
             instituicoes: 'instituicao/instituicao',
+            instituicaoEditar: 'instituicao/getInstituicaEditar',
             dialog: 'instituicao/getDialog',
             accountInfo: 'account/accountInfo'
         }),

@@ -56,7 +56,6 @@
                                     label="Cidades"
                                 ></v-select>
 
-
                                 <v-menu
                                     ref="menuHoraOpen"
                                     v-model="menuHoraOpen"
@@ -203,6 +202,7 @@
                 this.statusDialog(false);
                 this.resetValidation();
                 this.reset();
+                this.instituicaoEditar = {};
             },
 
             resetValidation() {

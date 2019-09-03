@@ -1,5 +1,5 @@
 <template>
-    <v-flex md4 sm6 xl3 >
+    <v-flex md4 sm6 xl3>
         <v-card>
             <v-img
                 src="https://via.placeholder.com/150"
@@ -11,9 +11,9 @@
                                 v-text="instituicao.nome">
                 </v-card-title>
             </v-img>
-            <div class="ma-1">
-                <v-rating v-model="votos"></v-rating>
-            </div>
+<!--            <div class="ma-1">-->
+<!--                <v-rating v-model="votos"></v-rating>-->
+<!--            </div>-->
             <v-card-actions>
                 <div class="flex-grow-1"></div>
                 <v-btn icon :to="`/instituicao/${instituicao.id}`">
@@ -24,6 +24,11 @@
                 <v-btn icon>
                     <v-icon>
                         share
+                    </v-icon>
+                </v-btn>
+                <v-btn icon @click="editar(instituicao)">
+                    <v-icon>
+                        edit
                     </v-icon>
                 </v-btn>
                 <v-btn
@@ -70,24 +75,22 @@
         data() {
             return {
                 votos: 3,
-                instituicaoEditar: {},
-                dialog: false,
                 show: false,
             };
         },
-        computed: {
-            ...mapGetters({
-                instituicoes: 'instituicao/instituicao',
-            }),
-        },
-        created() {
-            this.obterInstituicoes();
-        },
         methods: {
             ...mapActions({
-                obterInstituicoes: 'instituicao/obterInstituicoes',
-                removerInstituicao: 'instituicao/removerInstituicao',
+                statusDialog: 'instituicao/setDialog',
+                insitituicaoEditar: 'instituicao/insitituicaoEditar'
             }),
+
+            editar(instituicao) {
+                console.log(instituicao)
+
+                this.statusDialog(true);
+                this.insitituicaoEditar(instituicao);
+
+            }
         }
     };
 </script>
