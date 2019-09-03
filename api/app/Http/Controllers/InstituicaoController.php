@@ -18,11 +18,16 @@ class InstituicaoController extends Controller
 
     public function getInstisUser($user_id)
     {
-
         $instituicoes = Instituicao::buscarInstisUser($user_id);
 
         return response()->json($instituicoes);
+    }
 
+    public function buscarInsti($id)
+    {
+        $instituicao = Instituicao::buscarInstuicaoById($id);
+
+        return response($instituicao, 200);
     }
 
     public function post(ServerRequestInterface $request)

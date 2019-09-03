@@ -39,6 +39,12 @@ class Instituicao extends Model
         return DB::table('app.instituicao as inst')
             ->where('fk_usuario_id', '=', $user_id)
             ->get();
+    }
 
+    public static function buscarInstuicaoById($id)
+    {
+        return DB::table('app.instituicao as inst')
+            ->where('inst.id', '=', $id)
+            ->get();
     }
 }

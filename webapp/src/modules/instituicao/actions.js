@@ -62,3 +62,15 @@ export const obterInstiUser = ({commit, dispatch}, user_id) => {
 export const insitituicaoEditar = ({commit}, payload) => {
    commit(types.INSTITUICAO_EDITAR, payload)
 };
+
+export const buscartInstituicao = ({commit, dispatch}, instituicaoId) => {
+    requisicaoAutorizada.get(`http://localhost/v1/instituicao/buscar/${instituicaoId}`)
+        .then(resp => {
+            commit(types.INSTITUICAO_ENCONTRADA, resp.data.data[0])
+        })
+        .catch(error => {
+            dispatch('alert/error', error, {
+                root: true,
+            });
+        })
+};

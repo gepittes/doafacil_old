@@ -16,10 +16,13 @@ export const mutations = {
         Object.assign(state.instituicao[index], instituicaoEditada);
     },
     [types.ESTADO_DIALOG](state, payload){
-        state.dialog = payload
+        state.dialog = payload;
         state.instituicaoEditar = []
     },
     [types.INSTITUICAO_EDITAR](state, payload) {
         state.instituicaoEditar = payload
+    },
+    [types.INSTITUICAO_ENCONTRADA](state, payload) {
+        state.instituicaoEncontrada = payload;
     }
 };
