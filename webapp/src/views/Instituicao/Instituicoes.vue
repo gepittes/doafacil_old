@@ -26,7 +26,7 @@
             </v-btn>
 
         </v-container>
-        <InstituicaoFormulario/>
+        <InstituicaoFormulario :instituicao-editar="this.instituicaoEditar"/>
     </v-app>
 </template>
 <script>
@@ -43,7 +43,6 @@ export default {
     },
     data() {
         return {
-            votos: 3,
             instituicoesIniciais: [],
             instituicao: {},
         };
@@ -51,7 +50,9 @@ export default {
     computed: {
         ...mapGetters({
             instituicoes: 'instituicao/instituicao',
+            instituicaoEditar: 'instituicao/getInstituicaEditar',
             dialog: 'instituicao/getDialog',
+            accountInfo: 'account/accountInfo'
         }),
     },
     watch: {
@@ -65,12 +66,11 @@ export default {
     },
 
     created() {
-        this.obterInstituicoes();
+        this.obterInstiUser(this.accountInfo.user_id);
     },
     methods: {
         ...mapActions({
-            obterInstituicoes: 'instituicao/obterInstituicoes',
-            removerInstituicao: 'instituicao/removerInstituicao',
+            obterInstiUser: 'instituicao/obterInstiUser',
             statusDialog: 'instituicao/setDialog',
         }),
         openDialog() {

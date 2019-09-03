@@ -44,16 +44,31 @@ export const atualizarInstituicao = ({ dispatch, commit }, instituicao) => requi
 });
 
 export const setDialog = ({commit}, payload) => {
-    commit('setDialog', payload)
+    commit(types.ESTADO_DIALOG, payload)
+};
+
+export const obterInstiUser = ({commit, dispatch}, user_id) => {
+    requisicaoAutorizada.get(`http://localhost/v1/instituicao/user/buscar/${user_id}`)
+        .then((response) => {
+            const {data} = response;
+            commit(types.OBTER_INSTITUICOES, data.data);
+        }).catch((error) => {
+        dispatch('alert/error', error.response.data.error, {
+            root: true,
+        });
+    });
+};
+
+export const insitituicaoEditar = ({commit}, payload) => {
+   commit(types.INSTITUICAO_EDITAR, payload)
 };
 
 export const buscartInstituicao = ({commit, dispatch}, instituicaoId) => {
     requisicaoAutorizada.get(`http://localhost/v1/instituicao/buscar/${instituicaoId}`)
         .then(resp => {
-            commit('setInstiEncontrada', resp.data.data[0])
+            commit(types.INSTITUICAO_ENCONTRADA, resp.data.data[0])
         })
         .catch(error => {
-            console.log(error)
             dispatch('alert/error', error, {
                 root: true,
             });

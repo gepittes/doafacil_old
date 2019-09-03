@@ -19,6 +19,9 @@
                         </v-list-item>
                         <v-form ref="form" lazy-validation @submit.prevent="salvar()">
                             <v-flex left justify-center>
+                                <v-text-field class="hidden-screen-only"
+                                    v-model="instituicao.fk_usuario_id = this.accountInfo.user_id"
+                                />
                                 <v-text-field
                                     v-if="false"
                                     v-model="instituicao.id"
@@ -52,7 +55,6 @@
                                     v-model="instituicao.localidade"
                                     label="Cidades"
                                 ></v-select>
-
 
                                 <v-menu
                                     ref="menuHoraOpen"
@@ -164,7 +166,8 @@
         },
         computed: {
             ...mapGetters({
-                dialog: 'instituicao/getDialog'
+                dialog: 'instituicao/getDialog',
+                accountInfo: 'account/accountInfo',
             }),
             cidade() {
                 this.estados.forEach(e => {
@@ -199,6 +202,7 @@
                 this.statusDialog(false);
                 this.resetValidation();
                 this.reset();
+                this.instituicaoEditar = {};
             },
 
             resetValidation() {
@@ -221,7 +225,7 @@
                     } else {
                         this.cadastrarInstituicao(this.instituicao)
                     }
-                    this.reset()
+                    this.reset();
                     this.closeDialog();
                 }
             },

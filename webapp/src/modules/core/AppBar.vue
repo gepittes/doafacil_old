@@ -8,7 +8,7 @@
             :clipped-left="clipped"
             app
             dark
-            height="100"
+            :height="styleBar.barW"
             class="gradient-doafacil-bg">
 
             <v-container>
@@ -16,7 +16,7 @@
                     <v-col xl="6">
                         <router-link to="/">
                             <v-img
-                                :max-width="130"
+                                :max-width="styleBar.imgW"
                                 :src="logo"/>
                         </router-link>
                     </v-col>
@@ -99,7 +99,7 @@
                             <v-col md="11" lg="10" xl="11">
                                 <router-link to="/" v-if="this.window.width >= 1024">
                                     <v-img
-                                        :max-width="130"
+                                        :max-width="styleBar.imgW"
                                         :src="logo"/>
                                 </router-link>
                             </v-col>
@@ -162,6 +162,10 @@
                     width: 0,
                     height: 0,
                 },
+                styleBar : {
+                    imgW: 0,
+                    barW: 0
+                },
                 email: '',
                 password: '',
                 clipped: false,
@@ -183,6 +187,19 @@
                 }
                 this.window.width = width;
             },
+            'status.loggedIn': function (val) {
+
+                if(this.status.loggedIn) {
+                    this.styleBar.barW = 50;
+                    this.styleBar.imgW = 80;
+                }
+
+                if(this.status.loggedIn !== true){
+                    this.styleBar.barW = 100;
+                    this.styleBar.imgW = 130;
+                }
+
+            }
         },
         methods: {
             handleResize() {
@@ -208,6 +225,17 @@
         created() {
             window.addEventListener('resize', this.handleResize)
             this.handleResize();
+
+            if(this.status.loggedIn) {
+                this.styleBar.barW = 50;
+                this.styleBar.imgW = 80;
+            }
+
+            if(this.status.loggedIn !== true){
+                this.styleBar.barW = 100;
+                this.styleBar.imgW = 130;
+            }
+
         },
         computed: {
             ...mapGetters({

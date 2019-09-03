@@ -16,11 +16,27 @@ class InstituicaoController extends Controller
         return response()->json($intituicao);
     }
 
+    public function getInstisUser($user_id)
+    {
+        $instituicoes = Instituicao::buscarInstisUser($user_id);
+
+        return response()->json($instituicoes);
+    }
+
+    public function buscarInsti($id)
+    {
+        $instituicao = Instituicao::buscarInstuicaoById($id);
+
+        return response($instituicao, 200);
+    }
+
     public function post(ServerRequestInterface $request)
     {
         $dados = $request->getParsedBody();
-        
-        return response()->json(Instituicao::create($dados));
+
+        $inst = Instituicao::storeInsti($dados);
+
+        return response()->json($inst);
     }
 
     public function show($id)
@@ -43,16 +59,6 @@ class InstituicaoController extends Controller
         Instituicao::destroy($id);
 
         return response()->json($instituicao,'204');
-    }
-
-    public function buscarInsti($id)
-    {
-        // Todo implementar verificacao da chave do user, caso ele possua autorizacao de editar restorna uma chave true
-
-        $instituicao = Instituicao::buscarInstuicaoById($id);
-
-        return response($instituicao, 200);
-
     }
 
 }
