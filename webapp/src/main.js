@@ -10,7 +10,13 @@ import store from './store';
 import filters from './filters';
 import './registerServiceWorker';
 
+import Default from "./views/layouts/Default";
+import NoSideBar from "./views/layouts/NoSideBar";
+
 import { configureFakeBackend } from './modules/_helpers';
+
+Vue.component('default-layout', Default);
+Vue.component('no-side-bar-layout', NoSideBar);
 
 Vue.use(VeeValidate);
 configureFakeBackend();

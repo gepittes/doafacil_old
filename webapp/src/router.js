@@ -11,6 +11,7 @@ import NaoEncontrado from './modules/core/NaoEncontrado.vue';
 import Conta from './modules/conta/Conta.vue';
 import Configuracao from './modules/core/Configuracao.vue';
 import store from './store';
+import Main from './views/Main.vue';
 import { obterInformacoesJWT } from './modules/account/_helpers/jwt';
 
 Vue.use(Router);
@@ -24,7 +25,6 @@ const routesObject = [
             title: 'perfil',
         },
     },
-    { path: '/sobre', redirect: '/' },
     {
         path: '/doacao',
         component: PontoDoacao,
@@ -33,17 +33,21 @@ const routesObject = [
         },
     },
     {
+        path: '/main',
+        component: Main,
+        meta: {
+            title: 'Principal',
+        },
+    },
+    {
         path: '/instituicoes',
         component: Instituicoes,
         name: 'instituicoes',
-        meta: {
-            title: 'instituicoes',
-        },
-
     },
     {
         path: '/login',
         component: Login,
+        meta: { layout: "no-side-bar" },
     },
     {
         path: '/cadastrar',
@@ -52,11 +56,13 @@ const routesObject = [
     {
         path: '*',
         component: NaoEncontrado,
+        meta: { layout: "no-side-bar" },
     },
     {
         path: '/',
         component: Home,
         name: 'home',
+        meta: { layout: "no-side-bar" },
     },
     {
         path: '/configuracao',
