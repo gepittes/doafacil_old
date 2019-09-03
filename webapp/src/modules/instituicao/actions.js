@@ -44,7 +44,7 @@ export const atualizarInstituicao = ({ dispatch, commit }, instituicao) => requi
 });
 
 export const setDialog = ({commit}, payload) => {
-    commit('setDialog', payload)
+    commit(types.ESTADO_DIALOG, payload)
 };
 
 export const obterInstiUser = ({commit, dispatch}, user_id) => {
