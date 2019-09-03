@@ -47,18 +47,6 @@ export const setDialog = ({commit}, payload) => {
     commit('setDialog', payload)
 };
 
-export const buscartInstituicao = ({commit, dispatch}, instituicaoId) => {
-    requisicaoAutorizada.get(`http://localhost/v1/instituicao/buscar/${instituicaoId}`)
-        .then(resp => {
-            commit('setInstiEncontrada', resp.data.data[0])
-        })
-        .catch(error => {
-            dispatch('alert/error', error, {
-                root: true,
-            });
-        })
-};
-
 export const obterInstiUser = ({commit, dispatch}, user_id) => {
     requisicaoAutorizada.get(`http://localhost/v1/instituicao/user/buscar/${user_id}`)
         .then((response) => {

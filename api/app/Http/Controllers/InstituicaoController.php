@@ -56,14 +56,4 @@ class InstituicaoController extends Controller
         return response()->json($instituicao,'204');
     }
 
-    public function buscarInsti($id)
-    {
-        // Todo implementar verificacao da chave do user, caso ele possua autorizacao de editar restorna uma chave true
-
-        $instituicao = Instituicao::buscarInstuicaoById($id);
-
-        return response($instituicao, 200);
-
-    }
-
 }

@@ -19,13 +19,6 @@ class Instituicao extends Model
 
     protected $table = 'app.instituicao';
 
-    public static function buscarInstuicaoById($id)
-    {
-        return DB::table('app.instituicao as inst')
-            ->where('inst.id', '=', $id)
-            ->get();
-    }
-
     public static function storeInsti($dados)
     {
         $inst = new Instituicao();
