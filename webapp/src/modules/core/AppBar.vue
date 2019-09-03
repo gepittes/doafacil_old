@@ -189,8 +189,6 @@
             },
             'status.loggedIn': function (val) {
 
-                console.log(val)
-
                 if(this.status.loggedIn) {
                     this.styleBar.barW = 50;
                     this.styleBar.imgW = 80;
@@ -227,6 +225,17 @@
         created() {
             window.addEventListener('resize', this.handleResize)
             this.handleResize();
+
+            if(this.status.loggedIn) {
+                this.styleBar.barW = 50;
+                this.styleBar.imgW = 80;
+            }
+
+            if(this.status.loggedIn !== true){
+                this.styleBar.barW = 100;
+                this.styleBar.imgW = 130;
+            }
+
         },
         computed: {
             ...mapGetters({
