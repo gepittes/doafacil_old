@@ -1,6 +1,6 @@
 <template>
-    <div id="menu">
-        <div
+    <v-flex class="mt-3">
+        <v-row
             v-if="showAvatar"
             id="avatar">
             <div class="user-pro-img">
@@ -8,7 +8,7 @@
                     src="http://via.placeholder.com/150x150"
                     alt="">
             </div>
-        </div>
+        </v-row>
         <v-list
             class="justify-content-start"
             nav
@@ -35,9 +35,8 @@
                 </v-list-item>
             </v-list-item-group>
         </v-list>
-    </div>
-
-
+        
+    </v-flex>
 </template>
 
 <script>
@@ -88,11 +87,6 @@ export default {
                     text: 'Instituições',
                     to: '/instituicoes',
                     icon: 'list',
-                },
-                {
-                    icon: 'help',
-                    text: 'Sobre',
-                    to: '/#/sobre',
                 },
                 {
                     icon: 'settings',
