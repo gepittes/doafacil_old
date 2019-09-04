@@ -6,7 +6,7 @@
                 <v-col cols="3" 
                 md="2"
                 class="pa-0">
-                    <v-col 
+                    <!-- <v-col 
                     class="user-pro-img"
                     justify="center"
                     
@@ -14,7 +14,7 @@
                         <img
                             src="http://via.placeholder.com/170x170"
                             alt="">
-                    </v-col>
+                    </v-col> -->
                     <menu-instituicao :show-avatar="false"/>
                 </v-col>
                 <v-col cols="9" 

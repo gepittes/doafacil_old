@@ -1,14 +1,5 @@
 <template>
     <v-flex class="mt-3">
-        <v-row
-            v-if="showAvatar"
-            id="avatar">
-            <div class="user-pro-img">
-                <img
-                    src="http://via.placeholder.com/150x150"
-                    alt="">
-            </div>
-        </v-row>
         <v-list
             class="justify-content-start"
             nav
@@ -35,7 +26,6 @@
                 </v-list-item>
             </v-list-item-group>
         </v-list>
-        
     </v-flex>
 </template>
 
@@ -53,10 +43,10 @@ export default {
             type: Boolean,
             default: true,
         },
-        showAvatar: {
-            type: Boolean,
-            default: true,
-        },
+        // showAvatar: {
+        //     type: Boolean,
+        //     default: true,
+        // },
     },
     data() {
         return {
@@ -81,7 +71,7 @@ export default {
                 {
                     icon: 'contacts',
                     text: 'Ponto de Doaçao',
-                    to: '/doacao',
+                    to: '/pontos',
                 },
                 {
                     text: 'Instituições',
@@ -112,21 +102,21 @@ export default {
             this.$emit('input', val);
         },
     },
-    created(){
-        this.obterMenusLaterais(this.accountInfo)
-    },
+    // created(){
+    //     this.obterMenusLaterais(this.accountInfo)
+    // },
 
     methods: {
         // Fica ativado por enquanto depois retira
-        obterMenusLaterais(value) {
-            if (value.is_admin === true) {
-                this.items.push({
-                    icon: "edit",
-                    text: "Administração",
-                    to: "/administracao"
-                });
-            }
-        },
+        // obterMenusLaterais(value) {
+        //     if (value.is_admin === true) {
+        //         this.items.push({
+        //             icon: "edit",
+        //             text: "Administração",
+        //             to: "/administracao"
+        //         });
+        //     }
+        // },
     },
 };
 </script>

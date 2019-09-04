@@ -1,8 +1,8 @@
 <template>
     <div>
-        <template>
+        <!-- <template>
             <BarraLateral :drawer="drawer"/>
-        </template>
+        </template> -->
 
         <v-app-bar
             :clipped-left="clipped"
