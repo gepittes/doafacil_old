@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PontoDeDoacao;
 use Illuminate\Http\Request;
 use Psr\Http\Message\ServerRequestInterface;
+use Laravel\Lumen\Routing\Controller;
 
 class PontoDeDoacaoController extends Controller
 {

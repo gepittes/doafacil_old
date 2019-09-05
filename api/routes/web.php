@@ -20,10 +20,9 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
     $router->post('/autenticacao/login', 'AutenticacaoController@post');
 
     $router->get('/ponto', 'PontoDeDoacaoController@get');
-
+    $router->post('/ponto', 'PontoDeDoacaoController@post');
     $router->patch('/ponto/{id}', 'PontoDeDoacaoController@patch');
     $router->delete('/ponto/{id}', 'PontoDeDoacaoController@delete');
-    $router->post('/ponto', 'PontoDeDoacaoController@post');
     $router->post('/conta', 'ContaController@post');
     $router->get('/instituicao', 'InstituicaoController@get');
     $router->get('/instituicao/buscar/{id}', 'InstituicaoController@buscarInsti');

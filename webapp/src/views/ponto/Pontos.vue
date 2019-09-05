@@ -133,6 +133,7 @@ export default {
 
         }),
         salvar() {
+            
             this.cadastraPontoDeDoacao(this.ponto)
             // Validar formulário
             // if (this.$refs.form.validate()) {

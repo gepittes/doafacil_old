@@ -23,10 +23,8 @@ export const removerPontoDeDoacao = ({ dispatch, commit }, pontoId) => {
     });
 };
 
-export const cadastraPontoDeDoacao = ({ dispatch, commit }, ponto) => requisicaoAutorizada.post('http://localhost/v1/ponto', ponto).then((response) => {
+export const cadastraPontoDeDoacao = ({ dispatch, commit }, ponto) => axios.post('http://localhost/v1/ponto', ponto).then((response) => {
     const { data } = response;
-    console.log(ponto);
-    console.log(data.data);
     commit(types.ACRESCENTAR_PONTO_DE_DOACAO, data.data);
     dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
 }).catch((error) => {
