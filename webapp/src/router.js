@@ -53,6 +53,7 @@ const routesObject = [
     {
         path: '/cadastrar',
         component: Cadastrar,
+        meta: { layout: 'no-side-bar' },
     },
     {
         path: '*',
