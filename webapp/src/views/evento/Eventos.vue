@@ -12,17 +12,28 @@
                     label="Selecione uma instituição"
                     hide-details
                     prepend-icon="list"
+                    v-model="instiSelected"
                     single-line
+                    color="green"
+                    autofocus
                 ></v-select>
             </v-col>
             <v-col class="text-center" xl="2" md="3">
-                <v-btn rounded color="green" dark v-if="!this.isVisible" @click="openPainel">Adicionar</v-btn>
+                <v-btn rounded
+                       color="green"
+                       dark
+                       v-if="!this.isVisible"
+                       @click="openPainel"
+                       :disabled="this.isDisable"
+                >Adicionar</v-btn>
             </v-col>
         </v-row>
 
         <v-row justify="center">
             <v-col xl="10">
-                <v-expansion-panels class="mb-3">
+                <v-expansion-panels class="mb-3"
+                                    :disabled="this.isDisable"
+                >
                     <v-expansion-panel>
                         <v-expansion-panel-header>Caledário de Eventos</v-expansion-panel-header>
                         <v-expansion-panel-content>
@@ -34,7 +45,9 @@
                 <v-expand-transition>
                     <v-expansion-panels class="mb-3"
                                         v-if="this.isVisible"
-                                        :value="this.statusPainel">
+                                        :value="this.statusPainel"
+                                        :disabled="this.isDisable"
+                    >
                         <v-expansion-panel>
                             <v-expansion-panel-header expand-icon="fa fa-plus">Criação de Evento
                             </v-expansion-panel-header>
@@ -45,7 +58,9 @@
                     </v-expansion-panels>
                 </v-expand-transition>
 
-                <v-expansion-panels class="mb-3">
+                <v-expansion-panels class="mb-3"
+                                    :disabled="this.isDisable"
+                >
                     <v-expansion-panel>
                         <v-expansion-panel-header>Gerenciar Eventos</v-expansion-panel-header>
                         <v-expansion-panel-content>
@@ -82,7 +97,13 @@
         data() {
             return {
                 isVisible: false,
+                isDisable: true,
+                instiSelected: {}
             }
+        },
+
+        watch: {
+            instiSelected(){if(this.instiSelected) {this.isDisable = false}}
         },
 
         computed: {
