@@ -97,7 +97,7 @@
                 <v-col xl="6" md="6">
                     <v-row justify="center">
                         <!-- MAP HERE -->
-                        <v-img src="https://via.placeholder.com/600x500" width="600" height="500"/>
+                        <v-img src="https://i.imgur.com/O6ZQx8b.png" width="600" height="500"/>
                     </v-row>
                 </v-col>
             </v-row>
@@ -144,9 +144,12 @@
             }),
         },
         methods: {
-            ...mapActions({}),
+            ...mapActions({
+                statusPnlCreate: 'evento/statusPnlCreate',
+            }),
 
             closeDialog() {
+                this.statusPnlCreate([]);
                 this.resetValidation();
                 this.reset();
             },
@@ -156,7 +159,7 @@
             },
 
             reset() {
-
+                this.evento = {}
             },
 
             salvar() {

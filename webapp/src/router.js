@@ -12,6 +12,7 @@ import Conta from './modules/conta/Conta.vue';
 import Configuracao from './modules/core/Configuracao.vue';
 import store from './store';
 import { obterInformacoesJWT } from './modules/account/_helpers/jwt';
+import Eventos from "./views/evento/Eventos";
 
 Vue.use(Router);
 
@@ -33,13 +34,19 @@ const routesObject = [
         },
     },
     {
+        path: '/eventos',
+        component: Eventos,
+        meta: {
+            title: 'Eventos'
+        }
+    },
+    {
         path: '/instituicoes',
         component: Instituicoes,
         name: 'instituicoes',
         meta: {
             title: 'instituicoes',
         },
-
     },
     {
         path: '/login',

@@ -15,8 +15,8 @@
                     single-line
                 ></v-select>
             </v-col>
-            <v-col class="text-center" xl="2" md="3" @click="openPainel">
-                <v-btn rounded color="green" dark v-if="!this.isOpenCreate">Adicionar</v-btn>
+            <v-col class="text-center" xl="2" md="3">
+                <v-btn rounded color="green" dark v-if="!this.isVisible" @click="openPainel">Adicionar</v-btn>
             </v-col>
         </v-row>
 
@@ -33,7 +33,7 @@
 
                 <v-expand-transition>
                     <v-expansion-panels class="mb-3"
-                                        v-if="this.isOpenCreate"
+                                        v-if="this.isVisible"
                                         :value="this.statusPainel">
                         <v-expansion-panel>
                             <v-expansion-panel-header expand-icon="fa fa-plus">Criação de Evento
@@ -81,27 +81,27 @@
         components: {EventoFormulario, EventoCard, Calendario},
         data() {
             return {
-                isOpenCreate: false,
-                statusPainel: 1
+                isVisible: false,
             }
         },
-
 
         computed: {
             ...mapGetters({
                 instituicoes: 'instituicao/instituicao',
-                accountInfo: 'account/accountInfo'
+                accountInfo: 'account/accountInfo',
+                statusPainel: 'evento/getStatusPnlCreate'
             })
         },
 
         methods: {
             ...mapActions({
                 obterInstiUser: 'instituicao/obterInstiUser',
+                statusPnlCreate: 'evento/statusPnlCreate'
             }),
             openPainel() {
-                this.isOpenCreate = !this.isOpenCreate;
+                this.isVisible = !this.isVisible;
                 setTimeout(() => {
-                    this.statusPainel = 0
+                    this.statusPnlCreate(0)
                 }, 300)
             }
         },
