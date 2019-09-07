@@ -23,18 +23,52 @@
                 >
                     <router-view/>
                 </v-col>
-            </v-row>   
+            </v-row>
+            <alerta
+                v-if="alert.message != null && alert.message_type != null"
+                :color="alert.message_type"
+            >{{ alert.message }}
+            </alerta> 
         </v-container>
     </v-app>
 </template>
 <script>
+
+import { mapState, mapActions, mapGetters } from 'vuex';
 import AppBar from '../../modules/core/AppBar'
 import MenuInstituicao from '../../modules/core/MenuInstituicao.vue';
+import Alerta from '../../modules/alert/Alerta.vue';
 
 
 export default {
     name: 'Main',
-    components: { MenuInstituicao, AppBar },
+    components: { 
+        MenuInstituicao, 
+        Alerta,
+        AppBar},
+    computed: {
+        options() {
+            return {
+                duration: 1300,
+                offset: 0,
+                easing: 'easeInOutCubic',
+            };
+        },
+        ...mapState({
+            alert: state => state.alert,
+            // isLoggedIn: state => state.isLoggedIn
+            // status: state => state.status
+        }),
+
+    },
+    mounted() {
+        this.loading = true;
+    },
+    methods: {
+        ...mapActions({
+            clearAlert: 'alert/clear',
+        }),
+    },
     
 };
 </script>
