@@ -6,6 +6,7 @@ import PerfilInstituicao from './views/Instituicao/Perfil.vue';
 import Cadastrar from './modules/conta/Cadastrar.vue';
 import Administracao from './modules/core/Administracao.vue';
 import Pontos from './views/ponto/Pontos.vue';
+import PontoPerfil from './views/ponto/Perfil.vue';
 import Home from './views/home/Home.vue';
 import NaoEncontrado from './modules/core/NaoEncontrado.vue';
 import Conta from './modules/conta/Conta.vue';
@@ -32,6 +33,12 @@ const routesObject = [
         meta: {
             title: 'Principal',
         },
+    },
+    {
+        path: '/ponto/:id',
+        component: PontoPerfil,
+        name: 'pontoPerfil',
+        props: true,
     },
     {
         path: '/pontos',
