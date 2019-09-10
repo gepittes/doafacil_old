@@ -25,7 +25,6 @@ const routesObject = [
         props: true,
         meta: {
             title: 'perfil',
-            layout: 'no-side-bar',
         },
     },
     {
