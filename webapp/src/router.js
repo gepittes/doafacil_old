@@ -14,6 +14,7 @@ import Configuracao from './modules/core/Configuracao.vue';
 import store from './store';
 import Main from './views/Main.vue';
 import { obterInformacoesJWT } from './modules/account/_helpers/jwt';
+import Eventos from "./views/evento/Eventos";
 
 Vue.use(Router);
 
@@ -48,9 +49,19 @@ const routesObject = [
         },
     },
     {
+        path: '/eventos',
+        component: Eventos,
+        meta: {
+            title: 'Eventos'
+        }
+    },
+    {
         path: '/instituicoes',
         component: Instituicoes,
         name: 'instituicoes',
+        meta: {
+            title: 'instituicoes',
+        },
     },
     {
         path: '/login',

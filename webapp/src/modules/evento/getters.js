@@ -1,0 +1,1 @@
+export const getStatusPnlCreate = (state) => state.statusPainel;
