@@ -59,30 +59,38 @@ export default {
             item: 0,
             items: [
                 {
-                    icon: 'home',
+                    icon: 'fa fa-home',
                     text: 'Inicio',
                     to: '/main',
                 },
                 {
-                    icon: 'home',
-                    text: 'Site',
-                    to: '/',
-                },
-                {
-                    icon: 'contacts',
+                    icon: 'fa fa-map',
                     text: 'Ponto de Doaçao',
                     to: '/pontos',
                 },
                 {
-                    text: 'Instituições',
-                    to: '/instituicoes',
-                    icon: 'list',
+                    icon: 'fa fa-calendar-alt',
+                    text: 'Eventos',
+                    to: '/eventos',
                 },
                 {
-                    icon: 'settings',
+                    text: 'Instituições',
+                    to: '/instituicoes',
+                    icon: 'fa fa-stream',
+                },
+                {
+                    icon: 'fa fa-cog',
                     text: 'Configuração',
                     to: '/configuracao',
                 },
+                { 
+                    icon: "fa fa-comment-alt", 
+                    text: "Enviar feedback" 
+                },
+                { 
+                    icon: "fa fa-question-circle", 
+                    text: "Ajuda"
+                }
 
             ],
         };
