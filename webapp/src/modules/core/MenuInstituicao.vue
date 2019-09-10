@@ -1,14 +1,5 @@
 <template>
-    <div id="menu">
-        <div
-            v-if="showAvatar"
-            id="avatar">
-            <div class="user-pro-img">
-                <img
-                    src="http://via.placeholder.com/150x150"
-                    alt="">
-            </div>
-        </div>
+    <v-flex class="mt-3">
         <v-list
             class="justify-content-start"
             nav
@@ -35,9 +26,7 @@
                 </v-list-item>
             </v-list-item-group>
         </v-list>
-    </div>
-
-
+    </v-flex>
 </template>
 
 <script>
@@ -54,10 +43,10 @@ export default {
             type: Boolean,
             default: true,
         },
-        showAvatar: {
-            type: Boolean,
-            default: true,
-        },
+        // showAvatar: {
+        //     type: Boolean,
+        //     default: true,
+        // },
     },
     data() {
         return {
@@ -70,35 +59,38 @@ export default {
             item: 0,
             items: [
                 {
-                    icon: 'home',
+                    icon: 'fa fa-home',
                     text: 'Inicio',
                     to: '/main',
                 },
                 {
-                    icon: 'home',
-                    text: 'Site',
-                    to: '/',
+                    icon: 'fa fa-map',
+                    text: 'Ponto de Doaçao',
+                    to: '/pontos',
                 },
                 {
-                    icon: 'contacts',
-                    text: 'Ponto de Doaçao',
-                    to: '/doacao',
+                    icon: 'fa fa-calendar-alt',
+                    text: 'Eventos',
+                    to: '/eventos',
                 },
                 {
                     text: 'Instituições',
                     to: '/instituicoes',
-                    icon: 'list',
+                    icon: 'fa fa-stream',
                 },
                 {
-                    icon: 'help',
-                    text: 'Sobre',
-                    to: '/#/sobre',
-                },
-                {
-                    icon: 'settings',
+                    icon: 'fa fa-cog',
                     text: 'Configuração',
                     to: '/configuracao',
                 },
+                { 
+                    icon: "fa fa-comment-alt", 
+                    text: "Enviar feedback" 
+                },
+                { 
+                    icon: "fa fa-question-circle", 
+                    text: "Ajuda"
+                }
 
             ],
         };
@@ -118,21 +110,21 @@ export default {
             this.$emit('input', val);
         },
     },
-    created(){
-        this.obterMenusLaterais(this.accountInfo)
-    },
+    // created(){
+    //     this.obterMenusLaterais(this.accountInfo)
+    // },
 
     methods: {
         // Fica ativado por enquanto depois retira
-        obterMenusLaterais(value) {
-            if (value.is_admin === true) {
-                this.items.push({
-                    icon: "edit",
-                    text: "Administração",
-                    to: "/administracao"
-                });
-            }
-        },
+        // obterMenusLaterais(value) {
+        //     if (value.is_admin === true) {
+        //         this.items.push({
+        //             icon: "edit",
+        //             text: "Administração",
+        //             to: "/administracao"
+        //         });
+        //     }
+        // },
     },
 };
 </script>

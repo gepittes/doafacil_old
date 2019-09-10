@@ -5,12 +5,14 @@ import Instituicoes from './views/Instituicao/Instituicoes.vue';
 import PerfilInstituicao from './views/Instituicao/Perfil.vue';
 import Cadastrar from './modules/conta/Cadastrar.vue';
 import Administracao from './modules/core/Administracao.vue';
-import PontoDoacao from './components/doacao/PontoDoacao.vue';
+import Pontos from './views/ponto/Pontos.vue';
+import PontoPerfil from './views/ponto/Perfil.vue';
 import Home from './views/home/Home.vue';
 import NaoEncontrado from './modules/core/NaoEncontrado.vue';
 import Conta from './modules/conta/Conta.vue';
 import Configuracao from './modules/core/Configuracao.vue';
 import store from './store';
+import Main from './views/Main.vue';
 import { obterInformacoesJWT } from './modules/account/_helpers/jwt';
 import Eventos from "./views/evento/Eventos";
 
@@ -25,12 +27,24 @@ const routesObject = [
             title: 'perfil',
         },
     },
-    { path: '/sobre', redirect: '/' },
     {
-        path: '/doacao',
-        component: PontoDoacao,
+        path: '/main',
+        component: Main,
         meta: {
-            title: 'Ponto de Doação',
+            title: 'Principal',
+        },
+    },
+    {
+        path: '/ponto/:id',
+        component: PontoPerfil,
+        name: 'pontoPerfil',
+        props: true,
+    },
+    {
+        path: '/pontos',
+        component: Pontos,
+        meta: {
+            title: 'Principal',
         },
     },
     {
@@ -51,19 +65,23 @@ const routesObject = [
     {
         path: '/login',
         component: Login,
+        meta: { layout: 'no-side-bar' },
     },
     {
         path: '/cadastrar',
         component: Cadastrar,
+        meta: { layout: 'no-side-bar' },
     },
     {
         path: '*',
         component: NaoEncontrado,
+        meta: { layout: 'no-side-bar' },
     },
     {
         path: '/',
         component: Home,
         name: 'home',
+        meta: { layout: 'no-side-bar' },
     },
     {
         path: '/configuracao',
