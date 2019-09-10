@@ -67,13 +67,13 @@ export default {
       rightDrawer: false,
       item: 0,
       items: [
-        { icon: "home", text: "Inicio", to: "/"},
-        { icon: "contacts", text: "Ponto de Doaçao", to: "/doacao" },
-        { text: "Minhas Instituições", to: "/instituicoes", icon: "list" },
-        { icon: "help", text: "Sobre", to: "/#/sobre" },
-        { icon: "settings", text: "Configuração" },
-        { icon: "chat_bubble", text: "Enviar feedback" },
-        { icon: "help", text: "Ajuda" },
+        { icon: "fa fa-home", text: "Inicio", to: "/"},
+        { icon: "fa fa-stream" , text: "Minhas Instituições", to: "/instituicoes"},
+        { icon: "fa fa-map", text: "Ponto de Doação", to: "/doacao" },
+        { icon: "fa fa-calendar-alt", text: "Eventos", to: "/eventos" },
+        { icon: "fa fa-cog", text: "Configuração" },
+        { icon: "fa fa-comment-alt", text: "Enviar feedback" },
+        { icon: "fa fa-question-circle", text: "Ajuda"}
       ],
     };
   },
