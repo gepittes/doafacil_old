@@ -1,8 +1,8 @@
 <template>
     <div>
-        <!-- <template>
+        <template  v-if="window.width < 960">
             <BarraLateral :drawer="drawer"/>
-        </template> -->
+        </template>
 
         <v-app-bar
             :clipped-left="clipped"
@@ -91,7 +91,7 @@
                 <v-row align="center" justify="end" v-if="status.loggedIn">
                     <v-col md="8" lg="6" xl="5">
                         <v-row align="center" justify="end">
-                            <v-col md="1" lg="2" xl="1" >
+                            <v-col md="1" lg="2" xl="1" v-if="window.width < 960" >
                                 <v-btn class="transparent elevation-0" @click.stop="drawer = !drawer">
                                     <v-icon>fa fa-list</v-icon>
                                 </v-btn>
