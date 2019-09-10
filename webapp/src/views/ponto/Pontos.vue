@@ -3,17 +3,15 @@
         <v-container
             fluid
             grid-list-md>
-
-                <!-- <v-layout
+                <v-layout
                     row
-                    wrap>
-                    <Ponto/>
+                    wrap>        
                     <Ponto
                         v-for="ponto in pontoIniciais"
                         :key="ponto.id"
                         :ponto="ponto"
                     />
-                </v-layout> -->
+                </v-layout>
             <v-dialog
             v-model="dialog"
             width="500"
@@ -108,29 +106,30 @@ export default {
             // rules: {required: value => !!value || 'Campo Obrigatório.'}
         };
     },
-    // computed: {
-    //     ...mapGetters({
-    //         pontos: 'ponto/ponto',
+    computed: {
+        ...mapGetters({
+            pontos: 'ponto/ponto',
         
-    //     }),
-    // },
-    // watch: {
-    //         pontos(value) {
-    //         if ('error' in value) {
-    //             this.pontoIniciais = {};
-    //         } else {
-    //             this.pontoIniciais = value;
-    //         }
-    //     },
-    // },
+        }),
+    },
+    watch: {
+            pontos(value) {
+                console.log(value);
+            if ('error' in value) {
+                this.pontoIniciais = {};
+            } else {
+                this.pontoIniciais = value;
+            }
+        },
+    },
 
-    // created() {
-    //     this.obterInstituicoes();
-    // },
+    created() {
+        this.obterPontoDeDoacoes();
+    },
     methods: {
         ...mapActions({
+            obterPontoDeDoacoes: 'ponto/obterPontoDeDoacoes',
             cadastraPontoDeDoacao: 'ponto/cadastraPontoDeDoacao',
-
         }),
         salvar() {
             

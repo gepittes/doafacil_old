@@ -1,1 +1,1 @@
-export const pronto = state => state.pronto;
+export const ponto = state => state.ponto;
