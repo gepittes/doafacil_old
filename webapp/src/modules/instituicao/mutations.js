@@ -17,7 +17,6 @@ export const mutations = {
     },
     [types.ESTADO_DIALOG](state, payload){
         state.dialog = payload;
-        state.instituicaoEditar = []
     },
     [types.INSTITUICAO_EDITAR](state, payload) {
         state.instituicaoEditar = payload
