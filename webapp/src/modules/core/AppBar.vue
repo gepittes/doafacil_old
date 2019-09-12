@@ -211,9 +211,6 @@
                     const {email, password} = this;
                     if (email && password) {
                         this.login({email, password});
-                        // todo error console tratar ao errar login CORS
-                        // #Pedro Issue
-                        // this.clear();
                     }
                 }
             },
