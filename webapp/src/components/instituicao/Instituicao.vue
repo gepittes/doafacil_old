@@ -11,9 +11,6 @@
                                 v-text="instituicao.nome">
                 </v-card-title>
             </v-img>
-<!--            <div class="ma-1">-->
-<!--                <v-rating v-model="votos"></v-rating>-->
-<!--            </div>-->
             <v-card-actions>
                 <div class="flex-grow-1"></div>
                 <v-btn icon :to="`/instituicao/${instituicao.id}`">
@@ -44,9 +41,9 @@
                         <div class="title text--primary">Horários</div>
                         <v-layout>
                             <v-flex>
-                                <b>Abertura: </b><v-chip class="ma-1" color="green lighten-2">{{instituicao.hora_open}} hrs</v-chip>
+                                <b>Abertura: </b><v-chip class="ma-1" color="green lighten-1"><b>{{instituicao.hora_open}} hrs</b></v-chip>
                                 <v-spacer></v-spacer>
-                                <b>Fechamento: </b><v-chip class="ma-1" color="red lighten-2">{{instituicao.hora_close}} hrs</v-chip>
+                                <b>Fechamento: </b><v-chip class="ma-1" color="red lighten-1"><b>{{instituicao.hora_close}} hrs</b></v-chip>
                             </v-flex>
                             <v-flex>
                                 <b>UF: </b><v-chip class="ma-1">{{instituicao.uf}}</v-chip>
@@ -74,7 +71,6 @@
         props: ['instituicao'],
         data() {
             return {
-                votos: 3,
                 show: false,
             };
         },
@@ -85,11 +81,8 @@
             }),
 
             editar(instituicao) {
-                console.log(instituicao)
-
                 this.statusDialog(true);
                 this.insitituicaoEditar(instituicao);
-
             }
         }
     };

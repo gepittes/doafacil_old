@@ -19,9 +19,6 @@
                         </v-list-item>
                         <v-form ref="form" lazy-validation @submit.prevent="salvar()">
                             <v-flex left justify-center>
-                                <v-text-field class="hidden-screen-only"
-                                    v-model="instituicao.fk_usuario_id = this.accountInfo.user_id"
-                                />
                                 <v-text-field
                                     v-if="false"
                                     v-model="instituicao.id"
@@ -148,8 +145,7 @@
     import {mask} from 'vue-the-mask'
 
     export default {
-        name: 'NovaInstituicao',
-        props: ['instituicaoEditar'],
+        name: 'FormInstituicao',
         directives: {mask},
         data() {
             return {
@@ -168,6 +164,7 @@
             ...mapGetters({
                 dialog: 'instituicao/getDialog',
                 accountInfo: 'account/accountInfo',
+                getInstituicaoEditar: 'instituicao/getInstituicaEditar',
             }),
             cidade() {
                 this.estados.forEach(e => {
@@ -176,25 +173,31 @@
                     }
                 });
                 return this.cidades
-            }
+            },
         },
         created() {
-            this.carregarEstados()
+            this.carregarEstados();
         },
         watch: {
-            instituicaoEditar(value) {
-                if ('error' in value) {
-                    alert(value.error);
-                    this.instituicao = {};
-                } else {
-                    this.instituicao = value;
-                }
+            getInstituicaoEditar(value) {
+
+                this.carregarEstados();
+                this.instituicao.fk_usuario_id = value.fk_usuario_id;
+                this.instituicao.hora_open = value.hora_open;
+                this.instituicao.hora_close = value.hora_close;
+                this.instituicao.id = value.id;
+                this.instituicao.localidade = value.localidade;
+                this.instituicao.nome = value.nome;
+                this.instituicao.telefone = value.telefone;
+                this.instituicao.uf = value.uf;
+
             },
         },
         methods: {
             ...mapActions({
                 cadastrarInstituicao: 'instituicao/cadastrarInstituicao',
                 atualizarInstituicao: 'instituicao/atualizarInstituicao',
+                insitituicaoEditar: 'instituicao/insitituicaoEditar',
                 statusDialog: 'instituicao/setDialog'
             }),
 
@@ -202,7 +205,7 @@
                 this.statusDialog(false);
                 this.resetValidation();
                 this.reset();
-                this.instituicaoEditar = {};
+                this.insitituicaoEditar({ })
             },
 
             resetValidation() {
@@ -216,16 +219,16 @@
             salvar() {
                 this.submitted = true;
 
-                // Validar formulário
                 if (this.$refs.form.validate()) {
+
+                    this.instituicao.fk_usuario_id = this.accountInfo.user_id;
 
                     // veririfica se o formulario está preenchido  para atualizar se não criando novo
                     if (this.instituicao.id) {
-                        this.atualizarInstituicao(this.instituicaoEditar)
+                        this.atualizarInstituicao(this.instituicao)
                     } else {
                         this.cadastrarInstituicao(this.instituicao)
                     }
-                    this.reset();
                     this.closeDialog();
                 }
             },
