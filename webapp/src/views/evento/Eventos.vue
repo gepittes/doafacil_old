@@ -2,7 +2,7 @@
     <v-container>
         <v-row justify="center" align="center">
             <v-col xl="2" md="3">
-                <v-subheader class="text-uppercase font-weight-bold">Instituição Seleciona:</v-subheader>
+                <v-subheader class="text-uppercase font-weight-bold">Instituição Selecionada:</v-subheader>
             </v-col>
             <v-col xl="4" md="4" cols="12">
                 <v-select
@@ -52,7 +52,7 @@
                             <v-expansion-panel-header expand-icon="fa fa-plus">Criação de Evento
                             </v-expansion-panel-header>
                             <v-expansion-panel-content>
-                                <EventoFormulario/>
+                                <EventoFormulario :instituicao-select="ObjInstiSelect" />
                             </v-expansion-panel-content>
                         </v-expansion-panel>
                     </v-expansion-panels>
@@ -98,12 +98,23 @@
             return {
                 isVisible: false,
                 isDisable: true,
-                instiSelected: {}
+                instiSelected: {},
+                ObjInstiSelect: {}
             }
         },
 
         watch: {
-            instiSelected(){if(this.instiSelected) {this.isDisable = false}}
+            instiSelected(value) {
+                if (this.instiSelected) {
+                    this.isDisable = false
+                }
+                // Serve para coletar o objeto da instiuicao que esta sendo selecionado.
+                this.instituicoes.forEach(e => {
+                    if(e.nome === this.instiSelected) {
+                        this.ObjInstiSelect = e;
+                    }
+                });
+            }
         },
 
         computed: {
