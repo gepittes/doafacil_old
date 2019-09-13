@@ -19,7 +19,7 @@ class PontoDeDoacaoController extends Controller
     public function post(ServerRequestInterface $request)
     {
         $dados = $request->getParsedBody();
-
+      
         return response()->json(PontoDeDoacao::create($dados));
     }
 
