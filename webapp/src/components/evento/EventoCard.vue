@@ -35,7 +35,7 @@
                     edit
                 </v-icon>
             </v-btn>
-            <v-btn icon>
+            <v-btn icon @click="deletarInti(evento.id)">
                 <v-icon>
                     delete
                 </v-icon>
@@ -45,6 +45,8 @@
 </template>
 
 <script>
+    import {mapActions} from 'vuex'
+
     export default {
         name: 'eventoCard',
         props: ['evento'],
@@ -53,6 +55,9 @@
         }),
 
         methods: {
+            ...mapActions({
+                deletarInti : 'evento/deletarEvento'
+            }),
             openMap() {
                 //open Map event here!
             }
