@@ -34,43 +34,40 @@ export const cadastrarInstituicao = ({ dispatch, commit }, instituicao) => axios
     });
 });
 
-export const atualizarInstituicao = ({ dispatch, commit }, instituicao) => requisicaoAutorizada.patch(`http://localhost/v1/instituicao/${instituicao.id}`, instituicao).then(() => {
-    commit(types.ATUALIZAR_INSTITUICAO, instituicao);
-    dispatch('alert/success', 'Instituicao atualizado com sucesso!', { root: true });
-}).catch((error) => {
-    dispatch('alert/error', error.response.data.error, {
-        root: true,
+export const atualizarInstituicao = ({ dispatch, commit }, instituicao) => requisicaoAutorizada.patch(`http://localhost/v1/instituicao/${instituicao.id}`, instituicao)
+    .then(() => {
+        commit(types.ATUALIZAR_INSTITUICAO, instituicao);
+        dispatch('alert/success', 'Instituicao atualizado com sucesso!', { root: true });
+    }).catch((error) => {
+        dispatch('alert/error', error.response.data.error, { root: true });
     });
-});
 
-export const setDialog = ({commit}, payload) => {
-    commit(types.ESTADO_DIALOG, payload)
+export const setDialog = ({ commit }, payload) => {
+    commit(types.ESTADO_DIALOG, payload);
 };
 
-export const obterInstiUser = ({commit, dispatch}, user_id) => {
-    requisicaoAutorizada.get(`http://localhost/v1/instituicao/user/buscar/${user_id}`)
+export const obterInstiUser = ({ commit, dispatch }, userId) => {
+    requisicaoAutorizada.get(`http://localhost/v1/instituicao/user/buscar/${userId}`)
         .then((response) => {
-            const {data} = response;
+            const { data } = response;
             commit(types.OBTER_INSTITUICOES, data.data);
         }).catch((error) => {
-        dispatch('alert/error', error.response.data.error, {
-            root: true,
+            dispatch('alert/error', error.response.data.error, { root: true });
         });
-    });
 };
 
-export const insitituicaoEditar = ({commit}, payload) => {
-   commit(types.INSTITUICAO_EDITAR, payload)
+export const insitituicaoEditar = ({ commit }, payload) => {
+    commit(types.INSTITUICAO_EDITAR, payload);
 };
 
-export const buscartInstituicao = ({commit, dispatch}, instituicaoId) => {
-    requisicaoAutorizada.get(`http://localhost/v1/instituicao/buscar/${instituicaoId}`)
-        .then(resp => {
-            commit(types.INSTITUICAO_ENCONTRADA, resp.data.data[0])
+export const buscartInstituicao = ({ commit, dispatch }, instituicaoId) => {
+    axios.get(`http://localhost/v1/instituicao/${instituicaoId}`)
+        .then((resp) => {
+            commit(types.INSTITUICAO_ENCONTRADA, resp.data.data[0]);
         })
-        .catch(error => {
+        .catch((error) => {
             dispatch('alert/error', error, {
                 root: true,
             });
-        })
+        });
 };
