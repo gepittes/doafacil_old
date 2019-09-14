@@ -16,6 +16,14 @@ class CreatePontoDeDoacaosTable extends Migration
         Schema::create('app.ponto_de_doacoes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
+            $table->string('descricao');
+            $table->string('hora_open')->nullable();
+            $table->string('hora_close')->nullable();
+            $table->unsignedbigInteger('instituicao_id')
+                ->references('id')
+                ->on('app.instituicao')
+                ->onDelete('cascade');
+            $table->string('img')->nullable();
             $table->timestamps();
         });
     }
