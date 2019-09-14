@@ -19,10 +19,15 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
 
     $router->post('/autenticacao/login', 'AutenticacaoController@post');
 
-    $router->get('/ponto', 'PontoDeDoacaoController@get');
-    $router->post('/ponto', 'PontoDeDoacaoController@post');
-    $router->patch('/ponto/{id}', 'PontoDeDoacaoController@patch');
-    $router->delete('/ponto/{id}', 'PontoDeDoacaoController@delete');
+    $router->group(['namespace' => 'Ponto'], function () use ($router){
+        $router->get('/ponto', 'PontoController@get');
+        $router->get('/pontoByInst/{id}', 'PontoController@getPontoByInst');
+        $router->post('/ponto', 'PontoController@post');
+        $router->patch('/ponto/{id}', 'PontoController@patch');
+        $router->delete('/ponto/{id}', 'PontoController@delete');
+    });
+
+
     $router->post('/conta', 'ContaController@post');
     $router->get('/instituicao', 'InstituicaoController@get');
     $router->get('/instituicao/buscar/{id}', 'InstituicaoController@buscarInsti');

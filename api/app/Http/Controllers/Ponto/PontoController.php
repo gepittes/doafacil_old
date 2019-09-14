@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Ponto;
 
 use App\Models\PontoDeDoacao;
 use Illuminate\Http\Request;
 use Psr\Http\Message\ServerRequestInterface;
 use Laravel\Lumen\Routing\Controller;
 
-class PontoDeDoacaoController extends Controller
+class PontoController extends Controller
 {
     public function get()
     {
@@ -43,6 +43,11 @@ class PontoDeDoacaoController extends Controller
         PontoDeDoacao::destroy($id);
 
         return response()->json($pontoDeDoacao,'204');
+    }
+
+    public  function getPontoByInst($id)
+    {
+        return response(PontoDeDoacao::getPontoByInst($id),'201');
     }
 
 }

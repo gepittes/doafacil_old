@@ -16,4 +16,10 @@ class PontoDeDoacao extends Model
     ];
 
     protected $table = 'app.ponto_de_doacoes';
+
+    public static function getPontoByInst($id)
+    {
+        return PontoDeDoacao::where('instituicao_id','=',$id)->get();
+    }
+
 }

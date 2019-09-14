@@ -22,6 +22,17 @@ export const removerPontoDeDoacao = ({ dispatch, commit }, pontoId) => {
     });
 };
 
+export const getPontoByInst = ({ dispatch, commit }, instituicaoId) => {
+    axios.get(`http://localhost/v1/pontoByInst/${instituicaoId}`).then((response) => {
+        const { data } = response;
+        commit(types.GET_PONTO_BY_INSTITUICAO, data.data);
+    }).catch((error) => {
+        dispatch('alert/error', error.response.data.error, {
+            root: true,
+        });
+    });
+};
+
 export const cadastraPontoDeDoacao = ({ dispatch, commit }, ponto) => axios.post('http://localhost/v1/ponto', ponto).then((response) => {
     const { data } = response;
     commit(types.ACRESCENTAR_PONTO_DE_DOACAO, data.data);
@@ -34,7 +45,7 @@ export const cadastraPontoDeDoacao = ({ dispatch, commit }, ponto) => axios.post
 
 export const atualizarPontoDeDoacao = ({ dispatch, commit }, ponto) => axios.patch(`http://localhost/v1/ponto/${ponto.pontoId}`, ponto).then(() => {
     commit(types.ATUALIZAR_PONTO_DE_DOACAO, ponto);
-    dispatch('alert/success', 'Ponto de doação atualizado com sucesso!', { root: true });
+    dispatch('alert/success', 'PontoDeDoacao de doação atualizado com sucesso!', { root: true });
 }).catch((error) => {
     dispatch('alert/error', error.response.data.error, {
         root: true,

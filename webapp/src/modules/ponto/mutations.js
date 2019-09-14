@@ -15,4 +15,7 @@ export const mutations = {
         const index = state.ponto.findIndex(ponto => ponto.ponto_id === pontoEditada.ponto_id);
         Object.assign(state.ponto[index], pontoEditada);
     },
+    [types.GET_PONTO_BY_INSTITUICAO](state, ponto) {
+        state.ponto = ponto;
+    },
 };
