@@ -12,9 +12,21 @@ export const obterPontoDeDoacoes = ({ dispatch, commit }) => {
     });
 };
 
-export const removerPontoDeDoacao = ({ dispatch, commit }, pontoId) => {
+export const removerPonto = ({ dispatch, commit }, pontoId) => {
     axios.delete(`http://localhost/v1/ponto/${pontoId}`).then(() => {
         commit(types.DELETE_PONTO_DE_DOACAO, pontoId);
+        dispatch('alert/success', 'Ponto de Acesso excluido com sucesso!', { root: true });
+    }).catch((error) => {
+        dispatch('alert/error', error.response.data.error, {
+            root: true,
+        });
+    });
+};
+
+export const getPontoByInst = ({ dispatch, commit }, instituicaoId) => {
+    axios.get(`http://localhost/v1/pontoByInst/${instituicaoId}`).then((response) => {
+        const { data } = response;
+        commit(types.GET_PONTO_BY_INSTITUICAO, data.data);
     }).catch((error) => {
         dispatch('alert/error', error.response.data.error, {
             root: true,
@@ -25,18 +37,26 @@ export const removerPontoDeDoacao = ({ dispatch, commit }, pontoId) => {
 export const cadastraPontoDeDoacao = ({ dispatch, commit }, ponto) => axios.post('http://localhost/v1/ponto', ponto).then((response) => {
     const { data } = response;
     commit(types.ACRESCENTAR_PONTO_DE_DOACAO, data.data);
-    dispatch('alert/success', 'Cadastro realizado com sucesso!', { root: true });
+    dispatch('alert/success', 'Ponto de acesso criado com sucesso!', { root: true });
 }).catch((error) => {
     dispatch('alert/error', error.response.data.error, {
         root: true,
     });
 });
 
-export const atualizarPontoDeDoacao = ({ dispatch, commit }, ponto) => axios.patch(`http://localhost/v1/ponto/${ponto.pontoId}`, ponto).then(() => {
+export const atualizarPonto = ({ dispatch, commit }, ponto) => axios.patch(`http://localhost/v1/ponto/${ponto.id}`, ponto).then(() => {
     commit(types.ATUALIZAR_PONTO_DE_DOACAO, ponto);
-    dispatch('alert/success', 'Ponto de doação atualizado com sucesso!', { root: true });
+    dispatch('alert/success', 'Ponto foi atualizado com sucesso!', { root: true });
 }).catch((error) => {
     dispatch('alert/error', error.response.data.error, {
         root: true,
     });
 });
+
+export const setPontoEditar = ({ commit }, pontoEditar) => {
+    commit(types.SET_PONTO_EDITAR, pontoEditar);
+};
+
+export const cleanPontoEditar = ({ commit }, pontoEditar) => {
+    commit(types.CLEAN_PONTO_EDITAR, pontoEditar);
+};
