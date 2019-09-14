@@ -1,156 +1,155 @@
 <template>
-    <v-app>
-        <v-container
-            fluid
-            grid-list-md>
-                <v-layout
-                    row
-                    wrap>        
-                    <Ponto
-                        v-for="ponto in pontoIniciais"
-                        :key="ponto.id"
-                        :ponto="ponto"
-                    />
-                </v-layout>
-            <v-dialog
-            v-model="dialog"
-            width="500"
-            >
-            <template v-slot:activator="{ on }">
+    <v-container>
+        <v-row
+            justify="center"
+            align="center">
+            <v-col
+                xl="2"
+                md="3">
+                <v-subheader class="text-uppercase font-weight-bold">Seleciona Instituição:</v-subheader>
+            </v-col>
+            <v-col
+                xl="4"
+                md="4"
+                cols="12">
+                <v-select
+                    :items="instituicoes"
+                    v-model="instiSelected"
+                    item-text="nome"
+                    item-value="id"
+                    menu-props="auto"
+                    label="Selecione uma instituição"
+                    hide-details
+                    prepend-icon="list"
+                    single-line
+                    color="green"
+                    autofocus
+                />
+            </v-col>
+            <v-col
+                class="text-center"
+                xl="2"
+                md="3">
                 <v-btn
-                    fab
-                    color="success"
+                    v-if="!isVisible"
+                    :disabled="isDisable"
+                    rounded
+                    color="green"
                     dark
-                    fixed
-                    bottom
-                    right
-                    v-on="on">
-                    <v-icon>add</v-icon>
+                    @click="openPainel"
+                >Adicionar
                 </v-btn>
-            </template>
+            </v-col>
+        </v-row>
 
-            <v-card>
-                <v-card-title
-                class="headline grey lighten-2"
-                primary-title
+        <v-row justify="center">
+            <v-col xl="10">
+                <v-expand-transition>
+                    <v-expansion-panels
+                        v-if="isVisible"
+                        :value="statusPainel"
+                        :disabled="isDisable"
+                        class="mb-3"
+                    >
+                        <v-expansion-panel>
+                            <v-expansion-panel-header expand-icon="fa fa-plus">Criar um ponto de doação
+                            </v-expansion-panel-header>
+                            <v-expansion-panel-content>
+                                <PontoFormulario
+                                    :insti-selected="instiSelected"
+                                    @closePainel="statusPainel = $event"
+                                />
+
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                    </v-expansion-panels>
+                </v-expand-transition>
+
+                <v-expansion-panels
+                    :disabled="isDisable"
+                    class="mb-3"
                 >
-                Criar novo Ponto de doação
-                </v-card-title>
+                    <v-expansion-panel>
+                        <v-expansion-panel-header>Gerenciar ponto de doação</v-expansion-panel-header>
+                        <v-expansion-panel-content>
+                            <v-container>
+                                <v-row justify="center">
+                                    <v-col
+                                        v-for="ponto in pontos"
+                                        :key="ponto.id"
+                                        xl="3"
+                                        md="4"
+                                    >
+                                        <Ponto
+                                            :ponto="ponto"
+                                            :update="update"/>
+                                    </v-col>
+                                </v-row>
+                            </v-container>
+                        </v-expansion-panel-content>
+                    </v-expansion-panel>
+                </v-expansion-panels>
+            </v-col>
+        </v-row>
+    </v-container>
 
-                <v-card-text>
-                        <v-flex left justify-center>
-                            <v-text-field
-                                v-model="ponto.nome"
-                                name="nome"
-                                label="Nome do ponto de Doação"/>
-                            <!-- <v-text-field
-                                required
-                                name="Rua"
-                                label="Rua"
-                            /> -->
-                            <!-- <v-text-field
-                                required
-                                name="Bairro"
-                                label="Bairro"
-                            />
-                            <v-text-field
-                                required
-                                name="Bairro"
-                                label="Cep"
-                            />
-                            <v-text-field
-                                required
-                                label="Estado"/>
-                            <v-text-field
-                                required
-                                label="Cidade"
-                            /> -->
-                        </v-flex>
-                        <v-card-actions>
-                            <v-btn
-                                color="secundary"
-                                type="cancel"
-                                class="ma ma-1"
-                                @click="dialog = false">Fechar
-                            </v-btn>
-                            <v-btn
-                                class="ma ma-1"
-                                color="primary"
-                                @click.native="salvar()">Salvar
-                            </v-btn>
-                        </v-card-actions>
-                </v-card-text>
-            </v-card>
-            </v-dialog>
-        </v-container>
-    </v-app>
 </template>
-<script>
 
-import { mapActions, mapGetters } from 'vuex';
-import Ponto from '../../components/ponto/Ponto';
+<script>
+import { mapGetters, mapActions } from 'vuex';
+
+import Ponto from '../../components/ponto/PontoCard';
+import PontoFormulario from '../../components/ponto/PontoFormulario';
 
 export default {
-    name: 'Pontos',
-    components: {
-        Ponto
-    },
+    name: 'Eventos',
+    components: { Ponto, PontoFormulario },
     data() {
         return {
-            submitted: false,
-            pontoIniciais: [],
-            dialog: false,
-            ponto: {
-                nome: null
-            },
-            // rules: {required: value => !!value || 'Campo Obrigatório.'}
+            statusPainel: [],
+            isVisible: false,
+            isDisable: true,
+            instiSelected: {},
+            pontoEditar: {},
         };
     },
     computed: {
         ...mapGetters({
+            instituicoes: 'instituicao/instituicao',
             pontos: 'ponto/ponto',
-        
+            accountInfo: 'account/accountInfo',
         }),
     },
     watch: {
-            pontos(value) {
-                console.log(value);
-            if ('error' in value) {
-                this.pontoIniciais = {};
-            } else {
-                this.pontoIniciais = value;
+        instiSelected() {
+            if (this.instiSelected) {
+                this.isDisable = false;
+                this.getPontoByInst(this.instiSelected);
             }
         },
     },
-
     created() {
-        this.obterPontoDeDoacoes();
+        this.obterInstiUser(this.accountInfo.user_id);
     },
     methods: {
         ...mapActions({
-            obterPontoDeDoacoes: 'ponto/obterPontoDeDoacoes',
-            cadastraPontoDeDoacao: 'ponto/cadastraPontoDeDoacao',
+            obterInstiUser: 'instituicao/obterInstiUser',
+            getPontoByInst: 'ponto/getPontoByInst',
+            setPontoEditar: 'ponto/setPontoEditar',
         }),
-        salvar() {
-            
-            this.cadastraPontoDeDoacao(this.ponto)
-            // Validar formulário
-            // if (this.$refs.form.validate()) {
-
-            //     // veririfica se o formulario está preenchido  para atualizar se não criando novo
-            //     if (this.instituicao.id) {
-            //         this.atualizarInstituicao(this.instituicaoEditar)
-            //     } else {
-            //         this.cadastrarInstituicao(this.instituicao)
-            //     }
-            //     this.reset();
-            //     this.closeDialog();
-            // }
+        openPainel() {
+            this.isVisible = !this.isVisible;
+            setTimeout(() => {
+                this.statusPainel = 0;
+            }, 300);
         },
-
+        update(ponto) {
+            this.isVisible = true;
+            setTimeout(() => {
+                this.statusPainel = 0;
+            }, 300);
+            this.setPontoEditar(ponto);
+        },
     },
-
 };
-
 </script>
-

@@ -12,7 +12,16 @@ export const mutations = {
         state.ponto.splice(index, 1);
     },
     [types.ATUALIZAR_PONTO_DE_DOACAO](state, pontoEditada) {
-        const index = state.ponto.findIndex(ponto => ponto.ponto_id === pontoEditada.ponto_id);
+        const index = state.ponto.findIndex(ponto => ponto.id === pontoEditada.id);
         Object.assign(state.ponto[index], pontoEditada);
+    },
+    [types.GET_PONTO_BY_INSTITUICAO](state, ponto) {
+        state.ponto = ponto;
+    },
+    [types.SET_PONTO_EDITAR](state, pontoEditar) {
+        state.pontoEditar = pontoEditar;
+    },
+    [types.CLEAN_PONTO_EDITAR](state, pontoEditar) {
+        state.pontoEditar = pontoEditar;
     },
 };
