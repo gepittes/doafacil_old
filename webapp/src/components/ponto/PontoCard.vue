@@ -28,7 +28,9 @@
                 Mapa do local
             </v-btn>
             <v-spacer/>
-            <v-btn icon>
+            <v-btn
+                icon
+                @click="update(ponto)">
                 <v-icon>
                     edit
                 </v-icon>
@@ -74,8 +76,14 @@ import { mapActions } from 'vuex';
 
 export default {
     name: 'PontoCard',
-    // eslint-disable-next-line vue/require-prop-types
-    props: ['ponto'],
+    props: {
+        ponto: {
+            type: Object,
+            required: true,
+        },
+        // eslint-disable-next-line vue/require-default-prop
+        update: { type: Function },
+    },
     data() {
         return {
             dialog: false,

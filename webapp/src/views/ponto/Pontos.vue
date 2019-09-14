@@ -80,7 +80,9 @@
                                         xl="3"
                                         md="4"
                                     >
-                                        <Ponto :ponto="ponto"/>
+                                        <Ponto
+                                            :ponto="ponto"
+                                            :update="update"/>
                                     </v-col>
                                 </v-row>
                             </v-container>
@@ -90,6 +92,7 @@
             </v-col>
         </v-row>
     </v-container>
+
 </template>
 
 <script>
@@ -107,6 +110,7 @@ export default {
             isVisible: false,
             isDisable: true,
             instiSelected: {},
+            pontoEditar: {},
         };
     },
     computed: {
@@ -131,12 +135,20 @@ export default {
         ...mapActions({
             obterInstiUser: 'instituicao/obterInstiUser',
             getPontoByInst: 'ponto/getPontoByInst',
+            setPontoEditar: 'ponto/setPontoEditar',
         }),
         openPainel() {
             this.isVisible = !this.isVisible;
             setTimeout(() => {
                 this.statusPainel = 0;
             }, 300);
+        },
+        update(ponto) {
+            this.isVisible = true;
+            setTimeout(() => {
+                this.statusPainel = 0;
+            }, 300);
+            this.setPontoEditar(ponto);
         },
     },
 };

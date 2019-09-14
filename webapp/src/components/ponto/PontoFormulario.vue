@@ -1,24 +1,28 @@
 <template>
     <v-container>
-        <v-form ref="form" lazy-validation @submit.prevent="salvar()">
+        <v-form
+            ref="form"
+            lazy-validation
+            @submit.prevent="salvar()">
             <v-row justify="center" >
-                <v-col xl="6" md="6">
+                <v-col
+                    xl="6"
+                    md="6">
                     <v-text-field
-                        v-if="false"
-                        v-model="ponto.id"
-                        label="id"/>
-                    <v-text-field
-                        required
                         v-model="ponto.nome"
                         :rules="[rules.required]"
+                        required
                         label="Nome do ponto"/>
                     <v-textarea
                         v-model="ponto.descricao"
-                        label="Descrição do ponto"
                         :rules="[rules.required]"
-                    ></v-textarea>
+                        label="Descrição do ponto"
+                    />
                     <v-row justify="center">
-                        <v-col cols="12" xl="6" md="6">
+                        <v-col
+                            cols="12"
+                            xl="6"
+                            md="6">
                             <v-menu
                                 ref="menuHoraOpen"
                                 v-model="menuHoraOpen"
@@ -34,12 +38,12 @@
                                 <template v-slot:activator="{ on }">
                                     <v-text-field
                                         v-model="ponto.hora_open"
+                                        :rules="[rules.required]"
                                         label="Horário de Abertura:"
                                         prepend-icon="access_time"
-                                        :rules="[rules.required]"
                                         readonly
                                         v-on="on"
-                                    ></v-text-field>
+                                    />
                                 </template>
                                 <v-time-picker
                                     v-if="menuHoraOpen"
@@ -48,11 +52,12 @@
                                     format="24hr"
                                     scrollable
                                     @click:minute="$refs.menuHoraOpen.save(ponto.hora_open)"
-                                ></v-time-picker>
+                                />
                             </v-menu>
                         </v-col>
-
-                        <v-col md="6" xl="6" >
+                        <v-col
+                            md="6"
+                            xl="6" >
                             <v-menu
                                 ref="menuHoraClose"
                                 v-model="menuHoraClose"
@@ -68,12 +73,12 @@
                                 <template v-slot:activator="{ on }">
                                     <v-text-field
                                         v-model="ponto.hora_close"
+                                        :rules="[rules.required]"
                                         label="Horário de Fechamento:"
                                         prepend-icon="access_time"
-                                        :rules="[rules.required]"
                                         readonly
                                         v-on="on"
-                                    ></v-text-field>
+                                    />
                                 </template>
                                 <v-time-picker
                                     v-if="menuHoraClose"
@@ -82,29 +87,34 @@
                                     format="24hr"
                                     scrollable
                                     @click:minute="$refs.menuHoraClose.save(ponto.hora_close)"
-                                ></v-time-picker>
+                                />
                             </v-menu>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col>
                             <v-file-input
-                                label="Imagem ponto"
                                 ref="imagem"
+                                label="Imagem ponto"
                             />
                         </v-col>
                     </v-row>
                 </v-col>
-
-                <v-col xl="6" md="6">
+                <v-col
+                    xl="6"
+                    md="6">
                     <v-row justify="center">
                         <!-- MAP HERE -->
-                        <v-img src="https://i.imgur.com/O6ZQx8b.png" width="600" height="500"/>
+                        <v-img
+                            src="https://i.imgur.com/O6ZQx8b.png"
+                            width="600"
+                            height="500"/>
                     </v-row>
                 </v-col>
             </v-row>
-
-            <v-row align="center" justify="end">
+            <v-row
+                align="center"
+                justify="end">
                 <v-card-actions>
                     <v-btn
                         color="secundary"
@@ -121,64 +131,85 @@
             </v-row>
         </v-form>
     </v-container>
-
 </template>
-
 <script>
-    import axios from 'axios'
-    import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
-    export default {
-        name: "pontoFormulario",
-        props: ['instiSelected'],
-        data() {
-            return {
-                menuHoraOpen: false,
-                menuHoraClose: false,
-                submitted: false,
-                ponto: {},
-                rules: {required: value => !!value || 'Campo Obrigatório.'}
-            }
-        },
-        computed: {
-            ...mapGetters({
-                accountInfo: 'account/accountInfo',
-            }),
-        },
-        methods: {
-            ...mapActions({
-                cadastraPontoDeDoacao: 'ponto/cadastraPontoDeDoacao',
-            }),
+export default {
+    name: 'PontoFormulario',
+    // eslint-disable-next-line vue/require-prop-types
+    props: ['instiSelected'],
+    data() {
+        return {
+            menuHoraOpen: false,
+            menuHoraClose: false,
+            submitted: false,
+            ponto: {},
+            rules: { required: value => !!value || 'Campo Obrigatório.' },
+        };
+    },
 
-            closeDialog() {
-                this.resetValidation();
-                this.reset();
-                this.$emit('closePainel', [])
-            },
-
-            resetValidation() {
-                this.$refs.form.resetValidation()
-            },
-
-            reset() {
-                this.ponto = {}
-            },
-
-            salvar() {
-                self = this
-                self.submitted = true;
-                if (self.$refs.form.validate()) {
-                    const { ponto } = self
-                    const instituicaoID = { 
-                        instituicao_id: self.instiSelected 
-                    }  
-                    const data = Object.assign(ponto, instituicaoID);
-                    
-                    this.cadastraPontoDeDoacao(data)
-                    this.reset();
-                    this.closeDialog();
+    computed: {
+        ...mapGetters({
+            accountInfo: 'account/accountInfo',
+            pontoEditar: 'ponto/pontoEditar',
+        }),
+    },
+    watch: {
+        pontoEditar: {
+            deep: true,
+            handler(value) {
+                if ('error' in value) {
+                    this.ponto = {};
+                } else {
+                    this.ponto = { ...value };
                 }
             },
-        }
-    }
+        },
+    },
+    created() {
+        this.loadPonto(this.pontoEditar);
+    },
+    methods: {
+        ...mapActions({
+            cadastraPontoDeDoacao: 'ponto/cadastraPontoDeDoacao',
+            atualizarPonto: 'ponto/atualizarPonto',
+            cleanPontoEditar: 'ponto/cleanPontoEditar',
+        }),
+
+        closeDialog() {
+            this.resetValidation();
+            this.reset()
+            this.$emit('closePainel', []);
+        },
+        reset() {
+            this.ponto = {};
+        },
+        resetValidation() {
+            this.$refs.form.resetValidation();
+        },
+        salvar() {
+            this.submitted = true;
+            if (this.$refs.form.validate()) {
+                const { ponto } = this;
+                const instituicaoID = {
+                    instituicao_id: this.instiSelected,
+                };
+                const data = Object.assign(ponto, instituicaoID);
+                if (this.pontoEditar.id) {
+                    this.atualizarPonto(data);
+                    this.cleanPontoEditar({});
+                } else {
+                    this.cadastraPontoDeDoacao(data);
+                }
+                this.closeDialog();
+            }
+        },
+        loadPonto(value) {
+            if (value) {
+                this.ponto = { ...value };
+            }
+        },
+    },
+};
 </script>

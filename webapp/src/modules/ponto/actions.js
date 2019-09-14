@@ -44,11 +44,19 @@ export const cadastraPontoDeDoacao = ({ dispatch, commit }, ponto) => axios.post
     });
 });
 
-export const atualizarPontoDeDoacao = ({ dispatch, commit }, ponto) => axios.patch(`http://localhost/v1/ponto/${ponto.pontoId}`, ponto).then(() => {
+export const atualizarPonto = ({ dispatch, commit }, ponto) => axios.patch(`http://localhost/v1/ponto/${ponto.id}`, ponto).then(() => {
     commit(types.ATUALIZAR_PONTO_DE_DOACAO, ponto);
-    dispatch('alert/success', 'PontoDeDoacao de doação atualizado com sucesso!', { root: true });
+    dispatch('alert/success', 'Ponto foi atualizado com sucesso!', { root: true });
 }).catch((error) => {
     dispatch('alert/error', error.response.data.error, {
         root: true,
     });
 });
+
+export const setPontoEditar = ({ commit }, pontoEditar) => {
+    commit(types.SET_PONTO_EDITAR, pontoEditar);
+};
+
+export const cleanPontoEditar = ({ commit }, pontoEditar) => {
+    commit(types.CLEAN_PONTO_EDITAR, pontoEditar);
+};

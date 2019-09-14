@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Ponto;
 
 use App\Models\PontoDeDoacao;
-use Illuminate\Http\Request;
+use App\Services\Ponto\PontoServices as PontoService;
 use Psr\Http\Message\ServerRequestInterface;
 use Laravel\Lumen\Routing\Controller;
 
@@ -11,16 +11,19 @@ class PontoController extends Controller
 {
     public function get()
     {
-        $pontoDeDoacao = PontoDeDoacao::all();
-
-        return response()->json($pontoDeDoacao);
+        $pontoServices = new PontoService();
+        return response()->json($pontoServices->obter());
     }
 
     public function post(ServerRequestInterface $request)
     {
         $dados = $request->getParsedBody();
-      
-        return response()->json(PontoDeDoacao::create($dados));
+        $pontoServices = new PontoService();
+        try {
+            return response()->json($pontoServices->criar($dados));
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 
     public function show($id)
@@ -30,24 +33,23 @@ class PontoController extends Controller
         return response()->json($intituicao);
     }
 
-
-    public function patch($id)
+    public function patch(ServerRequestInterface $request, $id = null)
     {
-        PontoDeDoacao::find($id)->update(Request::all());
-
-        return response(PontoDeDoacao::find($id),201);
+        $dados = $request->getParsedBody();
+        $pontoServices = new PontoService();
+        return response()->json($pontoServices->alterar($id, $dados));
     }
 
-    public function delete(PontoDeDoacao $pontoDeDoacao, $id)
+    public function delete($id)
     {
-        PontoDeDoacao::destroy($id);
-
-        return response()->json($pontoDeDoacao,204);
+        $pontoServices = new PontoService();
+        return response()->json($pontoServices->remover($id));
     }
 
-    public  function getPontoByInst($id)
+    public function getPontoByInst($id)
     {
-        return response(PontoDeDoacao::getPontoByInst($id),201);
+        $pontoServices = new PontoService();
+        return response()->json($pontoServices->obter($id, 'instituicao_id'));
     }
 
 }
