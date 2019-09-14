@@ -35,19 +35,19 @@ class PontoController extends Controller
     {
         PontoDeDoacao::find($id)->update(Request::all());
 
-        return response(PontoDeDoacao::find($id),'201');
+        return response(PontoDeDoacao::find($id),201);
     }
 
     public function delete(PontoDeDoacao $pontoDeDoacao, $id)
     {
         PontoDeDoacao::destroy($id);
 
-        return response()->json($pontoDeDoacao,'204');
+        return response()->json($pontoDeDoacao,204);
     }
 
     public  function getPontoByInst($id)
     {
-        return response(PontoDeDoacao::getPontoByInst($id),'201');
+        return response(PontoDeDoacao::getPontoByInst($id),201);
     }
 
 }

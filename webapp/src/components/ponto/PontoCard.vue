@@ -33,24 +33,63 @@
                     edit
                 </v-icon>
             </v-btn>
-            <v-btn icon>
-                <v-icon>
-                    delete
-                </v-icon>
-            </v-btn>
+
+            <v-dialog
+                v-model="dialog"
+                persistent
+                max-width="290">
+                <template v-slot:activator="{ on }">
+                    <v-btn
+                        icon
+                        v-on="on">
+                        <v-icon>
+                            delete
+                        </v-icon>
+                    </v-btn>
+                </template>
+                <v-card>
+                    <v-card-title class="headline">Excluir o ponto!</v-card-title>
+                    <v-card-text>Seu ponto será excluido permanente você deseja realmente continuar?</v-card-text>
+                    <v-card-actions >
+                        <v-btn
+                            color="blue-grey"
+                            class="ma-2 white--text"
+                            @click="dialog = false"><i class="fas fa-window-close mr-1"/> Não </v-btn>
+                        <v-spacer/>
+                        <v-btn
+                            class="ma-2 white--text"
+                            color="error"
+                            @click="deletePonto()">
+                            <v-icon>delete</v-icon> Sim
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
         </v-card-actions>
     </v-card>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
     name: 'PontoCard',
+    // eslint-disable-next-line vue/require-prop-types
     props: ['ponto'],
-    data: () => ({
-        selection: 1,
-    }),
-
+    data() {
+        return {
+            dialog: false,
+            selection: 1,
+        };
+    },
     methods: {
+        ...mapActions({
+            removerPonto: 'ponto/removerPonto',
+        }),
+        deletePonto() {
+            this.dialog = !this.dialog;
+            this.removerPonto(this.ponto.id);
+        },
         openMap() {
             // open Map event here!
         },
