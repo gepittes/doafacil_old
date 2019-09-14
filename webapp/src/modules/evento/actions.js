@@ -8,6 +8,10 @@ export const statusPnlCreate = ({commit}, payload) => {
     commit(types.ESTADO_PNL_CREATE, payload)
 };
 
+export const statusPnlList = ({commit}, payload) => {
+    commit(types.ESTADO_PNL_LIST, payload)
+};
+
 export const criarEvento = ({commit, dispatch}, payload) => {
     requisicaoAutorizada.post(`${URL}/evento`, payload)
         .then(resp => {
@@ -26,7 +30,6 @@ export const deletarEvento = ({commit, dispatch}, eventoID) => {
             dispatch('alert/success', 'Evento excluido com sucesso!', {root: true});
         })
         .catch((error) => {
-            console.log(error);
             dispatch('alert/error', 'Falha ao deletar evento.', {root: true})
         })
 };

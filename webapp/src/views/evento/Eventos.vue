@@ -60,6 +60,7 @@
 
                 <v-expansion-panels class="mb-3"
                                     :disabled="this.isDisable"
+                                    :value="statusPainelList"
                 >
                     <v-expansion-panel>
                         <v-expansion-panel-header>Gerenciar Eventos</v-expansion-panel-header>
@@ -121,6 +122,7 @@
                 instituicoes: 'instituicao/instituicao',
                 accountInfo: 'account/accountInfo',
                 statusPainel: 'evento/getStatusPnlCreate',
+                statusPainelList: 'evento/getStatusPnlList',
                 eventos: 'evento/getEventosInsti'
             })
         },

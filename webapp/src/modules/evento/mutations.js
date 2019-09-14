@@ -4,8 +4,10 @@ export const mutations = {
     [types.ESTADO_PNL_CREATE](state, payload) {
         state.statusPainel = payload
     },
+    [types.ESTADO_PNL_LIST](state, payload) {
+        state.statusPainelList = payload
+    },
     [types.CRIAR_EVENTO](state, payload) {
-        console.log(payload);
         state.eventosInsti.push(payload)
     },
     [types.EVENTOS_INSTITUICAO](state, payload) {

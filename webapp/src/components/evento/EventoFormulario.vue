@@ -156,7 +156,8 @@
         methods: {
             ...mapActions({
                 statusPnlCreate: 'evento/statusPnlCreate',
-                criarEvento: 'evento/criarEvento'
+                criarEvento: 'evento/criarEvento',
+                setPainelList : 'evento/statusPnlList'
             }),
 
 
@@ -184,7 +185,8 @@
                     if(this.evento.id) {
 
                     }else {
-                        this.criarEvento(this.evento)
+                        this.criarEvento(this.evento);
+                        this.setPainelList(0);
                     }
 
                     this.reset();
