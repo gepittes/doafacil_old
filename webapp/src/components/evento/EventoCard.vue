@@ -7,17 +7,17 @@
             src="https://dq5r178u4t83b.cloudfront.net/wp-content/uploads/sites/15/2016/08/29110503/meeting-event-wedding-ballroom-sofitel-the-palm-dubai201-585x390.jpg"
         ></v-img>
 
-        <v-card-title>Nome do Evento</v-card-title>
+        <v-card-title>{{this.evento.nome}}</v-card-title>
         <v-card-text>
-            <div>Descricao</div>
+            <div>{{this.evento.descricao}}</div>
         </v-card-text>
 
         <v-divider class="mx-4 m-0"></v-divider>
 
         <v-card-text>
             <div class="title text--primary">Data e Hora do Evento</div>
-            <v-chip color="green mr-3"><b class="white--text">11/08/2019</b></v-chip>
-            <v-chip color="blue"><b class="white--text">5:30PM</b></v-chip>
+            <v-chip color="green mr-3"><b class="white--text">{{this.evento.data}}</b></v-chip>
+            <v-chip color="blue"><b class="white--text">{{this.evento.hora}} hrs</b></v-chip>
         </v-card-text>
 
         <v-card-actions>
@@ -47,6 +47,7 @@
 <script>
     export default {
         name: 'eventoCard',
+        props: ['evento'],
         data: () => ({
             selection: 1,
         }),

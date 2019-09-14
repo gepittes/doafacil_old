@@ -19,6 +19,12 @@ export const criarEvento = ({commit, dispatch}, payload) => {
         })
 };
 
-export const obterEventosInstiuicao = ({commit}) => {
-
+export const obterEventosInstiuicao = ({commit, dispatch}, id) => {
+    requisicaoAutorizada.get(`${URL}/evento/inistituicao/${id}`)
+        .then(resp => {
+            commit(types.EVENTOS_INSTITUICAO, resp.data.data);
+        })
+        .catch((error) => {
+            dispatch('alert/error', 'Falha ao obter eventos.', {root: true})
+        })
 };

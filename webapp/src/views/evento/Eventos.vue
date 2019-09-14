@@ -66,14 +66,11 @@
                         <v-expansion-panel-content>
                             <v-container>
                                 <v-row justify="center">
-                                    <v-col xl="3" md="4">
-                                        <EventoCard/>
-                                    </v-col>
-                                    <v-col xl="3" md="4">
-                                        <EventoCard/>
-                                    </v-col>
-                                    <v-col xl="3" md="4">
-                                        <EventoCard/>
+                                    <v-col xl="3" md="4"
+                                           v-for="evento in eventos"
+                                           :key="evento.id"
+                                    >
+                                        <EventoCard :evento="evento"/>
                                     </v-col>
                                 </v-row>
                             </v-container>
@@ -99,7 +96,7 @@
                 isVisible: false,
                 isDisable: true,
                 instiSelected: {},
-                ObjInstiSelect: {}
+                ObjInstiSelect: {},
             }
         },
 
@@ -109,26 +106,30 @@
                     this.isDisable = false
                 }
                 // Serve para coletar o objeto da instiuicao que esta sendo selecionado.
+                // O instiSelected apenas contem o nome da insituicao o ObjInstiSelect sao os dados completos.
                 this.instituicoes.forEach(e => {
                     if(e.nome === this.instiSelected) {
                         this.ObjInstiSelect = e;
                     }
                 });
-            }
+                this.obterEventosInstiuicao(this.ObjInstiSelect.id);
+            },
         },
 
         computed: {
             ...mapGetters({
                 instituicoes: 'instituicao/instituicao',
                 accountInfo: 'account/accountInfo',
-                statusPainel: 'evento/getStatusPnlCreate'
+                statusPainel: 'evento/getStatusPnlCreate',
+                eventos: 'evento/getEventosInsti'
             })
         },
 
         methods: {
             ...mapActions({
                 obterInstiUser: 'instituicao/obterInstiUser',
-                statusPnlCreate: 'evento/statusPnlCreate'
+                statusPnlCreate: 'evento/statusPnlCreate',
+                obterEventosInstiuicao: 'evento/obterEventosInstiuicao'
             }),
             openPainel() {
                 this.isVisible = !this.isVisible;

@@ -169,7 +169,7 @@
 
                 if (this.$refs.form.validate()) {
 
-                    this.evento.fk_insti_id = this.accountInfo.user_id;
+                    this.evento.fk_insti_id = this.instituicaoSelect.id;
 
                     if(this.evento.id) {
 

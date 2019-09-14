@@ -6,5 +6,8 @@ export const mutations = {
     },
     [types.CRIAR_EVENTO](state, payload) {
         state.evento = payload
+    },
+    [types.EVENTOS_INSTITUICAO](state, payload) {
+        state.eventosInsti = payload
     }
 };

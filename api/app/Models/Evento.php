@@ -26,9 +26,7 @@ class Evento extends Model
 
     public static function getEventosByInsti($id)
     {
-
-
-
+        return Evento::all()->where('fk_insti_id', '=', $id);
     }
 
 
