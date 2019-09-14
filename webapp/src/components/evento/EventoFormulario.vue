@@ -37,11 +37,13 @@
                                         :rules="[rules.required]"
                                         readonly
                                         v-on="on"
+                                        hint="MM/DD/YYYY format"
                                     ></v-text-field>
                                 </template>
                                 <v-date-picker v-model="evento.data"
                                                scrollable
                                                color="green lighten-1"
+                                               locale="Brazil"
                                 >
                                     <div class="flex-grow-1"></div>
                                     <v-btn text color="primary" @click="modalData = false">Cancel</v-btn>
@@ -125,6 +127,7 @@
 
 <script>
     import axios from 'axios'
+    import {formatDateDMY} from '../../filters'
     import {mapState, mapActions, mapGetters} from 'vuex';
 
     export default {
@@ -144,11 +147,19 @@
                 accountInfo: 'account/accountInfo',
             }),
         },
+        watch: {
+            'evento.data': function(val) {
+                this.evento.data = formatDateDMY(this.evento.data)
+            },
+        },
+
         methods: {
             ...mapActions({
                 statusPnlCreate: 'evento/statusPnlCreate',
-                criarEvento: 'evento/criarEvento'
+                criarEvento: 'evento/criarEvento',
+                setPainelList : 'evento/statusPnlList'
             }),
+
 
             closeDialog() {
                 this.statusPnlCreate([]);
@@ -174,7 +185,8 @@
                     if(this.evento.id) {
 
                     }else {
-                        this.criarEvento(this.evento)
+                        this.criarEvento(this.evento);
+                        this.setPainelList(0);
                     }
 
                     this.reset();
