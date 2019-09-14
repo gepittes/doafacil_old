@@ -129,6 +129,7 @@
 
     export default {
         name: "EventoFormulario",
+        props: {instituicaoSelect : Object},
         data() {
             return {
                 modalData: false,
@@ -146,6 +147,7 @@
         methods: {
             ...mapActions({
                 statusPnlCreate: 'evento/statusPnlCreate',
+                criarEvento: 'evento/criarEvento'
             }),
 
             closeDialog() {
@@ -165,8 +167,15 @@
             salvar() {
                 this.submitted = true;
 
-                // Validar formulário
                 if (this.$refs.form.validate()) {
+
+                    this.evento.fk_insti_id = this.instituicaoSelect.id;
+
+                    if(this.evento.id) {
+
+                    }else {
+                        this.criarEvento(this.evento)
+                    }
 
                     this.reset();
                     this.closeDialog();
