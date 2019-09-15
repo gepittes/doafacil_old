@@ -67,7 +67,7 @@ class Conta implements IService
         }
     }
 
-    public function alterar($id, array $dados = [])
+    public function alterar(int $id, array $dados = [])
     {
         $validator = Validator::make($dados, [
             "nome" => 'required|string|min:3|max:50',
@@ -84,8 +84,8 @@ class Conta implements IService
         } else {
             unset($dados['password']);
         }
-
-        return ModeloUsuario::where('usuario_id', $id)->update($dados);
+        ModeloUsuario::where('usuario_id', $id)->update($dados);
+        return $this->obter($id);
     }
 
     public function recuperarSenha()
