@@ -1,72 +1,68 @@
 <template>
-<v-layout row wrap>
-    <v-flex
-        xs12
-        sm6
-        md12
+    <v-layout
+        row
+        wrap>
+        <v-flex
+            xs12
+            sm6
+            md12
         >
-        <v-text-field
-            v-model="editedItem.name"
-            :rules="[rules.required, rules.minLength]"
-            prepend-icon="face"
-            required
-            label="Nome"/>
-        <v-text-field
-            v-model="editedItem.email"
-            :rules="[rules.required, rules.email, rules.minLength]"
-            prepend-icon="person"
-            required
-            label="E-mail"
+            <v-text-field
+                v-model="editedItem.nome"
+                :rules="[rules.required, rules.minLength]"
+                prepend-icon="face"
+                required
+                label="Nome"/>
+            <v-text-field
+                v-model="editedItem.email"
+                :rules="[rules.required, rules.email, rules.minLength]"
+                prepend-icon="person"
+                required
+                label="E-mail"
             />
-        <v-text-field
-            v-validate="{min: 6 }"
-            v-model="editedItem.password"
-            :rules="[rules.required, rules.minLength]"
-            prepend-icon="lock"
-            type="password"
-            label="Senha"
-            required />
-    </v-flex>
+<!--            <v-text-field-->
+<!--                v-validate="{min: 6 }"-->
+<!--                v-model="editedItem.password"-->
+<!--                :rules="[rules.required, rules.minLength]"-->
+<!--                prepend-icon="lock"-->
+<!--                type="password"-->
+<!--                label="Senha"-->
+<!--                required />-->
+        </v-flex>
 
-<v-flex md12 row>
-    <v-col align-center           
-        >
-        <v-btn
-             align-center 
-            color="error"
-            @click.native="close">Fechar
-            
-        </v-btn>
-    </v-col>
-    <v-col  align-center>
-        <v-btn
-            align-center 
-            v-if="!loading"
-            dark
-            color="blue darken-1"
-            @click.native="save">Gravar
-        </v-btn>
+        <v-flex
+            md12
+            row>
+            <v-col
+                align-center
+            >
+                <v-btn
+                    align-center
+                    color="error"
+                    @click.native="close">Fechar
 
-    </v-col>
-</v-flex>
-
-</v-layout>
-   
+                </v-btn>
+            </v-col>
+            <v-col align-center>
+                <v-btn
+                    v-if="!loading"
+                    align-center
+                    dark
+                    color="blue darken-1"
+                    @click.native="save">Gravar
+                </v-btn>
+            </v-col>
+        </v-flex>
+    </v-layout>
 </template>
 <script>
 
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
     data: () => ({
         loading: false,
         editedItem: {},
-        defaultItem: {
-            usuario_id: null,
-            descricao: '',
-            is_ativo: true,
-            is_admin: false,
-        },
         rules: {
             required: value => !!value || 'Campo Obrigatório.',
             minLength: object => (object != null && object.length != null && object.length > 3) || 'Campo obrigatório.',
@@ -80,37 +76,40 @@ export default {
     computed: {
         ...mapGetters({
             accountInfo: 'account/accountInfo',
+            user: 'account/user',
+            myuser: 'conta/user',
         }),
     },
-    created() {
-       this.loadUser()
-    
+    watch: {
+        user: {
+            deep: true,
+            handler(value) {
+                if ('error' in value) {
+                    this.editedItem = {};
+                } else {
+                    this.loadProfile(value);
+                    this.editedItem = { ...value };
+                }
+            },
+        },
+    },
+    mounted() {
+        this.loadProfile(this.myuser);
     },
     methods: {
-        loadUser(){
-            this.editedItem  =  this.accountInfo
+        save() {
+            const { editedItem } = this;
+            this.atualizarConta(editedItem);
+            this.loadProfile(this.myuser);
+            this.getUser(this.accountInfo.user_id);
+        },
+        loadProfile(value) {
+            this.editedItem = { ...value };
         },
         ...mapActions({
             atualizarConta: 'conta/atualizarConta',
+            getUser: 'account/getUser',
         }),
-    
-        save() {
-            const data = {
-                usuario_id: this.accountInfo.user_id,
-                nome: this.editedItem.name,
-                email: this.editedItem.email,
-                password: this.editedItem.password
-            }
-            console.log(data);
-            this.atualizarConta(data);
-    
-            self.close();
-        },
-
-        close() {
-            this.editedItem = Object.assign({}, this.defaultItem);
-        },
-
     },
 };
 </script>

@@ -12,7 +12,6 @@ export const mutations = {
         state.conta.splice(index, 1);
     },
     [types.ATUALIZAR_CONTA](state, contaEditada) {
-        const index = state.conta.findIndex(conta => conta.usuario_id === contaEditada.usuario_id);
-        Object.assign(state.conta[index], contaEditada);
+        state.user = contaEditada;
     },
 };
