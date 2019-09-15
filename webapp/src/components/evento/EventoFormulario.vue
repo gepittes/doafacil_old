@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-form ref="form" lazy-validation @submit.prevent="salvar()">
+        <v-form ref="form" @submit.prevent="salvar()">
             <v-row justify="center" align="center">
                 <v-col xl="6" md="6">
                     <v-text-field
@@ -145,23 +145,26 @@
         computed: {
             ...mapGetters({
                 accountInfo: 'account/accountInfo',
+                getEventoEditar: 'evento/getEventoEditar'
             }),
         },
         watch: {
-            'evento.data': function(val) {
-                this.evento.data = formatDateDMY(this.evento.data)
-            },
+            getEventoEditar(value){
+                this.evento = {...value}
+            }
         },
 
         methods: {
             ...mapActions({
                 statusPnlCreate: 'evento/statusPnlCreate',
                 criarEvento: 'evento/criarEvento',
-                setPainelList : 'evento/statusPnlList'
+                setPainelList : 'evento/statusPnlList',
+                eventoEditar: 'evento/eventoEditar',
+                atualizarEvento: 'evento/atualizarEvento'
             }),
 
-
             closeDialog() {
+                this.eventoEditar({});
                 this.statusPnlCreate([]);
                 this.resetValidation();
                 this.reset();
@@ -183,7 +186,8 @@
                     this.evento.fk_insti_id = this.instituicaoSelect.id;
 
                     if(this.evento.id) {
-
+                        this.atualizarEvento(this.evento);
+                        this.setPainelList(0);
                     }else {
                         this.criarEvento(this.evento);
                         this.setPainelList(0);

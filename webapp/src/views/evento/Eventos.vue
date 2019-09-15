@@ -22,7 +22,7 @@
                 <v-btn rounded
                        color="green"
                        dark
-                       v-if="!this.isVisible"
+                       v-if="!getVisibleCreateEvento"
                        @click="openPainel"
                        :disabled="this.isDisable"
                 >Adicionar</v-btn>
@@ -44,7 +44,7 @@
 
                 <v-expand-transition>
                     <v-expansion-panels class="mb-3"
-                                        v-if="this.isVisible"
+                                        v-if="getVisibleCreateEvento"
                                         :value="this.statusPainel"
                                         :disabled="this.isDisable"
                     >
@@ -94,7 +94,6 @@
         components: {EventoFormulario, EventoCard, Calendario},
         data() {
             return {
-                isVisible: false,
                 isDisable: true,
                 instiSelected: {},
                 ObjInstiSelect: {},
@@ -123,6 +122,7 @@
                 accountInfo: 'account/accountInfo',
                 statusPainel: 'evento/getStatusPnlCreate',
                 statusPainelList: 'evento/getStatusPnlList',
+                getVisibleCreateEvento: 'evento/getVisibleCreateEvento',
                 eventos: 'evento/getEventosInsti'
             })
         },
@@ -131,10 +131,11 @@
             ...mapActions({
                 obterInstiUser: 'instituicao/obterInstiUser',
                 statusPnlCreate: 'evento/statusPnlCreate',
-                obterEventosInstiuicao: 'evento/obterEventosInstiuicao'
+                obterEventosInstiuicao: 'evento/obterEventosInstiuicao',
+                visibleCreatePnlEvento: 'evento/visibleCreatePnlEvento'
             }),
             openPainel() {
-                this.isVisible = !this.isVisible;
+                this.visibleCreatePnlEvento(!this.getVisibleCreateEvento);
                 setTimeout(() => {
                     this.statusPnlCreate(0)
                 }, 300)

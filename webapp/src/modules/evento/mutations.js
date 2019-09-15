@@ -1,4 +1,5 @@
 import * as types from './types';
+import {eventoEditar} from "./actions";
 
 export const mutations = {
     [types.ESTADO_PNL_CREATE](state, payload) {
@@ -13,8 +14,18 @@ export const mutations = {
     [types.EVENTOS_INSTITUICAO](state, payload) {
         state.eventosInsti = payload
     },
-    [types.DELETAR_EVENTO](state, eventoID){
+    [types.DELETAR_EVENTO](state, eventoID) {
         const index = state.eventosInsti.findIndex(eventosInsti => eventosInsti.id === eventoID);
         state.eventosInsti.splice(index, 1);
+    },
+    [types.ATUALIZAR_EVENTO](state, eventoEditar) {
+        const index = state.eventosInsti.findIndex(evento => evento.id === eventoEditar.id);
+        Object.assign(state.eventosInsti[index], eventoEditar);
+    },
+    [types.EVENTO_EDITAR](state, evento) {
+        state.eventoEditar = evento;
+    },
+    [types.VISIBLE_PNL_CREATE](state, payload) {
+        state.isVisible = payload;
     }
 };

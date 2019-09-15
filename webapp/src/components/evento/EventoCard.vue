@@ -3,7 +3,8 @@
         <v-row justify="center">
             <v-dialog v-model="dialog" persistent max-width="300">
                 <v-card>
-                    <v-card-title class="headline text-center">Tem certeza que deseja deletar este evento? </v-card-title>
+                    <v-card-title class="headline text-center">Tem certeza que deseja deletar este evento?
+                    </v-card-title>
                     <v-card-text>Você esta prestes a deletar o evento {{evento.nome}}
                     </v-card-text>
                     <v-card-actions>
@@ -45,7 +46,7 @@
                     Mapa do local
                 </v-btn>
                 <v-spacer/>
-                <v-btn icon>
+                <v-btn icon @click="editarEvento(evento)">
                     <v-icon>
                         edit
                     </v-icon>
@@ -73,8 +74,18 @@
 
         methods: {
             ...mapActions({
-                deletarEvento: 'evento/deletarEvento'
+                deletarEvento: 'evento/deletarEvento',
+                eventoEditar: 'evento/eventoEditar',
+                statusPnlCreate: 'evento/statusPnlCreate',
+                visibleCreatePnlEvento: 'evento/visibleCreatePnlEvento'
             }),
+            editarEvento(evento) {
+                this.visibleCreatePnlEvento(true);
+                this.statusPnlCreate(0);
+                setTimeout(() => {
+                    this.eventoEditar(evento);
+                }, 800)
+            },
             openMap() {
                 //open Map event here!
             }
