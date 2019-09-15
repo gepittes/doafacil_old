@@ -67,7 +67,7 @@
                         <v-expansion-panel-content>
                             <v-container>
                                 <v-row justify="center">
-                                    <v-col xl="3" md="4"
+                                    <v-col xl="3" md="6" lg="4"
                                            v-for="evento in eventos"
                                            :key="evento.id"
                                     >
