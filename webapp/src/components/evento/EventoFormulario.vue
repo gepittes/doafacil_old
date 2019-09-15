@@ -2,7 +2,7 @@
     <v-container>
         <v-form ref="form" @submit.prevent="salvar()">
             <v-row justify="center" align="center">
-                <v-col xl="6" md="6">
+                <v-col>
                     <v-text-field
                         v-if="false"
                         v-model="evento.id"
@@ -18,7 +18,7 @@
                         :rules="[rules.required]"
                     ></v-textarea>
                     <v-row justify="center">
-                        <v-col cols="12" xl="6" md="6">
+                        <v-col xl="4" md="4" lg="4" cols="12">
                             <p>Data do Evento</p>
 
                             <v-dialog
@@ -53,7 +53,7 @@
                         </v-col>
 
 
-                        <v-col md="6" xl="6" >
+                        <v-col xl="4" md="4" lg="4" cols="12">
                             <p>Hora do Evento</p>
                             <v-dialog
                                 ref="dialog_hora"
@@ -94,12 +94,15 @@
                             />
                         </v-col>
                     </v-row>
-                </v-col>
-
-                <v-col xl="6" md="6">
-                    <v-row justify="center">
-                        <!-- MAP HERE -->
-                        <v-img src="https://i.imgur.com/O6ZQx8b.png" width="600" height="500"/>
+                    <v-row class="text-center">
+                        <v-col v-if="this.window.width > 900">
+                            <v-img src="https://i.imgur.com/O6ZQx8b.png" />
+                        </v-col>
+                        <v-col v-else>
+                            <v-btn class="ma-2" tile outlined color="success">
+                                <v-icon left>fa fa-map</v-icon> Abra o mapa para selcionar!
+                            </v-btn>
+                        </v-col>
                     </v-row>
                 </v-col>
             </v-row>
@@ -135,6 +138,10 @@
         props: {instituicaoSelect : Object},
         data() {
             return {
+                window: {
+                    width: 0,
+                    height: 0,
+                },
                 modalData: false,
                 modalHora: false,
                 submitted: false,
@@ -151,7 +158,11 @@
         watch: {
             getEventoEditar(value){
                 this.evento = {...value}
-            }
+            },
+            'window.width': function (width) {
+                this.window.width = width;
+                console.log(this.$refs)
+            },
         },
 
         methods: {
@@ -162,6 +173,11 @@
                 eventoEditar: 'evento/eventoEditar',
                 atualizarEvento: 'evento/atualizarEvento'
             }),
+
+            handleResize() {
+                this.window.width = window.innerWidth;
+                this.window.height = window.innerHeight;
+            },
 
             closeDialog() {
                 this.eventoEditar({});
@@ -197,6 +213,10 @@
                     this.closeDialog();
                 }
             },
+        },
+        created() {
+            window.addEventListener('resize', this.handleResize)
+            this.handleResize();
         }
     }
 </script>

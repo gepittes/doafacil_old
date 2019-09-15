@@ -30,7 +30,7 @@
         </v-row>
 
         <v-row justify="center">
-            <v-col xl="10">
+            <v-col xl="12">
                 <v-expansion-panels class="mb-3"
                                     :disabled="this.isDisable"
                 >

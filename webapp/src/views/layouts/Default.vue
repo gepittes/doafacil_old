@@ -9,7 +9,7 @@
                     <v-col cols="3" 
                     md="3"
                     lg="2"
-                           xl="2"
+                    xl="2"
                     v-if="menu"
                     class="pa-0">
                         <!-- <v-col 
