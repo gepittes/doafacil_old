@@ -17,10 +17,8 @@ export const removerInstituicao = ({ dispatch, commit }, instituicaoId) => {
     requisicaoAutorizada.delete(`http://localhost/v1/instituicao/${instituicaoId}`).then(() => {
         commit(types.DELETE_INSTITUICAO, instituicaoId);
         dispatch('alert/success', 'Instituicao excluido com sucesso!', { root: true });
-    }).catch((error) => {
-        dispatch('alert/error', error.response.data.error, {
-            root: true,
-        });
+    }).catch(() => {
+        dispatch('alert/error', 'Desculpe, Não encontramos a Instituição', { root: true });
     });
 };
 

@@ -51,13 +51,7 @@ class InstituicaoServices
 
     public function remover($id)
     {
-        try {
-
-            return  Instituicao::findOrFail($id)->delete();
-
-        } catch (\Exception $exception) {
-            throw $exception;
-        }
+        return  Instituicao::findOrFail($id)->delete();
     }
 
 }
