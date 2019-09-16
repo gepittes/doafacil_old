@@ -15,13 +15,13 @@ export const mutations = {
         const index = state.instituicao.findIndex(instituicao => instituicao.id === instituicaoEditada.id);
         Object.assign(state.instituicao[index], instituicaoEditada);
     },
-    [types.ESTADO_DIALOG](state, payload){
+    [types.ESTADO_DIALOG](state, payload) {
         state.dialog = payload;
     },
     [types.INSTITUICAO_EDITAR](state, payload) {
-        state.instituicaoEditar = payload
+        state.instituicaoEditar = payload;
     },
     [types.INSTITUICAO_ENCONTRADA](state, payload) {
         state.instituicaoEncontrada = payload;
-    }
+    },
 };

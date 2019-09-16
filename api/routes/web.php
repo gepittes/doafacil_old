@@ -20,13 +20,15 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
     $router->post('/autenticacao/login', 'AutenticacaoController@post');
 
     $router->post('/conta', 'ContaController@post');
-    $router->get('/instituicao', 'InstituicaoController@get');
-    $router->get('/instituicao/buscar/{id}', 'InstituicaoController@buscarInsti');
-    $router->get('/instituicao/user/buscar/{id}', 'InstituicaoController@getInstisUser');
-    $router->post('/instituicao', 'InstituicaoController@post');
-    $router->patch('/instituicao/{id}', 'InstituicaoController@patch');
-    $router->get('/instituicao/{id}', 'InstituicaoController@show');
-    $router->delete('/instituicao/{id}', 'InstituicaoController@delete');
+
+    $router->group(['namespace' => 'Instituicao'], function () use ($router){
+        $router->get('/instituicao', 'InstituicaoController@get');
+        $router->get('/instituicao/{id}', 'InstituicaoController@get');
+        $router->get('/instituicao/user/buscar/{id}', 'InstituicaoController@getInstisUser');
+        $router->post('/instituicao', 'InstituicaoController@post');
+        $router->patch('/instituicao/{id}', 'InstituicaoController@patch');
+        $router->delete('/instituicao/{id}', 'InstituicaoController@delete');
+    });
 
     $router->group(['namespace' => 'Evento'], function () use ($router){
         $router->get('/evento/inistituicao/{id}', 'EventoController@getEventosByInsti');
