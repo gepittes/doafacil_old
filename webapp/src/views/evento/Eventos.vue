@@ -22,7 +22,7 @@
                 <v-btn rounded
                        color="green"
                        dark
-                       v-if="!this.isVisible"
+                       v-if="!getVisibleCreateEvento"
                        @click="openPainel"
                        :disabled="this.isDisable"
                 >Adicionar</v-btn>
@@ -30,7 +30,7 @@
         </v-row>
 
         <v-row justify="center">
-            <v-col xl="10">
+            <v-col xl="12">
                 <v-expansion-panels class="mb-3"
                                     :disabled="this.isDisable"
                 >
@@ -44,7 +44,7 @@
 
                 <v-expand-transition>
                     <v-expansion-panels class="mb-3"
-                                        v-if="this.isVisible"
+                                        v-if="getVisibleCreateEvento"
                                         :value="this.statusPainel"
                                         :disabled="this.isDisable"
                     >
@@ -67,7 +67,7 @@
                         <v-expansion-panel-content>
                             <v-container>
                                 <v-row justify="center">
-                                    <v-col xl="3" md="4"
+                                    <v-col xl="3" md="6" lg="4"
                                            v-for="evento in eventos"
                                            :key="evento.id"
                                     >
@@ -94,7 +94,6 @@
         components: {EventoFormulario, EventoCard, Calendario},
         data() {
             return {
-                isVisible: false,
                 isDisable: true,
                 instiSelected: {},
                 ObjInstiSelect: {},
@@ -123,6 +122,7 @@
                 accountInfo: 'account/accountInfo',
                 statusPainel: 'evento/getStatusPnlCreate',
                 statusPainelList: 'evento/getStatusPnlList',
+                getVisibleCreateEvento: 'evento/getVisibleCreateEvento',
                 eventos: 'evento/getEventosInsti'
             })
         },
@@ -131,10 +131,11 @@
             ...mapActions({
                 obterInstiUser: 'instituicao/obterInstiUser',
                 statusPnlCreate: 'evento/statusPnlCreate',
-                obterEventosInstiuicao: 'evento/obterEventosInstiuicao'
+                obterEventosInstiuicao: 'evento/obterEventosInstiuicao',
+                visibleCreatePnlEvento: 'evento/visibleCreatePnlEvento'
             }),
             openPainel() {
-                this.isVisible = !this.isVisible;
+                this.visibleCreatePnlEvento(!this.getVisibleCreateEvento);
                 setTimeout(() => {
                     this.statusPnlCreate(0)
                 }, 300)

@@ -39,6 +39,7 @@
                                             :rules="emailRules"
                                             v-model="email"
                                             :hide-details="true"
+                                            tabindex="1"
                                             solo
                                             shaped
                                             light
@@ -57,6 +58,7 @@
                                             :rules="passwordRules"
                                             v-model="password"
                                             :hide-details="true"
+                                            tabindex="2"
                                             solo
                                             shaped
                                             light
@@ -69,6 +71,7 @@
                                         <v-btn
                                             :disabled="!valid"
                                             class="transparent elevation-0 mb-4"
+                                            tabindex="3"
                                             type="submit">
                                             <v-icon>fa fa-sign-in-alt mr-2</v-icon>
                                         </v-btn>

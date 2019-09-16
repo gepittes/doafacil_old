@@ -29,9 +29,13 @@ class EventoController extends Controller
         return response()->json($eventos, 200);
     }
 
-    public function patch($id)
+    public function patch(ServerRequestInterface $request, $id)
     {
+        $request = $request->getParsedBody();
 
+        $evento = Evento::updateEvento($request, $id);
+
+        return response()->json($evento, 200);
     }
 
     public function delete(Evento $evento, $id)

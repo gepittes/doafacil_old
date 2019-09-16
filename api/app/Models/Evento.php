@@ -29,5 +29,18 @@ class Evento extends Model
         return Evento::all()->where('fk_insti_id', '=', $id);
     }
 
+    public static function updateEvento($evento, $id)
+    {
+        $ev = Evento::find($id);
+        $ev->nome = $evento['nome'];
+        $ev->descricao = $evento['descricao'];
+        $ev->data = $evento['data'];
+        $ev->hora = $evento['hora'];
+        $ev->fk_insti_id = $evento['fk_insti_id'];
+        $ev->save();
+
+        return $ev;
+    }
+
 
 }

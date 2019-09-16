@@ -12,6 +12,14 @@ export const statusPnlList = ({commit}, payload) => {
     commit(types.ESTADO_PNL_LIST, payload)
 };
 
+export const eventoEditar = ({commit}, payload) => {
+    commit(types.EVENTO_EDITAR, payload)
+};
+
+export const visibleCreatePnlEvento = ({commit}, payload) => {
+    commit(types.VISIBLE_PNL_CREATE, payload)
+};
+
 export const criarEvento = ({commit, dispatch}, payload) => {
     requisicaoAutorizada.post(`${URL}/evento`, payload)
         .then(resp => {
@@ -31,6 +39,17 @@ export const deletarEvento = ({commit, dispatch}, eventoID) => {
         })
         .catch((error) => {
             dispatch('alert/error', 'Falha ao deletar evento.', {root: true})
+        })
+};
+
+export const atualizarEvento = ({commit, dispatch}, evento) => {
+    requisicaoAutorizada.patch(`${URL}/evento/${evento.id}`, evento)
+        .then((resp) => {
+            commit(types.ATUALIZAR_EVENTO, evento);
+            dispatch('alert/success', 'Evento atualizado com sucesso!', {root: true});
+        })
+        .catch((error) => {
+            dispatch('alert/error', 'Falha ao atualizar evento.', {root: true})
         })
 };
 
