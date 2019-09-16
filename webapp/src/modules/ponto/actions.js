@@ -16,10 +16,8 @@ export const removerPonto = ({ dispatch, commit }, pontoId) => {
     axios.delete(`http://localhost/v1/ponto/${pontoId}`).then(() => {
         commit(types.DELETE_PONTO_DE_DOACAO, pontoId);
         dispatch('alert/success', 'Ponto de Acesso excluido com sucesso!', { root: true });
-    }).catch((error) => {
-        dispatch('alert/error', error.response.data.error, {
-            root: true,
-        });
+    }).catch(() => {
+        dispatch('alert/error', 'Desculpe, Não encontramos este ponto', { root: true });
     });
 };
 
