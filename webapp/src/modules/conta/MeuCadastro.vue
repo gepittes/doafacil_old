@@ -7,27 +7,25 @@
             sm6
             md12
         >
-            <v-text-field
-                v-model="editedItem.nome"
-                :rules="[rules.required, rules.minLength]"
-                prepend-icon="face"
-                required
-                label="Nome"/>
-            <v-text-field
-                v-model="editedItem.email"
-                :rules="[rules.required, rules.email, rules.minLength]"
-                prepend-icon="person"
-                required
-                label="E-mail"
-            />
-<!--            <v-text-field-->
-<!--                v-validate="{min: 6 }"-->
-<!--                v-model="editedItem.password"-->
-<!--                :rules="[rules.required, rules.minLength]"-->
-<!--                prepend-icon="lock"-->
-<!--                type="password"-->
-<!--                label="Senha"-->
-<!--                required />-->
+            <v-form
+                ref="formconta"
+                v-model="valid"
+                :lazy-validation="lazy"
+            >
+                <v-text-field
+                    v-model="editedItem.nome"
+                    :rules="[rules.required, rules.minLength]"
+                    prepend-icon="face"
+                    required
+                    label="Nome"/>
+                <v-text-field
+                    v-model="editedItem.email"
+                    :rules="[rules.required, rules.email, rules.minLength]"
+                    prepend-icon="person"
+                    required
+                    label="E-mail"
+                />
+            </v-form>
         </v-flex>
 
         <v-flex
@@ -52,6 +50,60 @@
                     @click.native="save">Gravar
                 </v-btn>
             </v-col>
+            <v-dialog
+                v-model="dialog"
+                persistent
+                max-width="350">
+                <template v-slot:activator="{ on }">
+                    <v-btn
+                        align="right"
+                        dark
+                        color="blue darken-1"
+                        v-on="on">Alterar senha</v-btn>
+                </template>
+                <v-card>
+                    <v-card-title class="headline">Alterando a senha da conta</v-card-title>
+                    <v-col>
+                        <v-form
+                            ref="formse"
+                            v-model="valid"
+                            :lazy-validation="lazy"
+                        >
+                            <v-text-field
+                                v-model="senha.password"
+                                :rules="[rules.required, rules.minLength]"
+                                prepend-icon="lock"
+                                type="password"
+                                required
+                                label="Senha Atual"/>
+                            <v-text-field
+                                v-validate="{min: 6 }"
+                                v-model="senha.passwordNova"
+                                :rules="[rules.required, rules.minLength]"
+                                prepend-icon="lock"
+                                required
+                                type="password"
+                                label="Nova senha"
+                            />
+                            <v-btn
+                                color="warning"
+                                class="mr-4"
+                                @click="dialog = false"
+                            >
+                                Cancelar
+                            </v-btn>
+
+                            <v-btn
+                                :disabled="!valid"
+                                color="success"
+                                @click="save"
+                            >
+                                Salvar senha
+                            </v-btn>
+                        </v-form>
+                    </v-col>
+                </v-card>
+            </v-dialog>
         </v-flex>
     </v-layout>
 </template>
@@ -62,6 +114,9 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
     data: () => ({
         loading: false,
+        dialog: false,
+        senha: {},
+        valid: true,
         editedItem: {},
         rules: {
             required: value => !!value || 'Campo Obrigatório.',
@@ -72,6 +127,7 @@ export default {
                 return pattern.test(value) || 'E-mail inválido.';
             },
         },
+        lazy: false,
     }),
     computed: {
         ...mapGetters({
@@ -88,20 +144,31 @@ export default {
                     this.editedItem = {};
                 } else {
                     this.loadProfile(value);
-                    this.editedItem = { ...value };
                 }
             },
         },
     },
-    mounted() {
+    created() {
         this.loadProfile(this.myuser);
+        this.getUser(this.accountInfo.user_id);
     },
     methods: {
         save() {
             const { editedItem } = this;
-            this.atualizarConta(editedItem);
-            this.loadProfile(this.myuser);
-            this.getUser(this.accountInfo.user_id);
+            const { senha } = this;
+            const isHasSenha = Object.keys(senha).length;
+            if ((isHasSenha < 1) && (this.dialog === false)) {
+                this.senha = {}
+                this.atualizarConta(editedItem);
+            } else {
+                const userId = {
+                    usuario_id: this.user.usuario_id,
+                };
+                const data = Object.assign(senha, userId);
+                this.atualizarConta(data);
+                this.dialog = false;
+                this.senha = {}
+            }
         },
         loadProfile(value) {
             this.editedItem = { ...value };

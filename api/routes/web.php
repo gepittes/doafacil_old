@@ -51,15 +51,8 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
         $router->delete('/conta[/{id}]', 'ContaController@delete');
     });
 
-    /* Desativar jwt por enquanto
+
     $router->group(['middleware' => 'jwt.auth'], function () use ($router) {
-        $router->delete(
-            '/conta/{id}',
-            [
-                'middleware' => 'isAdmin',
-                'uses' => 'ContaController@delete'
-            ]
-        );
+
     });
-    */
 });
