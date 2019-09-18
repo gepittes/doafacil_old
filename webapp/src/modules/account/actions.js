@@ -67,3 +67,14 @@ export const register = ({ dispatch, commit }, user) => {
         },
     );
 };
+
+export const getUser = ({ dispatch, commit }, id) => {
+    axios.get(`http://localhost/v1/conta/${id}`).then((response) => {
+        const { data } = response;
+        commit(types.USER, data.data);
+    }).catch((error) => {
+        dispatch('alert/error', error.response.data.error, {
+            root: true,
+        });
+    });
+};
