@@ -6,6 +6,8 @@
             <v-expansion-panels
                 v-model="panel"
                 multiple
+                focusable
+                class="mt-5"
             >
                 <v-expansion-panel>
                     <v-expansion-panel-header>Conta</v-expansion-panel-header>
