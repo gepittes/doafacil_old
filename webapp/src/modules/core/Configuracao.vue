@@ -3,39 +3,38 @@
         <v-container
             fluid
             grid-list-md>
-                    <v-expansion-panels
-                        v-model="panel"
-                        multiple
-                    >
-                        <v-expansion-panel>
-                        <v-expansion-panel-header>Meu Cadastro</v-expansion-panel-header>
-                        <v-expansion-panel-content>
-                            <meu-cadastro/>
-                        </v-expansion-panel-content>
-                        </v-expansion-panel>
-  
-                        <v-expansion-panel>
-                        <v-expansion-panel-header>Minhas Doações</v-expansion-panel-header>
-                        <v-expansion-panel-content>
-                            Some content
-                        </v-expansion-panel-content>
-                        </v-expansion-panel>
-  
-                        <v-expansion-panel>
-                        <v-expansion-panel-header>Minhas Ponto de Doações</v-expansion-panel-header>
-                        <v-expansion-panel-content>
-                            Some content
-                        </v-expansion-panel-content>
-                        </v-expansion-panel>
+            <v-expansion-panels
+                v-model="panel"
+                multiple
+            >
+                <v-expansion-panel>
+                    <v-expansion-panel-header>Conta</v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                        <meu-cadastro
+                            :open-painel="openPainel"
+                        />
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
 
-                        <v-expansion-panel>
-                        <v-expansion-panel-header>Meus Eventos</v-expansion-panel-header>
-                        <v-expansion-panel-content>
-                            Some content
-                        </v-expansion-panel-content>
-                        </v-expansion-panel>
-                    </v-expansion-panels>
-           
+                <v-expansion-panel>
+                    <v-expansion-panel-header>Minhas Doações</v-expansion-panel-header>
+                    <v-expansion-panel-content/>
+                </v-expansion-panel>
+
+                <v-expansion-panel>
+                    <v-expansion-panel-header>Minhas Ponto de Doações</v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                        Some content
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+
+                <v-expansion-panel>
+                    <v-expansion-panel-header>Meus Eventos</v-expansion-panel-header>
+                    <v-expansion-panel-content>
+                        Some content
+                    </v-expansion-panel-content>
+                </v-expansion-panel>
+            </v-expansion-panels>
 
 
             <v-btn
@@ -52,16 +51,21 @@
     </v-app>
 </template>
 <script>
-import MeuCadastro from '../conta/MeuCadastro.vue'
+import MeuCadastro from '../conta/MeuCadastro.vue';
 
 export default {
     name: 'Main',
     components: { MeuCadastro },
-    data(){
+    data() {
         return {
-            panel: [0, 1],
-        }
-    }
+            panel: [],
+        };
+    },
+    methods: {
+        openPainel(value) {
+            this.panel = value;
+        },
+    },
 
 };
 </script>

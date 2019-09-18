@@ -33,33 +33,40 @@
             row>
             <v-col
                 align-center
+                class="col-4"
             >
                 <v-btn
                     align-center
                     color="error"
-                    @click.native="close">Fechar
+                    @click.native="openPainel([])">Fechar
 
                 </v-btn>
             </v-col>
-            <v-col align-center>
+            <v-col
+                align-center
+                class="col-4">
                 <v-btn
                     v-if="!loading"
                     align-center
                     dark
-                    color="blue darken-1"
-                    @click.native="save">Gravar
+                    color="success"
+                    @click.native="save">Atualizar Conta
                 </v-btn>
             </v-col>
             <v-dialog
                 v-model="dialog"
                 persistent
                 max-width="350">
-                <template v-slot:activator="{ on }">
-                    <v-btn
-                        align="right"
-                        dark
-                        color="blue darken-1"
-                        v-on="on">Alterar senha</v-btn>
+                <template
+                    v-slot:activator="{ on }"
+                    class="m-0">
+                    <v-col class="col-4">
+                        <v-btn
+                            align-right
+                            dark
+                            color="blue darken-1"
+                            v-on="on">Alterar senha</v-btn>
+                    </v-col>
                 </template>
                 <v-card>
                     <v-card-title class="headline">Alterando a senha da conta</v-card-title>
@@ -88,7 +95,7 @@
                             <v-btn
                                 color="warning"
                                 class="mr-4"
-                                @click="dialog = false"
+                                @click="resetSenha()"
                             >
                                 Cancelar
                             </v-btn>
@@ -112,6 +119,9 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
+    props: {
+        openPainel: { type: Function, required: true },
+    },
     data: () => ({
         loading: false,
         dialog: false,
@@ -153,12 +163,16 @@ export default {
         this.getUser(this.accountInfo.user_id);
     },
     methods: {
+        resetSenha() {
+            this.senha = {};
+            this.dialog = false;
+        },
         save() {
             const { editedItem } = this;
             const { senha } = this;
             const isHasSenha = Object.keys(senha).length;
             if ((isHasSenha < 1) && (this.dialog === false)) {
-                this.senha = {}
+                this.resetSenha();
                 this.atualizarConta(editedItem);
             } else {
                 const userId = {
@@ -167,7 +181,7 @@ export default {
                 const data = Object.assign(senha, userId);
                 this.atualizarConta(data);
                 this.dialog = false;
-                this.senha = {}
+                this.resetSenha();
             }
         },
         loadProfile(value) {
