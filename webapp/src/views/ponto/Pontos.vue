@@ -4,9 +4,9 @@
             justify="center"
             align="center">
             <v-col
-                xl="2"
+                xl="3"
                 md="3">
-                <v-subheader class="text-uppercase font-weight-bold">Seleciona Instituição:</v-subheader>
+                <v-subheader class="text-uppercase font-weight-bold">Instituição Selecionada:</v-subheader>
             </v-col>
             <v-col
                 xl="4"
@@ -43,7 +43,7 @@
         </v-row>
 
         <v-row justify="center">
-            <v-col xl="10">
+            <v-col xl="12">
                 <v-expand-transition>
                     <v-expansion-panels
                         v-if="isVisible"
