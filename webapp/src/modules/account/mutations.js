@@ -33,4 +33,7 @@ export default {
     [types.REGISTERFAILURE](state) {
         state.status = {};
     },
+    [types.USER](state, user) {
+        state.user = user;
+    },
 };

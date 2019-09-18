@@ -16,13 +16,13 @@ class JWTMiddleware
         $token = $request->bearerToken();
         if (!$token) {
             return response()->json([
-                'error' => 'Token n&atilde;o recebida.'
+                'error' => 'Token não foi recebido.'
             ], 403);
         }
         if (!env('JWT_SECRET')) {
             return response()->json([
-                'error' => 'Vari&aacute;vel de ambiente `JWT_SECRET`'
-                    . ' n&atilde;o definida.'
+                'error' => 'Variavel de ambiente `JWT_SECRET`'
+                    . 'Não está definida.'
             ], 401);
         }
 

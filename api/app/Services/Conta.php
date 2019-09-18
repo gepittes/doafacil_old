@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Usuario;
 use App\Models\Usuario as ModeloUsuario;
+use Illuminate\Support\Facades\Hash;
 use Psr\Http\Message\ServerRequestInterface;
 use Ratchet\Wamp\Exception;
 use Validator;
@@ -67,25 +69,40 @@ class Conta implements IService
         }
     }
 
-    public function alterar($id, array $dados = [])
+    public function alterar(int $id, array $dados = [])
     {
-        $validator = Validator::make($dados, [
-            "nome" => 'required|string|min:3|max:50',
-            "email" => 'required|string|min:3|max:50'
-        ]);
+        if (isset($dados['password'])) {
+            $validator = Validator::make($dados, [
+                "password" => 'required|string|min:3|max:50',
+                "passwordNova" => 'required|string|min:3|max:50'
+            ]);
+
+            $hashedPassword = ModeloUsuario::find($id)->password;
+            if (Hash::check($dados['password'], $hashedPassword) && !empty($dados['passwordNova']) ) {
+                $dados['password'] = password_hash($dados['passwordNova'], PASSWORD_BCRYPT);
+                unset($dados['passwordNova']);
+
+            } else {
+                throw new \Exception('Você digitou alguma coisa errada tente novamente!' );
+            }
+
+        }
+        if (!isset($dados['password'])) {
+            $validator = Validator::make($dados, [
+                "nome" => 'required|string|min:3|max:50',
+                "email" => 'required|string|min:3|max:50'
+            ]);
+        }
+        
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->first());
         }
         if (isset($dados['usuario_id'])) {
             unset($dados['usuario_id']);
         }
-        if (isset($dados['password']) && !empty($dados['password'])) {
-            $dados['password'] = password_hash($dados['password'], PASSWORD_BCRYPT);
-        } else {
-            unset($dados['password']);
-        }
+        ModeloUsuario::where('usuario_id', $id)->update($dados);
 
-        return ModeloUsuario::where('usuario_id', $id)->update($dados);
+        return $this->obter($id);
     }
 
     public function recuperarSenha()

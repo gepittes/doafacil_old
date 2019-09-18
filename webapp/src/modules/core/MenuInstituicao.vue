@@ -79,18 +79,13 @@ export default {
                     icon: 'fa fa-stream',
                 },
                 {
-                    icon: 'fa fa-cog',
-                    text: 'Configuração',
-                    to: '/configuracao',
+                    icon: 'fa fa-comment-alt',
+                    text: 'Enviar feedback',
                 },
-                { 
-                    icon: "fa fa-comment-alt", 
-                    text: "Enviar feedback" 
+                {
+                    icon: 'fa fa-question-circle',
+                    text: 'Ajuda',
                 },
-                { 
-                    icon: "fa fa-question-circle", 
-                    text: "Ajuda"
-                }
 
             ],
         };
