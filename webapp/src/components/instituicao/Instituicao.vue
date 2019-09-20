@@ -1,5 +1,20 @@
 <template>
     <v-flex md4 sm6 xl3>
+        <v-row justify="center">
+            <v-dialog v-model="dialog" persistent max-width="300">
+                <v-card>
+                    <v-card-title class="headline text-center">Tem certeza que deseja deletar este evento?
+                    </v-card-title>
+                    <v-card-text>Você esta prestes a deletar a instituição {{instituicao.nome}}
+                    </v-card-text>
+                    <v-card-actions>
+                        <div class="flex-grow-1"></div>
+                        <v-btn color="green darken-1" text @click="dialog = false">Cancelar</v-btn>
+                        <v-btn color="red darken-1" text @click="deletar(instituicao.id)">Sim, quero deletar!</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+        </v-row>
         <v-card>
             <v-img
                 src="https://via.placeholder.com/150"
@@ -18,14 +33,24 @@
                         store
                     </v-icon>
                 </v-btn>
-                <v-btn icon>
+                <v-btn icon
+                       v-if="this.$route.name !== `configuracao`">
                     <v-icon>
                         share
                     </v-icon>
                 </v-btn>
-                <v-btn icon @click="editar(instituicao)">
+                <v-btn icon
+                       v-if="this.$route.name !== `configuracao`"
+                       @click="editar(instituicao)">
                     <v-icon>
                         edit
+                    </v-icon>
+                </v-btn>
+                <v-btn icon
+                       v-if="this.$route.name === `configuracao`"
+                       @click="openDialog">
+                    <v-icon>
+                        delete
                     </v-icon>
                 </v-btn>
                 <v-btn
@@ -72,17 +97,27 @@
         data() {
             return {
                 show: false,
+                dialog: false
             };
         },
         methods: {
             ...mapActions({
                 statusDialog: 'instituicao/setDialog',
-                insitituicaoEditar: 'instituicao/insitituicaoEditar'
+                insitituicaoEditar: 'instituicao/insitituicaoEditar',
+                removerInstituicao: 'instituicao/removerInstituicao'
             }),
 
             editar(instituicao) {
                 this.statusDialog(true);
                 this.insitituicaoEditar(instituicao);
+            },
+
+            openDialog(){
+                this.dialog = true;
+            },
+
+            deletar(instituicao) {
+                this.removerInstituicao(instituicao);
             }
         }
     };

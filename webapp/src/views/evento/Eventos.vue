@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-row justify="center" align="center">
-            <v-col xl="2" md="3">
+            <v-col xl="3" md="3">
                 <v-subheader class="text-uppercase font-weight-bold">Instituição Selecionada:</v-subheader>
             </v-col>
             <v-col xl="4" md="4" cols="12">

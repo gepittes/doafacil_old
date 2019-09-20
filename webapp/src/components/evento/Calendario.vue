@@ -4,13 +4,13 @@
             <v-sheet height="64">
                 <v-toolbar flat color="white">
                     <v-btn outlined class="mr-4" @click="setToday">
-                        Today
+                        Hoje
                     </v-btn>
                     <v-btn fab text small @click="prev">
-                        <v-icon small>mdi-chevron-left</v-icon>
+                        <v-icon small>fas fa-arrow-left</v-icon>
                     </v-btn>
                     <v-btn fab text small @click="next">
-                        <v-icon small>mdi-chevron-right</v-icon>
+                        <v-icon small>fas fa-arrow-right</v-icon>
                     </v-btn>
                     <v-toolbar-title>{{ title }}</v-toolbar-title>
                     <div class="flex-grow-1"></div>
@@ -21,21 +21,21 @@
                                 v-on="on"
                             >
                                 <span>{{ typeToLabel[type] }}</span>
-                                <v-icon right>mdi-menu-down</v-icon>
+                                <v-icon small>fas fa-arrow-down</v-icon>
                             </v-btn>
                         </template>
                         <v-list>
                             <v-list-item @click="type = 'day'">
-                                <v-list-item-title>Day</v-list-item-title>
+                                <v-list-item-title>Dia</v-list-item-title>
                             </v-list-item>
                             <v-list-item @click="type = 'week'">
-                                <v-list-item-title>Week</v-list-item-title>
+                                <v-list-item-title>Semana</v-list-item-title>
                             </v-list-item>
                             <v-list-item @click="type = 'month'">
-                                <v-list-item-title>Month</v-list-item-title>
+                                <v-list-item-title>Mês</v-list-item-title>
                             </v-list-item>
                             <v-list-item @click="type = '4day'">
-                                <v-list-item-title>4 days</v-list-item-title>
+                                <v-list-item-title>4 Dias</v-list-item-title>
                             </v-list-item>
                         </v-list>
                     </v-menu>
@@ -51,6 +51,7 @@
                     :event-margin-bottom="3"
                     :now="today"
                     :type="type"
+                    locale="Brazil"
                     @click:event="showEvent"
                     @click:more="viewDay"
                     @click:date="viewDay"
@@ -73,7 +74,7 @@
                             dark
                         >
                             <v-btn icon>
-                                <v-icon>mdi-pencil</v-icon>
+                                <v-icon>fa fa-paper-plane</v-icon>
                             </v-btn>
                             <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
                             <div class="flex-grow-1"></div>
@@ -86,6 +87,8 @@
                         </v-toolbar>
                         <v-card-text>
                             <span v-html="selectedEvent.details"></span>
+                            <v-divider/>
+                            Hora do evento: <span v-html="selectedEvent.hour" class="badge badge-info"></span> hrs
                         </v-card-text>
                         <v-card-actions>
                             <v-btn
@@ -93,7 +96,7 @@
                                 color="secondary"
                                 @click="selectedOpen = false"
                             >
-                                Cancel
+                                Fechar
                             </v-btn>
                         </v-card-actions>
                     </v-card>
@@ -104,151 +107,32 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
+
     export default {
         name: 'Calendario',
         data: () => ({
-            today: '2019-01-08',
-            focus: '2019-01-08',
+            today: new Date().toISOString().slice(0, 10),
+            focus: new Date().toISOString().slice(0, 10),
             type: 'month',
             typeToLabel: {
-                month: 'Month',
-                week: 'Week',
-                day: 'Day',
-                '4day': '4 Days',
+                month: 'Mês',
+                week: 'Semana',
+                day: 'Dia',
+                '4day': '4 Dias',
             },
             start: null,
             end: null,
             selectedEvent: {},
             selectedElement: null,
             selectedOpen: false,
-            events: [
-                {
-                    name: 'Vacation',
-                    details: 'Going to the beach!',
-                    start: '2018-12-29',
-                    end: '2019-01-01',
-                    color: 'blue',
-                },
-                {
-                    name: 'Meeting',
-                    details: 'Spending time on how we do not have enough time',
-                    start: '2019-01-07 09:00',
-                    end: '2019-01-07 09:30',
-                    color: 'indigo',
-                },
-                {
-                    name: 'Large Event',
-                    details: 'This starts in the middle of an event and spans over multiple events',
-                    start: '2018-12-31',
-                    end: '2019-01-04',
-                    color: 'deep-purple',
-                },
-                {
-                    name: '3rd to 7th',
-                    details: 'Testing',
-                    start: '2019-01-03',
-                    end: '2019-01-07',
-                    color: 'cyan',
-                },
-                {
-                    name: 'Big Meeting',
-                    details: 'A very important meeting about nothing',
-                    start: '2019-01-07 08:00',
-                    end: '2019-01-07 11:30',
-                    color: 'red',
-                },
-                {
-                    name: 'Another Meeting',
-                    details: 'Another important meeting about nothing',
-                    start: '2019-01-07 10:00',
-                    end: '2019-01-07 13:30',
-                    color: 'brown',
-                },
-                {
-                    name: '7th to 8th',
-                    start: '2019-01-07',
-                    end: '2019-01-08',
-                    color: 'blue',
-                },
-                {
-                    name: 'Lunch',
-                    details: 'Time to feed',
-                    start: '2019-01-07 12:00',
-                    end: '2019-01-07 15:00',
-                    color: 'deep-orange',
-                },
-                {
-                    name: '30th Birthday',
-                    details: 'Celebrate responsibly',
-                    start: '2019-01-03',
-                    color: 'teal',
-                },
-                {
-                    name: 'New Year',
-                    details: 'Eat chocolate until you pass out',
-                    start: '2019-01-01',
-                    end: '2019-01-02',
-                    color: 'green',
-                },
-                {
-                    name: 'Conference',
-                    details: 'The best time of my life',
-                    start: '2019-01-21',
-                    end: '2019-01-28',
-                    color: 'grey darken-1',
-                },
-                {
-                    name: 'Hackathon',
-                    details: 'Code like there is no tommorrow',
-                    start: '2019-01-30 23:00',
-                    end: '2019-02-01 08:00',
-                    color: 'black',
-                },
-                {
-                    name: 'event 1',
-                    start: '2019-01-14 18:00',
-                    end: '2019-01-14 19:00',
-                    color: '#4285F4',
-                },
-                {
-                    name: 'event 2',
-                    start: '2019-01-14 18:00',
-                    end: '2019-01-14 19:00',
-                    color: '#4285F4',
-                },
-                {
-                    name: 'event 5',
-                    start: '2019-01-14 18:00',
-                    end: '2019-01-14 19:00',
-                    color: '#4285F4',
-                },
-                {
-                    name: 'event 3',
-                    start: '2019-01-14 18:30',
-                    end: '2019-01-14 20:30',
-                    color: '#4285F4',
-                },
-                {
-                    name: 'event 4',
-                    start: '2019-01-14 19:00',
-                    end: '2019-01-14 20:00',
-                    color: '#4285F4',
-                },
-                {
-                    name: 'event 6',
-                    start: '2019-01-14 21:00',
-                    end: '2019-01-14 23:00',
-                    color: '#4285F4',
-                },
-                {
-                    name: 'event 7',
-                    start: '2019-01-14 22:00',
-                    end: '2019-01-14 23:00',
-                    color: '#4285F4',
-                },
-            ],
+            events: []
         }),
         computed: {
+            ...mapGetters({
+                eventos: 'evento/getEventosInsti'
+            }),
+
             title() {
                 const {start, end} = this
                 if (!start || !end) {
@@ -283,7 +167,49 @@
                 })
             },
         },
+
+        created() {
+            this.eventos.forEach(e => {
+                let data = {
+                    name: e.nome,
+                    start: e.data,
+                    end: e.data,
+                    details: e.descricao,
+                    hour: e.hora,
+                    color: this.random_rgba()
+                };
+                this.events.push(data)
+            });
+        },
+
+        watch: {
+            eventos(e) {
+                this.events = [];
+
+                if (e.length === 0) {
+                    this.events = []
+                }
+                this.eventos.forEach(e => {
+                    let data = {
+                        name: e.nome,
+                        start: e.data,
+                        end: e.data,
+                        details: e.descricao,
+                        hour: e.hora,
+                        color: this.random_rgba()
+                    };
+                    this.events.push(data)
+                });
+            }
+        },
+
         methods: {
+
+            random_rgba() {
+                let colors = ['#03A9F4', '#E53935', '#4CAF50', '#009688', '#9C27B0', '#E040FB'];
+                return  colors[Math.floor(Math.random() * colors.length)];
+            },
+
             viewDay({date}) {
                 this.focus = date
                 this.type = 'day'
@@ -317,7 +243,6 @@
                 nativeEvent.stopPropagation()
             },
             updateRange({start, end}) {
-                // You could load events from an outside source (like database) now that we have the start and end dates on the calendar
                 this.start = start
                 this.end = end
             },
