@@ -23,7 +23,7 @@ class CreatePontoDeDoacaosTable extends Migration
                 ->references('id')
                 ->on('app.instituicao')
                 ->onDelete('cascade');
-            $table->string('img')->nullable();
+            $table->integer('img')->nullable();
             $table->timestamps();
         });
     }
