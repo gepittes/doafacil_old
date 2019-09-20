@@ -93,10 +93,11 @@
                     </v-row>
                     <v-row>
                         <v-col>
-                            <v-file-input
-                                ref="imagem"
-                                label="Imagem ponto"
-                            />
+                            <strong>Image:</strong>
+                            <input
+                                type="file"
+                                class="form-control"
+                                @change="onImageChange">
                         </v-col>
                     </v-row>
                 </v-col>
@@ -179,7 +180,7 @@ export default {
 
         closeDialog() {
             this.resetValidation();
-            this.reset()
+            this.reset();
             this.$emit('closePainel', []);
         },
         reset() {
@@ -195,15 +196,30 @@ export default {
                 const instituicaoID = {
                     instituicao_id: this.instiSelected,
                 };
+                const config = {
+                    headers: { 'content-type': 'multipart/form-data' },
+                }
                 const data = Object.assign(ponto, instituicaoID);
                 if (this.pontoEditar.id) {
                     this.atualizarPonto(data);
                     this.cleanPontoEditar({});
                 } else {
-                    this.cadastraPontoDeDoacao(data);
+                    this.cadastraPontoDeDoacao(data, config);
                 }
-                this.closeDialog();
+                // this.closeDialog();
             }
+        },
+        onImageChange(e) {
+            const files = e.target.files || e.dataTransfer.files;
+            if (!files.length) { return; }
+            this.createImage(files[0]);
+        },
+        createImage(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.ponto.image = e.target.result;
+            };
+            reader.readAsDataURL(file);
         },
         loadPonto(value) {
             if (value) {

@@ -3,6 +3,7 @@
 namespace App\Services\Ponto;
 
 use App\Models\PontoDeDoacao;
+use App\Services\Image\ImageServices;
 
 class PontoServices
 {
@@ -16,10 +17,9 @@ class PontoServices
         return $data;
     }
 
-    public function criar(array $dados = [])
+    public function criar($dados)
     {
         try {
-
             return PontoDeDoacao::create($dados);
 
         } catch (\Exception $exception) {
@@ -27,9 +27,12 @@ class PontoServices
         }
     }
 
-    public function alterar($id, array $dados = [])
+    public function alterar($id,$dados)
     {
+        $this->alterarImage($id,ImageServices::setImage($dados));
+        unset($dados['image']);;
         $ponto = PontoDeDoacao::where('id', $id)->update($dados);
+
         return $ponto ;
     }
 
@@ -37,5 +40,13 @@ class PontoServices
     {
         return  PontoDeDoacao::findOrFail($id)->delete();
     }
+
+    public function alterarImage($id, $img_id)
+    {
+       PontoDeDoacao::findOrFail($id)->update([
+            'img' => $img_id
+        ]);
+    }
+
 
 }

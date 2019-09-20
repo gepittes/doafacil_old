@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as types from './types';
+import { requisicaoAutorizada } from '../account/_helpers/requisicao-autorizada';
 
 export const obterPontoDeDoacoes = ({ dispatch, commit }) => {
     axios.get('http://localhost/v1/ponto').then((response) => {
@@ -32,7 +33,7 @@ export const getPontoByInst = ({ dispatch, commit }, instituicaoId) => {
     });
 };
 
-export const cadastraPontoDeDoacao = ({ dispatch, commit }, ponto) => axios.post('http://localhost/v1/ponto', ponto).then((response) => {
+export const cadastraPontoDeDoacao = ({ dispatch, commit }, ponto, config) => axios.post('http://localhost/v1/ponto', ponto, config).then((response) => {
     const { data } = response;
     commit(types.ACRESCENTAR_PONTO_DE_DOACAO, data.data);
     dispatch('alert/success', 'Ponto de acesso criado com sucesso!', { root: true });
@@ -42,7 +43,7 @@ export const cadastraPontoDeDoacao = ({ dispatch, commit }, ponto) => axios.post
     });
 });
 
-export const atualizarPonto = ({ dispatch, commit }, ponto) => axios.patch(`http://localhost/v1/ponto/${ponto.id}`, ponto).then(() => {
+export const atualizarPonto = ({ dispatch, commit }, ponto) => requisicaoAutorizada.patch(`http://localhost/v1/ponto/${ponto.id}`, ponto).then(() => {
     commit(types.ATUALIZAR_PONTO_DE_DOACAO, ponto);
     dispatch('alert/success', 'Ponto foi atualizado com sucesso!', { root: true });
 }).catch((error) => {
