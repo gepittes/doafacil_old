@@ -43,6 +43,7 @@ const routesObject = [
     {
         path: '/pontos',
         component: Pontos,
+        name: 'pontos',
         meta: {
             title: 'Principal',
         },
@@ -50,6 +51,7 @@ const routesObject = [
     {
         path: '/eventos',
         component: Eventos,
+        name: 'eventos',
         meta: {
             title: 'Eventos'
         }

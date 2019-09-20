@@ -46,12 +46,18 @@
                     Mapa do local
                 </v-btn>
                 <v-spacer/>
-                <v-btn icon @click="editarEvento(evento)">
+                <v-btn
+                    v-if="this.$route.name === `eventos`"
+                    icon
+                    @click="editarEvento(evento)">
                     <v-icon>
                         edit
                     </v-icon>
                 </v-btn>
-                <v-btn icon @click="dialog = true">
+                <v-btn
+                    v-if="this.$route.name === `eventos`"
+                    icon
+                    @click="dialog = true">
                     <v-icon>
                         delete
                     </v-icon>
