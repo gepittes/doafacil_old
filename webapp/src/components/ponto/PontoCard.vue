@@ -30,6 +30,7 @@
             <v-spacer/>
             <v-btn
                 icon
+                v-if="this.$route.name === `pontos`"
                 @click="update(ponto)">
                 <v-icon>
                     edit
@@ -39,6 +40,7 @@
             <v-dialog
                 v-model="dialog"
                 persistent
+                v-if="this.$route.name === `pontos`"
                 max-width="290">
                 <template v-slot:activator="{ on }">
                     <v-btn

@@ -102,7 +102,7 @@ import Ponto from '../../components/ponto/PontoCard';
 import PontoFormulario from '../../components/ponto/PontoFormulario';
 
 export default {
-    name: 'Eventos',
+    name: 'PontosDoacao',
     components: { Ponto, PontoFormulario },
     data() {
         return {
