@@ -12,7 +12,7 @@ class PontoServices
         $data = PontoDeDoacao::all();
 
         if (!empty(trim($nameFk))) {
-            $data =  PontoDeDoacao::where($nameFk,'=',$id)->get();
+            $data = PontoDeDoacao::where($nameFk, '=', $id)->get();
         }
         return $data;
     }
@@ -27,23 +27,28 @@ class PontoServices
         }
     }
 
-    public function alterar($id,$dados)
+    public function alterar($id, $dados)
     {
-        $this->alterarImage($id,ImageServices::setImage($dados));
+        if ($dados->img) {
+            ImageServices::setImage($dados, $dados->img);
+        } else {
+            $this->alterarImage($id, ImageServices::setImage($dados));
+        }
+
         unset($dados['image']);;
         $ponto = PontoDeDoacao::where('id', $id)->update($dados);
 
-        return $ponto ;
+        return $ponto;
     }
 
     public function remover($id)
     {
-        return  PontoDeDoacao::findOrFail($id)->delete();
+        return PontoDeDoacao::findOrFail($id)->delete();
     }
 
     public function alterarImage($id, $img_id)
     {
-       PontoDeDoacao::findOrFail($id)->update([
+        PontoDeDoacao::findOrFail($id)->update([
             'img' => $img_id
         ]);
     }

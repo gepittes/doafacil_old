@@ -13,20 +13,28 @@ use phpDocumentor\Reflection\File;
 
 class ImageServices
 {
-    public static  function setImage($dados)
+    public static function setImage($dados, $id = null)
     {
 
         $image_parts = explode(";base64,", $dados['image']);
         $image_type_aux = explode("image/", $image_parts[0]);
         $image_ext = $image_type_aux[1];
         $image_base64 = base64_decode($image_parts[1]);
-        $romdon = microtime() ;
-        $safeName =  md5($romdon).'.'.$image_ext;
-        $file = storage_path('app/images/'.$safeName);
+        $romdon = microtime();
+        $safeName = md5($romdon) . '.' . $image_ext;
+        $file = storage_path('app/images/' . $safeName);
         file_put_contents($file, $image_base64);
+
+        if (isset($id)) {
+
+            return ImageLink::findOrfail($id)->update([
+                'path' => $safeName
+            ]);
+        }
+
         $image = ImageLink::create([
-             'path' => $safeName,
-         ]);
+            'path' => $safeName,
+        ]);
         return $image->id;
     }
 }
