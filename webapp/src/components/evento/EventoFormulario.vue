@@ -95,13 +95,8 @@
                         </v-col>
                     </v-row>
                     <v-row class="text-center">
-                        <v-col v-if="this.window.width > 900">
+                        <v-col>
                             <v-img src="https://i.imgur.com/O6ZQx8b.png" />
-                        </v-col>
-                        <v-col v-else>
-                            <v-btn class="ma-2" tile outlined color="success">
-                                <v-icon left>fa fa-map</v-icon> Abra o mapa para selcionar!
-                            </v-btn>
                         </v-col>
                     </v-row>
                 </v-col>
@@ -159,10 +154,6 @@
             getEventoEditar(value){
                 this.evento = {...value}
             },
-            'window.width': function (width) {
-                this.window.width = width;
-                console.log(this.$refs)
-            },
         },
 
         methods: {
@@ -173,11 +164,6 @@
                 eventoEditar: 'evento/eventoEditar',
                 atualizarEvento: 'evento/atualizarEvento'
             }),
-
-            handleResize() {
-                this.window.width = window.innerWidth;
-                this.window.height = window.innerHeight;
-            },
 
             closeDialog() {
                 this.eventoEditar({});
@@ -214,9 +200,5 @@
                 }
             },
         },
-        created() {
-            window.addEventListener('resize', this.handleResize)
-            this.handleResize();
-        }
     }
 </script>
