@@ -37,7 +37,6 @@
                                         :rules="[rules.required]"
                                         readonly
                                         v-on="on"
-                                        hint="MM/DD/YYYY format"
                                     ></v-text-field>
                                 </template>
                                 <v-date-picker v-model="evento.data"
@@ -95,13 +94,8 @@
                         </v-col>
                     </v-row>
                     <v-row class="text-center">
-                        <v-col v-if="this.window.width > 900">
-                            <v-img src="https://i.imgur.com/O6ZQx8b.png" />
-                        </v-col>
-                        <v-col v-else>
-                            <v-btn class="ma-2" tile outlined color="success">
-                                <v-icon left>fa fa-map</v-icon> Abra o mapa para selcionar!
-                            </v-btn>
+                        <v-col>
+                            <MapboxFull @localizacao="evento.localizacao = $event" />
                         </v-col>
                     </v-row>
                 </v-col>
@@ -130,23 +124,20 @@
 
 <script>
     import axios from 'axios'
-    import {formatDateDMY} from '../../filters'
     import {mapState, mapActions, mapGetters} from 'vuex';
+    import MapboxFull from "../mapas/mapbox-full";
 
     export default {
         name: "EventoFormulario",
         props: {instituicaoSelect : Object},
+        components: {MapboxFull},
         data() {
             return {
-                window: {
-                    width: 0,
-                    height: 0,
-                },
                 modalData: false,
                 modalHora: false,
                 submitted: false,
                 evento: {},
-                rules: {required: value => !!value || 'Campo Obrigatório.'}
+                rules: {required: value => !! value || 'Campo Obrigatório.'}
             }
         },
         computed: {
@@ -159,10 +150,6 @@
             getEventoEditar(value){
                 this.evento = {...value}
             },
-            'window.width': function (width) {
-                this.window.width = width;
-                console.log(this.$refs)
-            },
         },
 
         methods: {
@@ -173,11 +160,6 @@
                 eventoEditar: 'evento/eventoEditar',
                 atualizarEvento: 'evento/atualizarEvento'
             }),
-
-            handleResize() {
-                this.window.width = window.innerWidth;
-                this.window.height = window.innerHeight;
-            },
 
             closeDialog() {
                 this.eventoEditar({});
@@ -204,7 +186,7 @@
                     if(this.evento.id) {
                         this.atualizarEvento(this.evento);
                         this.setPainelList(0);
-                    }else {
+                    } else {
                         this.criarEvento(this.evento);
                         this.setPainelList(0);
                     }
@@ -214,9 +196,5 @@
                 }
             },
         },
-        created() {
-            window.addEventListener('resize', this.handleResize)
-            this.handleResize();
-        }
     }
 </script>

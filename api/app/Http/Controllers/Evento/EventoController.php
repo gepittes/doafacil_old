@@ -20,7 +20,7 @@ class EventoController extends Controller
 
     public function get()
     {
-
+        //
     }
 
     public function getEventosByInsti($id)
@@ -34,16 +34,12 @@ class EventoController extends Controller
         $request = $request->getParsedBody();
 
         $evento = Evento::updateEvento($request, $id);
-
         return response()->json($evento, 200);
     }
 
     public function delete(Evento $evento, $id)
     {
         Evento::destroy($id);
-
         return response()->json($evento, 204);
     }
-
-
 }

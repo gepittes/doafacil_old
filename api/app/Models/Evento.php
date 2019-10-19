@@ -10,7 +10,6 @@ class Evento extends Model
 
     protected $fillable = ['nome', 'descricao', 'data', 'hora'];
 
-
     public static function storeEvento($request)
     {
         $evento = new Evento();
@@ -18,6 +17,8 @@ class Evento extends Model
         $evento->descricao = $request['descricao'];
         $evento->data = $request['data'];
         $evento->hora = $request['hora'];
+        $evento->longitude = $request['localizacao']['longitude'];
+        $evento->latitude = $request['localizacao']['latitude'];
         $evento->fk_insti_id = $request['fk_insti_id'];
         $evento->save();
 

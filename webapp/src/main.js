@@ -1,5 +1,6 @@
 import './plugins/doafacil';
 import './plugins/bootstrap';
+import './plugins/mapbox';
 import vuetify from './plugins/vuetify';
 import VeeValidate from 'vee-validate';
 import '@babel/polyfill';
@@ -13,13 +14,10 @@ import './registerServiceWorker';
 import Default from "./views/layouts/Default";
 import NoSideBar from "./views/layouts/NoSideBar";
 
-import { configureFakeBackend } from './modules/_helpers';
-
 Vue.component('default-layout', Default);
 Vue.component('no-side-bar-layout', NoSideBar);
 
 Vue.use(VeeValidate);
-configureFakeBackend();
 
 filters.create(Vue);
 
