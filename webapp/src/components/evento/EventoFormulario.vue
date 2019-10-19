@@ -37,7 +37,6 @@
                                         :rules="[rules.required]"
                                         readonly
                                         v-on="on"
-                                        hint="MM/DD/YYYY format"
                                     ></v-text-field>
                                 </template>
                                 <v-date-picker v-model="evento.data"
@@ -96,7 +95,7 @@
                     </v-row>
                     <v-row class="text-center">
                         <v-col>
-                            <v-img src="https://i.imgur.com/O6ZQx8b.png" />
+                            <MapboxFull @localizacao="evento.localizacao = $event" />
                         </v-col>
                     </v-row>
                 </v-col>
@@ -125,23 +124,20 @@
 
 <script>
     import axios from 'axios'
-    import {formatDateDMY} from '../../filters'
     import {mapState, mapActions, mapGetters} from 'vuex';
+    import MapboxFull from "../mapas/mapbox-full";
 
     export default {
         name: "EventoFormulario",
         props: {instituicaoSelect : Object},
+        components: {MapboxFull},
         data() {
             return {
-                window: {
-                    width: 0,
-                    height: 0,
-                },
                 modalData: false,
                 modalHora: false,
                 submitted: false,
                 evento: {},
-                rules: {required: value => !!value || 'Campo Obrigatório.'}
+                rules: {required: value => !! value || 'Campo Obrigatório.'}
             }
         },
         computed: {
@@ -190,7 +186,7 @@
                     if(this.evento.id) {
                         this.atualizarEvento(this.evento);
                         this.setPainelList(0);
-                    }else {
+                    } else {
                         this.criarEvento(this.evento);
                         this.setPainelList(0);
                     }
