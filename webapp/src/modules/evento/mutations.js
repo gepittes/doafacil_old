@@ -1,5 +1,4 @@
 import * as types from './types';
-import {eventoEditar} from "./actions";
 
 export const mutations = {
     [types.ESTADO_PNL_CREATE](state, payload) {
