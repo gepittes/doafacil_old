@@ -16,13 +16,12 @@
 </template>
 <script>
 import { mapActions } from "vuex";
-import cover from "../../assets/img/cover.jpeg";
 export default {
   name: "imagem",
   props: ["imgWidth", "imgHeight"],
   data() {
     return {
-      image: "https://via.placeholder.com/800x300"
+      image: `https://via.placeholder.com/${this.imgWidth}x${this.imgHeight}`
     };
   },
   computed: {
