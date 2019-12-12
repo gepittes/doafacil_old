@@ -8,6 +8,7 @@ import conta from '@/modules/conta';
 import instituicao from '@/modules/instituicao';
 import ponto from '@/modules/ponto';
 import evento from '@/modules/evento';
+import image from '@/modules/image';
 
 
 Vue.use(Vuex);
@@ -22,6 +23,7 @@ export default new Vuex.Store({
         ponto,
         instituicao,
         evento,
+        image,
     },
     strict: true,
 });
