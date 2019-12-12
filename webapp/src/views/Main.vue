@@ -1,13 +1,13 @@
 <template>
-    <div>
-        <h1>Dashbood</h1>
-    </div> 
+  <div class="row">
+    <imagem :imgWidth="800" :imgHeight="300" />
+  </div>
 </template>
 <script>
-export default {
-    
-}
-</script>
-<style>
+import imagem from "../modules/image/Image";
 
-</style>
+export default {
+  components: { imagem }
+};
+</script>
+<style scoped></style>
