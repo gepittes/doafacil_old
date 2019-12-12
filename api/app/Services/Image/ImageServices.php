@@ -2,20 +2,12 @@
 
 namespace App\Services\Image;
 
-use App\Models\ImageLink;
-use DateTime;
-use Faker\Provider\Image;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Storage;
-use phpDocumentor\Reflection\File;
+use App\Models\Image;
 
 class ImageServices
 {
-    public static function setImage($dados, $id = null)
+    public static function setImage($dados)
     {
-
         $image_parts = explode(";base64,", $dados['image']);
         $image_type_aux = explode("image/", $image_parts[0]);
         $image_ext = $image_type_aux[1];
@@ -25,16 +17,16 @@ class ImageServices
         $file = storage_path('app/images/' . $safeName);
         file_put_contents($file, $image_base64);
 
-        if (isset($id)) {
-
-            return ImageLink::findOrfail($id)->update([
-                'path' => $safeName
-            ]);
-        }
-
-        $image = ImageLink::create([
+        $image = Image::create([
             'path' => $safeName,
         ]);
+
+        // if (isset($dados['id'])) {
+        //     return Image::findOrfail($dados['id'])->update([
+        //         'path' => $safeName
+        //     ]);
+        // }
+
         return $image->id;
     }
 }

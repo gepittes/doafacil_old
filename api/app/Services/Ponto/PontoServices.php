@@ -29,13 +29,14 @@ class PontoServices
 
     public function alterar($id, $dados)
     {
-        if ($dados->img) {
-            ImageServices::setImage($dados, $dados->img);
-        } else {
-            $this->alterarImage($id, ImageServices::setImage($dados));
-        }
+//        dd($dados);
+        // if ($dados->img) {
 
-        unset($dados['image']);;
+        // } else {
+        //     $this->alterarImage($id, ImageServices::setImage($dados));
+        // }
+
+        unset($dados['image']);
         $ponto = PontoDeDoacao::where('id', $id)->update($dados);
 
         return $ponto;

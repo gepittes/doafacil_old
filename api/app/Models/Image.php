@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ImageLink extends Model
+class Image extends Model
 {
-    protected $table = 'app.image_links';
+    protected $table = 'app.image';
 
     protected $fillable = ['path'];
 
