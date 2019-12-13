@@ -10,4 +10,5 @@ class Image extends Model
 
     protected $fillable = ['path'];
 
+    public $timestamps = false;
 }
