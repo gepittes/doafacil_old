@@ -89,7 +89,7 @@ export default {
       eventoEditar: "evento/eventoEditar",
       statusPnlCreate: "evento/statusPnlCreate",
       visibleCreatePnlEvento: "evento/visibleCreatePnlEvento",
-      setImage: "ponto/setImage"
+      setImage: "evento/setImage"
     }),
     editarEvento(evento) {
       this.visibleCreatePnlEvento(true);
