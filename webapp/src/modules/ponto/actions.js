@@ -48,7 +48,7 @@ export const getPontoByInst = ({ dispatch, commit }, instituicaoId) => {
 
 export const cadastraPontoDeDoacao = ({ dispatch, commit }, ponto) =>
   axios
-    .post("http://localhost/v1/ponto", ponto, config)
+    .post("http://localhost/v1/ponto", ponto)
     .then(response => {
       const { data } = response;
       commit(types.ACRESCENTAR_PONTO_DE_DOACAO, data.data);
@@ -80,7 +80,25 @@ export const atualizarPonto = ({ dispatch, commit }, ponto) =>
 export const setPontoEditar = ({ commit }, pontoEditar) => {
   commit(types.SET_PONTO_EDITAR, pontoEditar);
 };
+export const setImage = ({ commit }, ponto) => {
+  commit(types.ATUALIZAR_PONTO_DE_DOACAO, ponto);
+};
 
 export const cleanPontoEditar = ({ commit }, pontoEditar) => {
   commit(types.CLEAN_PONTO_EDITAR, pontoEditar);
 };
+
+export const getPonto = ({ dispatch, commit }, ponto) =>
+  requisicaoAutorizada
+    .patch(`http://localhost/v1/ponto/${ponto.id}`)
+    .then(ponto => {
+      commit(types.ATUALIZAR_PONTO_DE_DOACAO, ponto);
+      dispatch("alert/success", "Ponto foi atualizado com sucesso!", {
+        root: true
+      });
+    })
+    .catch(error => {
+      dispatch("alert/error", error.response.data.error, {
+        root: true
+      });
+    });
