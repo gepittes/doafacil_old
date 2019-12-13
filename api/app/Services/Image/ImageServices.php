@@ -3,6 +3,9 @@
 namespace App\Services\Image;
 
 use App\Models\Image;
+use App\Models\PontoDeDoacao;
+use App\Services\ObjetoImage\ObjetoImageService;
+use App\Services\Ponto\PontoServices;
 
 class ImageServices
 {
@@ -21,11 +24,9 @@ class ImageServices
             'path' => $safeName,
         ]);
 
-        // if (isset($dados['id'])) {
-        //     return Image::findOrfail($dados['id'])->update([
-        //         'path' => $safeName
-        //     ]);
-        // }
+        if($dados['objectName'] === "ponto") {
+          return  PontoServices::setImage($dados['objectId'], $image['path'] );
+        }
 
         return $image->id;
     }
