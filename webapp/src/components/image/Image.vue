@@ -2,7 +2,7 @@
   <div class="linha">
     <div class="coluna">
       <div class="imagem">
-        <img :src="image" :style="styled" />
+        <img :src="image || imagPath" :style="styled" />
       </div>
       <div class="alterar">
         <span>Alterar</span>
@@ -15,22 +15,54 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "imagem",
-  props: ["imgWidth", "imgHeight"],
+  props: {
+    imgWidth: {
+      type: String
+    },
+    imgHeight: {
+      type: String
+    },
+    objectId: {
+      type: Number
+    },
+    objectName: {
+      type: String
+    },
+    modelImage: {
+      type: String
+    },
+    newImage: {
+      type: String
+    }
+  },
+
   data() {
     return {
       image: `https://via.placeholder.com/${this.imgWidth}x${this.imgHeight}`
     };
   },
   computed: {
+    ...mapGetters({
+      object: "image/object"
+    }),
     styled() {
       return {
         height: `${this.imgHeight}px`,
         width: `${this.imgWidth}px`,
         backgroundImage: `url(${this.image})`
       };
+    },
+    imagPath() {
+      return `http://localhost/img/${this.newImage}` || this.image;
+    },
+    setObject() {}
+  },
+  watch: {
+    object(value) {
+      this.$emit("setObject", value);
     }
   },
   methods: {
@@ -51,7 +83,13 @@ export default {
       reader.readAsDataURL(file);
     },
     upload() {
-      const data = { image: this.image };
+      const data = {
+        image: this.image,
+        objectId: this.objectId,
+        objectName: this.objectName,
+        modelImage: this.modelImage
+      };
+
       this.uploadImage(data);
     }
   }

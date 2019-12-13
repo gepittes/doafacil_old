@@ -1,1 +1,1 @@
-export const image = state => state.image;
+export const object = state => state.object;
