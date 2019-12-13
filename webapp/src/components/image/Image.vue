@@ -3,14 +3,12 @@
     <v-img class="white--text align-end" :height="imgHeight" :src="imagPath">
       <v-card-title mt-0>
         <v-row class="file">
-          <v-btn icon small color="secondary"
-            ><v-icon class="btn">fa fa-camera</v-icon></v-btn
-          >
+          <v-btn small color="primary"><v-icon>fa fa-camera</v-icon></v-btn>
           <input type="file" v-on:change="onFileChange($event)" />
         </v-row>
-        <v-row class="save">
-          <v-btn icon small color="success" @click="upload()"
-            ><v-icon class="btn">fa fa-save</v-icon></v-btn
+        <v-row class="save" v-if="isFile">
+          <v-btn small color="success" @click="upload()"
+            ><v-icon>fa fa-save</v-icon></v-btn
           >
         </v-row>
       </v-card-title>
@@ -69,6 +67,7 @@ export default {
   watch: {
     object(value) {
       this.$emit("setObject", value);
+      this.isFile = false;
     }
   },
   methods: {

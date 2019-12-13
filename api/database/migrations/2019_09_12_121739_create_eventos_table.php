@@ -19,6 +19,7 @@ class CreateEventosTable extends Migration
             $table->string('descricao');
             $table->string('data');
             $table->string('hora');
+            $table->string('image')->nullable();
             $table->unsignedBigInteger('fk_insti_id');
             $table->foreign('fk_insti_id')
                 ->references('id')->on('app.instituicao');
