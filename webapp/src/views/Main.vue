@@ -1,13 +1,9 @@
 <template>
   <div class="row">
-    <imagem :imgWidth="800" :imgHeight="300" />
+    <h1>Dash</h1>
   </div>
 </template>
 <script>
-import imagem from "../modules/image/Image";
-
-export default {
-  components: { imagem }
-};
+export default {};
 </script>
 <style scoped></style>

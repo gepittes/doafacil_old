@@ -1,6 +1,5 @@
 <template>
   <v-card max-width="300">
-    {{ ponto }}
     <imagem
       imgWidth="300"
       imgHeight="200"

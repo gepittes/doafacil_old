@@ -1,18 +1,21 @@
 <template>
-  <div class="linha">
-    <div class="coluna">
-      <div class="imagem">
-        <img :src="image || imagPath" :style="styled" />
-      </div>
-      <div class="alterar">
-        <span>Alterar</span>
-        <input type="file" v-on:change="onFileChange($event)" />
-      </div>
-      <div class="salvar">
-        <button @click="upload()">Salvar</button>
-      </div>
-    </div>
-  </div>
+  <v-card class="mx-auto" max-width="400">
+    <v-img class="white--text align-end" :height="imgHeight" :src="imagPath">
+      <v-card-title mt-0>
+        <v-row class="file">
+          <v-btn icon small color="secondary"
+            ><v-icon class="btn">fa fa-camera</v-icon></v-btn
+          >
+          <input type="file" v-on:change="onFileChange($event)" />
+        </v-row>
+        <v-row class="save">
+          <v-btn icon small color="success" @click="upload()"
+            ><v-icon class="btn">fa fa-save</v-icon></v-btn
+          >
+        </v-row>
+      </v-card-title>
+    </v-img>
+  </v-card>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
@@ -41,7 +44,8 @@ export default {
 
   data() {
     return {
-      image: `https://via.placeholder.com/${this.imgWidth}x${this.imgHeight}`
+      image: `https://via.placeholder.com/${this.imgWidth}x${this.imgHeight}`,
+      isFile: false
     };
   },
   computed: {
@@ -56,9 +60,11 @@ export default {
       };
     },
     imagPath() {
-      return `http://localhost/img/${this.newImage}` || this.image;
-    },
-    setObject() {}
+      if (this.newImage && !this.isFile) {
+        return (this.image = `http://localhost/img/${this.newImage}`);
+      }
+      return this.image;
+    }
   },
   watch: {
     object(value) {
@@ -72,6 +78,7 @@ export default {
     onFileChange(e) {
       let files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
+      this.isFile = true;
       this.createImage(files[0]);
     },
     createImage(file) {
@@ -82,6 +89,7 @@ export default {
       };
       reader.readAsDataURL(file);
     },
+
     upload() {
       const data = {
         image: this.image,
@@ -96,87 +104,31 @@ export default {
 };
 </script>
 <style scoped>
-.linha {
-  margin: 10px;
-  padding: 5px;
-  box-shadow: 2px black;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-.coluna {
-  display: flex;
-  flex-direction: column;
-}
-.alterar {
+.file {
   display: flex;
   flex-direction: column;
   position: absolute;
   justify-content: right;
-  margin-top: 10px;
   right: 10px;
   margin-right: 10px;
+  margin-bottom: 10px;
 }
-.imagem {
-  display: flex;
-  flex-direction: column;
-}
-.alterar {
-  border-radius: 8px;
-  font: normal 14px Myriad Pro, Verdana, Geneva, sans-serif;
-  color: #ebebeb;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  flex-direction: column;
-  width: 100px;
-  height: 30px;
-}
-.alterar input[type="file"] {
+
+.file input[type="file"] {
   -webkit-appearance: none;
   position: absolute;
-  top: 0;
-  left: 0;
   opacity: 0;
 }
-.alterar span {
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  min-height: 100%;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-align-items: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  font-weight: bold;
+.btn {
+  padding: 0;
 }
-.alterar:hover {
-  background: rgb(4, 62, 185);
-}
-.salvar {
+
+.save {
   display: flex;
   flex-direction: column;
   position: absolute;
   justify-content: right;
-  margin-top: 50px;
+  right: 65px;
   margin-right: 10px;
-  right: 10px;
-  width: 100px;
-  height: 30px;
-  border-radius: 8px;
-  font: normal 14px Myriad Pro, Verdana, Geneva, sans-serif;
-  color: #ebebeb;
-  background: rgba(0, 0, 0, 0.6);
-  -webkit-align-items: center;
-  align-items: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  font-weight: bold;
-}
-img {
-  position: relative;
 }
 </style>
