@@ -67,7 +67,6 @@ export default {
   watch: {
     object(value) {
       this.$emit("setObject", value);
-      this.isFile = false;
     }
   },
   methods: {
@@ -75,9 +74,9 @@ export default {
       uploadImage: "image/uploadImage"
     }),
     onFileChange(e) {
+      this.isFile = true;
       let files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
-      this.isFile = true;
       this.createImage(files[0]);
     },
     createImage(file) {
@@ -98,6 +97,7 @@ export default {
       };
 
       this.uploadImage(data);
+      this.isFile = false;
     }
   }
 };
