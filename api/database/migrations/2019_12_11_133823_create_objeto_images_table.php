@@ -11,16 +11,19 @@ class CreateObjetoImagesTable extends Migration
         Schema::create('app.objeto_images', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('image_id');
-            $table->foreign('image_id')->references('id')->on('app.image');
+            $table->foreign('image_id')
+                ->references('id')->on('app.image')->onDelete('cascade');;
             $table->unsignedBigInteger('ponto_id')->nullable();
-            $table->foreign('ponto_id')->references('id')->on('app.ponto_de_doacoes');
+            $table->foreign('ponto_id')
+                ->references('id')->on('app.ponto_de_doacoes')->onDelete('cascade');
             $table->unsignedBigInteger('instituicao_id')->nullable();
-            $table->foreign('instituicao_id')->references('id')->on('app.instituicao');
+            $table->foreign('instituicao_id')->references('id')->on('app.instituicao')->onDelete('cascade');
             $table->unsignedBigInteger('usuario_id')->nullable();
-            $table->foreign('usuario_id')->references('usuario_id')->on('app.usuario');
+            $table->foreign('usuario_id')
+                ->references('usuario_id')->on('app.usuario')->onDelete('cascade');
             $table->unsignedBigInteger('evento_id')->nullable();
-            $table->foreign('evento_id')->references('id')->on('app.eventos');
-            $table->timestamps();
+            $table->foreign('evento_id')
+                ->references('id')->on('app.eventos')->onDelete('cascade');
         });
     }
 
