@@ -8,7 +8,7 @@ class Evento extends Model
 {
     protected $table = 'app.eventos';
 
-    protected $fillable = ['nome', 'descricao', 'data', 'hora'];
+    protected $fillable = ['nome', 'descricao', 'data', 'hora','longitude', 'latitude'];
 
     public static function storeEvento($request)
     {

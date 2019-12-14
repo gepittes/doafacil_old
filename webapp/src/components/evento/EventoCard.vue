@@ -34,7 +34,7 @@
 
       <v-card-title>{{ evento.nome }}</v-card-title>
       <v-card-text>
-        <div>{{ this.evento.descricao }}</div>
+        <div>{{ evento.descricao }}</div>
       </v-card-text>
 
       <v-divider class="mx-4 m-0"></v-divider>
@@ -42,10 +42,10 @@
       <v-card-text>
         <div class="title text--primary">Data e Hora do Evento</div>
         <v-chip color="green mr-3"
-          ><b class="white--text">{{ this.evento.data }}</b></v-chip
+          ><b class="white--text">{{ evento.data }}</b></v-chip
         >
         <v-chip color="blue"
-          ><b class="white--text">{{ this.evento.hora }} hrs</b></v-chip
+          ><b class="white--text">{{ evento.hora }} hrs</b></v-chip
         >
       </v-card-text>
 
@@ -55,12 +55,20 @@
           Mapa do local
         </v-btn>
         <v-spacer />
-        <v-btn icon @click="editarEvento(evento)">
+        <v-btn
+          v-if="this.$route.name === `eventos`"
+          icon
+          @click="editarEvento(evento)"
+        >
           <v-icon>
             edit
           </v-icon>
         </v-btn>
-        <v-btn icon @click="dialog = true">
+        <v-btn
+          v-if="this.$route.name === `eventos`"
+          icon
+          @click="dialog = true"
+        >
           <v-icon>
             delete
           </v-icon>

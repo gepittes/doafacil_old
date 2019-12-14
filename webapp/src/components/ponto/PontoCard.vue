@@ -30,13 +30,18 @@
         Mapa do local
       </v-btn>
       <v-spacer />
-      <v-btn icon @click="update(ponto)">
+      <v-btn icon v-if="this.$route.name === `pontos`" @click="update(ponto)">
         <v-icon>
           edit
         </v-icon>
       </v-btn>
 
-      <v-dialog v-model="dialog" persistent max-width="290">
+      <v-dialog
+        v-model="dialog"
+        v-if="this.$route.name === `pontos`"
+        persistent
+        max-width="290"
+      >
         <template v-slot:activator="{ on }">
           <v-btn icon v-on="on">
             <v-icon>
