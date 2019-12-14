@@ -1,8 +1,7 @@
 <template>
   <v-card max-width="300">
     <imagem
-      imgWidth="300"
-      imgHeight="200"
+      imgHeight="100"
       :objectId="ponto.id"
       objectName="ponto"
       modelImage="cover"
@@ -110,7 +109,9 @@ export default {
     setObject(e) {
       this.setImage(e);
     },
-
+    // update(ponto) {
+    //   this.$emit("closePainel", []);
+    // },
     openMap() {
       //
     }

@@ -1,8 +1,8 @@
 <template>
-  <v-container>
-    <v-form ref="form" lazy-validation @submit.prevent="salvar()">
-      <v-row justify="center">
-        <v-col xl="6" md="6">
+  <v-container pa-0>
+    <v-form ref="form" lazy-validation @submit.prevent="salvar()" pa-0>
+      <v-row justify="center" pa-0>
+        <v-col xl="6" md="6" pa-0>
           <v-text-field
             v-model="ponto.nome"
             :rules="[rules.required]"
@@ -14,8 +14,8 @@
             :rules="[rules.required]"
             label="Descrição do ponto"
           />
-          <v-row justify="center">
-            <v-col cols="12" xl="6" md="6">
+          <v-row justify="center" pa-0>
+            <v-col cols="12" xl="6" md="6" pa-0>
               <v-menu
                 ref="menuHoraOpen"
                 v-model="menuHoraOpen"
@@ -84,7 +84,7 @@
           </v-row>
         </v-col>
       </v-row>
-      <v-row align="center" justify="end">
+      <v-row align="center" justify="end" pa-0>
         <v-card-actions>
           <v-btn
             color="secundary"
@@ -169,6 +169,7 @@ export default {
           this.cadastraPontoDeDoacao(data);
         }
       }
+      this.$emit("closePainel", []);
     },
     loadPonto(value) {
       if (value) {

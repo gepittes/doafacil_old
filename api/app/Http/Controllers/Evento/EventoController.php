@@ -10,10 +10,13 @@ class EventoController extends Controller
 {
     public function post(ServerRequestInterface $request)
     {
-        $request = $request->getParsedBody();
+        try {
+            $request = $request->getParsedBody();
+            return response()->json(Evento::storeEvento($request));
+        } catch (\Exception $e) {
+            return response()->json($e, 204);
+        }
 
-        $evento = Evento::storeEvento($request);
-        return response()->json($evento, 200);
     }
 
     public function getEventosByInsti($id)
