@@ -8,7 +8,7 @@ class Evento extends Model
 {
     protected $table = 'app.eventos';
 
-    protected $fillable = ['nome', 'descricao', 'data', 'hora','longitude', 'latitude'];
+    protected $fillable = ['nome', 'descricao', 'data', 'hora','longitude', 'latitude', 'image'];
 
     public static function storeEvento($request)
     {
@@ -21,7 +21,6 @@ class Evento extends Model
         $evento->latitude = $request['localizacao']['latitude'];
         $evento->fk_insti_id = $request['fk_insti_id'];
         $evento->save();
-
         return $evento;
     }
 
@@ -37,6 +36,9 @@ class Evento extends Model
         $ev->descricao = $evento['descricao'];
         $ev->data = $evento['data'];
         $ev->hora = $evento['hora'];
+        $ev->longitude = $evento['localizacao']['longitude'];
+        $ev->latitude = $evento['localizacao']['latitude'];
+        $ev->fk_insti_id = $evento['fk_insti_id'];
         $ev->fk_insti_id = $evento['fk_insti_id'];
         $ev->save();
 
