@@ -12,7 +12,7 @@ class PontoDeDoacao extends Model
         'hora_open',
         'hora_close',
         'instituicao_id',
-        'img'
+        'image'
     ];
 
     protected $table = 'app.ponto_de_doacoes';

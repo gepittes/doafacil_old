@@ -1,13 +1,9 @@
 <template>
-    <div>
-        <h1>Dashbood</h1>
-    </div> 
+  <div class="row">
+    <h1>Dash</h1>
+  </div>
 </template>
 <script>
-export default {
-    
-}
+export default {};
 </script>
-<style>
-
-</style>
+<style scoped></style>

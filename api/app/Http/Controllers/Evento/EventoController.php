@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Evento;
 
 use App\Models\Evento;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Request;
 use Laravel\Lumen\Routing\Controller;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -12,15 +10,13 @@ class EventoController extends Controller
 {
     public function post(ServerRequestInterface $request)
     {
-        $request = $request->getParsedBody();
+        try {
+            $request = $request->getParsedBody();
+            return response()->json(Evento::storeEvento($request));
+        } catch (\Exception $e) {
+            return response()->json($e, 204);
+        }
 
-        $evento = Evento::storeEvento($request);
-        return response()->json($evento, 200);
-    }
-
-    public function get()
-    {
-        //
     }
 
     public function getEventosByInsti($id)

@@ -12,11 +12,11 @@ class InstituicaoServices
 
         try {
             if (!empty(trim($id))) {
-                $data =  Instituicao::where('id','=',$id)->get();
+                $data = Instituicao::where('id', '=', $id)->get();
             }
 
             if (!empty(trim($nameFk))) {
-                $data =  Instituicao::where($nameFk,'=',$id)->get();
+                $data = Instituicao::where($nameFk, '=', $id)->get();
             }
 
             return $data;
@@ -42,7 +42,7 @@ class InstituicaoServices
 
             $ponto = Instituicao::where('id', $id)->update($dados);
 
-            return $ponto ;
+            return $ponto;
 
         } catch (\Exception $exception) {
             throw $exception;
@@ -51,7 +51,16 @@ class InstituicaoServices
 
     public function remover($id)
     {
-        return  Instituicao::findOrFail($id)->delete();
+        return Instituicao::findOrFail($id)->delete();
+    }
+
+    public static function setImage($id, $image)
+    {
+        $instituicao = Instituicao::find($id);
+        $instituicao->image = $image;
+        $instituicao->update();
+
+        return $instituicao;
     }
 
 }
