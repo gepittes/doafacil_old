@@ -21,10 +21,3 @@ $factory->define(App\Models\Usuario::class, function (Faker\Generator $faker) {
         'created_at' => $faker->dateTime,
     ];
 });
-//
-//$factory->define(App\Models\Instituicao::class, function (Faker\Generator $faker) {
-//    return [
-//        'nome' => $faker->name,
-//        'created_at' => $faker->dateTime,
-//    ];
-//});

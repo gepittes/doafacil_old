@@ -1,16 +1,13 @@
 <template>
     <section>
         <v-layout
-                column
-                wrap
                 class="my-5"
-                align-center
                 color="white"
                 id="sobre"
         >
-            <v-flex xs12>
-                <v-container grid-list-xl>
-                    <v-layout align-center justify-center>
+            <v-flex>
+                <v-container>
+                    <v-layout align-center justify-center row>
                         <v-flex xs12 md4>
                             <v-card class="elevation-0 transparent">
                                 <v-card-text class="layout justify-center">

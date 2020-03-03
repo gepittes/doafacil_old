@@ -18,17 +18,17 @@ class JsonResponseStyle
             ];
 
             if (!defined('API_VERSION')) {
-                $responseData['error'] = "Constante API_VERSION n&atilde;o definida.";
+                $responseData['error'] = "Constante API_VERSION não está definida.";
             }
             /**
              * @var \Illuminate\Http\Response|\Laravel\Lumen\Http\ResponseFactory $response
              */
-            $statusCode = '400';
+            $statusCode = 400;
             if (!$response->exception) {
                 $dados = json_decode($response->getContent(), true);
-    
+
                 $responseData['data'] = $dados;
-                $statusCode = '200';
+                $statusCode = 200;
             } else {
                 $responseData['error'] = $response->exception->getMessage();
             }

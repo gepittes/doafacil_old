@@ -22,7 +22,7 @@ export const login = ({ dispatch, commit }, { email, password }) => {
 
                     const objetoJWT = obterInformacoesJWT();
                     commit(types.SETACCOUNTINFO, objetoJWT.user);
-                    router.push({ name: 'home' });
+                    router.push({ name: 'main' });
                 } else {
                     dispatch('alert/error', 'Falha ao realizar login.', {
                         root: true,
@@ -66,4 +66,15 @@ export const register = ({ dispatch, commit }, user) => {
             }
         },
     );
+};
+
+export const getUser = ({ dispatch, commit }, id) => {
+    axios.get(`http://localhost/v1/conta/${id}`).then((response) => {
+        const { data } = response;
+        commit(types.USER, data.data);
+    }).catch((error) => {
+        dispatch('alert/error', error.response.data.error, {
+            root: true,
+        });
+    });
 };

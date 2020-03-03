@@ -1,0 +1,4 @@
+export default {
+    ponto: {},
+    pontoEditar: {},
+};

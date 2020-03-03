@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Usuario;
 use App\Models\Usuario as ModeloUsuario;
-use Psr\Http\Message\ServerRequestInterface;
+use Illuminate\Support\Facades\Hash;
 use Ratchet\Wamp\Exception;
 use Validator;
 
@@ -54,7 +55,7 @@ class Conta implements IService
                 'is_ativo' => true
             ]);
 
-            if(!isset($dados['is_admin'])) {
+            if (!isset($dados['is_admin'])) {
                 $dados['is_admin'] = false;
             }
 
@@ -67,25 +68,40 @@ class Conta implements IService
         }
     }
 
-    public function alterar($id, array $dados = [])
+    public function alterar(int $id, array $dados = [])
     {
-        $validator = Validator::make($dados, [
-            "nome" => 'required|string|min:3|max:50',
-            "email" => 'required|string|min:3|max:50'
-        ]);
+        if (isset($dados['password'])) {
+            $validator = Validator::make($dados, [
+                "password" => 'required|string|min:3|max:50',
+                "passwordNova" => 'required|string|min:3|max:50'
+            ]);
+
+            $hashedPassword = ModeloUsuario::find($id)->password;
+            if (Hash::check($dados['password'], $hashedPassword) && !empty($dados['passwordNova'])) {
+                $dados['password'] = password_hash($dados['passwordNova'], PASSWORD_BCRYPT);
+                unset($dados['passwordNova']);
+
+            } else {
+                throw new \Exception('Você digitou alguma coisa errada tente novamente!');
+            }
+
+        }
+        if (!isset($dados['password'])) {
+            $validator = Validator::make($dados, [
+                "nome" => 'required|string|min:3|max:50',
+                "email" => 'required|string|min:3|max:50'
+            ]);
+        }
+
         if ($validator->fails()) {
             throw new \Exception($validator->errors()->first());
         }
         if (isset($dados['usuario_id'])) {
             unset($dados['usuario_id']);
         }
-        if (isset($dados['password']) && !empty($dados['password'])) {
-            $dados['password'] = password_hash($dados['password'], PASSWORD_BCRYPT);
-        } else {
-            unset($dados['password']);
-        }
+        ModeloUsuario::where('usuario_id', $id)->update($dados);
 
-        return ModeloUsuario::where('usuario_id', $id)->update($dados);
+        return $this->obter($id);
     }
 
     public function recuperarSenha()
@@ -114,15 +130,15 @@ class Conta implements IService
         return $usuario->delete();
     }
 
-    public function autenticar(\Illuminate\Http\Request $request) : ModeloUsuario
+    public function autenticar(\Illuminate\Http\Request $request): ModeloUsuario
     {
         $email = $request->input('email');
-        if(empty($email)) {
+        if (empty($email)) {
             throw new \Exception('Item `email` não informado.');
         }
 
         $senha = $request->input('password');
-        if(empty($senha)) {
+        if (empty($senha)) {
             throw new \Exception('Item `password` não informado.');
         }
 
@@ -146,5 +162,14 @@ class Conta implements IService
     private function validarSenha(string $senha, string $senhaBanco)
     {
         return password_verify($senha, $senhaBanco);
+    }
+
+    public static function setImage($id, $image)
+    {
+        $usuario = Usuario::find($id);
+        $usuario->image = $image;
+        $usuario->update();
+
+        return $usuario;
     }
 }

@@ -14,7 +14,7 @@ class Instituicao extends Model
         'hora_close',
         'localidade',
         'uf',
+        'fk_usuario_id',
     ];
-
     protected $table = 'app.instituicao';
 }

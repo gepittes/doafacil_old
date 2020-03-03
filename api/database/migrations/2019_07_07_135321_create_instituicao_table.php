@@ -21,6 +21,10 @@ class CreateInstituicaoTable extends Migration
             $table->string('uf');
             $table->string('hora_open', null);
             $table->string('hora_close',null);
+            $table->string('image')->nullable();
+            $table->unsignedBigInteger('fk_usuario_id');
+            $table->foreign('fk_usuario_id')
+                ->references('usuario_id')->on('app.usuario');
             $table->timestamps();
         });
     }

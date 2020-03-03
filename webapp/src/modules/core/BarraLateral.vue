@@ -1,51 +1,53 @@
 <template>
-      <v-navigation-drawer
-              v-if="status.loggedIn"
-              v-model="drawer"
-              width="240px"
-              app>
-        <v-list>
-          <v-list-item>
-            <v-list-item-avatar>
+  <div id="barra-lateral">
+    <v-navigation-drawer
+      v-if="status.loggedIn"
+      v-model="drawer"
+      width="240px"
+      app
+    >
+      <v-list>
+        <v-list-item>
+          <v-list-item-avatar>
+            <v-icon>account_circle</v-icon>
+          </v-list-item-avatar>
+          <v-spacer></v-spacer>
+          <v-list-item-action>
+            <v-btn icon @click.stop="drawer = !drawer">
+              <v-icon>chevron_left</v-icon>
+            </v-btn>
+          </v-list-item-action>
+        </v-list-item>
 
-              <v-icon>account_circle</v-icon>
-            </v-list-item-avatar>
-          </v-list-item>
+        <v-list-item link>
+          <v-list-item-content>
+            <v-list-item-title class="title">{{
+              accountInfo.name
+            }}</v-list-item-title>
+            <v-list-item-subtitle>{{ accountInfo.email }}</v-list-item-subtitle>
+          </v-list-item-content>
 
-          <v-list-item link>
+          <v-list-item-action>
+            <v-icon>mdi-menu-down</v-icon>
+          </v-list-item-action>
+        </v-list-item>
+      </v-list>
+      <v-divider></v-divider>
+      <v-list nav dense>
+        <v-list-item-group v-model="item" color="primary">
+          <v-list-item v-for="(item, i) in items" :key="i" :to="item.to">
+            <v-list-item-icon>
+              <v-icon v-text="item.icon"></v-icon>
+            </v-list-item-icon>
+
             <v-list-item-content>
-              <v-list-item-title class="title">{{ accountInfo.name }}</v-list-item-title>
-              <v-list-item-subtitle>{{ accountInfo.email }}</v-list-item-subtitle>
+              <v-list-item-title v-text="item.text"></v-list-item-title>
             </v-list-item-content>
-
-            <v-list-item-action>
-              <v-icon>mdi-menu-down</v-icon>
-            </v-list-item-action>
           </v-list-item>
-        </v-list>
-        <v-divider></v-divider>
-        <v-list
-                nav
-                dense
-        >
-          <v-list-item-group v-model="item" color="primary">
-            <v-list-item
-                    v-for="(item, i) in items"
-                    :key="i"
-                    :to="item.to"
-            >
-              <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
-              </v-list-item-icon>
-
-              <v-list-item-content >
-                <v-list-item-title v-text="item.text"></v-list-item-title>
-              </v-list-item-content>
-
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-      </v-navigation-drawer>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+  </div>
 </template>
 
 <script>
@@ -54,37 +56,48 @@ import { mapGetters } from "vuex";
 export default {
   name: "App",
   props: {
-    value: {
+    drawer: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   data() {
     return {
       clipped: false,
-      drawer: false,
       fixed: false,
       miniVariant: false,
       right: true,
       rightDrawer: false,
       item: 0,
       items: [
-        { icon: "home", text: "Inicio", to: "/"},
-        { icon: "contacts", text: "Ponto de Doaçao", to: "/doacao" },
-        { text: "Instituições", to: "/instituicoes", icon: "list" },
-        { icon: "help", text: "Sobre", to: "/#/sobre" },
-        { icon: "settings", text: "Configuração" },
-        { icon: "chat_bubble", text: "Enviar feedback" },
-        { icon: "help", text: "Ajuda" },
-      ],
+        { icon: "fa fa-home", text: "Inicio", to: "/" },
+        {
+          icon: "fa fa-stream",
+          text: "Minhas Instituições",
+          to: "/instituicoes"
+        },
+        { icon: "fa fa-map", text: "Ponto de Doação", to: "/pontos" },
+        { icon: "fa fa-calendar-alt", text: "Eventos", to: "/eventos" },
+        { icon: "fa fa-cog", text: "Configuração", to: "/configuracao" },
+        { icon: "fa fa-comment-alt", text: "Enviar feedback" },
+        { icon: "fa fa-question-circle", text: "Ajuda" }
+      ]
     };
   },
   watch: {
-    value(val) {
-      this.drawer = val;
+    drawer(value) {
+      this.$emit("closeMenu", value);
     },
-    drawer(val) {
-      this.$emit("input", val);
+    $route: function(val) {
+      if (val.matched[0].path === "/instituicao/:id") {
+        this.drawer = false;
+      }
+      if (
+        val.matched[0].path !== "/instituicao/:id" &&
+        window.innerWidth > 900
+      ) {
+        this.drawer = true;
+      }
     }
   },
   computed: {
@@ -114,7 +127,7 @@ export default {
         { icon: "help", text: "Sobre", to: "/sobre" },
         { icon: "settings", text: "Configuração" },
         { icon: "chat_bubble", text: "Enviar feedback" },
-        { icon: "help", text: "Ajuda" },
+        { icon: "help", text: "Ajuda" }
         // {
         //     icon: 'keyboard_arrow_up',
         //     'icon-alt': 'keyboard_arrow_down',
@@ -125,7 +138,6 @@ export default {
         //
         //     ],
         // },
-
       ];
       if (this.accountInfo.is_admin === true) {
         menusLaterais.push({

@@ -19,28 +19,43 @@ $router->group(['prefix' => $apiPattern], function () use ($router) {
 
     $router->post('/autenticacao/login', 'AutenticacaoController@post');
 
-    $router->post('/conta', 'ContaController@post');
-    $router->get('/instituicao', 'InstituicaoController@get');
-    $router->post('/instituicao', 'InstituicaoController@post');
-    $router->patch('/instituicao/{id}', 'InstituicaoController@patch');
-    $router->get('/instituicao/{id}', 'InstituicaoController@show');
-    $router->delete('/instituicao/{id}', 'InstituicaoController@delete');
+    $router->group(['namespace' => 'Instituicao'], function () use ($router) {
+        $router->get('/instituicao', 'InstituicaoController@get');
+        $router->get('/instituicao/{id}', 'InstituicaoController@get');
+        $router->get('/instituicao/user/buscar/{id}', 'InstituicaoController@getInstisUser');
+        $router->post('/instituicao', 'InstituicaoController@post');
+        $router->patch('/instituicao/{id}', 'InstituicaoController@patch');
+        $router->delete('/instituicao/{id}', 'InstituicaoController@delete');
+    });
+
+    $router->group(['namespace' => 'Evento'], function () use ($router) {
+        $router->get('/evento/inistituicao/{id}', 'EventoController@getEventosByInsti');
+        $router->get('/evento', 'EventoController@get');
+        $router->post('/evento', 'EventoController@post');
+        $router->patch('/evento/{id}', 'EventoController@patch');
+        $router->delete('/evento/{id}', 'EventoController@delete');
+    });
+
+    $router->group(['namespace' => 'Ponto'], function () use ($router) {
+        $router->get('/pontoByInst/{id}', 'PontoController@getPontoByInst');
+        $router->get('/ponto', 'PontoController@get');
+        $router->post('/ponto', 'PontoController@post');
+        $router->patch('/ponto/{id}', 'PontoController@patch');
+        $router->delete('/ponto/{id}', 'PontoController@delete');
+    });
+
+    $router->group(['namespace' => 'Conta'], function () use ($router) {
+        $router->post('/conta', 'ContaController@post');
+        $router->get('/conta[/{id}]', 'ContaController@get');
+        $router->patch('/conta[/{id}]', 'ContaController@patch');
+        $router->delete('/conta[/{id}]', 'ContaController@delete');
+    });
+
+    $router->group(['namespace' => 'Image'], function () use ($router) {
+        $router->post('/image', 'ImageController@post');
+    });
 
     $router->group(['middleware' => 'jwt.auth'], function () use ($router) {
-        $router->get('/conta[/{id}]', 'ContaController@get');
-        $router->patch(
-            '/conta/{id}',
-            [
-                'middleware' => 'isAdmin',
-                'uses' => 'ContaController@patch'
-            ]
-        );
-        $router->delete(
-            '/conta/{id}',
-            [
-                'middleware' => 'isAdmin',
-                'uses' => 'ContaController@delete'
-            ]
-        );
+
     });
 });

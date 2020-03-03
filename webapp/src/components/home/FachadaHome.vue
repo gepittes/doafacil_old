@@ -2,22 +2,28 @@
     <section>
         <v-parallax :src="imgParalax" height="550" alt="união de mãos">
             <v-flex>
-                <v-container grid-list-xl>
-                    <v-layout align-center justify-center row>
-                        <v-flex xl6 md7>
+                <v-container>
+                    <v-row align="center" justify="center">
+                        <v-col xl="6" md="12" lg="9">
+
                             <v-card class="elevation-0 transparent">
-                                <v-card-text class="text-xs-center layout justify-center">
+                                <v-card-text class="layout justify-center">
                                     <MascoteGif :width="100"/>
                                 </v-card-text>
-                                <v-card-title primary-title class="layout justify-center">
-                                    <div class="font-weight-black display-1 text-xs-center white--text text-uppercase">
-                                        Simples de <span class="red--text t-doar">doar</span>,
-                                        <span class="t-facil">Fácil</span>
-                                        de encontrar!
-                                    </div>
-                                </v-card-title>
-                                <v-layout align-center justify-center row>
-                                    <v-flex xl9>
+                                <v-row align="center" justify="center">
+                                    <v-col lg="12">
+                                        <v-card-title class="layout justify-center">
+                                            <div class="font-weight-black display-1 white--text text-uppercase">
+                                                Simples de <span class="red--text t-doar">doar</span>,
+                                                <span class="t-facil">Fácil</span>
+                                                de encontrar!
+                                            </div>
+                                        </v-card-title>
+                                    </v-col>
+                                </v-row>
+
+                                <v-row align="center" justify="center">
+                                    <v-col xl="10" md="8" lg="10">
                                         <v-card-text class="white--text">
                                             <p class="t-justify body-2 font-italic">
                                                 <v-icon class="white--text">fas fa-quote-left</v-icon>
@@ -35,32 +41,11 @@
                                                 <v-icon class="white--text">fas fa-quote-right</v-icon>
                                             </p>
                                         </v-card-text>
-                                    </v-flex>
-                                </v-layout>
+                                    </v-col>
+                                </v-row>
                             </v-card>
-                        </v-flex>
-                    </v-layout>
-                    <v-layout align-center justify-center>
-
-                        <v-card class="elevation-0 transparent">
-                            <v-layout align-center justify-center>
-                                <v-flex xl5>
-                                    <router-link tag="v-btn" class="red darken-1 white--text text-uppercase"
-                                                 to="/login">
-                                        <v-icon class="mr-1">fas fa-people-carry</v-icon>
-                                        QUERO DOAR!
-                                    </router-link>
-                                </v-flex>
-                                <v-flex xl6>
-                                    <router-link tag="v-btn" class="blue darken-1 white--text text-uppercase"
-                                                 to="/login">
-                                        QUERO RECEBER!
-                                        <v-icon class="ml-1">fas fa-hands-helping</v-icon>
-                                    </router-link>
-                                </v-flex>
-                            </v-layout>
-                        </v-card>
-                    </v-layout>
+                        </v-col>
+                    </v-row>
                 </v-container>
             </v-flex>
         </v-parallax>

@@ -13,5 +13,6 @@ export const state = {
     status: { loggedIn },
     token: informacoesJWT,
     accountInfo: informacoesJWT ? informacoesJWT.user : '',
+    user: {},
 };
 

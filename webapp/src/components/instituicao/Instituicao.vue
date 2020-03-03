@@ -1,117 +1,109 @@
 <template>
-    <v-flex xs6 md3 lg3>
-        <v-card>
-            <v-img
-                src="https://myfaithmedia.org/wp-content/uploads/2018/09/Open-Hands.jpg"
-                class="white--text"
-                height="200px"
-                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-            >
-                <v-card-title primary-title class="fill-height align-end text-uppercase font-weight-bold"
-                              v-text="instituicao.nome">
-                </v-card-title>
-            </v-img>
-            <div class="ma-1">
-                <v-rating v-model="votos"></v-rating>
-            </div>
-            <v-card-actions>
-                <div class="flex-grow-1"></div>
-                <v-btn icon :to="`/instituicao/${instituicao.id}`">
-                    <v-icon>
-                        store
-                    </v-icon>
-                </v-btn>
-                <v-btn icon>
-                    <v-icon>
-                        share
-                    </v-icon>
-                </v-btn>
-                <v-btn icon>
-                    <v-icon left color="info" @click="editarInstituicao(instituicao)">edit</v-icon>
-                </v-btn>
-                <v-btn icon>
-                    <v-icon color="warning" @click="excluirInstituicao(instituicao.id)">delete</v-icon>
-                </v-btn>
-                <v-btn
-                    icon
-                    @click="show = !show"
+  <v-flex md4 sm6 xl3>
+    <v-card>
+      <imagem
+        imgWidth="300"
+        imgHeight="100"
+        :objectId="instituicao.id"
+        objectName="instituicao"
+        modelImage="cover"
+        :newImage="instituicao.image"
+        @setObject="setObject($event)"
+      />
+      <v-card-title class="headline text-center" v-text="instituicao.nome">
+      </v-card-title>
+      <v-card-text>Descrição da intituicao </v-card-text>
+      <v-card-actions>
+        <div class="flex-grow-1"></div>
+        <v-btn icon :to="`/instituicao/${instituicao.id}`">
+          <v-icon>
+            store
+          </v-icon>
+        </v-btn>
+        <v-btn icon>
+          <v-icon>
+            share
+          </v-icon>
+        </v-btn>
+        <v-btn icon @click="editar(instituicao)">
+          <v-icon>
+            edit
+          </v-icon>
+        </v-btn>
+        <v-btn icon @click="show = !show">
+          <v-icon>{{
+            show ? "keyboard_arrow_up" : "keyboard_arrow_down"
+          }}</v-icon>
+        </v-btn>
+      </v-card-actions>
+      <v-expand-transition>
+        <div v-show="show">
+          <v-card-text>
+            <div class="title text--primary">Horários</div>
+            <v-layout>
+              <v-flex>
+                <b>Abertura: </b
+                ><v-chip class="ma-1" color="green lighten-1"
+                  ><b>{{ instituicao.hora_open }} hrs</b></v-chip
                 >
-                    <v-icon>{{ show ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
-                </v-btn>
-            </v-card-actions>
-            <v-expand-transition>
-                <div v-show="show">
-                    <v-card-text>
-                        <div class="title text--primary">Horários</div>
-                        <v-layout>
-                            <v-flex>
-                                <b>Abertura: </b><v-chip class="ma-1" color="green lighten-2">{{instituicao.hora_open}} hrs</v-chip>
-                                <v-spacer></v-spacer>
-                                <b>Fechamento: </b><v-chip class="ma-1" color="red lighten-2">{{instituicao.hora_close}} hrs</v-chip>
-                            </v-flex>
-                            <v-flex>
-                                <b>UF: </b><v-chip class="ma-1">{{instituicao.uf}}</v-chip>
-                                <v-spacer></v-spacer>
-                                <b>Cidade: </b><v-chip class="ma-1">{{instituicao.localidade}}</v-chip>
-                            </v-flex>
-                        </v-layout>
-
-                    </v-card-text>
-                </div>
-            </v-expand-transition>
-            <v-dialog v-model="dialog" max-width="700px">
-                <v-card light>
-                    <v-card-text>
-                        <v-toolbar color="primary">
-                            <v-toolbar-title>Atualizar Instituição</v-toolbar-title>
-                        </v-toolbar>
-                        <Criar :instituicaoEditar="instituicaoEditar" :dialog.sync="dialog"/>
-                    </v-card-text>
-                </v-card>
-            </v-dialog>
-        </v-card>
-    </v-flex>
+                <v-spacer></v-spacer>
+                <b>Fechamento: </b
+                ><v-chip class="ma-1" color="red lighten-1"
+                  ><b>{{ instituicao.hora_close }} hrs</b></v-chip
+                >
+              </v-flex>
+              <v-flex>
+                <b>UF: </b><v-chip class="ma-1">{{ instituicao.uf }}</v-chip>
+                <v-spacer></v-spacer>
+                <b>Cidade: </b
+                ><v-chip class="ma-1">{{ instituicao.localidade }}</v-chip>
+              </v-flex>
+            </v-layout>
+          </v-card-text>
+        </div>
+      </v-expand-transition>
+    </v-card>
+  </v-flex>
 </template>
 
 <script>
-    import {mapActions, mapGetters} from 'vuex';
-    import Instituicoes from './Instituicoes';
-    import Criar from './InstituicaoFormulario';
-    import Perfil from './Perfil';
+import { mapActions, mapGetters } from "vuex";
+import Instituicoes from "../../views/Instituicao/Instituicoes";
+import Criar from "./InstituicaoFormulario";
+import Perfil from "../../views/Instituicao/Perfil";
+import imagem from "../image/Image";
 
-    export default {
-        name: 'Instituicao',
-        components: {Criar, Perfil, Instituicoes},
-        props: ['instituicao'],
-        data() {
-            return {
-                votos: 3,
-                instituicaoEditar: {},
-                dialog: false,
-                show: false,
-            };
-        },
-        computed: {
-            ...mapGetters({
-                instituicoes: 'instituicao/instituicao',
-            }),
-        },
-        created() {
-            this.obterInstituicoes();
-        },
-        methods: {
-            ...mapActions({
-                obterInstituicoes: 'instituicao/obterInstituicoes',
-                removerInstituicao: 'instituicao/removerInstituicao',
-            }),
-            excluirInstituicao(id) {
-                this.removerInstituicao(id);
-            },
-            editarInstituicao(instituicao) {
-                this.instituicaoEditar = {...instituicao};
-                this.dialog = true;
-            },
-
-        }
+export default {
+  name: "Instituicao",
+  components: { Criar, Perfil, Instituicoes, imagem },
+  props: ["instituicao"],
+  data() {
+    return {
+      show: false,
+      dialog: false
     };
+  },
+  methods: {
+    ...mapActions({
+      statusDialog: "instituicao/setDialog",
+      insitituicaoEditar: "instituicao/insitituicaoEditar",
+      setImage: "instituicao/setImage"
+    }),
+
+    editar(instituicao) {
+      this.statusDialog(true);
+      this.insitituicaoEditar(instituicao);
+    },
+    setObject(e) {
+      this.setImage(e);
+    },
+    openDialog() {
+      this.dialog = true;
+    },
+
+    deletar(instituicao) {
+      this.removerInstituicao(instituicao);
+    }
+  }
+};
 </script>
