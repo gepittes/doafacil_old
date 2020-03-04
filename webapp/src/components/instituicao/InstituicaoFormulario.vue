@@ -1,4 +1,5 @@
 <template>
+
   <v-dialog v-model="dialog" max-width="500px" persistent>
     <v-card light>
       <v-container grid-list-md>
