@@ -181,16 +181,7 @@ export default {
   watch: {
     getInstituicaoEditar(value) {
       this.carregarEstados();
-
       this.instituicao = { ...value };
-      // this.instituicao.fk_usuario_id = value.fk_usuario_id
-      // this.instituicao.hora_open = value.hora_open
-      // this.instituicao.hora_close = value.hora_close
-      // this.instituicao.id = value.id
-      // this.instituicao.localidade = value.localidade
-      // this.instituicao.nome = value.nome
-      // this.instituicao.telefone = value.telefone
-      // this.instituicao.uf = value.uf
     }
   },
 
