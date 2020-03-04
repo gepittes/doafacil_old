@@ -1,5 +1,6 @@
 <template>
-  <v-dialog v-model="this.dialog" max-width="500px" persistent>
+
+  <v-dialog v-model="dialog" max-width="500px" persistent>
     <v-card light>
       <v-container grid-list-md>
         <v-layout xs12 sm6 md6 align-center justify-center>
@@ -7,10 +8,10 @@
             <v-list-item>
               <v-list-item-avatar color="grey"></v-list-item-avatar>
               <v-list-item-content>
-                <v-list-item-title class="headline mt-1" v-if="!instituicao.id"
+                <v-list-item-title v-if="!instituicao.id" class="headline mt-1"
                   >Cadastrar Instituição
                 </v-list-item-title>
-                <v-list-item-title class="headline ma-1" v-else
+                <v-list-item-title v-else class="headline ma-1"
                   >Atualizar Instituição
                 </v-list-item-title>
               </v-list-item-content>
@@ -23,33 +24,33 @@
                   label="id"
                 />
                 <v-text-field
-                  required
                   v-model="instituicao.nome"
+                  required
                   :rules="[rules.required]"
                   label="Nome"
                 />
                 <v-text-field
                   v-model="instituicao.telefone"
+                  v-mask="'(##) #####-####'"
                   required
                   :rules="[rules.required]"
                   label="Telefone"
                   return-masked-value
-                  v-mask="'(##) #####-####'"
                 />
                 <v-select
+                  v-model="instituicao.uf"
                   required
                   :items="estado"
                   :rules="[rules.required]"
-                  v-model="instituicao.uf"
                   label="Estados"
                 ></v-select>
               </v-flex>
               <v-flex right>
                 <v-select
+                  v-model="instituicao.localidade"
                   required
                   :rules="[rules.required]"
                   :items="cidade"
-                  v-model="instituicao.localidade"
                   label="Cidades"
                 ></v-select>
 
@@ -142,13 +143,12 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { mapState, mapActions, mapGetters } from 'vuex'
-import { constants } from 'crypto'
-import { mask } from 'vue-the-mask'
+import axios from "axios";
+import { mapActions, mapGetters } from "vuex";
+import { mask } from "vue-the-mask";
 
 export default {
-  name: 'FormInstituicao',
+  name: "FormInstituicao",
   directives: { mask },
   data() {
     return {
@@ -159,92 +159,97 @@ export default {
       estados: [],
       estado: [],
       cidades: [],
-      maskTel: '####-####',
-      rules: { required: value => !!value || 'Campo Obrigatório.' },
-    }
+      maskTel: "####-####",
+      rules: { required: value => !!value || "Campo Obrigatório." }
+    };
   },
   computed: {
     ...mapGetters({
-      dialog: 'instituicao/getDialog',
-      accountInfo: 'account/accountInfo',
-      getInstituicaoEditar: 'instituicao/getInstituicaEditar',
+      dialog: "instituicao/getDialog",
+      accountInfo: "account/accountInfo",
+      getInstituicaoEditar: "instituicao/getInstituicaEditar"
     }),
     cidade() {
       this.estados.forEach(e => {
         if (e.nome === this.instituicao.uf) {
-          this.cidades = e.cidades
+          this.cidades = e.cidades;
         }
-      })
-      return this.cidades
-    },
+      });
+      return this.cidades;
+    }
   },
-  created() {
-    this.carregarEstados()
-  },
+
   watch: {
     getInstituicaoEditar(value) {
-      this.carregarEstados()
-      this.instituicao.fk_usuario_id = value.fk_usuario_id
-      this.instituicao.hora_open = value.hora_open
-      this.instituicao.hora_close = value.hora_close
-      this.instituicao.id = value.id
-      this.instituicao.localidade = value.localidade
-      this.instituicao.nome = value.nome
-      this.instituicao.telefone = value.telefone
-      this.instituicao.uf = value.uf
-    },
+      this.carregarEstados();
+
+      this.instituicao = { ...value };
+      // this.instituicao.fk_usuario_id = value.fk_usuario_id
+      // this.instituicao.hora_open = value.hora_open
+      // this.instituicao.hora_close = value.hora_close
+      // this.instituicao.id = value.id
+      // this.instituicao.localidade = value.localidade
+      // this.instituicao.nome = value.nome
+      // this.instituicao.telefone = value.telefone
+      // this.instituicao.uf = value.uf
+    }
   },
+
+  created() {
+    this.carregarEstados();
+  },
+
   methods: {
     ...mapActions({
-      cadastrarInstituicao: 'instituicao/cadastrarInstituicao',
-      atualizarInstituicao: 'instituicao/atualizarInstituicao',
-      insitituicaoEditar: 'instituicao/insitituicaoEditar',
-      statusDialog: 'instituicao/setDialog',
+      cadastrarInstituicao: "instituicao/cadastrarInstituicao",
+      atualizarInstituicao: "instituicao/atualizarInstituicao",
+      insitituicaoEditar: "instituicao/insitituicaoEditar",
+      statusDialog: "instituicao/setDialog"
     }),
 
     closeDialog() {
-      this.statusDialog(false)
-      this.resetValidation()
-      this.reset()
-      this.insitituicaoEditar({})
+      this.statusDialog(false);
+      this.resetValidation();
+      this.reset();
+      this.insitituicaoEditar({});
     },
 
     resetValidation() {
-      this.$refs.form.resetValidation()
+      this.$refs.form.resetValidation();
     },
 
     reset() {
-      this.instituicao = {}
+      this.instituicao = {};
     },
 
     salvar() {
-      this.submitted = true
+      this.submitted = true;
 
       if (this.$refs.form.validate()) {
-        this.instituicao.fk_usuario_id = this.accountInfo.user_id
+        this.instituicao.fk_usuario_id = this.accountInfo.user_id;
 
         // veririfica se o formulario está preenchido  para atualizar se não criando novo
         if (this.instituicao.id) {
-          this.atualizarInstituicao(this.instituicao)
+          this.atualizarInstituicao(this.instituicao);
         } else {
-          this.cadastrarInstituicao(this.instituicao)
+          this.cadastrarInstituicao(this.instituicao);
         }
-        this.closeDialog()
+        this.closeDialog();
       }
     },
 
     async carregarEstados() {
       await axios
         .get(
-          'https://gist.githubusercontent.com/letanure/3012978/raw/36fc21d9e2fc45c078e0e0e07cce3c81965db8f9/estados-cidades.json'
+          "https://gist.githubusercontent.com/letanure/3012978/raw/36fc21d9e2fc45c078e0e0e07cce3c81965db8f9/estados-cidades.json"
         )
         .then(res => {
-          this.estados = res.data.estados
+          this.estados = res.data.estados;
           this.estados.forEach(e => {
-            this.estado.push(e.nome)
-          })
-        })
-    },
-  },
-}
+            this.estado.push(e.nome);
+          });
+        });
+    }
+  }
+};
 </script>
