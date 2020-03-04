@@ -30,43 +30,43 @@
   </v-app>
 </template>
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
-import AppBar from "../../modules/core/AppBar";
-import MenuInstituicao from "../../modules/core/MenuInstituicao.vue";
-import Alerta from "../../modules/alert/Alerta.vue";
+import { mapState, mapActions, mapGetters } from 'vuex'
+import AppBar from '../../modules/core/AppBar'
+import MenuInstituicao from '../../modules/core/MenuInstituicao.vue'
+import Alerta from '../../modules/alert/Alerta.vue'
 
 export default {
-  name: "Main",
+  name: 'Main',
   components: {
     MenuInstituicao,
     Alerta,
-    AppBar
+    AppBar,
   },
   data() {
     return {
       window: {
-        width: 0
+        width: 0,
       },
       menu: true,
-      main: 9
-    };
-  },
-  watch: {
-    "window.width": function(width) {
-      if (width < 700) {
-        this.menu = false;
-        this.main = 12;
-      }
-      if (width > 700) {
-        this.menu = true;
-        this.main = 9;
-      }
-      this.window.width = width;
+      main: 9,
     }
   },
+  watch: {
+    'window.width': function(width) {
+      if (width < 700) {
+        this.menu = false
+        this.main = 12
+      }
+      if (width > 700) {
+        this.menu = true
+        this.main = 9
+      }
+      this.window.width = width
+    },
+  },
   created() {
-    window.addEventListener("resize", this.handleResize);
-    this.handleResize();
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize()
   },
 
   computed: {
@@ -74,26 +74,26 @@ export default {
       return {
         duration: 1300,
         offset: 0,
-        easing: "easeInOutCubic"
-      };
+        easing: 'easeInOutCubic',
+      }
     },
     ...mapState({
-      alert: state => state.alert
+      alert: state => state.alert,
       // isLoggedIn: state => state.isLoggedIn
       // status: state => state.status
-    })
+    }),
   },
   mounted() {
-    this.loading = true;
+    this.loading = true
   },
   methods: {
     ...mapActions({
-      clearAlert: "alert/clear"
+      clearAlert: 'alert/clear',
     }),
 
     handleResize() {
-      this.window.width = window.innerWidth;
-    }
-  }
-};
+      this.window.width = window.innerWidth
+    },
+  },
+}
 </script>

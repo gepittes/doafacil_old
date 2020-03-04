@@ -13,7 +13,6 @@ function handleResponse(response) {
     return Promise.reject(error);
   }
   return response.data.data;
-  s;
 }
 
 function login(email, password) {

@@ -77,44 +77,44 @@
 </template>
 
 <script>
-import imagem from "../image/Image";
-import { mapActions, mapMutations } from "vuex";
+import imagem from '../image/Image'
+import { mapActions, mapMutations } from 'vuex'
 
 export default {
-  name: "PontoCard",
+  name: 'PontoCard',
   components: { imagem },
   props: {
     ponto: {
       type: Object,
-      required: true
+      required: true,
     },
-    update: { type: Function }
+    update: { type: Function },
   },
   data() {
     return {
       dialog: false,
-      selection: 1
-    };
+      selection: 1,
+    }
   },
   methods: {
     ...mapActions({
-      removerPonto: "ponto/removerPonto",
-      setImage: "ponto/setImage"
+      removerPonto: 'ponto/removerPonto',
+      setImage: 'ponto/setImage',
     }),
 
     deletePonto() {
-      this.dialog = !this.dialog;
-      this.removerPonto(this.ponto.id);
+      this.dialog = !this.dialog
+      this.removerPonto(this.ponto.id)
     },
     setObject(e) {
-      this.setImage(e);
+      this.setImage(e)
     },
     // update(ponto) {
     //   this.$emit("closePainel", []);
     // },
     openMap() {
       //
-    }
-  }
-};
+    },
+  },
+}
 </script>

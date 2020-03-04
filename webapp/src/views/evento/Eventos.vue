@@ -8,26 +8,26 @@
       </v-col>
       <v-col xl="4" md="4" cols="12">
         <v-select
+          v-model="instiSelected"
           :items="instituicoes"
           item-text="nome"
           menu-props="auto"
           label="Selecione uma instituição"
           hide-details
           prepend-icon="list"
-          v-model="instiSelected"
           single-line
           color="green"
           autofocus
-        ></v-select>
+        />
       </v-col>
       <v-col class="text-center" xl="2" md="3">
         <v-btn
+          v-if="!getVisibleCreateEvento"
           rounded
           color="green"
           dark
-          v-if="!getVisibleCreateEvento"
+          :disabled="isDisable"
           @click="openPainel"
-          :disabled="this.isDisable"
           >Adicionar</v-btn
         >
       </v-col>
@@ -35,7 +35,7 @@
 
     <v-row justify="center">
       <v-col xl="12">
-        <v-expansion-panels class="mb-3" :disabled="this.isDisable">
+        <v-expansion-panels class="mb-3" :disabled="isDisable">
           <v-expansion-panel>
             <v-expansion-panel-header
               >Caledário de Eventos</v-expansion-panel-header
@@ -48,10 +48,10 @@
 
         <v-expand-transition>
           <v-expansion-panels
-            class="mb-3"
             v-if="getVisibleCreateEvento"
-            :value="this.statusPainel"
-            :disabled="this.isDisable"
+            class="mb-3"
+            :value="statusPainel"
+            :disabled="isDisable"
           >
             <v-expansion-panel>
               <v-expansion-panel-header expand-icon="fa fa-plus"
@@ -66,7 +66,7 @@
 
         <v-expansion-panels
           class="mb-3"
-          :disabled="this.isDisable"
+          :disabled="isDisable"
           :value="statusPainelList"
         >
           <v-expansion-panel>
@@ -77,11 +77,11 @@
               <v-container>
                 <v-row justify="center">
                   <v-col
+                    v-for="evento in eventos"
+                    :key="evento.id"
                     xl="3"
                     md="6"
                     lg="4"
-                    v-for="evento in eventos"
-                    :key="evento.id"
                   >
                     <EventoCard :evento="evento" />
                   </v-col>
@@ -97,9 +97,9 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import Calendario from "../../components/evento/Calendario";
-import EventoCard from "../../components/evento/EventoCard";
-import EventoFormulario from "../../components/evento/EventoFormulario";
+import Calendario from "@/components/evento/Calendario";
+import EventoCard from "@/components/evento/EventoCard";
+import EventoFormulario from "@/components/evento/EventoFormulario";
 
 export default {
   name: "Eventos",
@@ -112,8 +112,19 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters({
+      instituicoes: "instituicao/instituicao",
+      accountInfo: "account/accountInfo",
+      statusPainel: "evento/getStatusPnlCreate",
+      statusPainelList: "evento/getStatusPnlList",
+      getVisibleCreateEvento: "evento/getVisibleCreateEvento",
+      eventos: "evento/getEventosInsti"
+    })
+  },
+
   watch: {
-    instiSelected(value) {
+    instiSelected() {
       if (this.instiSelected) {
         this.isDisable = false;
       }
@@ -128,15 +139,8 @@ export default {
     }
   },
 
-  computed: {
-    ...mapGetters({
-      instituicoes: "instituicao/instituicao",
-      accountInfo: "account/accountInfo",
-      statusPainel: "evento/getStatusPnlCreate",
-      statusPainelList: "evento/getStatusPnlList",
-      getVisibleCreateEvento: "evento/getVisibleCreateEvento",
-      eventos: "evento/getEventosInsti"
-    })
+  created() {
+    this.obterInstiUser(this.accountInfo.user_id);
   },
 
   methods: {
@@ -152,10 +156,6 @@ export default {
         this.statusPnlCreate(0);
       }, 300);
     }
-  },
-
-  created() {
-    this.obterInstiUser(this.accountInfo.user_id);
   }
 };
 </script>

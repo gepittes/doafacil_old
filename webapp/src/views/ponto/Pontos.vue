@@ -79,13 +79,13 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex'
 
-import Ponto from "../../components/ponto/PontoCard";
-import PontoFormulario from "../../components/ponto/PontoFormulario";
+import Ponto from '../../components/ponto/PontoCard'
+import PontoFormulario from '../../components/ponto/PontoFormulario'
 
 export default {
-  name: "PontosDoacao",
+  name: 'PontosDoacao',
   components: { Ponto, PontoFormulario },
   data() {
     return {
@@ -93,46 +93,46 @@ export default {
       isVisible: false,
       isDisable: true,
       instiSelected: {},
-      pontoEditar: {}
-    };
+      pontoEditar: {},
+    }
   },
   computed: {
     ...mapGetters({
-      instituicoes: "instituicao/instituicao",
-      pontos: "ponto/ponto",
-      accountInfo: "account/accountInfo"
-    })
+      instituicoes: 'instituicao/instituicao',
+      pontos: 'ponto/ponto',
+      accountInfo: 'account/accountInfo',
+    }),
   },
   watch: {
     instiSelected() {
       if (this.instiSelected) {
-        this.isDisable = false;
-        this.getPontoByInst(this.instiSelected);
+        this.isDisable = false
+        this.getPontoByInst(this.instiSelected)
       }
-    }
+    },
   },
   created() {
-    this.obterInstiUser(this.accountInfo.user_id);
+    this.obterInstiUser(this.accountInfo.user_id)
   },
   methods: {
     ...mapActions({
-      obterInstiUser: "instituicao/obterInstiUser",
-      getPontoByInst: "ponto/getPontoByInst",
-      setPontoEditar: "ponto/setPontoEditar"
+      obterInstiUser: 'instituicao/obterInstiUser',
+      getPontoByInst: 'ponto/getPontoByInst',
+      setPontoEditar: 'ponto/setPontoEditar',
     }),
     openPainel() {
-      this.isVisible = !this.isVisible;
+      this.isVisible = !this.isVisible
       setTimeout(() => {
-        this.statusPainel = 0;
-      }, 300);
+        this.statusPainel = 0
+      }, 300)
     },
     update(ponto) {
-      this.isVisible = true;
+      this.isVisible = true
       setTimeout(() => {
-        this.statusPainel = 0;
-      }, 300);
-      this.setPontoEditar(ponto);
-    }
-  }
-};
+        this.statusPainel = 0
+      }, 300)
+      this.setPontoEditar(ponto)
+    },
+  },
+}
 </script>

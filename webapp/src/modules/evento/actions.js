@@ -28,7 +28,7 @@ export const criarEvento = ({ commit, dispatch }, payload) => {
         root: true
       });
     })
-    .catch(error => {
+    .catch(() => {
       dispatch("alert/error", "Falha ao salvar evento.", { root: true });
     });
 };
@@ -40,7 +40,7 @@ export const deletarEvento = ({ commit, dispatch }, eventoID) => {
       commit(types.DELETAR_EVENTO, eventoID);
       dispatch("alert/success", "Evento excluido com sucesso!", { root: true });
     })
-    .catch(error => {
+    .catch(() => {
       dispatch("alert/error", "Falha ao deletar evento.", { root: true });
     });
 };
@@ -57,7 +57,7 @@ export const atualizarEvento = ({ commit, dispatch }, evento) => {
         root: true
       });
     })
-    .catch(error => {
+    .catch(() => {
       dispatch("alert/error", "Falha ao atualizar evento.", { root: true });
     });
 };
@@ -68,7 +68,7 @@ export const obterEventosInstiuicao = ({ commit, dispatch }, id) => {
     .then(resp => {
       commit(types.EVENTOS_INSTITUICAO, resp.data.data);
     })
-    .catch(error => {
+    .catch(() => {
       dispatch("alert/error", "Falha ao obter eventos.", { root: true });
     });
 };

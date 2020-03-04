@@ -99,47 +99,47 @@
   </v-container>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
-import MenuInstituicao from "../../modules/core/MenuInstituicao.vue";
-import EventoCard from "../../components/evento/EventoCard";
-import PontoCard from "../../components/ponto/PontoCard";
+import { mapGetters, mapActions } from 'vuex'
+import MenuInstituicao from '../../modules/core/MenuInstituicao.vue'
+import EventoCard from '../../components/evento/EventoCard'
+import PontoCard from '../../components/ponto/PontoCard'
 
 export default {
-  name: "Perfil",
+  name: 'Perfil',
   components: { EventoCard, MenuInstituicao, PontoCard },
   data() {
     return {
       menuShow: true,
       tab: null,
       text:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut " +
-        "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris" +
-        " nisi ut aliquip ex ea commodo consequat."
-    };
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut ' +
+        'labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris' +
+        ' nisi ut aliquip ex ea commodo consequat.',
+    }
   },
   computed: {
     ...mapGetters({
-      instituicao: "instituicao/getInstiEncontrada",
-      eventos: "evento/getEventosInsti",
-      pontos: "ponto/ponto"
-    })
+      instituicao: 'instituicao/getInstiEncontrada',
+      eventos: 'evento/getEventosInsti',
+      pontos: 'ponto/ponto',
+    }),
   },
   created() {
-    this.obterInstituicoes();
-    this.buscarInstituicoe(this.$route.params.id);
-    this.obterEventosInstiuicao(this.$route.params.id);
-    this.getPontoByInst(this.$route.params.id);
+    this.obterInstituicoes()
+    this.buscarInstituicoe(this.$route.params.id)
+    this.obterEventosInstiuicao(this.$route.params.id)
+    this.getPontoByInst(this.$route.params.id)
   },
 
   methods: {
     ...mapActions({
-      obterInstituicoes: "instituicao/obterInstituicoes",
-      buscarInstituicoe: "instituicao/buscartInstituicao",
-      obterEventosInstiuicao: "evento/obterEventosInstiuicao",
-      getPontoByInst: "ponto/getPontoByInst"
-    })
-  }
-};
+      obterInstituicoes: 'instituicao/obterInstituicoes',
+      buscarInstituicoe: 'instituicao/buscartInstituicao',
+      obterEventosInstiuicao: 'evento/obterEventosInstiuicao',
+      getPontoByInst: 'ponto/getPontoByInst',
+    }),
+  },
+}
 </script>
 
 <style scoped>

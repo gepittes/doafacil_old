@@ -51,15 +51,15 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex'
 
 export default {
-  name: "App",
+  name: 'App',
   props: {
     drawer: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
@@ -70,64 +70,64 @@ export default {
       rightDrawer: false,
       item: 0,
       items: [
-        { icon: "fa fa-home", text: "Inicio", to: "/" },
+        { icon: 'fa fa-home', text: 'Inicio', to: '/' },
         {
-          icon: "fa fa-stream",
-          text: "Minhas Instituições",
-          to: "/instituicoes"
+          icon: 'fa fa-stream',
+          text: 'Minhas Instituições',
+          to: '/instituicoes',
         },
-        { icon: "fa fa-map", text: "Ponto de Doação", to: "/pontos" },
-        { icon: "fa fa-calendar-alt", text: "Eventos", to: "/eventos" },
-        { icon: "fa fa-cog", text: "Configuração", to: "/configuracao" },
-        { icon: "fa fa-comment-alt", text: "Enviar feedback" },
-        { icon: "fa fa-question-circle", text: "Ajuda" }
-      ]
-    };
+        { icon: 'fa fa-map', text: 'Ponto de Doação', to: '/pontos' },
+        { icon: 'fa fa-calendar-alt', text: 'Eventos', to: '/eventos' },
+        { icon: 'fa fa-cog', text: 'Configuração', to: '/configuracao' },
+        { icon: 'fa fa-comment-alt', text: 'Enviar feedback' },
+        { icon: 'fa fa-question-circle', text: 'Ajuda' },
+      ],
+    }
   },
   watch: {
     drawer(value) {
-      this.$emit("closeMenu", value);
+      this.$emit('closeMenu', value)
     },
     $route: function(val) {
-      if (val.matched[0].path === "/instituicao/:id") {
-        this.drawer = false;
+      if (val.matched[0].path === '/instituicao/:id') {
+        this.drawer = false
       }
       if (
-        val.matched[0].path !== "/instituicao/:id" &&
+        val.matched[0].path !== '/instituicao/:id' &&
         window.innerWidth > 900
       ) {
-        this.drawer = true;
+        this.drawer = true
       }
-    }
+    },
   },
   computed: {
     ...mapGetters({
-      status: "account/status",
-      token: "account/token",
-      accountInfo: "account/accountInfo"
-    })
+      status: 'account/status',
+      token: 'account/token',
+      accountInfo: 'account/accountInfo',
+    }),
   },
   methods: {
     obterMenusLaterais() {
       const menusLaterais = [
-        { icon: "home", text: "Inicio", to: "/" },
-        { icon: "contacts", text: "Ponto de Doaçao", to: "/doacao" },
+        { icon: 'home', text: 'Inicio', to: '/' },
+        { icon: 'contacts', text: 'Ponto de Doaçao', to: '/doacao' },
         {
-          icon: "keyboard_arrow_up",
-          "icon-alt": "keyboard_arrow_down",
-          text: "Instituições",
+          icon: 'keyboard_arrow_up',
+          'icon-alt': 'keyboard_arrow_down',
+          text: 'Instituições',
           model: false,
           children: [
-            { text: "Minhas instituição", to: "/instituicoes", icon: "list" }
+            { text: 'Minhas instituição', to: '/instituicoes', icon: 'list' },
             // { text: 'Atualizar',  to: '#' },
             // { text: 'locais' },
             // { text: 'Eventos' },
-          ]
+          ],
         },
-        { icon: "help", text: "Sobre", to: "/sobre" },
-        { icon: "settings", text: "Configuração" },
-        { icon: "chat_bubble", text: "Enviar feedback" },
-        { icon: "help", text: "Ajuda" }
+        { icon: 'help', text: 'Sobre', to: '/sobre' },
+        { icon: 'settings', text: 'Configuração' },
+        { icon: 'chat_bubble', text: 'Enviar feedback' },
+        { icon: 'help', text: 'Ajuda' },
         // {
         //     icon: 'keyboard_arrow_up',
         //     'icon-alt': 'keyboard_arrow_down',
@@ -138,22 +138,22 @@ export default {
         //
         //     ],
         // },
-      ];
+      ]
       if (this.accountInfo.is_admin === true) {
         menusLaterais.push({
-          icon: "edit",
-          text: "Administração",
-          to: "/administracao"
-        });
+          icon: 'edit',
+          text: 'Administração',
+          to: '/administracao',
+        })
       }
       menusLaterais.push({
-        icon: "exit_to_app",
-        text: "Sair",
-        to: "/logout"
-      });
+        icon: 'exit_to_app',
+        text: 'Sair',
+        to: '/logout',
+      })
 
-      return menusLaterais;
-    }
-  }
-};
+      return menusLaterais
+    },
+  },
+}
 </script>

@@ -100,82 +100,82 @@
   </v-container>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: "PontoFormulario",
-  props: ["instiSelected"],
+  name: 'PontoFormulario',
+  props: ['instiSelected'],
   data() {
     return {
       menuHoraOpen: false,
       menuHoraClose: false,
       submitted: false,
       ponto: {},
-      rules: { required: value => !!value || "Campo Obrigatório." }
-    };
+      rules: { required: value => !!value || 'Campo Obrigatório.' },
+    }
   },
 
   computed: {
     ...mapGetters({
-      accountInfo: "account/accountInfo",
-      pontoEditar: "ponto/pontoEditar"
-    })
+      accountInfo: 'account/accountInfo',
+      pontoEditar: 'ponto/pontoEditar',
+    }),
   },
   watch: {
     pontoEditar: {
       deep: true,
       handler(value) {
-        if ("error" in value) {
-          this.ponto = {};
+        if ('error' in value) {
+          this.ponto = {}
         } else {
-          this.ponto = { ...value };
+          this.ponto = { ...value }
         }
-      }
-    }
+      },
+    },
   },
   created() {
-    this.loadPonto(this.pontoEditar);
+    this.loadPonto(this.pontoEditar)
   },
   methods: {
     ...mapActions({
-      cadastraPontoDeDoacao: "ponto/cadastraPontoDeDoacao",
-      atualizarPonto: "ponto/atualizarPonto",
-      cleanPontoEditar: "ponto/cleanPontoEditar"
+      cadastraPontoDeDoacao: 'ponto/cadastraPontoDeDoacao',
+      atualizarPonto: 'ponto/atualizarPonto',
+      cleanPontoEditar: 'ponto/cleanPontoEditar',
     }),
 
     closeDialog() {
-      this.resetValidation();
-      this.reset();
-      this.$emit("closePainel", []);
+      this.resetValidation()
+      this.reset()
+      this.$emit('closePainel', [])
     },
     reset() {
-      this.ponto = {};
+      this.ponto = {}
     },
     resetValidation() {
-      this.$refs.form.resetValidation();
+      this.$refs.form.resetValidation()
     },
     salvar() {
-      this.submitted = true;
+      this.submitted = true
       if (this.$refs.form.validate()) {
-        const { ponto } = this;
+        const { ponto } = this
         const instituicaoID = {
-          instituicao_id: this.instiSelected
-        };
-        const data = Object.assign(ponto, instituicaoID);
+          instituicao_id: this.instiSelected,
+        }
+        const data = Object.assign(ponto, instituicaoID)
         if (this.pontoEditar.id) {
-          this.atualizarPonto(data);
-          this.cleanPontoEditar({});
+          this.atualizarPonto(data)
+          this.cleanPontoEditar({})
         } else {
-          this.cadastraPontoDeDoacao(data);
+          this.cadastraPontoDeDoacao(data)
         }
       }
-      this.$emit("closePainel", []);
+      this.$emit('closePainel', [])
     },
     loadPonto(value) {
       if (value) {
-        this.ponto = { ...value };
+        this.ponto = { ...value }
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>
