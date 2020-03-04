@@ -32,7 +32,7 @@
         </v-btn>
         <v-btn icon @click="show = !show">
           <v-icon>{{
-            show ? "keyboard_arrow_up" : "keyboard_arrow_down"
+            show ? 'keyboard_arrow_up' : 'keyboard_arrow_down'
           }}</v-icon>
         </v-btn>
       </v-card-actions>
@@ -67,43 +67,43 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
-import Instituicoes from "../../views/Instituicao/Instituicoes";
-import Criar from "./InstituicaoFormulario";
-import Perfil from "../../views/Instituicao/Perfil";
-import imagem from "../image/Image";
+import { mapActions, mapGetters } from 'vuex'
+import Instituicoes from '../../views/Instituicao/Instituicoes'
+import Criar from './InstituicaoFormulario'
+import Perfil from '../../views/Instituicao/Perfil'
+import imagem from '../image/Image'
 
 export default {
-  name: "Instituicao",
+  name: 'Instituicao',
   components: { Criar, Perfil, Instituicoes, imagem },
-  props: ["instituicao"],
+  props: ['instituicao'],
   data() {
     return {
       show: false,
-      dialog: false
-    };
+      dialog: false,
+    }
   },
   methods: {
     ...mapActions({
-      statusDialog: "instituicao/setDialog",
-      insitituicaoEditar: "instituicao/insitituicaoEditar",
-      setImage: "instituicao/setImage"
+      statusDialog: 'instituicao/setDialog',
+      insitituicaoEditar: 'instituicao/insitituicaoEditar',
+      setImage: 'instituicao/setImage',
     }),
 
     editar(instituicao) {
-      this.statusDialog(true);
-      this.insitituicaoEditar(instituicao);
+      this.statusDialog(true)
+      this.insitituicaoEditar(instituicao)
     },
     setObject(e) {
-      this.setImage(e);
+      this.setImage(e)
     },
     openDialog() {
-      this.dialog = true;
+      this.dialog = true
     },
 
     deletar(instituicao) {
-      this.removerInstituicao(instituicao);
-    }
-  }
-};
+      this.removerInstituicao(instituicao)
+    },
+  },
+}
 </script>

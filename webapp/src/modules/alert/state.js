@@ -1,4 +1,4 @@
 export default {
-    message_type: null,
-    message: null,
+  message_type: null,
+  message: null
 };

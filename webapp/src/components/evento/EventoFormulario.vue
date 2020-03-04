@@ -123,82 +123,82 @@
 </template>
 
 <script>
-import axios from "axios";
-import { formatDateDMY } from "../../filters";
-import { mapState, mapActions, mapGetters } from "vuex";
-import MapboxFull from "../mapas/mapbox-full";
+import axios from 'axios'
+import { formatDateDMY } from '../../filters'
+import { mapState, mapActions, mapGetters } from 'vuex'
+import MapboxFull from '../mapas/mapbox-full'
 
 export default {
-  name: "EventoFormulario",
+  name: 'EventoFormulario',
   props: { instituicaoSelect: Object },
   components: { MapboxFull },
   data() {
     return {
       window: {
         width: 0,
-        height: 0
+        height: 0,
       },
       modalData: false,
       modalHora: false,
       submitted: false,
       evento: {},
-      rules: { required: value => !!value || "Campo Obrigatório." }
-    };
+      rules: { required: value => !!value || 'Campo Obrigatório.' },
+    }
   },
   computed: {
     ...mapGetters({
-      accountInfo: "account/accountInfo",
-      getEventoEditar: "evento/getEventoEditar"
-    })
+      accountInfo: 'account/accountInfo',
+      getEventoEditar: 'evento/getEventoEditar',
+    }),
   },
   watch: {
     getEventoEditar(value) {
-      this.evento = { ...value };
-    }
+      this.evento = { ...value }
+    },
   },
 
   methods: {
     ...mapActions({
-      statusPnlCreate: "evento/statusPnlCreate",
-      criarEvento: "evento/criarEvento",
-      setPainelList: "evento/statusPnlList",
-      eventoEditar: "evento/eventoEditar",
-      atualizarEvento: "evento/atualizarEvento"
+      statusPnlCreate: 'evento/statusPnlCreate',
+      criarEvento: 'evento/criarEvento',
+      setPainelList: 'evento/statusPnlList',
+      eventoEditar: 'evento/eventoEditar',
+      atualizarEvento: 'evento/atualizarEvento',
     }),
 
     closeDialog() {
-      this.eventoEditar({});
-      this.statusPnlCreate([]);
-      this.resetValidation();
-      this.reset();
+      this.eventoEditar({})
+      this.statusPnlCreate([])
+      this.resetValidation()
+      this.reset()
     },
 
     resetValidation() {
-      this.$refs.form.resetValidation();
+      this.$refs.form.resetValidation()
     },
 
     reset() {
-      this.evento = {};
+      this.evento = {}
     },
 
     salvar() {
-      this.submitted = true;
+      this.submitted = true
 
       if (this.$refs.form.validate()) {
-        this.evento.fk_insti_id = this.instituicaoSelect.id;
+        this.evento.fk_insti_id = this.instituicaoSelect.id
 
         if (this.evento.id) {
-          this.atualizarEvento(this.evento);
-          this.setPainelList(0);
+          this.atualizarEvento(this.evento)
+          this.setPainelList(0)
         } else {
-          this.criarEvento(this.evento);
-          this.setPainelList(0);
+          this.criarEvento(this.evento)
+          this.setPainelList(0)
         }
 
-        this.reset();
-        this.closeDialog();
+        this.reset()
+        this.closeDialog()
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>

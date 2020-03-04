@@ -141,100 +141,100 @@
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex'
 // eslint-disable-next-line import/extensions,import/no-unresolved
-import BarraLateral from "./BarraLateral";
+import BarraLateral from './BarraLateral'
 // eslint-disable-next-line import/first,import/no-unresolved
-import LogoPng from "@/assets/doafacil/logos/logo-doafacil-bg-white.png";
+import LogoPng from '@/assets/doafacil/logos/logo-doafacil-bg-white.png'
 
 export default {
-  name: "AppBar",
+  name: 'AppBar',
   components: { BarraLateral },
   data() {
     return {
       window: {
         width: 0,
-        height: 0
+        height: 0,
       },
       styleBar: {
         imgW: 0,
-        barW: 0
+        barW: 0,
       },
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       clipped: false,
       valid: true,
       drawer: false,
       logo: LogoPng,
       emailRules: [
-        v => !!v || "E-mail obrigatório",
-        v => /.+@.+/.test(v) || "E-mail precisa ser válido"
+        v => !!v || 'E-mail obrigatório',
+        v => /.+@.+/.test(v) || 'E-mail precisa ser válido',
       ],
-      passwordRules: [v => !!v || "Senha obrigatória"]
-    };
+      passwordRules: [v => !!v || 'Senha obrigatória'],
+    }
   },
   computed: {
     ...mapGetters({
-      status: "account/status",
-      user: "account/user",
-      accountInfo: "account/accountInfo"
+      status: 'account/status',
+      user: 'account/user',
+      accountInfo: 'account/accountInfo',
     }),
     userName() {
-      return this.accountInfo.name.split(" ")[0];
-    }
+      return this.accountInfo.name.split(' ')[0]
+    },
   },
   watch: {
-    "window.width": function(width) {
-      if (width > 960 && this.$route.path === "/login") {
-        this.$router.push({ name: "home" });
+    'window.width': function(width) {
+      if (width > 960 && this.$route.path === '/login') {
+        this.$router.push({ name: 'home' })
       }
-      this.window.width = width;
+      this.window.width = width
     },
-    "status.loggedIn": function() {
+    'status.loggedIn': function() {
       if (this.status.loggedIn) {
-        this.styleBar.barW = 50;
-        this.styleBar.imgW = 80;
+        this.styleBar.barW = 50
+        this.styleBar.imgW = 80
       }
 
       if (this.status.loggedIn !== true) {
-        this.styleBar.barW = 100;
-        this.styleBar.imgW = 130;
+        this.styleBar.barW = 100
+        this.styleBar.imgW = 130
       }
-    }
+    },
   },
   created() {
-    window.addEventListener("resize", this.handleResize);
-    this.handleResize();
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize()
 
     if (this.status.loggedIn) {
-      this.styleBar.barW = 50;
-      this.styleBar.imgW = 80;
+      this.styleBar.barW = 50
+      this.styleBar.imgW = 80
     }
 
     if (this.status.loggedIn !== true) {
-      this.styleBar.barW = 100;
-      this.styleBar.imgW = 130;
+      this.styleBar.barW = 100
+      this.styleBar.imgW = 130
     }
   },
   methods: {
     handleResize() {
-      this.window.width = window.innerWidth;
-      this.window.height = window.innerHeight;
+      this.window.width = window.innerWidth
+      this.window.height = window.innerHeight
     },
     submit() {
       if (this.$refs.form.validate()) {
-        const { email, password } = this;
+        const { email, password } = this
         if (email && password) {
-          this.login({ email, password });
+          this.login({ email, password })
         }
       }
     },
     clear() {
-      this.$refs.form.reset();
+      this.$refs.form.reset()
     },
-    ...mapActions("account", ["login", "logout"])
-  }
-};
+    ...mapActions('account', ['login', 'logout']),
+  },
+}
 </script>
 <style>
 .user-name {

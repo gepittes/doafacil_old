@@ -79,39 +79,39 @@
 </template>
 
 <script>
-import imagem from "../image/Image";
-import { mapActions } from "vuex";
+import imagem from '../image/Image'
+import { mapActions } from 'vuex'
 
 export default {
-  name: "eventoCard",
-  props: ["evento"],
+  name: 'eventoCard',
+  props: ['evento'],
   components: { imagem },
   data: () => ({
     selection: 1,
-    dialog: false
+    dialog: false,
   }),
 
   methods: {
     ...mapActions({
-      deletarEvento: "evento/deletarEvento",
-      eventoEditar: "evento/eventoEditar",
-      statusPnlCreate: "evento/statusPnlCreate",
-      visibleCreatePnlEvento: "evento/visibleCreatePnlEvento",
-      setImage: "evento/setImage"
+      deletarEvento: 'evento/deletarEvento',
+      eventoEditar: 'evento/eventoEditar',
+      statusPnlCreate: 'evento/statusPnlCreate',
+      visibleCreatePnlEvento: 'evento/visibleCreatePnlEvento',
+      setImage: 'evento/setImage',
     }),
     editarEvento(evento) {
-      this.visibleCreatePnlEvento(true);
-      this.statusPnlCreate(0);
+      this.visibleCreatePnlEvento(true)
+      this.statusPnlCreate(0)
       setTimeout(() => {
-        this.eventoEditar(evento);
-      }, 800);
+        this.eventoEditar(evento)
+      }, 800)
     },
     openMap() {
       //open Map event here!
     },
     setObject(e) {
-      this.setImage(e);
-    }
-  }
-};
+      this.setImage(e)
+    },
+  },
+}
 </script>

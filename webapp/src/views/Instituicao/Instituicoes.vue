@@ -17,54 +17,54 @@
   </v-app>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
-import MenuInstituicao from "../../modules/core/MenuInstituicao.vue";
-import InstituicaoFormulario from "../../components/instituicao/InstituicaoFormulario.vue";
-import Perfil from "./Perfil.vue";
-import Instituicao from "../../components/instituicao/Instituicao.vue";
+import { mapActions, mapGetters } from 'vuex'
+import MenuInstituicao from '../../modules/core/MenuInstituicao.vue'
+import InstituicaoFormulario from '../../components/instituicao/InstituicaoFormulario.vue'
+import Perfil from './Perfil.vue'
+import Instituicao from '../../components/instituicao/Instituicao.vue'
 
 export default {
-  name: "ListarInstituicoes",
+  name: 'ListarInstituicoes',
   components: {
     InstituicaoFormulario,
     Perfil,
     Instituicao,
-    MenuInstituicao
+    MenuInstituicao,
   },
   data() {
     return {
       instituicoesIniciais: [],
-      instituicao: {}
-    };
+      instituicao: {},
+    }
   },
   computed: {
     ...mapGetters({
-      instituicoes: "instituicao/instituicao",
-      dialog: "instituicao/getDialog",
-      accountInfo: "account/accountInfo"
-    })
+      instituicoes: 'instituicao/instituicao',
+      dialog: 'instituicao/getDialog',
+      accountInfo: 'account/accountInfo',
+    }),
   },
   watch: {
     instituicoes(value) {
-      if ("error" in value) {
-        this.instituicoesIniciais = {};
+      if ('error' in value) {
+        this.instituicoesIniciais = {}
       } else {
-        this.instituicoesIniciais = value;
+        this.instituicoesIniciais = value
       }
-    }
+    },
   },
 
   created() {
-    this.obterInstiUser(this.accountInfo.user_id);
+    this.obterInstiUser(this.accountInfo.user_id)
   },
   methods: {
     ...mapActions({
-      obterInstiUser: "instituicao/obterInstiUser",
-      statusDialog: "instituicao/setDialog"
+      obterInstiUser: 'instituicao/obterInstiUser',
+      statusDialog: 'instituicao/setDialog',
     }),
     openDialog() {
-      this.statusDialog(true);
-    }
-  }
-};
+      this.statusDialog(true)
+    },
+  },
+}
 </script>

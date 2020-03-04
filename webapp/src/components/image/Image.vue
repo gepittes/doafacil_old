@@ -16,76 +16,76 @@
   </v-card>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters } from 'vuex'
 export default {
-  name: "imagem",
+  name: 'imagem',
   props: {
     imgWidth: {
-      type: String
+      type: String,
     },
     imgHeight: {
-      type: String
+      type: String,
     },
     objectId: {
-      type: Number
+      type: Number,
     },
     objectName: {
-      type: String
+      type: String,
     },
     modelImage: {
-      type: String
+      type: String,
     },
     newImage: {
-      type: String
-    }
+      type: String,
+    },
   },
 
   data() {
     return {
       image: `https://via.placeholder.com/${this.imgWidth}x${this.imgHeight}`,
-      isFile: false
-    };
+      isFile: false,
+    }
   },
   computed: {
     ...mapGetters({
-      object: "image/object"
+      object: 'image/object',
     }),
     styled() {
       return {
         height: `${this.imgHeight}px`,
         width: `${this.imgWidth}px`,
-        backgroundImage: `url(${this.image})`
-      };
+        backgroundImage: `url(${this.image})`,
+      }
     },
     imagPath() {
       if (this.newImage && !this.isFile) {
-        return (this.image = `http://localhost/img/${this.newImage}`);
+        return (this.image = `http://localhost/img/${this.newImage}`)
       }
-      return this.image;
-    }
+      return this.image
+    },
   },
   watch: {
     object(value) {
-      this.$emit("setObject", value);
-    }
+      this.$emit('setObject', value)
+    },
   },
   methods: {
     ...mapActions({
-      uploadImage: "image/uploadImage"
+      uploadImage: 'image/uploadImage',
     }),
     onFileChange(e) {
-      this.isFile = true;
-      let files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      this.createImage(files[0]);
+      this.isFile = true
+      let files = e.target.files || e.dataTransfer.files
+      if (!files.length) return
+      this.createImage(files[0])
     },
     createImage(file) {
-      let reader = new FileReader();
-      let vm = this;
+      let reader = new FileReader()
+      let vm = this
       reader.onload = e => {
-        vm.image = e.target.result;
-      };
-      reader.readAsDataURL(file);
+        vm.image = e.target.result
+      }
+      reader.readAsDataURL(file)
     },
 
     upload() {
@@ -93,14 +93,14 @@ export default {
         image: this.image,
         objectId: this.objectId,
         objectName: this.objectName,
-        modelImage: this.modelImage
-      };
+        modelImage: this.modelImage,
+      }
 
-      this.uploadImage(data);
-      this.isFile = false;
-    }
-  }
-};
+      this.uploadImage(data)
+      this.isFile = false
+    },
+  },
+}
 </script>
 <style scoped>
 .file {
@@ -113,7 +113,7 @@ export default {
   margin-bottom: 10px;
 }
 
-.file input[type="file"] {
+.file input[type='file'] {
   -webkit-appearance: none;
   position: absolute;
   opacity: 0;

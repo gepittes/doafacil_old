@@ -13,37 +13,37 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
-import AppBar from "../../modules/core/AppBar";
-import Alerta from "../../modules/alert/Alerta.vue";
+import { mapState, mapActions, mapGetters } from 'vuex'
+import AppBar from '../../modules/core/AppBar'
+import Alerta from '../../modules/alert/Alerta.vue'
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     Alerta,
-    AppBar
+    AppBar,
   },
   computed: {
     options() {
       return {
         duration: 1300,
         offset: 0,
-        easing: "easeInOutCubic"
-      };
+        easing: 'easeInOutCubic',
+      }
     },
     ...mapState({
-      alert: state => state.alert
+      alert: state => state.alert,
       // isLoggedIn: state => state.isLoggedIn
       // status: state => state.status
-    })
+    }),
   },
   mounted() {
-    this.loading = true;
+    this.loading = true
   },
   methods: {
     ...mapActions({
-      clearAlert: "alert/clear"
-    })
-  }
-};
+      clearAlert: 'alert/clear',
+    }),
+  },
+}
 </script>

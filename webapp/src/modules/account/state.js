@@ -1,18 +1,17 @@
-import { obterInformacoesJWT } from '../account/_helpers/jwt';
+import { obterInformacoesJWT } from "../account/_helpers/jwt";
 
-let informacoesJWT = '';
+let informacoesJWT = "";
 try {
-    informacoesJWT = obterInformacoesJWT();
+  informacoesJWT = obterInformacoesJWT();
 } catch (Exception) {
-    informacoesJWT = '';
+  informacoesJWT = "";
 }
 
-const loggedIn = informacoesJWT !== '';
+const loggedIn = informacoesJWT !== "";
 
 export const state = {
-    status: { loggedIn },
-    token: informacoesJWT,
-    accountInfo: informacoesJWT ? informacoesJWT.user : '',
-    user: {},
+  status: { loggedIn },
+  token: informacoesJWT,
+  accountInfo: informacoesJWT ? informacoesJWT.user : "",
+  user: {}
 };
-

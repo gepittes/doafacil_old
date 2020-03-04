@@ -96,66 +96,66 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
-import Calendario from "../../components/evento/Calendario";
-import EventoCard from "../../components/evento/EventoCard";
-import EventoFormulario from "../../components/evento/EventoFormulario";
+import { mapGetters, mapActions } from 'vuex'
+import Calendario from '../../components/evento/Calendario'
+import EventoCard from '../../components/evento/EventoCard'
+import EventoFormulario from '../../components/evento/EventoFormulario'
 
 export default {
-  name: "Eventos",
+  name: 'Eventos',
   components: { EventoFormulario, EventoCard, Calendario },
   data() {
     return {
       isDisable: true,
       instiSelected: {},
-      ObjInstiSelect: {}
-    };
+      ObjInstiSelect: {},
+    }
   },
 
   watch: {
     instiSelected(value) {
       if (this.instiSelected) {
-        this.isDisable = false;
+        this.isDisable = false
       }
       // Serve para coletar o objeto da instiuicao que esta sendo selecionado.
       // O instiSelected apenas contem o nome da insituicao o ObjInstiSelect sao os dados completos.
       this.instituicoes.forEach(e => {
         if (e.nome === this.instiSelected) {
-          this.ObjInstiSelect = e;
+          this.ObjInstiSelect = e
         }
-      });
-      this.obterEventosInstiuicao(this.ObjInstiSelect.id);
-    }
+      })
+      this.obterEventosInstiuicao(this.ObjInstiSelect.id)
+    },
   },
 
   computed: {
     ...mapGetters({
-      instituicoes: "instituicao/instituicao",
-      accountInfo: "account/accountInfo",
-      statusPainel: "evento/getStatusPnlCreate",
-      statusPainelList: "evento/getStatusPnlList",
-      getVisibleCreateEvento: "evento/getVisibleCreateEvento",
-      eventos: "evento/getEventosInsti"
-    })
+      instituicoes: 'instituicao/instituicao',
+      accountInfo: 'account/accountInfo',
+      statusPainel: 'evento/getStatusPnlCreate',
+      statusPainelList: 'evento/getStatusPnlList',
+      getVisibleCreateEvento: 'evento/getVisibleCreateEvento',
+      eventos: 'evento/getEventosInsti',
+    }),
   },
 
   methods: {
     ...mapActions({
-      obterInstiUser: "instituicao/obterInstiUser",
-      statusPnlCreate: "evento/statusPnlCreate",
-      obterEventosInstiuicao: "evento/obterEventosInstiuicao",
-      visibleCreatePnlEvento: "evento/visibleCreatePnlEvento"
+      obterInstiUser: 'instituicao/obterInstiUser',
+      statusPnlCreate: 'evento/statusPnlCreate',
+      obterEventosInstiuicao: 'evento/obterEventosInstiuicao',
+      visibleCreatePnlEvento: 'evento/visibleCreatePnlEvento',
     }),
     openPainel() {
-      this.visibleCreatePnlEvento(!this.getVisibleCreateEvento);
+      this.visibleCreatePnlEvento(!this.getVisibleCreateEvento)
       setTimeout(() => {
-        this.statusPnlCreate(0);
-      }, 300);
-    }
+        this.statusPnlCreate(0)
+      }, 300)
+    },
   },
 
   created() {
-    this.obterInstiUser(this.accountInfo.user_id);
-  }
-};
+    this.obterInstiUser(this.accountInfo.user_id)
+  },
+}
 </script>

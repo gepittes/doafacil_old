@@ -137,32 +137,32 @@
   </v-app>
 </template>
 <script>
-import { mapGetters, mapActions } from "vuex";
-import MenuInstituicao from "../../modules/core/MenuInstituicao.vue";
+import { mapGetters, mapActions } from 'vuex'
+import MenuInstituicao from '../../modules/core/MenuInstituicao.vue'
 
 export default {
-  name: "PerfilPontoDeDoacao",
+  name: 'PerfilPontoDeDoacao',
   components: { MenuInstituicao },
-  props: ["id"],
+  props: ['id'],
   data() {
     return {
       menuShow: true,
       tab: null,
       text:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut " +
-        "labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris" +
-        " nisi ut aliquip ex ea commodo consequat."
-    };
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut ' +
+        'labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris' +
+        ' nisi ut aliquip ex ea commodo consequat.',
+    }
   },
   computed: {
-    ...mapGetters({})
+    ...mapGetters({}),
   },
   created() {},
 
   methods: {
-    ...mapActions({})
-  }
-};
+    ...mapActions({}),
+  },
+}
 </script>
 
 <style scoped>
